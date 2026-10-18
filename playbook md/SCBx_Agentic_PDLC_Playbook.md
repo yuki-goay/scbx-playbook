@@ -7,39 +7,39 @@
 
 **The What**
 
-1.1 [[#About this playbook|About this playbook]]
-1.2 [[#1.1 What Agentic PDLC means|What Agentic PDLC means]]
+1.1 [About this playbook](#about-this-playbook)
+1.2 [What Agentic PDLC means](#11-what-agentic-pdlc-means)
 * [Agent catalogue](agent-catalogue.md)
 * [Design agents](../pages/design-agents.md)
-1.3 [[#1.2 Overview of Agentic PDLC end-to-end|Overview of Agentic PDLC end-to-end]]
+1.3 [Overview of Agentic PDLC end-to-end](#12-overview-of-agentic-pdlc-end-to-end)
 *  [Best practices of Agentic PDLC](../pages/appendix-b-best-practices.md)
 * [AI PDLC Lifecycle](ai-pdlc-lifecycle.md)
-1.4 [[#1.3 Four changes in the delivery model|Four changes in the delivery model]]
+1.4 [Four changes in the delivery model](#13-four-changes-in-the-delivery-model)
 
 **The Why**
 
-2.1 [[#2.1 Reimagining the agentic design process|Design approach to Agentic PDLC]]
-2.2 [[#2.2 Design principles for building agents|Design principles for building agents]]
-2.3 [[#2.3 Governance and Controls|Governance and Controls]]
-2.4 [[#2.4 Measurements|Measurements]]
+2.1 [Design approach to Agentic PDLC](#21-reimagining-the-agentic-design-process)
+2.2 [Design principles for building agents](#22-design-principles-for-building-agents)
+2.3 [Governance and Controls](#23-governance-and-controls)
+2.4 [Measurements](#24-measurements)
 
 **The Who**
 
-3.1 [[#3.1 Product squad roles|Product squad roles]]
+3.1 [Product squad roles](#31-product-squad-roles)
 
 **The How**
 
-4.1 [[#4.1 Identify the project type|Identify the project type]]
+4.1 [Identify the project type](#41-identify-the-project-type)
 * [3.2 Greenfield development](../pages/3-2-greenfield-development.md)
 * [3.3 Brownfield enhancement](../pages/3-3-brownfield-enhancement.md)
 * [3.4 Modernisation and upgrade](../pages/3-4-modernisation-and-upgrade.md)
 * [3.5 Hybrid programmes](../pages/3-5-hybrid-programmes.md)
-4.2 [[#4.2 Baseline the current state|Baseline the current state]]
-4.3 [[#4.3 Tailoring lifecycle activities|Tailoring lifecycle activities]]
-4.4 [[#4.4 Select relevant agents|Select relevant agents]]
+4.2 [Baseline the current state](#42-baseline-the-current-state)
+4.3 [Tailoring lifecycle activities](#43-tailoring-lifecycle-activities)
+4.4 [Select relevant agents](#44-select-relevant-agents)
 4.5 [Pilot pre-initiation and getting started](../pages/4-1-pilot-pre-initialisation.md)
 - [Step-by-step agent walkthroughs](../pages/4-2-to-4-10-agent-walkthroughs.md)
-4.6 [[#Templates and additional references|Templates and additional references]]
+4.6 [Templates and additional references](#templates-and-additional-references)
 
 
 ---
