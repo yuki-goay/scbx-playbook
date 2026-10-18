@@ -1,0 +1,14 @@
+node_modules/
+.DS_Store
+.env
+.env.*
+_verify/
+dist/
+build/
+css/
+fonts/
+package.json
+package-lock.json
+*.pdf
+SCBx Playbook restructure v2.png
+SCBx_Agentic_PDLC_Playbook_Sections_1-4_Draft 2 16Oct.md
