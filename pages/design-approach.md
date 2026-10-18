@@ -62,27 +62,27 @@ No agent will fit every team on day one. Designers work differently, evidence li
 
 The Discover phase establishes shared understanding of the problem before any solution work begins. The goal is not to produce volume, but to produce a clear and evidenced problem statement that the whole team can work from.
 
-- [Align and plan](align-and-plan.md)
-- [Gather and organise evidence](gather-and-organise-evidence.md)
-- [Draw out insights and needs](draw-out-insights-and-needs.md)
-- [Map the current state](map-the-current-state.md)
-- [Frame the problem](frame-the-problem.md)
+- [Align and plan](../chapters/align-and-plan.md)
+- [Gather and organise evidence](../chapters/gather-and-organise-evidence.md)
+- [Draw out insights and needs](../chapters/draw-out-insights-and-needs.md)
+- [Map the current state](../chapters/map-the-current-state.md)
+- [Frame the problem](../chapters/frame-the-problem.md)
 
 ### Define
 
 The Define phase converts discovery evidence into a validated solution direction. Concepts are generated, prioritised and tested before detailed design begins.
 
-- [Ideate and prioritise](ideate-and-prioritise.md)
-- [Test concepts](test-concepts.md)
+- [Ideate and prioritise](../chapters/ideate-and-prioritise.md)
+- [Test concepts](../chapters/test-concepts.md)
 
 ### Design
 
 The Design phase produces the detailed, tested solution ready for handoff. It covers information architecture, design language, detailed screens and design quality checks.
 
-- [Structure the experience](structure-the-experience.md)
-- [Define and maintain the design language](define-and-maintain-the-design-language.md)
-- [Design the detailed screens](design-the-detailed-screens.md)
-- [Test usability](test-usability.md)
+- [Structure the experience](../chapters/structure-the-experience.md)
+- [Define and maintain the design language](../chapters/define-and-maintain-the-design-language.md)
+- [Design the detailed screens](../chapters/design-the-detailed-screens.md)
+- [Test usability](../chapters/test-usability.md)
 
 ---
 

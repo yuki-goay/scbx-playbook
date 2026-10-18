@@ -9,11 +9,11 @@
 
 1.1 [About this playbook](#about-this-playbook)
 1.2 [What Agentic PDLC means](#11-what-agentic-pdlc-means)
-* [Agent catalogue](agent-catalogue.md)
+* [Agent catalogue](../pages/agent-catalogue.md)
 * [Design agents](../pages/design-agents.md)
 1.3 [Overview of Agentic PDLC end-to-end](#12-overview-of-agentic-pdlc-end-to-end)
 *  [Best practices of Agentic PDLC](../pages/appendix-b-best-practices.md)
-* [AI PDLC Lifecycle](ai-pdlc-lifecycle.md)
+* [AI PDLC Lifecycle](../pages/ai-pdlc-lifecycle.md)
 1.4 [Four changes in the delivery model](#13-four-changes-in-the-delivery-model)
 
 **The Why**
@@ -81,13 +81,13 @@ Microsoft and IBM guidance both reinforce that agent quality must be assessed th
 
 **Useful links**
 *What agent should I use?*
-→  [Agent Catalogue](agent-catalogue.md)
+→  [Agent Catalogue](../pages/agent-catalogue.md)
 
 *How to make it work better?*
 →  [Best practices of Agentic PDLC](../pages/appendix-b-best-practices.md)
 
 *What is the full AI PDLC?*
-→   [AI PDLC Lifecycle](ai-pdlc-lifecycle.md)
+→   [AI PDLC Lifecycle](../pages/ai-pdlc-lifecycle.md)
 
 ---
 
