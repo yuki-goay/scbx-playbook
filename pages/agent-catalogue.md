@@ -19,22 +19,58 @@ Catalogue entries should be read as operating contracts. Purpose and use conditi
 
 ### Agent overview
 
-| **Agent**              | **Description**                                                                                                                                                           |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Context Builder]      | Creates a unified project context from business, technical, compliance, standards, documentation and codebase sources to support downstream agent-enabled delivery.       |
-| [BRD Builder]          | Converts business problems, objectives and discovery inputs into a structured and traceable Business Requirements Document for stakeholder review and approval.           |
-| [PRD Builder]          | Translates approved business direction into detailed, measurable and testable product requirements for downstream design, engineering and validation.                     |
-| [Jira Backlog Manager] | Transforms approved product requirements or epics into a structured delivery backlog of epics, user stories and acceptance criteria.                                      |
-| [Spec-Clarify]         | Converts approved requirements, architecture, design and standards into an implementation-ready specification while identifying gaps, conflicts and unresolved questions. |
-| [Task-Planner]         | Decomposes the approved specification and solution approach into ordered implementation tasks with explicit dependencies and expected outcomes.                           |
-| [Task-Implementor]     | Executes bounded implementation tasks against the approved specification and plan, producing source-code changes and associated unit tests.                               |
-| [API Testing]          | Generates and executes API tests against approved interface specifications and acceptance criteria, producing test results and evidence for review.                       |
-| [Functional Testing]   | Converts approved requirements, designs and acceptance criteria into repeatable functional tests, executable scripts and test evidence.                                   |
-| [Azure-Deploy]         | Prepares deployment artefacts, validates configuration and executes approved Azure deployments after required quality, security and readiness checks.                     |
+| **Agent** | **Description** |
+| --- | --- |
+| [Research planner](#a1-research-planner) | Gets the team ready before anyone talks to a user, turning vision and stakeholder notes into an assumptions log, research plan, interview guides and screeners. |
+| [Insights synthesizer](#a2-insights-synthesizer) | Makes sense of what users said by filing and tagging raw sessions, then drafting insights, personas, blueprints and test findings traceable to source. |
+| [Experience designer](#a3-experience-designer) | Turns decisions into something people can see and try by drafting experience structure, design language, detailed screens and a working concept prototype. |
+| [Context Builder](#a4-context-builder) | Creates a unified project context from business, technical, compliance, standards, documentation and codebase sources to support downstream agent-enabled delivery. |
+| [BRD Builder](#a5-brd-builder-agent) | Converts business problems, objectives and discovery inputs into a structured and traceable Business Requirements Document for stakeholder review and approval. |
+| [PRD Builder](#a6-prd-builder-agent) | Translates approved business direction into detailed, measurable and testable product requirements for downstream design, engineering and validation. |
+| [Jira Backlog Manager](#a7-jira-backlog-manager) | Transforms approved product requirements or epics into a structured delivery backlog of epics, user stories and acceptance criteria. |
+| [Spec-Clarify](#a8-spec-clarify) | Converts approved requirements, architecture, design and standards into an implementation-ready specification while identifying gaps, conflicts and unresolved questions. |
+| [Task-Planner](#a9-task-planner) | Decomposes the approved specification and solution approach into ordered implementation tasks with explicit dependencies and expected outcomes. |
+| [Task-Implementor](#a10-task-implementor) | Executes bounded implementation tasks against the approved specification and plan, producing source-code changes and associated unit tests. |
+| [API Testing](#a11-api-testing) | Generates and executes API tests against approved interface specifications and acceptance criteria, producing test results and evidence for review. |
+| [Functional Testing](#a12-functional-testing) | Converts approved requirements, designs and acceptance criteria into repeatable functional tests, executable scripts and test evidence. |
+| [Azure-Deploy](#a13-azure-deploy) | Prepares deployment artefacts, validates configuration and executes approved Azure deployments after required quality, security and readiness checks. |
 
 ---
 
-## A.1 Context Builder
+## Design Agents
+
+### A.1 Research planner
+
+Gets the team ready before anyone talks to a user. It turns the vision and early stakeholder notes into a clear list of assumptions, a research plan, interview guides and screeners, so fieldwork starts with real questions instead of guesses. It prepares the ground but never runs the research itself.
+
+| **Use when** | **Approved inputs** | **Output** | **Human review** |
+|----|----|----|----|
+| Kickoff has produced the vision and objectives; stakeholder interviews or earlier findings have changed what we need to ask; or a gate asks for the plan to be revised. | Vision and objectives, stakeholder and expert interview notes, briefs and earlier work. | Assumptions log, research plan, interview guides and screeners. | A person signs off the plan before fieldwork starts. |
+
+---
+
+### A.2 Insights synthesizer
+
+Makes sense of what users told us. It files and tags raw sessions as evidence, then drafts the insights, personas, blueprints and test findings, each one traceable to where it came from. It also helps plan, log and analyse tests, and keeps the evidence repository up to date.
+
+| **Use when** | **Approved inputs** | **Output** | **Human review** |
+|----|----|----|----|
+| A person has cleared new transcripts, notes, recordings or session results; tagged evidence is ready for a draft, register, map or score; a test is ready to plan, log or analyse; or a gate asks for a check, flag or comparison. | Checked raw material, tagged and de-identified evidence, personas, jobs and pain points, prioritised features, the to-be blueprint, experience principles, the hi-fi prototype and pass criteria. | Tagged evidence, insights, personas, blueprints and test findings. | A person checks raw transcripts and recordings for sensitive content before the agent sees them. After that, people review the drafts and the evidence behind them, because deciding what the findings mean is still a human call. |
+
+---
+
+### A.3 Experience designer
+
+Turns decisions into something people can see and try. It drafts the structure of the experience, the design language and the detailed screens, builds a working concept prototype from the approved design system, and checks designs against our principles and standards.
+
+| **Use when** | **Approved inputs** | **Output** | **Human review** |
+|----|----|----|----|
+| The approved blueprint, features or validated gaps are ready to structure, wire or compose; a screen, component or prototype is marked ready for checking; the design language needs a change; or a person has signed the instruction to prototype approved concepts and the design system is ready. | To-be blueprint and prioritised features, validated gaps and feature acceptance, experience principles, and the current information architecture and design language versions. For prototypes, it also takes the signed instruction, approved concept proposals and brief, passed on by a person. | The experience structure, design language, detailed screens and check results. The coded prototype and its build log go back for testing. | A person signs the instruction before any prototype is built, and approves the concepts it is built from. Designers then review the screens and the check results, since the agent flags problems but people decide what good looks like. |
+
+---
+## Coding Agents
+
+## A.4 Context Builder
 
 The Context Builder creates the project context needed to support downstream agent-enabled delivery. It brings together available reference material, project documentation, source code, configuration and tests, and supplements these with business, stakeholder, compliance and technical context. For greenfield projects, it also prompts for the business overview and technology stack where existing project material is not yet available.
 
@@ -44,7 +80,7 @@ The Context Builder creates the project context needed to support downstream age
 
 ---
 
-## A.2 BRD Builder Agent
+## A.5 BRD Builder Agent
 
 This section describes how the HVE Core **BRD Builder Agent** can be used within an AI-enabled Product Development Lifecycle to create structured, traceable, and reviewable requirements documents.
 
@@ -175,7 +211,7 @@ The BRD should not contain detailed technical implementation decisions unless th
 
 ---
 
-## A.3 PRD Builder Agent
+## A.6 PRD Builder Agent
 
 #### Purpose
 
@@ -351,7 +387,7 @@ The PRD should then translate this information into:
 
 ---
 
-## A.4 Jira Backlog Manager
+## A.7 Jira Backlog Manager
 
 The Jira Backlog Manager turns approved product requirements or epics into a structured delivery backlog. It drafts epics, user stories and acceptance criteria and can help maintain relationships and consistency across backlog items. The Product Owner or Business Analyst retains responsibility for priority, scope, sequencing and acceptance intent.
 
@@ -361,7 +397,7 @@ The Jira Backlog Manager turns approved product requirements or epics into a str
 
 ---
 
-## A.5 Spec-Clarify
+## A.8 Spec-Clarify
 
 Spec-Clarify converts approved requirements, architecture, design and standards into an implementation-ready specification. It identifies missing information, conflicting assumptions and unresolved questions before planning or coding begins. The specification becomes the main implementation reference only after the relevant business and technical owners resolve and approve the open points.
 
@@ -370,7 +406,7 @@ Spec-Clarify converts approved requirements, architecture, design and standards 
 | Use before planning and implementation for a bounded increment. | Approved requirements, design, architecture, context and standards. | spec.md, acceptance criteria and clarification questions. | FDE coordinates clarification; accountable business and technical roles approve resolved content. |
 
 ---
-## A.6 Task-Planner
+## A.9 Task-Planner
 
 Task-Planner decomposes the approved specification and solution approach into ordered implementation tasks. It makes dependencies, sequencing and expected outcomes explicit so work can be executed in controlled increments. The FDE or engineering lead checks that the plan covers the approved scope and does not introduce unsupported design decisions.
 
@@ -380,7 +416,7 @@ Task-Planner decomposes the approved specification and solution approach into or
 
 ---
 
-## A.7 Task-Implementor
+## A.10 Task-Implementor
 
 Task-Implementor executes bounded tasks from the approved specification and plan. It produces source-code changes and unit tests within the supplied repository context, standards and guardrails. The Application Engineer remains accountable for understanding the change, resolving failures and confirming that the pull request is suitable for review.
 
@@ -390,7 +426,7 @@ Task-Implementor executes bounded tasks from the approved specification and plan
 
 ---
 
-## A.8 API Testing
+## A.11 API Testing
 
 The API Testing agent creates and executes tests for APIs introduced or changed by the increment. It uses approved interface specifications, acceptance criteria and test standards to produce test assets, results and evidence. The Quality Engineer confirms that coverage is sufficient and decides whether the evidence can be accepted.
 
@@ -400,7 +436,7 @@ The API Testing agent creates and executes tests for APIs introduced or changed 
 
 ---
 
-## A.9 Functional Testing
+## A.12 Functional Testing
 
 The Functional Testing agent converts approved product requirements, stories, designs and acceptance criteria into repeatable functional tests. It can prepare test scenarios, cases, data, executable scripts and execution evidence for functional, role-based, negative and boundary conditions. The Quality Engineer reviews coverage and results and retains the quality decision.
 
@@ -410,7 +446,7 @@ The Functional Testing agent converts approved product requirements, stories, de
 
 ---
 
-## A.10 Azure-Deploy
+## A.13 Azure-Deploy
 
 Azure-Deploy supports the final delivery sequence by preparing deployment artefacts, validating configuration and executing an approved deployment to Azure. It should be used only after the release candidate has passed the required quality, security and readiness checks. Release approval and production deployment authority remain with the named human roles.
 
@@ -421,5 +457,5 @@ Azure-Deploy supports the final delivery sequence by preparing deployment artefa
 ---
 
 *How to make it work? Check out the best practices guide:*
-→  [Best practices of Agentic PDLC](../pages/appendix-b-best-practices.md)
+→  [Best practices of Agentic PDLC](best-practices.md)
 
