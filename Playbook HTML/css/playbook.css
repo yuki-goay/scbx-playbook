@@ -1,0 +1,4190 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   SCBx Agentic PDLC Playbook — CSS Design System  v0.1
+   --------------------------------------------------------------------------
+   Source of truth  : SCB EASY Style Guide Lite v3.3 (colour, type, spacing,
+                      4px radius, button / card / tab / field / tag / dialog
+                      / pagination specs).
+   Gap-fill pattern : IBM Carbon-style documentation patterns (UI shell,
+                      side-nav, breadcrumb, data table, accordion, structured
+                      list, progress steps, skeleton, code snippet), always
+                      re-skinned with SCB tokens. Carbon never overrides SCB.
+   Web adaptation   : The SCB guide is specified for a 320px mobile app.
+                      Values are kept 1:1 (converted px -> rem so they respect
+                      user font-size settings; 1rem = 16px). Layout scales up
+                      using the guide's own spacing curve (16 -> 24 -> 48).
+
+   Deliberate deviations from the guide (all for WCAG 2.2 AA on the web):
+     • Error / secondary text uses --scb-red-deep / --scb-gray-dark-text
+       (≈6% darker than Cherry Red / Dark Gray) instead of Light Red / Gray,
+       which fail 4.5:1. Cherry Red is kept for fills (toast, alert bar);
+       Light Red + Gray remain as borders and decorative colour.
+     • Unselected tab text and input placeholder use the text-safe Dark Gray,
+       not Gray / Light Gray.
+     • SCB Yellow is never used for text, only for fills and accents.
+     • Hover and focus states are added (the guide only defines pressed).
+
+   Breakpoints (media queries cannot use variables):
+     sm 40rem (640)   md 48rem (768)   lg 64rem (1024)   xl 80rem (1280)
+
+   CONTENTS
+     1  Tokens            primitives + semantic + type + space + layout
+     2  Fonts             DB Heavent via local(), scaled fallback
+     3  Base              reset, typography, links, code, media
+     4  Layout            .page .app-header .layout .sidenav .main .article
+                          .toc .site-footer
+     5  Components        .btn .icon-btn .card .tag .alert .toast
+                          .inline-feedback .summary .section-label .tabs
+                          .table .flow .steps .accordion .agent .list
+                          .field .check .switch .search .tooltip .modal
+                          .spinner .skeleton .dots .pager .breadcrumb
+                          .metric .figure
+     5b Sitemap           .hero .intent .path-header .path-index .related
+                          .compare .dos/.do/.dont .code-block .checklist
+                          .glossary .sitemap .path-progress
+     6  Utilities         .stack .cluster .visually-hidden .skip-link
+                          print + forced-colors
+
+   PATH COLOUR  Put data-path="what|why|who|how" on any ancestor and the
+                summary, steps, tables, cards, buttons, nav and index re-tint.
+                What = SCB Purple · Why = SCB Yellow · Who = Light/Mossy Green
+                · How = SCB Blue. Text always uses the -ink variant (AA).
+   ========================================================================== */
+
+@layer tokens, base, layout, components, prose, utilities;
+
+
+/* ==========================================================================
+   2  FONTS  (declared first so the stack below can reference them)
+   --------------------------------------------------------------------------
+   DB Heavent v3.2 (Prinya R. Nont) is bundled in ../fonts. It is the SCB
+   brand face and is very compact: 22px DB Heavent reads optically like ~16px
+   of a normal sans, which is why every size in the guide looks large.
+   Weights used by the guide: Light 300 (Number2), Regular 400, Medium 500
+   (all "Bold" styles). The Bold file is deliberately not shipped.
+   local() is tried first so an installed copy is used without a download.
+   TODO(licence): confirm web-embedding rights before publishing publicly.
+   If the files are missing, "SCB Display Fallback" renders a system sans
+   scaled down (size-adjust) so the guide's px sizes still look right.
+   ========================================================================== */
+
+@font-face {
+  font-family: "SCB Display";
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: local("DB Heavent Light"), local("DBHeaventt-Light"),
+       url("../fonts/DBHeavent-Light.ttf") format("truetype");
+}
+@font-face {
+  font-family: "SCB Display";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: local("DB Heavent"), local("DBHeavent"),
+       url("../fonts/DBHeavent-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "SCB Display";
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: local("DB Heavent Med"), local("DBHeavent-Med"),
+       url("../fonts/DBHeavent-Medium.ttf") format("truetype");
+}
+
+/* Fallback faces: used only if DB Heavent fails to load.
+   Measured against Arial / Helvetica, DB Heavent Latin has 70% of the advance
+   width and 68% of the x-height, so size-adjust: 70% keeps the guide's px
+   sizes visually right. DB Heavent Thai is 68% as wide and 74% as tall as
+   Thonburi, so 71%. size-adjust is per @font-face, so Latin and Thai are
+   separate faces split by unicode-range. Windows and Android fall back to
+   Leelawadee UI / Noto Sans Thai, which have different proportions: tune if
+   those platforms matter and DB Heavent cannot be guaranteed there. */
+
+@font-face {
+  font-family: "SCB Display Fallback";
+  font-weight: 300;
+  font-display: swap;
+  size-adjust: 70%;
+  unicode-range: U+0000-0DFF, U+0E80-10FFFF;
+  src: local("Helvetica Neue Light"), local("HelveticaNeue-Light"), local("Segoe UI Light"), local("Arial");
+}
+@font-face {
+  font-family: "SCB Display Fallback";
+  font-weight: 400;
+  font-display: swap;
+  size-adjust: 70%;
+  unicode-range: U+0000-0DFF, U+0E80-10FFFF;
+  src: local("Helvetica Neue"), local("HelveticaNeue"), local("Segoe UI"), local("Arial");
+}
+@font-face {
+  font-family: "SCB Display Fallback";
+  font-weight: 500;
+  font-display: swap;
+  size-adjust: 70%;
+  unicode-range: U+0000-0DFF, U+0E80-10FFFF;
+  src: local("Helvetica Neue Medium"), local("HelveticaNeue-Medium"), local("Segoe UI Semibold"), local("Arial Bold");
+}
+@font-face {
+  font-family: "SCB Display Fallback";
+  font-weight: 300;
+  font-display: swap;
+  size-adjust: 71%;
+  unicode-range: U+0E00-0E7F;
+  src: local("Thonburi Light"), local("Leelawadee UI Semilight"), local("Noto Sans Thai Light"), local("Thonburi");
+}
+@font-face {
+  font-family: "SCB Display Fallback";
+  font-weight: 400;
+  font-display: swap;
+  size-adjust: 71%;
+  unicode-range: U+0E00-0E7F;
+  src: local("Thonburi"), local("Leelawadee UI"), local("Noto Sans Thai"), local("Tahoma");
+}
+@font-face {
+  font-family: "SCB Display Fallback";
+  font-weight: 500;
+  font-display: swap;
+  size-adjust: 71%;
+  unicode-range: U+0E00-0E7F;
+  src: local("Thonburi Bold"), local("Leelawadee UI Bold"), local("Noto Sans Thai Medium"), local("Tahoma Bold");
+}
+
+
+/* ==========================================================================
+   1  TOKENS
+   ========================================================================== */
+@layer tokens {
+  :root {
+    color-scheme: light;
+
+    /* ---- 1a. Colour primitives (SCB EASY Style Guide) ------------------ */
+    /* Accent */
+    --scb-purple:        #7631C1;  /* SCB Purple — primary brand            */
+    --scb-purple-dark:   #4F2A81;  /* Dark Purple — pressed / active line   */
+    --scb-purple-slip:   #4B2885;  /* Slip Purple — deepest purple          */
+    --scb-yellow:        #FEAC00;  /* SCB Yellow — accent fills only        */
+    --scb-yellow-bright: #FFC241;  /* Yellow — focus ring on dark surfaces  */
+    --scb-yellow-light:  #FFEAA8;  /* Light Yellow — notes, section labels  */
+    /* Messaging */
+    --scb-red-cherry:    #DA2E36;  /* Cherry Red — error (text-safe)        */
+    --scb-red-light:     #F05F61;  /* Light Red — error fills / borders     */
+    --scb-green-light:   #00BC50;  /* Light Green                           */
+    --scb-green-mossy:   #00603F;  /* Mossy Green — success (text-safe)     */
+    --scb-blue:          #4A90E2;  /* Blue — informational                  */
+    /* Neutral */
+    --scb-white:         #FFFFFF;
+    --scb-bg:            #F5F3F6;  /* "Fake White" — page background        */
+    --scb-black:         #353239;  /* "Fake Black" — primary text           */
+    --scb-gray-dark:     #736E78;  /* secondary text                        */
+    --scb-gray:          #959199;  /* tertiary / placeholder / control edge */
+    --scb-gray-light:    #C9C6CD;  /* dividers, inactive dots               */
+
+    /* Derived tints (primitive at low opacity over white; not in the guide
+       but computed from it so every tint stays on-palette). */
+    --scb-purple-tint-8:  #F4EFFA;
+    --scb-purple-tint-16: #E9DEF5;
+    --scb-red-tint:       #FDECEC;
+    --scb-green-tint:     #D9F5E5;
+    --scb-blue-tint:      #E9F2FC;
+    --scb-gray-subtle:    #E4E1E7;  /* skeletons */
+    /* Text-safe darkenings (~6%) of Dark Gray / Cherry Red, so secondary and
+       error text hold 4.5:1 on tinted surfaces as well as on white. */
+    --scb-gray-dark-text: #6B666F;  /* 5.6 white · 5.1 bg · 4.95 purple-tint */
+    --scb-red-deep:       #B5222B;  /* 6.5 white · 5.7 red-tint              */
+    /* Text-safe inks for the Why (yellow) and How (blue) paths: SCB Yellow
+       and Blue are too light for text on white (1.9:1 and 3.3:1).          */
+    --scb-yellow-ink:     #7A5200;  /* 6.9 white · 5.8 light-yellow          */
+    --scb-yellow-tint:    #FFF4D6;
+    --scb-blue-ink:       #1F5FA8;  /* 6.4 white · 5.7 blue-tint             */
+
+    /* ---- Path identity (sitemap: The What / Why / Who / How) -------------
+       Set on any ancestor with data-path="what|why|who|how". Components read
+         --path        borders, bars, dots        (decorative)
+         --path-ink    text / icons on white or tint  (>= 4.5:1)
+         --path-tint   soft background
+         --path-solid  fill that carries text
+         --path-on     text colour on --path-solid    (>= 4.5:1)
+       Default (no data-path) = What / brand purple.                        */
+    --path:       var(--scb-purple);
+    --path-ink:   var(--scb-purple);
+    --path-tint:  var(--scb-purple-tint-8);
+    --path-solid: var(--scb-purple);
+    --path-on:    var(--scb-white);
+
+    /* ---- 1g. Icons + translatable strings -------------------------------
+       DB Heavent has no arrows, chevrons, ticks or crosses (checked glyph by
+       glyph), so those characters would silently fall back to another font.
+       Every symbol is drawn instead: an SVG mask painted with currentColor,
+       so it follows text colour, hover state and forced-colors mode.
+       Used as:  --icon: var(--icon-chevron-right);  (see ".icon-mask" group) */
+    --icon-chevron-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 3l5 5-5 5'/%3E%3C/svg%3E");
+    --icon-chevron-left:  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 3L5 8l5 5'/%3E%3C/svg%3E");
+    --icon-chevron-down:  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 6l5 5 5-5'/%3E%3C/svg%3E");
+    --icon-arrow-right:   url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 8h11M9 4l4 4-4 4'/%3E%3C/svg%3E");
+    --icon-arrow-down:    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 2v11M4 9l4 4 4-4'/%3E%3C/svg%3E");
+    --icon-check:         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 8.5l3.5 3.5L13 4.5'/%3E%3C/svg%3E");
+    --icon-cross:         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 4l8 8M12 4l-8 8'/%3E%3C/svg%3E");
+
+    /* Strings that CSS generates; overridden per language below. */
+    --label-before: "Before";
+    --label-now:    "Now";
+
+    /* ---- 1b. Semantic colour ------------------------------------------ */
+    --color-bg-page:        var(--scb-bg);
+    --color-surface:        var(--scb-white);
+    --color-surface-subtle: var(--scb-bg);
+    --color-surface-accent: var(--scb-purple-tint-8);
+    --color-surface-brand:  var(--scb-purple);
+    --color-surface-brand-deep: var(--scb-purple-dark);
+    --color-surface-inverse: var(--scb-black);
+
+    --color-text:           var(--scb-black);
+    --color-text-muted:     var(--scb-gray-dark-text); /* AA on white, bg, tints */
+    --color-text-subtle:    var(--scb-gray);       /* large / decorative only */
+    --color-text-inverse:   var(--scb-white);
+    --color-text-link:      var(--scb-purple);
+    --color-text-link-hover: var(--scb-purple-dark);
+    --color-text-error:     var(--scb-red-deep);
+    --color-text-success:   var(--scb-green-mossy);
+
+    --color-border:         var(--scb-gray-light); /* decorative dividers   */
+    --color-border-control: var(--scb-gray);       /* 3:1 control edges     */
+
+    --color-primary:         var(--scb-purple);
+    --color-primary-hover:   var(--scb-purple-dark);
+    --color-primary-pressed: var(--scb-purple-slip);
+
+    --color-focus:          var(--scb-purple);
+    --color-focus-on-dark:  var(--scb-yellow-bright);
+
+    /* ---- 1c. Typography ------------------------------------------------ */
+    --scb-font-display:
+      "SCB Display", "SCB Display Fallback", "Thonburi", "Sarabun",
+      system-ui, sans-serif;
+    --scb-font-system:
+      -apple-system, BlinkMacSystemFont, "SF UI Display", "Segoe UI", Roboto,
+      "Helvetica Neue", "Thonburi", "Leelawadee UI", "Noto Sans Thai", Arial, sans-serif;
+    --scb-font-mono:
+      ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+
+    --fw-light:   300;
+    --fw-regular: 400;
+    --fw-medium:  500;
+
+    /* Type scale — names and px values are the guide's. */
+    --fs-number-1: 3.5rem;      /* 56  Number1   (Regular)                  */
+    --fs-number-2: 2.25rem;     /* 36  Number2   (Light)                    */
+    --fs-headline: 2rem;        /* 32  Headline / Headline Bold             */
+    --fs-title:    1.5rem;      /* 24  Title / Title Bold                   */
+    --fs-text-1:   1.375rem;    /* 22  Text1 — default body                 */
+    --fs-text-2:   1.25rem;     /* 20  Text2 — secondary                    */
+    --fs-text-3:   1.125rem;    /* 18  Text3                                */
+    --fs-small-1:  0.875rem;    /* 14  Small1 (system font)                 */
+    --fs-small-2:  0.8125rem;   /* 13  Small2 (system font)                 */
+    --fs-small-3:  0.6875rem;   /* 11  Small3 (system font, use sparingly)  */
+
+    --lh-heading: 1.2;
+    --lh-body:    1.3;
+    --lh-system:  1.5;          /* guide: system default x 1.25            */
+
+    /* ---- 1d. Spacing — "rule of 8s", exponential ----------------------- */
+    --space-xs:   0.25rem;      /*  4  extension: hairline gaps only        */
+    --space-sm:   0.5rem;       /*  8  small                                */
+    --space-base: 1rem;         /* 16  base — page margin, card padding     */
+    --space-md:   1.5rem;       /* 24  medium — end-of-page padding         */
+    --space-lg:   3rem;         /* 48  large                                */
+    --space-xl:   4rem;         /* 64  x-large                              */
+
+    /* ---- 1e. Shape, elevation, motion --------------------------------- */
+    --radius:      4px;         /* all four corners, everywhere             */
+    --radius-full: 999px;       /* dots, spinner, switch only               */
+    --shadow-1: 0 1px 2px rgba(53, 50, 57, 0.16);
+    --shadow-2: 0 4px 16px rgba(53, 50, 57, 0.24);
+    --dur: 150ms;
+    --ease: cubic-bezier(0.2, 0, 0.38, 0.9);
+
+    /* ---- 1f. Layout ---------------------------------------------------- */
+    --header-h:   3.5rem;       /* 56 */
+    --sidenav-w:  18rem;        /* 288 (= Large button width) */
+    --content-w:  55rem;        /* 880 */
+    --content-w-wide: 72rem;    /* 1152 — landing, sitemap */
+    --toc-w:      16rem;        /* 256 */
+    --page-margin: var(--space-base);
+
+    --z-sidenav: 90;
+    --z-header:  100;
+    --z-tooltip: 150;
+    --z-modal:   200;
+    --z-toast:   250;
+  }
+
+  /* Page margin: 16 (guide) -> 24 -> 48 along the guide's spacing curve. */
+  @media (min-width: 40rem) { :root { --page-margin: var(--space-md); } }
+  @media (min-width: 64rem) { :root { --page-margin: var(--space-lg); } }
+
+  /* Path identity. What = purple (brand), Why = yellow, Who = green, How = blue */
+  [data-path="what"] {
+    --path: var(--scb-purple);  --path-ink: var(--scb-purple);  --path-tint: var(--scb-purple-tint-8);
+    --path-solid: var(--scb-purple);  --path-on: var(--scb-white);
+  }
+  [data-path="why"] {
+    --path: var(--scb-yellow);  --path-ink: var(--scb-yellow-ink);  --path-tint: var(--scb-yellow-tint);
+    --path-solid: var(--scb-yellow);  --path-on: var(--scb-black);
+  }
+  [data-path="who"] {
+    --path: var(--scb-green-light);  --path-ink: var(--scb-green-mossy);  --path-tint: var(--scb-green-tint);
+    --path-solid: var(--scb-green-mossy);  --path-on: var(--scb-white);
+  }
+  [data-path="how"] {
+    --path: var(--scb-blue);  --path-ink: var(--scb-blue-ink);  --path-tint: var(--scb-blue-tint);
+    --path-solid: var(--scb-blue-ink);  --path-on: var(--scb-white);
+  }
+
+  /* Thai. Put lang="th" on <html> (or on a translated fragment).
+     Measured from DB Heavent: the tallest Thai mark rises 0.79em above the
+     baseline and the deepest vowel drops 0.31em below it, so a worst-case
+     stack needs 1.10em; the font's own line box is 1.20em, which is tight
+     when a fallback font with taller marks (Thonburi) is substituted. The
+     guide asks for "default" line height, so Thai gets +12% / +15%.
+     Small sizes grow by 1px: Thai tone marks are illegible at 11px. */
+  :lang(th) {
+    --lh-heading: 1.35;
+    --lh-body:    1.5;
+    --lh-system:  1.6;
+    --fs-small-1: 0.9375rem;    /* 15 */
+    --fs-small-2: 0.875rem;     /* 14 */
+    --fs-small-3: 0.75rem;      /* 12 */
+    --label-before: "ก่อน";
+    --label-now:    "ตอนนี้";
+  }
+
+  /* English passages inside a Thai page (untranslated content) keep the
+     Latin metrics, because custom properties inherit regardless of lang. */
+  :lang(th) :lang(en) {
+    --lh-heading: 1.2;
+    --lh-body:    1.3;
+    --lh-system:  1.5;
+    --fs-small-1: 0.875rem;
+    --fs-small-2: 0.8125rem;
+    --fs-small-3: 0.6875rem;
+    --label-before: "Before";
+    --label-now:    "Now";
+  }
+}
+
+
+/* ==========================================================================
+   3  BASE
+   ========================================================================== */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-bg-page);
+    color: var(--color-text);
+    font-family: var(--scb-font-display);
+    font-size: var(--fs-text-1);
+    font-weight: var(--fw-regular);
+    line-height: var(--lh-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-synthesis-weight: none;       /* only Light/Regular/Medium are shipped; never fake a bold */
+    overflow-wrap: break-word;         /* long paths such as .github/contexts/ */
+  }
+
+  h1, h2, h3, h4, h5, h6,
+  p, ul, ol, dl, dd, figure, blockquote, pre, fieldset {
+    margin: 0;
+  }
+
+  ul, ol { padding-left: var(--space-md); }
+
+  img, svg, video, canvas { max-width: 100%; height: auto; }
+  img, svg { vertical-align: middle; }
+
+  button, input, select, textarea {
+    font: inherit;
+    color: inherit;
+    letter-spacing: inherit;
+  }
+  button { cursor: pointer; }
+  fieldset { border: 0; padding: 0; min-width: 0; }
+  [hidden] { display: none !important; }
+
+  ::selection { background: var(--scb-yellow-light); color: var(--color-text); }
+
+  :where(h1, h2, h3, h4, h5, h6, [id]) {
+    scroll-margin-top: calc(var(--header-h) + var(--space-base));
+  }
+
+  /* ---- Headings (guide: Headline / Title / Text1 / Text2) -------------- */
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--color-text);
+    font-weight: var(--fw-medium);
+    line-height: var(--lh-heading);
+    text-wrap: balance;
+  }
+  h1 { font-size: var(--fs-headline); }          /* Headline Bold */
+  h2 { font-size: var(--fs-title); }             /* Title Bold    */
+  h3 { font-size: var(--fs-text-1); }            /* Text1 Bold    */
+  h4 { font-size: var(--fs-text-2); }            /* Text2 Bold    */
+  h5, h6 {                                       /* Section title: all caps */
+    font-size: var(--fs-text-2);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  strong, b { font-weight: var(--fw-medium); }
+
+  /* Thai has no italic tradition and a slanted Thai glyph is a synthesised
+     distortion. Emphasis becomes weight instead. */
+  :lang(th) { font-synthesis-style: none; }
+  :lang(th) :is(em, i, cite, dfn) { font-style: normal; font-weight: var(--fw-medium); }
+  small { font-size: var(--fs-small-2); font-family: var(--scb-font-system); line-height: var(--lh-system); }
+
+  /* ---- Links ----------------------------------------------------------- */
+  a {
+    color: var(--color-text-link);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+    transition: color var(--dur) var(--ease);
+  }
+  a:hover { color: var(--color-text-link-hover); text-decoration-thickness: 2px; }
+
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+    border-radius: var(--radius);
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid var(--color-border);
+    margin: var(--space-md) 0;
+  }
+
+  /* ---- Code ------------------------------------------------------------ */
+  code, kbd, samp, pre { font-family: var(--scb-font-mono); }
+
+  :not(pre) > code {
+    padding: 0 var(--space-xs);
+    background: var(--color-surface-subtle);
+    border-radius: var(--radius);
+    color: var(--scb-purple-dark);
+    font-size: 0.8em;
+    overflow-wrap: anywhere;
+  }
+
+  pre {
+    padding: var(--space-base);
+    background: var(--color-surface-inverse);
+    color: var(--color-text-inverse);
+    border-radius: var(--radius);
+    font-size: var(--fs-small-1);
+    line-height: var(--lh-system);
+    overflow-x: auto;
+    tab-size: 2;
+  }
+
+  kbd {
+    padding: 0 var(--space-xs);
+    border: 1px solid var(--color-border-control);
+    border-bottom-width: 2px;
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    font-size: 0.8em;
+  }
+
+  blockquote {
+    padding-left: var(--space-base);
+    border-left: 4px solid var(--scb-purple);
+    color: var(--color-text-muted);
+  }
+
+  /* ---- Prose: wrap rendered markdown / long-form copy in .prose -------- */
+  .prose { font-size: var(--fs-text-1); line-height: var(--lh-body); }
+  .prose li + li { margin-top: var(--space-sm); }
+  .prose li > :is(ul, ol) { margin-top: var(--space-sm); }
+  .prose li::marker { color: var(--scb-purple); font-weight: var(--fw-medium); }
+
+  /* Lead paragraph */
+  .lead { font-size: var(--fs-title); line-height: var(--lh-body); }
+
+  /* Caption / helper copy — Small2, system font */
+  .text-small {
+    font-family: var(--scb-font-system);
+    font-size: var(--fs-small-2);
+    line-height: var(--lh-system);
+  }
+  .text-muted { color: var(--color-text-muted); }
+}
+
+
+/* ==========================================================================
+   4  LAYOUT
+   --------------------------------------------------------------------------
+   <div class="page">
+     <a class="skip-link" href="#main">Skip to content</a>
+     <header class="app-header">…</header>
+     <div class="layout layout--toc">
+       <nav class="sidenav" id="sidenav" aria-label="Playbook">…</nav>
+       <div class="sidenav-scrim"></div>
+       <main class="main" id="main"><div class="main__inner">
+         <article class="article prose">…</article>
+       </div></main>
+       <aside class="toc" aria-label="On this page">…</aside>
+     </div>
+     <footer class="site-footer">…</footer>
+   </div>
+   The sidenav drawer (< lg) is toggled by adding .is-open to .sidenav and
+   .is-visible to .sidenav-scrim, and aria-expanded on the .icon-btn--menu.
+   ========================================================================== */
+@layer layout {
+  .page { display: flex; flex-direction: column; min-height: 100vh; min-height: 100dvh; }
+
+  /* ---- Top nav (Notion-style: logo left, links centre, actions right) -- */
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-header);
+    display: flex;
+    align-items: center;
+    gap: var(--space-base);
+    height: var(--header-h);
+    padding-inline: var(--page-margin);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text);
+  }
+  .top-nav :focus-visible { outline-color: var(--color-focus); }
+  .top-nav a { color: inherit; text-decoration: none; }
+
+  .top-nav__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    font-weight: var(--fw-medium);
+    font-size: var(--fs-text-1);
+    color: var(--color-text);
+  }
+  .top-nav__logo-mark {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 6px;
+    background: var(--color-surface-brand);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .top-nav__logo-mark img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+  }
+  .top-nav__logo-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 16rem;
+  }
+
+  .top-nav__links {
+    display: none;
+    align-items: center;
+    gap: 0.125rem;
+    flex: 1;
+    justify-content: center;
+  }
+  .top-nav__link {
+    display: inline-flex;
+    align-items: center;
+    height: 2.25rem;
+    padding-inline: 0.75rem;
+    border-radius: 6px;
+    font-size: var(--fs-text-2);
+    color: var(--color-text-muted);
+    transition: background 0.15s ease, color 0.15s ease;
+    white-space: nowrap;
+  }
+  .top-nav__link:hover { background: var(--color-surface-raised); color: var(--color-text); }
+
+  .top-nav__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-left: auto;
+  }
+  .top-nav__lang {
+    display: inline-flex;
+    align-items: center;
+    height: 2rem;
+    padding-inline: 0.625rem;
+    border-radius: 6px;
+    font-size: var(--fs-text-2);
+    font-weight: var(--fw-medium);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+  }
+  .top-nav__lang:hover { background: var(--color-surface-raised); color: var(--color-text); }
+  .top-nav__hamburger { color: var(--color-text); }
+  .top-nav.is-scrolled { box-shadow: 0 1px 0 var(--color-border), 0 2px 12px rgba(53,50,57,0.06); }
+
+  @media (min-width: 64rem) {
+    .top-nav__links { display: flex; }
+    .top-nav__hamburger { display: none; }
+  }
+
+  /* ---- Shell grid ------------------------------------------------------ */
+  .layout { flex: 1 0 auto; display: block; }
+
+  .main {
+    min-width: 0;
+    padding: var(--space-base) var(--page-margin) var(--space-md);  /* 24 end-of-page */
+  }
+  .main__inner { max-width: var(--content-w); margin-inline: auto; }
+  .main__inner > * + * { margin-top: var(--space-base); }
+  .main__inner--wide { max-width: var(--content-w-wide); }
+
+  /* Page without side navigation (landing, sitemap) */
+  .page--bare .sidenav,
+  .page--bare .sidenav-scrim,
+  .page--bare .toc { display: none; }
+  .page--bare .layout { display: block; }
+
+  /* ---- Side navigation (drawer on mobile, sticky column on desktop) ---- */
+  .sidenav {
+    position: fixed;
+    z-index: var(--z-sidenav);
+    top: var(--header-h);
+    bottom: 0;
+    left: 0;
+    width: min(var(--sidenav-w), 88vw);
+    padding-block: var(--space-base) var(--space-md);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: var(--color-surface);
+    border-right: 1px solid var(--color-border);
+    transform: translateX(-100%);
+    visibility: hidden;
+    transition: transform var(--dur) var(--ease), visibility 0s linear var(--dur);
+  }
+  .sidenav.is-open {
+    transform: none;
+    visibility: visible;
+    box-shadow: var(--shadow-2);
+    transition: transform var(--dur) var(--ease), visibility 0s;
+  }
+
+  .sidenav-scrim {
+    display: none;
+    position: fixed;
+    inset: var(--header-h) 0 0 0;
+    z-index: calc(var(--z-sidenav) - 1);
+    background: rgba(53, 50, 57, 0.64);
+  }
+  .sidenav-scrim.is-visible { display: block; }
+
+  .toc { display: none; }
+
+  @media (min-width: 64rem) {
+    .layout { display: grid; grid-template-columns: var(--sidenav-w) minmax(0, 1fr); }
+
+    .sidenav {
+      position: sticky;
+      top: var(--header-h);
+      bottom: auto;
+      z-index: auto;
+      width: auto;
+      height: calc(100vh - var(--header-h));
+      height: calc(100dvh - var(--header-h));
+      transform: none;
+      visibility: visible;
+      box-shadow: none;
+      transition: none;
+    }
+    .sidenav-scrim { display: none !important; }
+    .main { padding-top: var(--space-md); }
+  }
+
+  @media (min-width: 80rem) {
+    .layout--toc { grid-template-columns: var(--sidenav-w) minmax(0, 1fr) var(--toc-w); }
+    .toc {
+      display: block;
+      position: sticky;
+      top: calc(var(--header-h) + var(--space-md));
+      align-self: start;
+      max-height: calc(100vh - var(--header-h) - var(--space-lg));
+      overflow-y: auto;
+      padding: 0 var(--space-base) 0 0;
+      margin-top: var(--space-md);
+    }
+  }
+
+  /* ---- Side-nav content ------------------------------------------------ */
+  .nav-group + .nav-group { margin-top: var(--space-md); }
+  .nav-group__label {
+    margin: 0;
+    padding: var(--space-sm) var(--space-base);
+    color: var(--color-text-muted);
+    font-size: var(--fs-text-2);
+    font-weight: var(--fw-medium);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  /* Path groups get a colour dot; the shared group sits below a rule */
+  .nav-group[data-path] .nav-group__label { display: flex; align-items: center; gap: var(--space-sm); }
+  .nav-group[data-path] .nav-group__label::before {
+    content: "";
+    flex: none;
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: var(--radius-full);
+    background: var(--path);
+  }
+  .nav-group--shared { margin-top: var(--space-md); padding-top: var(--space-md); border-top: 1px solid var(--color-border); }
+  .nav-list { list-style: none; margin: 0; padding: 0; }
+  .nav-link {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+    min-height: 2.5rem;
+    padding: var(--space-sm) var(--space-base);
+    border-left: 4px solid transparent;
+    color: var(--color-text);
+    font-size: var(--fs-text-1);
+    line-height: var(--lh-heading);
+    text-decoration: none;
+  }
+  .nav-link:hover { background: var(--path-tint); color: var(--color-text); }
+  .nav-link[aria-current="page"],
+  .nav-link.is-current {
+    background: var(--path-tint);
+    border-left-color: var(--path);
+    color: var(--path-ink);
+    font-weight: var(--fw-medium);
+  }
+  .nav-link__num {
+    flex: none;
+    min-width: 2.25rem;
+    color: var(--color-text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+  /* Parent with sub-pages. The link navigates; the button only expands.
+       <li class="nav-item">
+         <div class="nav-item__row">
+           <a class="nav-link" href="…">What kind of project is this?</a>
+           <button class="nav-toggle" type="button" aria-expanded="false"
+                   aria-controls="sub-22" aria-label="Show sub-pages"></button>
+         </div>
+         <ul class="nav-list" id="sub-22" hidden>…</ul>
+       </li>
+     Expand the branch that holds aria-current="page" on load. */
+  .nav-item__row { position: relative; }
+  .nav-item__row:has(.nav-toggle) .nav-link { padding-right: 2.75rem; }
+  .nav-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 2.75rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-text-muted);
+  }
+  .nav-toggle::before {
+    content: "";
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    margin: auto;
+    background: currentColor;
+    -webkit-mask: var(--icon-chevron-down) center / contain no-repeat;
+            mask: var(--icon-chevron-down) center / contain no-repeat;
+    transform: rotate(-90deg);
+    transition: transform var(--dur) var(--ease);
+  }
+  .nav-toggle[aria-expanded="true"]::before { transform: none; }
+  .nav-toggle:hover { color: var(--path-ink); }
+  .nav-toggle:focus-visible { outline-offset: -2px; }
+
+  /* Level 2 */
+  .nav-list .nav-list .nav-link {
+    padding-left: var(--space-lg);
+    color: var(--color-text-muted);
+    font-size: var(--fs-text-2);
+  }
+  .nav-list .nav-list .nav-link[aria-current="page"] { color: var(--path-ink); }
+
+  /* ---- Reading surface ------------------------------------------------- */
+  .article {
+    padding: var(--space-md) var(--space-base);
+    background: var(--color-surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-1);
+  }
+  @media (min-width: 40rem) { .article { padding: var(--space-md); } }
+  @media (min-width: 64rem) { .article { padding: var(--space-lg); } }
+
+  /* ---- Page header (back-link, section label, title, lead) ------------- */
+  .page-header { margin-bottom: var(--space-md); }
+  .page-header > * + * { margin-top: var(--space-sm); }
+
+  /* ---- On this page ---------------------------------------------------- */
+  .toc__title {
+    margin: 0 0 var(--space-sm);
+    color: var(--color-text-muted);
+    font-size: var(--fs-text-3);
+    font-weight: var(--fw-medium);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .toc__list { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--color-border); }
+  .toc__link {
+    display: block;
+    margin-left: -1px;
+    padding: var(--space-xs) var(--space-base);
+    border-left: 2px solid transparent;
+    color: var(--color-text-muted);
+    font-size: var(--fs-text-3);
+    line-height: var(--lh-heading);
+    text-decoration: none;
+  }
+  .toc__link:hover { color: var(--scb-purple-dark); }
+  .toc__link[aria-current="true"],
+  .toc__link.is-current {
+    border-left-color: var(--scb-purple);
+    color: var(--scb-purple);
+    font-weight: var(--fw-medium);
+  }
+
+  /* ---- Footer (Notion-style multi-col) --------------------------------- */
+  .site-footer {
+    padding-block: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 3vw, 2rem);
+    padding-inline: var(--page-margin);
+    background: var(--color-surface-raised);
+    border-top: 1px solid var(--color-border);
+    font-size: var(--fs-text-2);
+    color: var(--color-text-muted);
+  }
+  .site-footer a { color: inherit; text-decoration: none; }
+  .site-footer a:hover { color: var(--color-text); }
+  .site-footer :focus-visible { outline-color: var(--color-focus); }
+  .site-footer__inner { max-width: var(--content-w-wide); margin-inline: auto; }
+
+  .site-footer__top {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+  @media (min-width: 48rem) {
+    .site-footer__top { flex-direction: row; align-items: flex-start; gap: 4rem; }
+  }
+
+  .site-footer__brand {
+    font-weight: var(--fw-medium);
+    font-size: var(--fs-text-1);
+    color: var(--color-text);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .site-footer__cols {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    flex: 1;
+  }
+  @media (min-width: 56rem) {
+    .site-footer__cols { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .footer-col { display: flex; flex-direction: column; gap: 0.625rem; }
+  .footer-col__heading {
+    font-weight: var(--fw-medium);
+    color: var(--color-text);
+    margin: 0 0 0.25rem;
+    font-size: var(--fs-text-2);
+  }
+  .footer-col__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.375rem; }
+  .footer-col__list a { line-height: var(--lh-body); }
+
+  .site-footer__bottom {
+    padding-top: clamp(1rem, 2vw, 1.5rem);
+    border-top: 1px solid var(--color-border);
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+  }
+
+  /* Path name in the side-nav group label links to the path's landing page */
+  .nav-group__label a { color: inherit; text-decoration: none; }
+  .nav-group__label a:hover { text-decoration: underline; }
+  .nav-group__label a[aria-current="page"] { color: var(--path-ink); }
+
+  /* Third-level entries in "On this page" */
+  .toc__link--sub { padding-left: calc(var(--space-base) * 2); }
+}
+
+
+/* ==========================================================================
+   5  COMPONENTS
+   ========================================================================== */
+@layer components {
+
+  /* ------------------------------------------------------------------------
+     BUTTONS  (guide: Primary / Outline / Text-link; L 288x48, M 136x40,
+     S 72x40; 4px radius; disabled 40% opacity; pressed Dark Purple)
+     Only one .btn (primary) per screen, excluding header and modals.
+       <a class="btn" href="…">Start</a>
+       <button class="btn btn--outline">Cancel</button>
+       <a class="btn btn--link" href="…">Learn more</a>
+     ------------------------------------------------------------------------ */
+  .btn {
+    --btn-bg: var(--scb-purple);
+    --btn-fg: var(--scb-white);
+    --btn-bd: var(--scb-purple);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    min-width: 8.5rem;                           /* M: 136 */
+    min-height: 2.5rem;                          /* M/S: 40 */
+    padding: var(--space-sm) var(--space-base);
+    border: 1px solid var(--btn-bd);
+    border-radius: var(--radius);
+    background: var(--btn-bg);
+    color: var(--btn-fg);
+    font-family: var(--scb-font-display);
+    font-size: var(--fs-text-1);                 /* Text1: text in button */
+    font-weight: var(--fw-medium);
+    line-height: var(--lh-heading);
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;                         /* guide: no truncation, keep labels short */
+    max-width: 100%;
+    transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+  }
+  .btn:hover   { --btn-bg: var(--scb-purple-dark);  --btn-bd: var(--scb-purple-dark);  color: var(--btn-fg); text-decoration: none; }
+  .btn:active  { --btn-bg: var(--scb-purple-slip);  --btn-bd: var(--scb-purple-slip);  }
+  .btn:disabled,
+  .btn[aria-disabled="true"] { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+
+  .btn--outline { --btn-bg: transparent; --btn-fg: var(--scb-purple); --btn-bd: var(--scb-purple); }
+  .btn--outline:hover  { --btn-bg: var(--scb-purple-tint-8);  --btn-fg: var(--scb-purple-dark); --btn-bd: var(--scb-purple-dark); }
+  .btn--outline:active { --btn-bg: var(--scb-purple-tint-16); --btn-fg: var(--scb-purple-dark); --btn-bd: var(--scb-purple-dark); }
+
+  .btn--lg    { min-width: 18rem; min-height: 3rem; }        /* L: 288x48 */
+  .btn--sm    { min-width: 4.5rem; }                         /* S: 72x40  */
+  .btn--block { display: flex; width: 100%; }
+
+  /* Text-link button: low-urgency / "Learn more >" */
+  .btn--link {
+    --btn-bg: transparent; --btn-fg: var(--scb-purple); --btn-bd: transparent;
+    min-width: 0;
+    padding-inline: var(--space-sm);
+  }
+  .btn--link:hover  { --btn-bg: var(--scb-purple-tint-8);  --btn-fg: var(--scb-purple-dark); --btn-bd: transparent; }
+  .btn--link:active { --btn-bg: var(--scb-purple-tint-16); --btn-fg: var(--scb-purple-dark); --btn-bd: transparent; }
+  .btn--link::after {
+    content: "";
+    width: 1em; height: 1em;
+    background: currentColor;
+    -webkit-mask: var(--icon-chevron-right) center / contain no-repeat;
+            mask: var(--icon-chevron-right) center / contain no-repeat;
+  }
+
+  /* Icon button — min target 40px (guide minimum is 24px + 8px margin) */
+  .icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--scb-purple);
+    transition: background-color var(--dur) var(--ease);
+  }
+  .icon-btn:hover  { background: var(--scb-purple-tint-8); }
+  .icon-btn:active { background: var(--scb-purple-tint-16); }
+  .icon-btn:disabled { opacity: 0.4; pointer-events: none; }
+  .icon-btn--inverse { color: var(--scb-white); }
+  .icon-btn--inverse:hover  { background: rgba(255, 255, 255, 0.16); }
+  .icon-btn--inverse:active { background: rgba(255, 255, 255, 0.24); }
+  .icon-btn--inverse:focus-visible { outline-color: var(--color-focus-on-dark); }
+
+  /* Hamburger glyph: <span class="icon-menu" aria-hidden="true"></span> */
+  .icon-menu, .icon-menu::before, .icon-menu::after {
+    display: block;
+    width: 1.25rem;
+    height: 2px;
+    background: currentColor;
+    border-radius: 1px;
+  }
+  .icon-menu { position: relative; }
+  .icon-menu::before, .icon-menu::after { content: ""; position: absolute; left: 0; }
+  .icon-menu::before { top: -0.375rem; }
+  .icon-menu::after  { top:  0.375rem; }
+
+
+  /* ------------------------------------------------------------------------
+     CARDS  (guide: 4px radius, 16px inner margin, 8px between cards)
+       <div class="card-grid">
+         <a class="card card--link card--section" href="…">
+           <span class="section-label">The What</span>
+           <h3 class="card__title">Overview</h3>
+           <p class="card__body">…</p>
+         </a>
+       </div>
+     ------------------------------------------------------------------------ */
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-base);
+    background: var(--color-surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-1);
+    color: var(--color-text);
+  }
+  .card__title { font-size: var(--fs-text-1); font-weight: var(--fw-medium); line-height: var(--lh-heading); }
+  .card__body  { color: var(--color-text-muted); font-size: var(--fs-text-2); }
+  .card__meta  { color: var(--color-text-muted); font-family: var(--scb-font-system); font-size: var(--fs-small-2); line-height: var(--lh-system); }
+  .card__footer { margin-top: auto; padding-top: var(--space-sm); }
+
+  .card--link { text-decoration: none; position: relative; transition: box-shadow var(--dur) var(--ease); }
+  .card--link:hover { box-shadow: var(--shadow-2); color: var(--color-text); }
+  .card--link .card__title { color: var(--path-ink); }
+  .card--link::after {
+    content: "";
+    position: absolute;
+    right: var(--space-base);
+    bottom: var(--space-sm);
+    width: 1.5rem; height: 1.5rem;
+    background: var(--path-ink);
+    -webkit-mask: var(--icon-chevron-right) center / 1rem no-repeat;
+            mask: var(--icon-chevron-right) center / 1rem no-repeat;
+  }
+  .card--section { border-top: 4px solid var(--path); }
+  .card--accent  { border-left: 4px solid var(--scb-purple); }
+  .card--subtle  { background: var(--color-surface-subtle); box-shadow: none; }
+
+  .card-grid {
+    display: grid;
+    gap: var(--space-sm);                         /* 8px between cards */
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  }
+
+
+  /* ------------------------------------------------------------------------
+     SECTION LABEL — the yellow "sticky" from the sitemap (The What / Why /
+     Who / How) plus the question it answers.
+       <span class="section-label">The Why</span>
+       <p class="section-question">Why are we reimagining …?</p>
+     ------------------------------------------------------------------------ */
+  .section-label {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-base);
+    background: var(--scb-yellow-light);
+    border-radius: var(--radius);
+    color: var(--color-text);
+    font-size: var(--fs-text-2);
+    font-weight: var(--fw-medium);
+    line-height: var(--lh-heading);
+  }
+  .section-question { font-size: var(--fs-title); line-height: var(--lh-body); }
+
+
+  /* ------------------------------------------------------------------------
+     SECTION SUMMARY — replaces the "| SECTION SUMMARY | … |" markdown row
+       <div class="summary"><span class="summary__label">Section summary</span>
+       <span class="summary__value">Greenfield lifecycle</span></div>
+     ------------------------------------------------------------------------ */
+  .summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-xs) var(--space-base);
+    padding: var(--space-base);
+    background: var(--path-tint);
+    border-left: 4px solid var(--path);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+  .summary__label {
+    color: var(--path-ink);
+    font-size: var(--fs-text-3);
+    font-weight: var(--fw-medium);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .summary__value { font-size: var(--fs-title); line-height: var(--lh-heading); }
+
+
+  /* ------------------------------------------------------------------------
+     TAGS  (status / category chips)
+       <span class="tag tag--new">New</span>
+       <span class="tag tag--draft">Placeholder</span>
+     ------------------------------------------------------------------------ */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.5rem;
+    padding: 0 var(--space-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--scb-bg);
+    color: var(--color-text);
+    font-size: var(--fs-text-3);
+    font-weight: var(--fw-medium);
+    line-height: var(--lh-heading);
+    white-space: nowrap;
+  }
+  .tag--purple  { background: var(--scb-purple-tint-16); border-color: transparent; color: var(--scb-purple-dark); }
+  .tag--success,
+  .tag--new     { background: var(--scb-green-tint);     border-color: transparent; color: var(--scb-green-mossy); }
+  .tag--warning { background: var(--scb-yellow-light);   border-color: transparent; color: var(--color-text); }
+  .tag--error   { background: var(--scb-red-tint);       border-color: transparent; color: var(--scb-red-cherry); }
+  .tag--info    { background: var(--scb-blue-tint);      border-color: transparent; color: var(--color-text); }
+  .tag--draft   { background: transparent; border-style: dashed; border-color: var(--color-border-control); color: var(--color-text-muted); }
+  .tag--dark    { background: var(--scb-black); border-color: transparent; color: var(--scb-white); }
+
+
+  /* ------------------------------------------------------------------------
+     ALERTS — in-page callouts (replaces "> 🟢 note" blockquotes)
+       <div class="alert alert--draft" role="note">
+         <p class="alert__title">Not yet authored</p>
+         <p>…</p>
+       </div>
+     Use role="alert" only for errors that appear dynamically.
+     ------------------------------------------------------------------------ */
+  .alert {
+    --alert-accent: var(--scb-blue);
+    --alert-bg: var(--scb-blue-tint);
+
+    padding: var(--space-base);
+    background: var(--alert-bg);
+    border-left: 4px solid var(--alert-accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    color: var(--color-text);
+    font-size: var(--fs-text-2);
+  }
+  .alert > * + * { margin-top: var(--space-sm); }
+  .alert__title { font-size: var(--fs-text-1); font-weight: var(--fw-medium); }
+  .alert--success { --alert-accent: var(--scb-green-mossy); --alert-bg: var(--scb-green-tint); }
+  .alert--warning { --alert-accent: var(--scb-yellow);      --alert-bg: var(--scb-yellow-light); }
+  .alert--error   { --alert-accent: var(--scb-red-cherry);  --alert-bg: var(--scb-red-tint); }
+  .alert--draft   { --alert-accent: var(--scb-gray-dark);   --alert-bg: var(--scb-bg); }
+  .alert--dark    { --alert-accent: var(--scb-black);       --alert-bg: var(--scb-bg); }
+
+  /* "Plain Jane" feedback bar: Mossy Green = success, Cherry Red = error,
+     slides in under the header, auto-dismisses (JS). */
+  .toast-region {
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    z-index: var(--z-toast);
+    pointer-events: none;
+  }
+  .toast {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    min-height: 3rem;
+    padding: var(--space-sm) var(--page-margin);
+    background: var(--scb-black);
+    color: var(--scb-white);
+    font-size: var(--fs-text-1);
+    line-height: var(--lh-heading);
+    pointer-events: auto;
+    animation: scb-toast-in 200ms var(--ease);
+  }
+  .toast--success { background: var(--scb-green-mossy); }
+  .toast--error   { background: var(--scb-red-cherry); }
+  @keyframes scb-toast-in { from { transform: translateY(-100%); } to { transform: none; } }
+
+  /* Inline feedback (Small2) — helper / error text under a control */
+  .inline-feedback {
+    color: var(--color-text-muted);
+    font-family: var(--scb-font-system);
+    font-size: var(--fs-small-2);
+    line-height: var(--lh-system);
+  }
+  .inline-feedback--error { color: var(--color-text-error); }
+
+
+  /* ------------------------------------------------------------------------
+     TABS  (guide: 40px high, selected = SCB Purple, unselected = grey,
+     equal width, one line with ellipsis, Text2 Bold centred)
+       <div class="tabs" role="tablist" aria-label="Project type">
+         <button class="tab" role="tab" aria-selected="true" aria-controls="p1">Greenfield</button>
+         …
+       </div>
+       <div id="p1" role="tabpanel" tabindex="0">…</div>
+     Modifiers: .tabs--scroll (don't truncate), .tabs--segmented (secondary)
+     ------------------------------------------------------------------------ */
+  .tabs {
+    display: flex;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .tab {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 2.5rem;
+    margin: 0 0 -1px;
+    padding: 0 var(--space-base);
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: none;
+    color: var(--color-text-muted);
+    font-size: var(--fs-text-2);
+    font-weight: var(--fw-medium);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  }
+  .tab:hover { color: var(--scb-purple-dark); background: var(--scb-purple-tint-8); }
+  .tab[aria-selected="true"] { color: var(--scb-purple); border-bottom-color: var(--scb-purple); }
+  .tab:focus-visible { outline-offset: -2px; }
+
+  .tabs--scroll { overflow-x: auto; scrollbar-width: thin; }
+  .tabs--scroll .tab { flex: 0 0 auto; }
+
+  /* Secondary tab: toggles two sets of info within a section */
+  .tabs--segmented {
+    display: inline-flex;
+    gap: var(--space-xs);
+    padding: var(--space-xs);
+    background: var(--scb-purple-tint-16);
+    border: 0;
+    border-radius: var(--radius);
+  }
+  .tabs--segmented .tab { margin: 0; border: 0; border-radius: var(--radius); padding-inline: var(--space-base); }
+  .tabs--segmented .tab:hover { background: rgba(255, 255, 255, 0.5); }
+  .tabs--segmented .tab[aria-selected="true"] { background: var(--scb-white); box-shadow: var(--shadow-1); }
+
+  .tab-panel { padding-top: var(--space-base); }
+
+
+  /* ------------------------------------------------------------------------
+     TABLES  (Carbon data-table pattern, SCB tokens)
+       <div class="table-wrap" tabindex="0" role="region" aria-label="…">
+         <table class="table">…</table>
+       </div>
+     .prose > table is styled the same so rendered markdown works as-is.
+     Modifiers: .table--compact, .table--hover, .table--strong-first
+     ------------------------------------------------------------------------ */
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+  }
+  .table-wrap > .table { min-width: 32rem; }
+
+  .table,
+  .prose > table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--fs-text-2);
+    line-height: var(--lh-body);
+  }
+  .prose > table { border: 1px solid var(--color-border); }
+
+  .table caption {
+    padding: var(--space-sm) var(--space-base);
+    color: var(--color-text-muted);
+    font-size: var(--fs-text-3);
+    text-align: left;
+  }
+  :is(.table, .prose > table) :is(th, td) {
+    padding: var(--space-base);
+    border-bottom: 1px solid var(--color-border);
+    text-align: left;
+    vertical-align: top;
+  }
+  :is(.table, .prose > table) thead th {
+    background: var(--path-tint);
+    border-bottom: 2px solid var(--path);
+    color: var(--color-text);
+    font-weight: var(--fw-medium);
+    white-space: nowrap;
+  }
+  :is(.table, .prose > table) tbody tr:last-child :is(th, td) { border-bottom: 0; }
+  :is(.table, .prose > table) tbody th { font-weight: var(--fw-medium); }
+
+  .table--strong-first td:first-child { font-weight: var(--fw-medium); }
+  .table--compact :is(th, td) { padding: var(--space-sm) var(--space-base); font-size: var(--fs-text-3); }
+  .table--hover tbody tr:hover { background: var(--scb-purple-tint-8); }
+
+
+  /* ----------------------------------------------------------------------
+     MARKDOWN CONTRACT. The build step converts .md to HTML and the content
+     keeps changing, so a converter's bare output has to look right with no
+     classes added. These are the shapes the playbook source uses:
+
+     1. "| **SECTION SUMMARY** | *text* |" with no body rows
+        -> a header-only <table>. Rendered as the summary bar.
+     2. "> **Context reset:** …" and "> 🟢 *placeholder*"
+        -> <blockquote>. Rendered as a callout. GitHub alert syntax
+        ("> [!NOTE]", markdown-it-github-alerts) maps to the same look.
+     3. "- [ ] item" -> <li><input type=checkbox disabled>. Rendered as a
+        checklist (B.15 pre-flight).
+     4. Wide tables with no wrapper -> scroll sideways on narrow screens.
+     5. Fenced code blocks -> <pre><code class="language-…">.
+     ---------------------------------------------------------------------- */
+
+  /* 1. Summary bar: a table with a header and no body */
+  .prose > table:not(:has(tbody tr)) {
+    display: block;
+    border: 0;
+    border-left: 4px solid var(--path);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    background: var(--path-tint);
+    overflow: visible;
+  }
+  .prose > table:not(:has(tbody tr)) :is(thead, tr) { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-xs) var(--space-base); }
+  .prose > table:not(:has(tbody tr)) thead { padding: var(--space-base); }
+  .prose > table:not(:has(tbody tr)) th {
+    padding: 0;
+    border: 0;
+    background: none;
+    white-space: normal;
+    font-style: normal;
+  }
+  .prose > table:not(:has(tbody tr)) th:first-child {
+    color: var(--path-ink);
+    font-size: var(--fs-text-3);
+    font-weight: var(--fw-medium);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .prose > table:not(:has(tbody tr)) th:not(:first-child) {
+    flex: 1 1 14rem;
+    font-size: var(--fs-title);
+    font-weight: var(--fw-regular);
+    line-height: var(--lh-heading);
+  }
+  .prose > table:not(:has(tbody tr)) :is(em, strong) { font-style: normal; font-weight: inherit; }
+
+  /* 2. Callouts */
+  .prose > blockquote,
+  .markdown-alert {
+    padding: var(--space-base);
+    background: var(--path-tint);
+    border-left: 4px solid var(--path);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    color: var(--color-text);
+    font-size: var(--fs-text-2);
+  }
+  .prose > blockquote > * + *, .markdown-alert > * + * { margin-top: var(--space-sm); }
+  .markdown-alert-title { color: var(--path-ink); font-weight: var(--fw-medium); }
+  .markdown-alert-tip       { --path: var(--scb-green-light);  --path-tint: var(--scb-green-tint);  --path-ink: var(--scb-green-mossy); }
+  .markdown-alert-warning   { --path: var(--scb-yellow);       --path-tint: var(--scb-yellow-tint); --path-ink: var(--scb-yellow-ink); }
+  .markdown-alert-important { --path: var(--scb-purple);       --path-tint: var(--scb-purple-tint-8); --path-ink: var(--scb-purple); }
+  .markdown-alert-caution   { --path: var(--scb-red-cherry);   --path-tint: var(--scb-red-tint);     --path-ink: var(--scb-red-deep); }
+
+  /* 3. Task lists */
+  .prose ul:has(> li > input[type="checkbox"]),
+  .contains-task-list { list-style: none; padding-left: 0; }
+  .prose li:has(> input[type="checkbox"]),
+  .task-list-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    padding: var(--space-sm) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .prose li + li:has(> input[type="checkbox"]) { margin-top: 0; }
+  .prose li > input[type="checkbox"] {
+    flex: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin: 0.125rem 0 0;
+    accent-color: var(--scb-purple);
+  }
+
+  /* 4. Tables with no wrapper: scroll sideways below 48rem */
+  @media (max-width: 47.99rem) {
+    .prose > table:has(tbody tr) { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .prose > table:has(tbody tr) :is(th, td) { min-width: 8rem; }
+  }
+
+
+  /* ------------------------------------------------------------------------
+     FLOW — horizontal process chain (lifecycle flow, agent pipeline).
+     Stacks vertically on small screens.
+       <ol class="flow">
+         <li class="flow__step">Context Builder</li>
+         <li class="flow__step flow__step--primary">PRD Builder</li>
+       </ol>
+     Variants: --primary (purple), --dark (governance), --new (green)
+     ------------------------------------------------------------------------ */
+  .flow {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin: 0;
+    padding: 0;
+  }
+  .flow__step {
+    position: relative;
+    padding: var(--space-sm) var(--space-base);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-control);
+    border-radius: var(--radius);
+    font-size: var(--fs-text-2);
+    font-weight: var(--fw-medium);
+    line-height: var(--lh-heading);
+    text-align: center;
+  }
+  .flow__step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: var(--space-md);
+    height: var(--space-md);
+    transform: translateX(-50%);
+    background: var(--color-text-muted);
+    -webkit-mask: var(--icon-arrow-down) center / 1rem no-repeat;
+            mask: var(--icon-arrow-down) center / 1rem no-repeat;
+  }
+  .flow__step--primary { background: var(--scb-purple);          border-color: var(--scb-purple);      color: var(--scb-white); }
+  .flow__step--dark    { background: var(--scb-black);           border-color: var(--scb-black);       color: var(--scb-white); }
+  .flow__step--new     { background: var(--scb-green-tint);      border-color: var(--scb-green-mossy); color: var(--scb-green-mossy); }
+
+  @media (min-width: 40rem) {
+    .flow { flex-direction: row; flex-wrap: wrap; align-items: stretch; gap: var(--space-sm) var(--space-md); }
+    .flow__step { display: flex; align-items: center; }
+    .flow__step:not(:last-child)::after {
+      top: 50%;
+      left: 100%;
+      transform: translateY(-50%);
+      -webkit-mask-image: var(--icon-arrow-right);
+              mask-image: var(--icon-arrow-right);
+    }
+  }
+
+
+  /* ------------------------------------------------------------------------
+     STEPS — vertical numbered lifecycle (Carbon progress-indicator pattern)
+       <ol class="steps" style="--steps-start:-1">   (-1 => first item shows 0)
+         <li class="steps__item">
+           <h3 class="steps__title">Mobilise and assess</h3>
+           <p class="steps__body">…</p>
+         </li>
+       </ol>
+     ------------------------------------------------------------------------ */
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: step var(--steps-start, 0);
+  }
+  .steps__item {
+    position: relative;
+    padding: 0 0 var(--space-md) var(--space-lg);
+    counter-increment: step;
+  }
+  .steps__item:last-child { padding-bottom: 0; }
+  .steps__item::before {
+    content: counter(step);
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-full);
+    background: var(--path-solid);
+    color: var(--path-on);
+    font-size: var(--fs-text-2);
+    font-weight: var(--fw-medium);
+    line-height: 1;
+  }
+  .steps__item:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 2.25rem;
+    bottom: 0.25rem;
+    left: calc(1rem - 1px);
+    width: 2px;
+    background: var(--color-border);
+  }
+  .steps__title { font-size: var(--fs-text-1); font-weight: var(--fw-medium); line-height: var(--lh-heading); }
+  .steps__body  { margin-top: var(--space-xs); color: var(--color-text-muted); font-size: var(--fs-text-2); }
+
+
+  /* ------------------------------------------------------------------------
+     ACCORDION  (native <details>; Carbon pattern)
+       <div class="accordion">
+         <details><summary>Title</summary><div class="accordion__panel">…</div></details>
+       </div>
+     ------------------------------------------------------------------------ */
+  .accordion { border-top: 1px solid var(--color-border); }
+  .accordion > details { border-bottom: 1px solid var(--color-border); }
+  .accordion summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-base);
+    min-height: 3rem;
+    padding: var(--space-sm) var(--space-base);
+    cursor: pointer;
+    font-size: var(--fs-text-1);
+    font-weight: var(--fw-medium);
+    list-style: none;
+  }
+  .accordion summary::-webkit-details-marker { display: none; }
+  .accordion summary:hover { background: var(--scb-purple-tint-8); }
+  .accordion summary:focus-visible { outline-offset: -2px; }
+  .accordion summary::after {
+    content: "";
+    flex: none;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-top: -0.25rem;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform var(--dur) var(--ease);
+  }
+  .accordion details[open] > summary::after { margin-top: 0.25rem; transform: rotate(-135deg); }
+  .accordion__panel { padding: var(--space-sm) var(--space-base) var(--space-base); }
+  .accordion__panel > * + * { margin-top: var(--space-sm); }
+
+
+  /* ------------------------------------------------------------------------
+     AGENT ENTRY — operating-contract card for the Agent Catalogue
+       <article class="agent">
+         <header class="agent__header">
+           <h3 class="agent__name">Context Builder</h3>
+           <code>context-builder</code><span class="tag tag--purple">Context</span>
+         </header>
+         <dl class="agent__list">
+           <dt>Use when</dt><dd>…</dd>
+           <dt>Approved inputs</dt><dd>…</dd>
+           <dt>Outputs</dt><dd>…</dd>
+           <dt>Human review</dt><dd>…</dd>
+           <dt>Limitations and stop conditions</dt><dd>…</dd>
+         </dl>
+       </article>
+     ------------------------------------------------------------------------ */
+  .agent {
+    padding: var(--space-base);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-top: 4px solid var(--scb-purple);
+    border-radius: var(--radius);
+  }
+  .agent__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm) var(--space-base);
+    margin-bottom: var(--space-base);
+  }
+  .agent__name { font-size: var(--fs-title); }
+  .agent__list { display: grid; grid-template-columns: minmax(0, 1fr); margin: 0; }
+  .agent__list dt,
+  .agent__list dd { margin: 0; padding-top: var(--space-base); }
+  .agent__list dt {
+    border-top: 1px solid var(--color-border);
+    color: var(--scb-purple-dark);
+    font-size: var(--fs-text-2);
+    font-weight: var(--fw-medium);
+  }
+  .agent__list dd { padding-top: var(--space-xs); font-size: var(--fs-text-2); }
+  .agent__list > :nth-child(2) ~ dt { margin-top: var(--space-base); }   /* gap between pairs */
+
+  @media (min-width: 48rem) {
+    .agent__list { grid-template-columns: 12rem minmax(0, 1fr); column-gap: var(--space-md); }
+    .agent__list dt, .agent__list dd { padding-top: var(--space-base); border-top: 1px solid var(--color-border); }
+    .agent__list > :nth-child(2) ~ dt { margin-top: 0; }
+    .agent__list dd { padding-bottom: 0; }
+  }
+
+
+  /* ------------------------------------------------------------------------
+     LISTS  (guide: Lists; Carbon structured-list)
+       <ul class="list">
+         <li><a class="list__item" href="…"><span>Title</span>
+             <span class="list__secondary">3.2</span></a></li>
+       </ul>
+     ------------------------------------------------------------------------ */
+  .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: var(--color-surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-1);
+  }
+  .list > li + li { border-top: 1px solid var(--color-border); }
+  .list__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-base);
+    min-height: 3rem;
+    padding: var(--space-sm) var(--space-base);
+    color: var(--color-text);
+    font-size: var(--fs-text-1);                   /* Text1: text in list item */
+    text-decoration: none;
+  }
+  a.list__item:hover { background: var(--scb-purple-tint-8); color: var(--color-text); }
+  a.list__item::after {
+    content: "";
+    flex: none;
+    width: 1.5rem; height: 1.5rem;
+    background: var(--scb-purple);
+    -webkit-mask: var(--icon-chevron-right) center / 1rem no-repeat;
+            mask: var(--icon-chevron-right) center / 1rem no-repeat;
+  }
+  .list__secondary { color: var(--color-text-muted); font-size: var(--fs-text-2); margin-left: auto; }
+  a.list__item .list__secondary { margin-left: auto; }
+
+
+  /* ------------------------------------------------------------------------
+     FORM FIELDS  (guide: label above, single line underneath — Dark Purple
+     when active, Light Red / Cherry on error; Small2 caption + counter)
+       <div class="field field--error">
+         <label class="field__label" for="x">Field label</label>
+         <input class="field__control" id="x" aria-describedby="x-msg">
+         <div class="field__row">
+           <span class="field__message" id="x-msg">Invalid amount</span>
+           <span class="field__counter">0 / 40</span>
+         </div>
+       </div>
+     ------------------------------------------------------------------------ */
+  .field { display: flex; flex-direction: column; gap: var(--space-xs); }
+  .field__label { color: var(--color-text-muted); font-size: var(--fs-text-2); }
+  .field__control {
+    width: 100%;
+    min-height: 3rem;
+    padding: var(--space-sm) 0;
+    border: 0;
+    border-bottom: 1px solid var(--color-border-control);
+    border-radius: 0;
+    background: transparent;
+    color: var(--color-text);
+    font-size: var(--fs-text-1);                   /* Text1: text in form field */
+    outline: 2px solid transparent;                /* visible in forced-colors */
+    transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  }
+  .field__control::placeholder { color: var(--color-text-muted); opacity: 1; }
+  .field__control:hover { border-bottom-color: var(--color-text); }
+  .field__control:focus {
+    border-bottom-color: var(--scb-purple-dark);
+    box-shadow: inset 0 -1px 0 var(--scb-purple-dark);      /* 2px line, no layout shift */
+  }
+  .field__control:disabled { color: var(--color-text-subtle); border-bottom-color: var(--color-border); cursor: not-allowed; }
+  textarea.field__control { min-height: 6rem; resize: vertical; }
+
+  select.field__control {
+    appearance: none;
+    padding-right: var(--space-lg);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23353239' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--space-sm) center;
+  }
+
+  .field__row { display: flex; justify-content: space-between; gap: var(--space-base); }
+  .field__message,
+  .field__counter {
+    color: var(--color-text-muted);
+    font-family: var(--scb-font-system);
+    font-size: var(--fs-small-2);
+    line-height: var(--lh-system);
+  }
+  .field__counter { margin-left: auto; }
+
+  .field--error .field__control,
+  .field__control[aria-invalid="true"] {
+    border-bottom-color: var(--scb-red-cherry);
+    box-shadow: inset 0 -1px 0 var(--scb-red-cherry);
+  }
+  .field--error .field__message { color: var(--color-text-error); }
+
+  /* Checkbox / radio — native control, recoloured to SCB Purple */
+  .check {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    min-height: 2.5rem;
+    padding-block: var(--space-xs);
+    font-size: var(--fs-text-1);
+    cursor: pointer;
+  }
+  .check input { flex: none; width: 1.25rem; height: 1.25rem; margin: 0.125rem 0 0; accent-color: var(--scb-purple); }
+  .check input:disabled + span { opacity: 0.4; }
+
+  /* Toggle switch: <label class="switch"><input type="checkbox" role="switch"><span>Label</span></label> */
+  .switch {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    min-height: 2.5rem;
+    font-size: var(--fs-text-1);
+    cursor: pointer;
+  }
+  .switch input {
+    appearance: none;
+    position: relative;
+    flex: none;
+    width: 3rem;
+    height: 1.5rem;
+    margin: 0;
+    border-radius: var(--radius-full);
+    background: var(--scb-gray);
+    transition: background-color var(--dur) var(--ease);
+  }
+  .switch input::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: calc(1.5rem - 4px);
+    height: calc(1.5rem - 4px);
+    border-radius: var(--radius-full);
+    background: var(--scb-white);
+    box-shadow: var(--shadow-1);
+    transition: transform var(--dur) var(--ease);
+  }
+  .switch input:checked { background: var(--scb-purple); }
+  .switch input:checked::before { transform: translateX(1.5rem); }
+  .switch input:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* Search: <div class="search"><input class="search__input" type="search" …></div> */
+  .search__input {
+    width: 100%;
+    min-height: 2.5rem;
+    padding: var(--space-sm) var(--space-base) var(--space-sm) 2.5rem;
+    border: 1px solid var(--color-border-control);
+    border-radius: var(--radius);
+    background-color: var(--color-surface);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none' stroke='%23736E78' stroke-width='1.75'%3E%3Ccircle cx='8.5' cy='8.5' r='5.75'/%3E%3Cpath d='M13 13l4.5 4.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: var(--space-sm) center;
+    font-size: var(--fs-text-1);
+  }
+  .search__input:focus { border-color: var(--scb-purple-dark); outline: 2px solid var(--color-focus); outline-offset: 1px; }
+
+
+  /* ------------------------------------------------------------------------
+     BREADCRUMB + BACK LINK  (replaces "← Back to playbook")
+       <a class="back-link" href="…">Back to playbook</a>
+       <nav class="breadcrumb" aria-label="Breadcrumb"><ol>
+         <li><a href="…">Playbook</a></li>
+         <li><a href="…">The How</a></li>
+         <li aria-current="page">3.2 Greenfield development</li>
+       </ol></nav>
+     ------------------------------------------------------------------------ */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    min-height: 2.5rem;
+    font-size: var(--fs-text-2);
+    font-weight: var(--fw-medium);
+    text-decoration: none;
+  }
+  .back-link::before {
+    content: "";
+    width: 1.25rem; height: 1.25rem;
+    background: currentColor;
+    -webkit-mask: var(--icon-chevron-left) center / 1rem no-repeat;
+            mask: var(--icon-chevron-left) center / 1rem no-repeat;
+  }
+  .back-link:hover { text-decoration: underline; }
+
+  .breadcrumb ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-sm);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--color-text-muted);
+    font-size: var(--fs-text-3);
+  }
+  .breadcrumb li + li::before { content: "/"; content: "/" / ""; margin-right: var(--space-sm); color: var(--color-text-subtle); }
+  .breadcrumb a { color: var(--color-text-muted); }
+  .breadcrumb a:hover { color: var(--scb-purple); }
+  .breadcrumb [aria-current="page"] { color: var(--color-text); }
+
+
+  /* ------------------------------------------------------------------------
+     PAGER — previous / next page links at the foot of an article
+       <nav class="pager" aria-label="Pagination">
+         <a class="pager__link" href="…"><span class="pager__dir">Previous</span>
+            <span class="pager__title">3.1 …</span></a>
+         <a class="pager__link pager__link--next" …>
+       </nav>
+     ------------------------------------------------------------------------ */
+  .pager {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+  }
+  .pager__link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-base);
+    background: var(--color-surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-1);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: box-shadow var(--dur) var(--ease);
+  }
+  .pager__link:hover { box-shadow: var(--shadow-2); color: var(--color-text); }
+  .pager__link--next { grid-column: 2; text-align: right; }
+  .pager__dir {
+    color: var(--color-text-muted);
+    font-family: var(--scb-font-system);
+    font-size: var(--fs-small-2);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .pager__title { color: var(--scb-purple); font-size: var(--fs-text-1); font-weight: var(--fw-medium); line-height: var(--lh-heading); }
+
+  /* Carousel pagination dots (guide: 8px apart; 6/4/2px; current = purple) */
+  .dots { display: flex; align-items: center; justify-content: center; gap: var(--space-sm); margin: 0; padding: 0; list-style: none; }
+  .dots__dot {
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: var(--radius-full);
+    background: var(--scb-gray-light);
+  }
+  .dots__dot--sm { width: 0.25rem;  height: 0.25rem; }
+  .dots__dot--xs { width: 0.125rem; height: 0.125rem; }
+  .dots__dot[aria-current="true"],
+  .dots__dot.is-current { background: var(--scb-purple); }
+
+
+  /* ------------------------------------------------------------------------
+     TOOLTIP  (dark chip, Small2; shows on hover and keyboard focus;
+     trigger must be focusable and reference the content via aria-describedby)
+       <span class="tooltip">
+         <button aria-describedby="t1">?</button>
+         <span class="tooltip__content" role="tooltip" id="t1">Text</span>
+       </span>
+     ------------------------------------------------------------------------ */
+  .tooltip { position: relative; display: inline-flex; }
+  .tooltip__content {
+    position: absolute;
+    z-index: var(--z-tooltip);
+    bottom: calc(100% + 0.5rem);
+    left: 50%;
+    width: max-content;
+    max-width: 16rem;
+    padding: var(--space-sm);
+    border-radius: var(--radius);
+    background: var(--scb-black);
+    box-shadow: var(--shadow-2);
+    color: var(--scb-white);
+    font-family: var(--scb-font-system);
+    font-size: var(--fs-small-2);
+    line-height: var(--lh-system);
+    text-align: left;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%);
+    transition: opacity var(--dur) var(--ease), visibility 0s linear var(--dur);
+  }
+  .tooltip__content::before {                       /* hover bridge (WCAG 1.4.13) */
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 0.5rem;
+  }
+  .tooltip__content::after {                        /* arrow */
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -0.375rem;
+    border: 0.375rem solid transparent;
+    border-top-color: var(--scb-black);
+  }
+  .tooltip:hover .tooltip__content,
+  .tooltip:focus-within .tooltip__content {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+
+  /* ------------------------------------------------------------------------
+     MODAL DIALOG  (guide: concise title, short body, primary action first
+     with a self-describing verb, plus a cancel path; native <dialog>)
+       <dialog class="modal" aria-labelledby="m-t">
+         <div class="modal__inner">
+           <h2 class="modal__title" id="m-t">Discard draft?</h2>
+           <p class="modal__body">…</p>
+           <div class="modal__actions">
+             <button class="btn">Yes, discard</button>
+             <button class="btn btn--outline">No, keep it</button>
+           </div>
+         </div>
+       </dialog>
+     ------------------------------------------------------------------------ */
+  .modal {
+    width: min(30rem, calc(100vw - 2rem));
+    max-height: calc(100dvh - 2rem);
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-2);
+    color: var(--color-text);
+    z-index: var(--z-modal);
+  }
+  .modal::backdrop { background: rgba(53, 50, 57, 0.64); }
+  .modal__inner { display: flex; flex-direction: column; gap: var(--space-base); padding: var(--space-md); }
+  .modal__title { font-size: var(--fs-title); }
+  .modal__body  { font-size: var(--fs-text-1); }
+  .modal__actions { display: flex; flex-direction: column; gap: var(--space-sm); }
+  .modal__actions .btn { width: 100%; }
+  @media (min-width: 40rem) {
+    .modal__actions { flex-direction: row; }
+    .modal__actions .btn { flex: 1; }
+  }
+  body:has(dialog.modal[open]) { overflow: hidden; }
+
+
+  /* ------------------------------------------------------------------------
+     PRELOADER
+       <div class="spinner" role="status"><span class="visually-hidden">Loading</span></div>
+       <div class="skeleton skeleton--text"></div>
+     ------------------------------------------------------------------------ */
+  .spinner {
+    width: 2rem;
+    height: 2rem;
+    border: 3px solid var(--scb-purple-tint-16);
+    border-top-color: var(--scb-purple);
+    border-radius: var(--radius-full);
+    animation: scb-spin 800ms linear infinite;
+  }
+  @keyframes scb-spin { to { transform: rotate(360deg); } }
+
+  .skeleton {
+    background: linear-gradient(90deg, var(--scb-bg) 0%, var(--scb-gray-subtle) 50%, var(--scb-bg) 100%);
+    background-size: 200% 100%;
+    border-radius: var(--radius);
+    animation: scb-shimmer 1.4s ease-in-out infinite;
+  }
+  .skeleton--text  { height: 1em; width: 100%; }
+  .skeleton--title { height: 1.5rem; width: 60%; }
+  .skeleton--block { height: 6rem; }
+  @keyframes scb-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+
+
+  /* ------------------------------------------------------------------------
+     METRIC  (Measurements section — guide: Number1 Regular 56 / Number2 Light 36)
+       <div class="metric"><div class="metric__value">42%</div>
+       <div class="metric__label">Cycle-time reduction</div></div>
+     ------------------------------------------------------------------------ */
+  .metric { display: flex; flex-direction: column; gap: var(--space-xs); }
+  .metric__value {
+    color: var(--scb-purple);
+    font-size: var(--fs-number-1);
+    font-weight: var(--fw-regular);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+  .metric--sm .metric__value { font-size: var(--fs-number-2); font-weight: var(--fw-light); }
+  .metric__label { color: var(--color-text-muted); font-size: var(--fs-text-2); }
+  .metric__delta { font-family: var(--scb-font-system); font-size: var(--fs-small-2); }
+  .metric__delta--up   { color: var(--color-text-success); }
+  .metric__delta--down { color: var(--color-text-error); }
+
+
+  /* ------------------------------------------------------------------------
+     FIGURE — diagrams / screenshots
+       <figure class="figure"><img src="…" alt="…"><figcaption>…</figcaption></figure>
+     ------------------------------------------------------------------------ */
+  .figure {
+    padding: var(--space-base);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    overflow-x: auto;
+  }
+  .figure img, .figure svg { display: block; margin-inline: auto; }
+  .figure figcaption {
+    margin-top: var(--space-sm);
+    color: var(--color-text-muted);
+    font-family: var(--scb-font-system);
+    font-size: var(--fs-small-2);
+    line-height: var(--lh-system);
+  }
+
+  /* ======================================================================
+     SITEMAP COMPONENTS
+     Everything below is driven by data-path="what|why|who|how" (see tokens).
+     ====================================================================== */
+
+  /* Hamburger is hidden once the side navigation is permanent (>= lg).
+     Lives here, not in layout, because .icon-btn is declared in components. */
+  @media (min-width: 64rem) { .icon-btn--menu { display: none; } }
+  .page--bare .icon-btn--menu { display: none; }
+
+  /* Header path links are a desktop shortcut; the side nav covers mobile. */
+  @media (max-width: 63.99rem) { .app-header__nav { display: none; } }
+
+  /* EN | ไทย — links to the same page in the other language.
+       <nav class="lang-switch" aria-label="Language">
+         <a class="lang-switch__item" lang="en" hreflang="en" href="…" aria-current="true">EN</a>
+         <a class="lang-switch__item" lang="th" hreflang="th" href="…">ไทย</a>
+       </nav>
+     Each label carries its own lang so it renders in the right script. */
+  .lang-switch {
+    display: inline-flex;
+    padding: 2px;
+    border: 1px solid rgba(255, 255, 255, 0.64);
+    border-radius: var(--radius);
+  }
+  .lang-switch__item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.5rem;
+    min-height: 2.25rem;
+    padding-inline: var(--space-sm);
+    border-radius: 2px;
+    color: var(--scb-white);
+    font-size: var(--fs-text-2);
+    font-weight: var(--fw-medium);
+    text-decoration: none;
+  }
+  .lang-switch__item:hover { background: rgba(255, 255, 255, 0.16); color: var(--scb-white); }
+  .lang-switch__item[aria-current="true"] { background: var(--scb-white); color: var(--scb-purple-dark); }
+  .lang-switch__item:focus-visible { outline-color: var(--color-focus-on-dark); }
+
+
+  /* ------------------------------------------------------------------------
+     HERO — landing page (2–3 sentence overview + "Read more" CTA)
+       <section class="hero">
+         <div class="hero__inner">
+           <p class="hero__eyebrow">SCBx · Agentic PDLC Playbook</p>
+           <h1 class="hero__title">…</h1>
+           <p class="hero__lead">…</p>
+           <div class="hero__actions"><a class="btn btn--inverse btn--lg" href="…">Read more</a></div>
+         </div>
+       </section>
+     ------------------------------------------------------------------------ */
+  .hero {
+    padding: var(--space-lg) var(--page-margin);
+    background: var(--color-surface-brand-deep);
+    color: var(--color-text-inverse);
+  }
+  .hero :focus-visible { outline-color: var(--color-focus-on-dark); }
+  .hero__inner { max-width: var(--content-w-wide); margin-inline: auto; }
+  .hero__inner > * + * { margin-top: var(--space-base); }
+  .hero__eyebrow {
+    color: var(--scb-yellow-light);
+    font-size: var(--fs-text-2);
+    font-weight: var(--fw-medium);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .hero__title { max-width: 11em; color: inherit; font-size: var(--fs-number-2); font-weight: var(--fw-regular); line-height: var(--lh-heading); }
+  .hero__lead  { max-width: 40rem; font-size: var(--fs-title); line-height: var(--lh-body); }
+  .hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-sm); padding-top: var(--space-sm); }
+  @media (min-width: 48rem) {
+    .hero { padding-block: var(--space-xl); }
+    .hero__title { font-size: var(--fs-number-1); }
+  }
+
+  /* Button on a dark surface (white fill, purple text) */
+  .btn--inverse { --btn-bg: var(--scb-white); --btn-fg: var(--scb-purple-dark); --btn-bd: var(--scb-white); }
+  .btn--inverse:hover  { --btn-bg: var(--scb-yellow-light); --btn-fg: var(--scb-purple-dark); --btn-bd: var(--scb-yellow-light); }
+  .btn--inverse:active { --btn-bg: var(--scb-yellow-bright); --btn-fg: var(--scb-purple-dark); --btn-bd: var(--scb-yellow-bright); }
+  .btn--inverse.btn--outline { --btn-bg: transparent; --btn-fg: var(--scb-white); --btn-bd: var(--scb-white); }
+  .btn--inverse.btn--outline:hover { --btn-bg: rgba(255, 255, 255, 0.16); --btn-fg: var(--scb-white); --btn-bd: var(--scb-white); }
+
+
+  /* ------------------------------------------------------------------------
+     INTENT CHOOSER — "What brings you here today?" -> four paths
+       <section class="intent" aria-labelledby="intent-h">
+         <h2 class="intent__question" id="intent-h">What brings you here today?</h2>
+         <ul class="intent__grid">
+           <li><a class="intent__option" data-path="what" href="…">
+             <span class="intent__path">The What</span>
+             <span class="intent__label">I'm new to this</span>
+             <span class="intent__hint">Start with the plain-language intro</span>
+           </a></li> … x4
+         </ul>
+       </section>
+     ------------------------------------------------------------------------ */
+  .intent { padding-block: var(--space-lg); }
+  .intent__question { margin-bottom: var(--space-base); font-size: var(--fs-headline); }
+  .intent__grid {
+    display: grid;
+    gap: var(--space-sm);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 40rem) { .intent__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 80rem) { .intent__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+  .intent__option {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    height: 100%;
+    min-height: 9rem;
+    padding: var(--space-base) var(--space-base) var(--space-lg);
+    background: var(--color-surface);
+    border-top: 4px solid var(--path);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-1);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: box-shadow var(--dur) var(--ease), background-color var(--dur) var(--ease);
+  }
+  .intent__option:hover { background: var(--path-tint); box-shadow: var(--shadow-2); color: var(--color-text); }
+  .intent__option::after {
+    content: "";
+    position: absolute;
+    right: var(--space-base);
+    bottom: var(--space-base);
+    width: 1.5rem; height: 1.5rem;
+    background: var(--path-ink);
+    -webkit-mask: var(--icon-arrow-right) center / 1.25rem no-repeat;
+            mask: var(--icon-arrow-right) center / 1.25rem no-repeat;
+    transition: transform var(--dur) var(--ease);
+  }
+  .intent__option:hover::after { transform: translateX(var(--space-xs)); }
+  .intent__path  { color: var(--path-ink); font-size: var(--fs-text-3); font-weight: var(--fw-medium); letter-spacing: 0.06em; text-transform: uppercase; }
+  .intent__label { font-size: var(--fs-title); font-weight: var(--fw-medium); line-height: var(--lh-heading); }
+  .intent__hint  { color: var(--color-text-muted); font-size: var(--fs-text-2); }
+
+
+  /* ------------------------------------------------------------------------
+     PATH HEADER — top of each path landing and path page
+     (the sitemap's yellow label + its guiding question)
+       <header class="path-header" data-path="how">
+         <span class="section-label">The How</span>
+         <h1 class="path-header__title">I'm ready to get started</h1>
+         <p class="section-question">How to execute</p>
+       </header>
+     ------------------------------------------------------------------------ */
+  .path-header {
+    padding: var(--space-base);
+    background: var(--path-tint);
+    border-left: 4px solid var(--path);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+  .path-header > * + * { margin-top: var(--space-sm); }
+  .path-header .section-label { background: var(--path-solid); color: var(--path-on); }
+  .path-header__title { font-size: var(--fs-headline); }
+
+  /* The label itself also follows the path when it sits elsewhere */
+  [data-path] > .section-label,
+  [data-path] .section-label.section-label--path { background: var(--path-solid); color: var(--path-on); }
+
+
+  /* ------------------------------------------------------------------------
+     PATH INDEX — ordered list of the pages in a path, with source tag.
+     Numbering shows reading order; sub-pages nest.
+       <ol class="path-index" data-path="how">
+         <li class="path-index__item">
+           <a class="path-index__link" href="…">
+             <span class="path-index__title">What kind of project is this?</span>
+             <span class="path-index__desc">Identify project type …</span>
+           </a>
+           <span class="tag tag--draft">New</span>      (optional)
+           <ol class="path-index path-index--sub">…</ol> (optional)
+         </li>
+       </ol>
+     ------------------------------------------------------------------------ */
+  .path-index {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: pi;
+  }
+  .path-index__item {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--space-xs) var(--space-sm);
+    padding: var(--space-base) var(--space-sm) var(--space-base) 3rem;
+    border-bottom: 1px solid var(--color-border);
+    counter-increment: pi;
+  }
+  .path-index__item::before {
+    content: counter(pi);
+    position: absolute;
+    top: var(--space-base);
+    left: 0;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-full);
+    background: var(--path-solid);
+    color: var(--path-on);
+    font-size: var(--fs-text-2);
+    font-weight: var(--fw-medium);
+    line-height: 1;
+  }
+  .path-index__link {
+    display: flex;
+    flex: 1 1 16rem;
+    flex-direction: column;
+    gap: var(--space-xs);
+    min-width: 0;
+    color: var(--color-text);
+    text-decoration: none;
+  }
+  .path-index__link:hover .path-index__title { color: var(--path-ink); text-decoration: underline; }
+  .path-index__title { color: var(--path-ink); font-size: var(--fs-text-1); font-weight: var(--fw-medium); line-height: var(--lh-heading); }
+  .path-index__desc  { color: var(--color-text-muted); font-size: var(--fs-text-2); }
+  .path-index__item > .tag { margin-top: var(--space-xs); }
+  .path-index__item > .path-index { flex: 0 0 100%; margin-top: var(--space-sm); }
+
+  /* Sub-pages: lettered, lighter, no big circle */
+  .path-index--sub { counter-reset: pis; }
+  .path-index--sub > .path-index__item {
+    padding: var(--space-sm) var(--space-sm) var(--space-sm) 2.25rem;
+    border-bottom: 0;
+    counter-increment: pis;
+  }
+  .path-index--sub > .path-index__item::before {
+    content: counter(pis, lower-alpha);
+    top: var(--space-sm);
+    width: 1.5rem;
+    height: 1.5rem;
+    background: var(--path-tint);
+    border: 1px solid var(--path);
+    color: var(--path-ink);
+    font-size: var(--fs-text-3);
+  }
+  .path-index--sub .path-index__title { font-size: var(--fs-text-2); }
+
+
+  /* ------------------------------------------------------------------------
+     SHARED LINKS — "Shared / always accessible" strip (Agent Catalogue,
+     Best practices, Glossary, Sitemap). Use inside .card-grid.
+       <a class="card card--link card--shared" href="…">…</a>
+     ------------------------------------------------------------------------ */
+  .card--shared { border-top: 4px solid var(--scb-gray); }
+  .card--shared.card--link .card__title { color: var(--scb-purple); }
+
+  /* "Related" block at the foot of an article */
+  .related { margin-top: var(--space-lg); padding-top: var(--space-md); border-top: 1px solid var(--color-border); }
+  .related__title {
+    margin-bottom: var(--space-sm);
+    color: var(--color-text-muted);
+    font-size: var(--fs-text-3);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+
+  /* ------------------------------------------------------------------------
+     COMPARE — before / after (How each role changes, 5.3.x)
+     Two columns on wide screens; stacked and labelled on narrow ones.
+       <div class="compare">
+         <div class="compare__head">Traditional emphasis</div>
+         <div class="compare__head compare__head--after">Agentic product squad</div>
+         <div class="compare__row">
+           <div class="compare__cell"><strong>Primary contribution:</strong> …</div>
+           <div class="compare__cell compare__cell--after"><strong>Primary contribution:</strong> …</div>
+         </div> …
+       </div>
+     ------------------------------------------------------------------------ */
+  .compare { display: grid; gap: var(--space-sm); }
+  .compare__head { display: none; }
+  .compare__row { display: contents; }
+  .compare__cell {
+    padding: var(--space-base);
+    background: var(--color-surface-subtle);
+    border-left: 4px solid var(--scb-gray);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-size: var(--fs-text-2);
+  }
+  .compare__cell::before {
+    content: var(--label-before);
+    display: block;
+    margin-bottom: var(--space-xs);
+    color: var(--color-text-muted);
+    font-size: var(--fs-text-3);
+    font-weight: var(--fw-medium);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .compare__cell--after { background: var(--path-tint); border-left-color: var(--path); }
+  .compare__cell--after::before { content: var(--label-now); color: var(--path-ink); }
+  .compare__cell--after + .compare__cell:not(.compare__cell--after),
+  .compare__row + .compare__row .compare__cell:first-child { margin-top: var(--space-sm); }
+
+  @media (min-width: 48rem) {
+    .compare { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-sm); row-gap: var(--space-sm); }
+    .compare__head {
+      display: block;
+      padding: var(--space-sm) var(--space-base);
+      border-bottom: 2px solid var(--scb-gray);
+      font-size: var(--fs-text-2);
+      font-weight: var(--fw-medium);
+    }
+    .compare__head--after { border-bottom-color: var(--path); color: var(--path-ink); }
+    .compare__cell::before { display: none; }
+    .compare__row + .compare__row .compare__cell:first-child { margin-top: 0; }
+  }
+
+
+  /* ------------------------------------------------------------------------
+     DO / DON'T  (Appendix B: pairs of prompts, practices)
+       <div class="dos">
+         <section class="do"><h4 class="do__title">Do</h4> … </section>
+         <section class="dont"><h4 class="do__title">Don't</h4> … </section>
+       </div>
+     Colour is never the only cue: each title is prefixed with a text glyph.
+     ------------------------------------------------------------------------ */
+  .dos { display: grid; gap: var(--space-sm); }
+  @media (min-width: 48rem) { .dos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .do, .dont {
+    padding: var(--space-base);
+    border-top: 4px solid var(--scb-green-mossy);
+    border-radius: var(--radius);
+    background: var(--scb-green-tint);
+  }
+  .dont { border-top-color: var(--scb-red-deep); background: var(--scb-red-tint); }
+  .do > * + *, .dont > * + * { margin-top: var(--space-sm); }
+  .do__title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    color: var(--scb-green-mossy);
+    font-size: var(--fs-text-1);
+    font-weight: var(--fw-medium);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .dont .do__title { color: var(--scb-red-deep); }
+  .do__title::before {
+    content: "";
+    flex: none;
+    width: 1.25rem; height: 1.25rem;
+    background: currentColor;
+    -webkit-mask: var(--icon-check) center / contain no-repeat;
+            mask: var(--icon-check) center / contain no-repeat;
+  }
+  .dont .do__title::before {
+    -webkit-mask-image: var(--icon-cross);
+            mask-image: var(--icon-cross);
+  }
+  .do pre, .dont pre { margin: 0; }
+
+  /* Do / Don't as table cells (the "Core do's and don'ts" table) */
+  .table .cell-do   { background: var(--scb-green-tint); }
+  .table .cell-dont { background: var(--scb-red-tint); }
+  .table thead .cell-do   { color: var(--scb-green-mossy); border-bottom-color: var(--scb-green-mossy); }
+  .table thead .cell-dont { color: var(--scb-red-deep);    border-bottom-color: var(--scb-red-deep); }
+
+
+  /* ------------------------------------------------------------------------
+     CODE BLOCK with label (prompts, file paths, commands)
+       <figure class="code-block">
+         <figcaption class="code-block__label">Prompt</figcaption>
+         <pre><code>…</code></pre>
+       </figure>
+     ------------------------------------------------------------------------ */
+  .code-block { border-radius: var(--radius); overflow: hidden; }
+  .code-block__label {
+    padding: var(--space-xs) var(--space-base);
+    background: var(--scb-purple-dark);
+    color: var(--scb-white);
+    font-family: var(--scb-font-system);
+    font-size: var(--fs-small-2);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .code-block pre { border-radius: 0; }
+  .code-block pre code { padding: 0; background: none; color: inherit; font-size: inherit; }
+
+
+  /* ------------------------------------------------------------------------
+     CHECKLIST — pre-flight checklist (B.15). Static, printable.
+       <ul class="checklist"><li>Objective is bounded</li>…</ul>
+     For an interactive checklist use .check inside each <li>.
+     ------------------------------------------------------------------------ */
+  .checklist { list-style: none; margin: 0; padding: 0; }
+  .checklist > li {
+    position: relative;
+    padding: var(--space-sm) 0 var(--space-sm) 2rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .checklist > li::before {
+    content: "";
+    position: absolute;
+    top: 0.75rem;
+    left: 0;
+    width: 1.125rem;
+    height: 1.125rem;
+    border: 2px solid var(--scb-purple);
+    border-radius: var(--radius);
+  }
+  .checklist > li:has(.check) { padding-left: 0; }
+  .checklist > li:has(.check)::before { display: none; }
+
+
+  /* ------------------------------------------------------------------------
+     GLOSSARY — BRD, PRD, FDA, FDE …
+       <dl class="glossary">
+         <div class="glossary__entry" id="term-brd">
+           <dt class="glossary__term">BRD</dt>
+           <dd class="glossary__def"><span class="glossary__full">Business Requirements Document</span> …</dd>
+         </div>
+       </dl>
+     Inline use: <abbr class="term" title="Business Requirements Document">BRD</abbr>
+     ------------------------------------------------------------------------ */
+  .glossary { margin: 0; }
+  .glossary__entry {
+    display: grid;
+    gap: var(--space-xs) var(--space-md);
+    padding: var(--space-base) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .glossary__term { color: var(--scb-purple); font-size: var(--fs-title); font-weight: var(--fw-medium); line-height: var(--lh-heading); }
+  .glossary__def  { margin: 0; font-size: var(--fs-text-1); }
+  .glossary__full { display: block; color: var(--color-text-muted); font-size: var(--fs-text-2); }
+  @media (min-width: 48rem) { .glossary__entry { grid-template-columns: 10rem minmax(0, 1fr); } }
+
+  /* Alphabet jump bar */
+  .glossary-index { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin: 0 0 var(--space-base); padding: 0; list-style: none; }
+  .glossary-index a {
+    display: grid;
+    place-items: center;
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    border-radius: var(--radius);
+    font-weight: var(--fw-medium);
+    text-decoration: none;
+  }
+  .glossary-index a:hover { background: var(--scb-purple-tint-8); }
+
+  abbr.term, abbr[title] {
+    text-decoration: underline dotted;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+    cursor: help;
+  }
+
+
+  /* ------------------------------------------------------------------------
+     SITEMAP VIEW — the "I'm lost" page. Nested, path-coloured, all links.
+       <nav class="sitemap" aria-label="Sitemap">
+         <section class="sitemap__path" data-path="what">
+           <h2 class="sitemap__title"><span class="sitemap__dot"></span>The What</h2>
+           <p class="sitemap__q">I'm new to this</p>
+           <ul class="sitemap__list">
+             <li><a href="…">What is Agentic PDLC?</a>
+               <ul><li><a href="…">Sub-page</a></li></ul></li>
+           </ul>
+         </section> …
+       </nav>
+     ------------------------------------------------------------------------ */
+  .sitemap { display: grid; gap: var(--space-sm); }
+  @media (min-width: 48rem) { .sitemap { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 80rem) { .sitemap { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+  .sitemap__path {
+    padding: var(--space-base);
+    background: var(--color-surface);
+    border-top: 4px solid var(--path);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-1);
+  }
+  .sitemap__title { display: flex; align-items: center; gap: var(--space-sm); font-size: var(--fs-title); }
+  .sitemap__dot { flex: none; width: 0.75rem; height: 0.75rem; border-radius: var(--radius-full); background: var(--path); }
+  .sitemap__q { margin-top: var(--space-xs); color: var(--color-text-muted); font-size: var(--fs-text-2); }
+  .sitemap__list, .sitemap__list ul { margin: 0; padding: 0; list-style: none; }
+  .sitemap__list { margin-top: var(--space-base); }
+  .sitemap__list > li { padding: var(--space-xs) 0; font-size: var(--fs-text-2); }
+  .sitemap__list a { color: var(--color-text); text-decoration-color: var(--path); }
+  .sitemap__list a:hover { color: var(--path-ink); }
+  .sitemap__list a[aria-current="page"] { color: var(--path-ink); font-weight: var(--fw-medium); }
+  .sitemap__list ul {
+    margin: var(--space-xs) 0 var(--space-xs) var(--space-xs);
+    padding-left: var(--space-base);
+    border-left: 2px solid var(--path);
+  }
+  .sitemap__list ul > li { padding: 2px 0; color: var(--color-text-muted); }
+
+  /* Shared strip under the four columns */
+  .sitemap__shared { margin-top: var(--space-sm); }
+
+
+  /* ------------------------------------------------------------------------
+     PATH PROGRESS — "you are here" within a path (Path 3 is sequential).
+       <ol class="path-progress" data-path="how" aria-label="Progress">
+         <li class="path-progress__step is-done">…</li>
+         <li class="path-progress__step" aria-current="step">…</li>
+       </ol>
+     ------------------------------------------------------------------------ */
+  .path-progress {
+    display: flex;
+    gap: var(--space-xs);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-x: auto;
+  }
+  .path-progress__step {
+    flex: 1 0 6rem;
+    padding-top: var(--space-sm);
+    border-top: 4px solid var(--scb-gray-light);
+    color: var(--color-text-muted);
+    font-size: var(--fs-text-3);
+    line-height: var(--lh-heading);
+  }
+  .path-progress__step.is-done { border-top-color: var(--path); }
+  .path-progress__step[aria-current="step"] { border-top-color: var(--path-solid); color: var(--path-ink); font-weight: var(--fw-medium); }
+
+
+  /* ------------------------------------------------------------------------
+     PATH-AWARE ADJUSTMENTS to earlier components
+     ------------------------------------------------------------------------ */
+  [data-path] .pager__title { color: var(--path-ink); }
+  [data-path] .breadcrumb [aria-current="page"] { border-bottom: 2px solid var(--path); }
+  [data-path] .prose li::marker { color: var(--path-ink); }
+  [data-path] .tag--path { background: var(--path-tint); color: var(--path-ink); border-color: transparent; }
+  [data-path] .agent { border-top-color: var(--path); }
+  [data-path] .btn:not(.btn--outline):not(.btn--link):not(.btn--inverse) {
+    --btn-bg: var(--path-solid); --btn-bd: var(--path-solid); --btn-fg: var(--path-on);
+  }
+  [data-path] .btn:not(.btn--outline):not(.btn--link):not(.btn--inverse):hover {
+    filter: brightness(0.88);
+  }
+  [data-path] .btn--outline { --btn-fg: var(--path-ink); --btn-bd: var(--path-ink); }
+
+}
+
+
+/* ==========================================================================
+   5c PROSE RHYTHM
+   --------------------------------------------------------------------------
+   Vertical spacing between the direct children of .prose (and .stack-like
+   containers). It is its own layer, after components, because components
+   reset their own margins (margin: 0 on .list, .steps, .flow, …) and a
+   base-layer rule would lose to every one of them: a component dropped into
+   markdown output would sit tight against the paragraph above it.
+   Only margin-top / margin-block are set here, never sides.
+   ========================================================================== */
+@layer prose {
+  .prose > * + * { margin-top: var(--space-base); }
+  .prose > h1 { margin-top: 0; }
+  .prose > h2 { margin-top: var(--space-lg); }
+  .prose > h3, .prose > h4 { margin-top: var(--space-md); }
+  .prose > h2 + *, .prose > h3 + *, .prose > h4 + * { margin-top: var(--space-sm); }
+  .prose > hr { margin-block: var(--space-lg); }
+  /* a callout / summary directly after a heading keeps the heading gap */
+  .prose > h1 + :is(table, blockquote, .summary) { margin-top: var(--space-base); }
+}
+
+
+/* ==========================================================================
+   6  UTILITIES, PRINT, FORCED COLORS
+   ========================================================================== */
+@layer utilities {
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .skip-link {
+    position: absolute;
+    z-index: calc(var(--z-modal) + 1);
+    top: var(--space-sm);
+    left: var(--space-sm);
+    padding: var(--space-sm) var(--space-base);
+    background: var(--scb-white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-2);
+    color: var(--scb-purple);
+    font-weight: var(--fw-medium);
+    transform: translateY(-200%);
+  }
+  .skip-link:focus { transform: none; }
+
+  /* Vertical rhythm helpers. --stack overrides the gap (default 16px). */
+  .stack > * + * { margin-top: var(--stack, var(--space-base)); }
+  .cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--cluster, var(--space-sm)); }
+  .grid-2 { display: grid; gap: var(--space-base); }
+  @media (min-width: 48rem) { .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+  .nowrap { white-space: nowrap; }
+
+  /* Thai strings run longer and have no spaces to break at; let labels wrap
+     (the browser breaks on word boundaries when lang="th" is set). */
+  :lang(th) :is(.btn, .tag, .app-header__link, .table thead th, .prose > table thead th) {
+    white-space: normal;
+  }
+  :lang(th) :is(.btn, .tab, .card__title, .intent__label, .path-index__title) { text-wrap: balance; }
+  /* ---- Thai: no case, no tracking ----------------------------------------
+     text-transform: uppercase does nothing for Thai but also letter-spacing
+     detaches tone marks and vowels from their consonants, which is a defect.
+     Zero it for any Thai text; the hierarchy it provided in English comes
+     from weight and colour, which stay. Specificity beats component rules
+     because this layer is last. */
+  :lang(th), :lang(th) * { letter-spacing: 0 !important; text-transform: none !important; }
+
+  /* Keep English words inside Thai prose from being tracked or capitalised
+     differently: wrap them <span lang="en">…</span>. */
+
+  .text-center { text-align: center; }
+
+  /* ---- Motion ----------------------------------------------------------- */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* ---- Windows High Contrast / forced colours --------------------------- */
+  @media (forced-colors: active) {
+    .btn, .tag, .alert, .card, .summary, .flow__step, .pager__link { border: 1px solid CanvasText; }
+    .tab[aria-selected="true"] { border-bottom-color: Highlight; }
+    .dots__dot { border: 1px solid CanvasText; }
+    .dots__dot[aria-current="true"], .dots__dot.is-current { background: Highlight; }
+    .switch input { border: 1px solid CanvasText; }
+    .switch input:checked { background: Highlight; }
+    /* Drawn icons are background-colour masks; stop the browser blanking them */
+    .btn--link::after, .card--link::after, .flow__step::after, a.list__item::after,
+    .back-link::before, .intent__option::after, .do__title::before, .nav-toggle::before {
+      forced-color-adjust: none;
+      background-color: CanvasText;
+    }
+  }
+
+  /* ---- Print ------------------------------------------------------------ */
+  @media print {
+    .app-header, .sidenav, .sidenav-scrim, .toc, .pager, .skip-link,
+    .toast-region, .site-footer { display: none; }
+    body { background: #fff; }
+    .page, .layout { display: block; min-height: 0; }
+    .main { padding: 0; }
+    .main__inner { max-width: none; }
+    .article { padding: 0; box-shadow: none; }
+    .table-wrap { overflow: visible; }
+    .prose > h2, .prose > h3 { break-after: avoid; }
+    .agent, .card, .alert, tr { break-inside: avoid; }
+    a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.8em; color: var(--color-text-muted); }
+  }
+}
+
+/* ==========================================================================
+   GLOBAL NAV + IKEA-STYLE HOME CARDS (SmartStack-inspired redesign)
+   Override layer rules to keep the sidenav as an overlay drawer on all sizes,
+   and rebuild the home page path cards as editorial image+text cards.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Navigation — hamburger always visible; sidenav always drawer-only
+   -------------------------------------------------------------------------- */
+@media (min-width: 64rem) {
+  .icon-btn--menu {
+    display: inline-flex !important; /* override the "hide at desktop" rule */
+  }
+  .layout {
+    display: block !important; /* was grid with sidebar column */
+  }
+  .sidenav {
+    position: fixed !important;
+    z-index: 200 !important;
+    top: var(--header-h) !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: min(var(--sidenav-w), 88vw) !important;
+    height: auto !important;
+    transform: translateX(-100%) !important;
+    visibility: hidden !important;
+    transition: transform var(--dur) var(--ease), visibility 0s linear var(--dur) !important;
+    box-shadow: none !important;
+  }
+  .sidenav.is-open {
+    transform: none !important;
+    visibility: visible !important;
+    box-shadow: var(--shadow-2) !important;
+    transition: transform var(--dur) var(--ease), visibility 0s !important;
+  }
+  .sidenav-scrim {
+    display: none !important;
+  }
+  .sidenav-scrim.is-visible {
+    display: block !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. Home page — full-width hero, no inner padding on main
+   -------------------------------------------------------------------------- */
+.home {
+  padding: 0;
+}
+
+/* Let the hero bleed edge-to-edge inside main */
+.main:has(.home) > .main__inner {
+  padding: 0;
+  max-width: none;
+}
+
+/* Hero: add a subtle radial glow at top-right (SmartStack feel) */
+.home .hero {
+  padding: clamp(2.5rem, 6vw, 4rem) var(--page-margin);
+  position: relative;
+  overflow: hidden;
+}
+
+.home .hero::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -5%;
+  width: 50%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(170, 140, 255, 0.38) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   3. Hero chooser — Notion-style centred hero
+   -------------------------------------------------------------------------- */
+.hero-chooser {
+  min-height: calc(100svh - var(--header-h, 4rem));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(3rem, 8vw, 6rem) var(--page-margin);
+  gap: 1.5rem;
+  text-align: center;
+  background:
+    radial-gradient(ellipse 75% 55% at 50% -5%, rgba(118, 49, 193, 0.10) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 95% 95%, rgba(254, 172, 0, 0.07) 0%, transparent 55%);
+}
+
+.hero-chooser__eyebrow {
+  margin: 0;
+  font-size: var(--fs-text-2);
+  font-weight: var(--fw-medium);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.hero-chooser__heading {
+  margin: 0;
+  font-size: clamp(2.25rem, 6vw, 3.75rem);
+  font-weight: var(--fw-medium);
+  color: var(--color-text);
+  line-height: var(--lh-heading);
+  max-width: 18ch;
+}
+
+.hero-chooser__sub {
+  margin: 0;
+  font-size: var(--fs-text-1);
+  color: var(--color-text-muted);
+  line-height: var(--lh-body);
+  max-width: 44ch;
+  margin-bottom: 1rem;
+}
+
+/* --------------------------------------------------------------------------
+   4. Path cards — IKEA editorial style: image block + title + intent + arrow
+   -------------------------------------------------------------------------- */
+.path-cards {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: var(--content-w-wide);
+  width: 100%;
+}
+
+@media (max-width: 55.99rem) {
+  .path-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 35.99rem) {
+  .path-cards { grid-template-columns: 1fr; }
+}
+
+.path-card {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1rem;
+  background: var(--color-surface);
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  padding: 1.5rem;
+  transition: border-color 0.18s ease,
+              box-shadow 0.18s ease,
+              transform 0.18s cubic-bezier(.2, .8, .4, 1);
+}
+
+.path-card:hover {
+  border-color: var(--path-ink);
+  box-shadow: 0 4px 24px rgba(65, 0, 191, 0.1);
+  transform: translateY(-2px);
+  color: var(--color-text);
+}
+
+.path-card__dot {
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  background: var(--path-solid);
+  flex-shrink: 0;
+  margin-top: 0.45em;
+}
+
+.path-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.path-card__intent {
+  color: var(--color-text);
+  font-size: var(--fs-title);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-heading);
+}
+
+.path-card__sub {
+  color: var(--color-text-muted);
+  font-size: var(--fs-text-2);
+  line-height: var(--lh-body);
+}
+
+.path-card__arrow {
+  display: inline-block;
+  margin-top: 0.875rem;
+  color: var(--path-ink);
+  font-size: 1.125rem;
+  transition: transform 0.18s ease;
+}
+
+.path-card:hover .path-card__arrow {
+  transform: translateX(4px);
+}
+
+/* --------------------------------------------------------------------------
+   5. Home overview — Notion 2-col bento
+   -------------------------------------------------------------------------- */
+.home-overview {
+  padding: clamp(4rem, 8vw, 7rem) var(--page-margin);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface-raised);
+}
+
+.home-overview__inner {
+  max-width: var(--content-w-wide);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+@media (min-width: 56rem) {
+  .home-overview__inner {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 5rem;
+  }
+  .home-overview__left { flex: 0 0 auto; max-width: 20rem; }
+  .home-overview__body { flex: 1; }
+}
+
+.home-overview__eyebrow {
+  margin: 0 0 0.625rem;
+  font-size: var(--fs-text-2);
+  font-weight: var(--fw-medium);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.home-overview__title {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: var(--fw-medium);
+  color: var(--color-text);
+  line-height: var(--lh-heading);
+  margin: 0;
+}
+
+.home-overview__body {
+  font-size: var(--fs-text-1);
+  color: var(--color-text-muted);
+  line-height: var(--lh-body);
+  margin: 0;
+  max-width: 60ch;
+  padding-top: 0.375rem;
+}
+
+/* --------------------------------------------------------------------------
+   6. Home lead — mission statement
+   -------------------------------------------------------------------------- */
+.home-lead {
+  padding: clamp(3.5rem, 6vw, 5.5rem) var(--page-margin);
+  border-top: 1px solid var(--color-border);
+}
+
+.home-lead__inner {
+  max-width: var(--content-w-wide);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+@media (min-width: 56rem) {
+  .home-lead__inner {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 6rem;
+  }
+  .home-lead__headline-wrap { flex: 0 0 auto; max-width: 28rem; }
+  .home-lead__body-wrap { flex: 1; padding-top: 0.375rem; }
+}
+
+.home-lead__headline {
+  font-size: clamp(1.625rem, 3vw, 2.25rem);
+  font-weight: var(--fw-medium);
+  color: var(--color-text);
+  line-height: var(--lh-heading);
+  margin: 0;
+}
+
+.home-lead__eyebrow {
+  font-size: var(--fs-text-2);
+  font-weight: var(--fw-medium);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-surface-brand);
+  margin: 0 0 1rem;
+}
+
+.home-lead__body {
+  font-size: var(--fs-text-1);
+  color: var(--color-text-muted);
+  line-height: var(--lh-body);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   7. Home paths grid — expanded path summaries
+   -------------------------------------------------------------------------- */
+.home-paths {
+  padding: clamp(3.5rem, 6vw, 5.5rem) var(--page-margin);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface-raised);
+}
+
+.home-paths__header {
+  max-width: var(--content-w-wide);
+  margin: 0 auto 3rem;
+}
+
+.home-paths__eyebrow {
+  font-size: var(--fs-text-2);
+  font-weight: var(--fw-medium);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: 0 0 0.625rem;
+}
+
+.home-paths__title {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: var(--fw-medium);
+  color: var(--color-text);
+  line-height: var(--lh-heading);
+  margin: 0;
+}
+
+.home-paths__grid {
+  max-width: var(--content-w-wide);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 55.99rem) {
+  .home-paths__grid { grid-template-columns: 1fr; }
+}
+
+.path-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.75rem 2rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-top: 3px solid var(--path-solid);
+  border-radius: 4px 4px 12px 12px;
+}
+
+.path-summary__tag {
+  font-size: var(--fs-text-2);
+  font-weight: var(--fw-semibold);
+  color: var(--path-ink);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 0.375rem;
+}
+
+.path-summary__intent {
+  font-size: var(--fs-title);
+  font-weight: var(--fw-medium);
+  color: var(--color-text);
+  margin: 0;
+  line-height: var(--lh-heading);
+}
+
+.path-summary__chapters {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--color-border);
+  padding-top: 1rem;
+  gap: 0;
+}
+
+.path-summary__chapter {
+  font-size: var(--fs-text-2);
+  color: var(--color-text-muted);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.path-summary__chapter:hover {
+  color: var(--path-ink);
+}
+
+.path-summary__chapter-num {
+  color: var(--path-ink);
+  opacity: 0.6;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  min-width: 2.25ch;
+  font-size: var(--fs-text-2);
+}
+
+.path-summary__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: var(--fs-text-2);
+  font-weight: var(--fw-medium);
+  color: var(--path-ink);
+  text-decoration: none;
+  margin-top: 0.25rem;
+  transition: gap 0.15s ease;
+}
+
+.path-summary__cta:hover {
+  gap: 0.625rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HOME PAGE — landing page specific components
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Home nav ────────────────────────────────────────────────────────────── */
+
+.home-nav {
+  background-color: var(--scb-purple);
+  height: 72px;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.home-nav__inner {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.home-nav__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.home-nav__logo img {
+  width: 71px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.home-nav__logo-text {
+  color: #ffffff;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.home-nav__center {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex: 1;
+  justify-content: center;
+}
+
+.home-nav__link {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.875rem;
+  font-weight: 300;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.home-nav__link:hover {
+  color: #ffffff;
+}
+
+.home-nav__end {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.home-nav__lang {
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 0.5rem 0.875rem;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 0.25rem;
+  transition: background 0.15s ease;
+}
+
+.home-nav__lang:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+/* ── Hero landing ─────────────────────────────────────────────────────────── */
+
+.hero-landing {
+  background-color: var(--scb-bg);
+}
+
+.hero-landing__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 5rem;
+  min-height: 480px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 2rem;
+}
+
+.hero-landing__content {
+  padding: 4rem 0;
+  max-width: 760px;
+}
+
+.hero-landing__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.4375rem 0.75rem;
+  background: rgba(118, 49, 193, 0.09);
+  border-radius: 0.25rem;
+  color: var(--scb-purple);
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 2.75rem;
+}
+
+.hero-landing__headline {
+  font-size: 4rem;
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--scb-black);
+  margin: 0 0 2.25rem;
+  letter-spacing: -0.01em;
+}
+
+.hero-landing__sub {
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #736e78;
+  margin: 0;
+  max-width: 620px;
+}
+
+.hero-landing__illustration {
+  align-self: center;
+  padding: 4rem 0 4rem 2rem;
+}
+
+/* ── Hero diagram illustration ───────────────────────────────────────────── */
+
+.hero-diagram {
+  position: relative;
+  width: 380px;
+  height: 260px;
+}
+
+.hero-diagram__dots {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.hero-diagram__cards {
+  position: absolute;
+  top: 80px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.hero-diagram__box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  font-size: 0.8125rem;
+  border-radius: 0.25rem;
+}
+
+.hero-diagram__box--light {
+  width: 100px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #736e78;
+  font-weight: 300;
+}
+
+.hero-diagram__box--purple {
+  width: 100px;
+  background: var(--scb-purple);
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.hero-diagram__arrow {
+  color: #c9c6cd;
+  font-size: 1rem;
+  padding: 0 0.375rem;
+  user-select: none;
+}
+
+.hero-diagram__chip {
+  position: absolute;
+  top: 144px;
+  left: 146px;
+  width: 138px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(254, 172, 0, 0.15);
+  border-radius: 0.25rem;
+  font-size: 0.6875rem;
+  color: var(--scb-black);
+  font-weight: 500;
+}
+
+.hero-rule {
+  border: none;
+  border-top: 1px solid rgba(201, 198, 205, 0.4);
+  margin: 0;
+}
+
+/* ── Path chooser ─────────────────────────────────────────────────────────── */
+
+.path-chooser {
+  background-color: #ffffff;
+}
+
+.path-chooser__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 3.5rem 5rem 6.75rem;
+}
+
+.path-chooser__heading {
+  font-size: 3.75rem;
+  font-weight: 300;
+  color: var(--scb-black);
+  text-align: center;
+  margin: 0 0 3rem;
+  font-style: italic;
+}
+
+.path-chooser__heading em {
+  font-style: inherit;
+}
+
+.path-chooser__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+/* ── Editorial card ──────────────────────────────────────────────────────── */
+
+.editorial-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  background: #ffffff;
+  border: 1px solid rgba(201, 198, 205, 0.4);
+  border-radius: 0.25rem;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: 410px;
+}
+
+.editorial-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(53, 50, 57, 0.12);
+}
+
+.editorial-card__top {
+  flex: 0 0 200px;
+  position: relative;
+  padding: 14px 16px 16px;
+}
+
+.editorial-card__arrow-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  background: var(--scb-black);
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: background 0.15s ease;
+}
+
+.editorial-card:hover .editorial-card__arrow-btn {
+  background: var(--scb-purple);
+}
+
+.editorial-card__intent {
+  font-size: 2.25rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--scb-black);
+  margin: 75px 0 0;
+}
+
+.editorial-card__bottom {
+  flex: 1;
+}
+
+.editorial-card[data-path="what"] .editorial-card__bottom { background-color: #7631C1; }
+.editorial-card[data-path="why"]  .editorial-card__bottom { background-color: #353239; }
+.editorial-card[data-path="who"]  .editorial-card__bottom { background-color: #4A90E2; }
+.editorial-card[data-path="how"]  .editorial-card__bottom { background-color: #009942; }
+
+/* ── About strip ─────────────────────────────────────────────────────────── */
+
+.about-strip {
+  background-color: rgba(118, 49, 193, 0.06);
+}
+
+.about-strip__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 2rem 5rem 2.5rem;
+}
+
+.about-strip__label {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--scb-purple);
+  margin: 0 0 0.625rem;
+}
+
+.about-strip__body {
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #736e78;
+  margin: 0;
+  max-width: 880px;
+}
+
+/* ── Home footer ─────────────────────────────────────────────────────────── */
+
+.home-footer {
+  background-color: var(--scb-black);
+}
+
+.home-footer__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 5rem;
+}
+
+.home-footer__top {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  padding: 3.25rem 0 0;
+}
+
+.home-footer__brand-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0 0 0.25rem;
+}
+
+.home-footer__brand-sub {
+  font-size: 1rem;
+  font-weight: 300;
+  color: #959199;
+  margin: 0;
+}
+
+.home-footer__cols {
+  display: flex;
+  gap: 3.5rem;
+}
+
+.home-footer__col-heading {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0 0 1rem;
+}
+
+.home-footer__col-heading a {
+  color: #c9c6cd;
+  text-decoration: none;
+}
+
+.home-footer__col-heading a:hover {
+  color: #ffffff;
+}
+
+.home-footer__col-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.home-footer__col-list a {
+  font-size: 1rem;
+  font-weight: 300;
+  color: #959199;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.home-footer__col-list a:hover {
+  color: #ffffff;
+}
+
+.home-footer__rule {
+  border: none;
+  border-top: 1px solid rgba(201, 198, 205, 0.12);
+  margin: 3.5rem 0 0;
+}
+
+.home-footer__copy {
+  font-size: 1rem;
+  font-weight: 300;
+  color: #959199;
+  margin: 1rem 0 2rem;
+}
+
+/* ── Home responsive ─────────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .hero-landing__inner {
+    grid-template-columns: 1fr;
+    padding: 0 2rem;
+  }
+  .hero-landing__illustration { display: none; }
+  .path-chooser__inner { padding: 2.5rem 2rem 4rem; }
+  .path-chooser__grid { grid-template-columns: repeat(2, 1fr); }
+  .about-strip__inner { padding: 2rem; }
+  .home-footer__top { grid-template-columns: 1fr; }
+  .home-footer__cols { flex-wrap: wrap; gap: 2rem; }
+  .home-footer__inner { padding: 0 2rem; }
+}
+
+@media (max-width: 640px) {
+  .home-nav__center { display: none; }
+  .hero-landing__headline { font-size: 2.5rem; }
+  .path-chooser__heading { font-size: 2.25rem; }
+  .editorial-card__intent { font-size: 1.75rem; }
+  .path-chooser__grid { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================================
+   The What — carousel page
+   ========================================================================== */
+
+/* ---------- Nav ---------- */
+.what-nav {
+  background: #5B2CC0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 72px;
+  display: flex;
+  align-items: center;
+}
+.what-nav__inner {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.what-nav__logo {
+  display: flex;
+  align-items: center;
+  gap: 19px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.what-nav__logo-text {
+  color: rgba(229,217,255,1);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.what-nav__links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-left: auto;
+}
+.what-nav__link {
+  color: rgba(204,191,255,1);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  text-decoration: none;
+  padding: 0;
+}
+.what-nav__link--active {
+  color: #fff;
+  font-weight: 600;
+  border-bottom: 2px solid #fff;
+  padding-bottom: 2px;
+}
+.what-nav__link:hover { color: #fff; }
+
+/* ---------- Breadcrumb ---------- */
+.what-breadcrumb {
+  background: #fff;
+  border-bottom: 1px solid #E5E3E9;
+  height: 48px;
+  display: flex;
+  align-items: center;
+}
+.what-breadcrumb__inner {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.what-breadcrumb__back {
+  color: rgba(120,120,135,1);
+  font-size: 0.8125rem;
+  text-decoration: none;
+}
+.what-breadcrumb__back:hover { color: #7631C1; }
+.what-breadcrumb__sep { color: rgba(224,224,230,1); font-size: 0.8125rem; }
+.what-breadcrumb__current {
+  color: rgba(91,44,192,1);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+/* ---------- Carousel shell ---------- */
+.what-carousel {
+  position: relative;
+  background: #fff;
+}
+
+/* ---------- Slides ---------- */
+.what-slide {
+  min-height: 556px;
+  padding: 0;
+  display: block;
+}
+.what-slide[hidden] { display: none; }
+
+.what-slide__split {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 640px 1fr;
+  min-height: 556px;
+}
+
+/* Left column */
+.what-slide__left {
+  padding: 56px 56px 56px 88px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.what-slide__counter {
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: rgba(120,120,135,1);
+  margin: 0;
+}
+.what-slide__title {
+  font-size: 3.5rem;
+  font-weight: 500;
+  color: rgba(18,17,26,1);
+  line-height: 1.2;
+  margin: 0;
+}
+.what-slide__sub {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #7631C1;
+  margin: 0;
+}
+.what-slide__sub--teal { color: #08918C; }
+.what-slide__body {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: rgba(18,17,26,1);
+  line-height: 1.5;
+  margin: 0;
+}
+.what-slide__bullets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.what-slide__bullets li {
+  padding-left: 18px;
+  position: relative;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: rgba(18,17,26,1);
+  line-height: 1.5;
+}
+.what-slide__bullets li::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(91,44,192,1);
+  position: absolute;
+  left: 0;
+  top: 7px;
+}
+.what-slide__bullets--teal li::before { background: #08918C; }
+
+.what-slide__gates-label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #9D97A6;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.what-cta {
+  display: inline-block;
+  margin-top: 8px;
+  background: #7631C1;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  align-self: flex-start;
+}
+.what-cta:hover { background: #5B2CC0; }
+
+/* Right panels */
+.what-slide__right {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.what-slide__right--purple {
+  background: #F5F0FF;
+  border-top: 6px solid #7631C1;
+  padding: 32px 40px;
+}
+.what-slide__right--teal {
+  background: #EBF8F7;
+  border-top: 6px solid #08918C;
+  padding: 32px 40px;
+}
+.what-slide__right--dark {
+  background: #1E1B2E;
+  padding: 24px 0 24px 24px;
+}
+
+.what-slide__panel-title {
+  font-size: 2.25rem;
+  font-weight: 500;
+  color: #7631C1;
+  margin: 0;
+}
+.what-slide__panel-title--teal { color: #08918C; }
+
+/* Principle cards */
+.what-principle {
+  background: #fff;
+  border-left: 4px solid #7631C1;
+  padding: 12px 16px;
+  border-radius: 0 4px 4px 0;
+}
+.what-principle__heading {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #353239;
+  margin: 0 0 4px;
+}
+.what-principle__sub {
+  font-size: 1rem;
+  font-weight: 300;
+  color: #6B6678;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Quote */
+.what-quote {
+  background: #E3D7FF;
+  color: #5B2CC0;
+  font-size: 1.5rem;
+  font-style: italic;
+  font-weight: 500;
+  margin: 8px 0 0;
+  padding: 16px 20px;
+  border-radius: 6px;
+  line-height: 1.5;
+}
+
+/* Stage grid (slide 2) */
+.what-stage-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 8px;
+  align-items: center;
+}
+.what-stage {
+  background: #fff;
+  border-left: 4px solid #08918C;
+  padding: 8px 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #353239;
+  border-radius: 0 4px 4px 0;
+}
+.what-stage-arrow {
+  font-size: 0.75rem;
+  color: #08918C;
+  text-align: center;
+}
+.what-gate-box {
+  background: #EBF8F7;
+  border: 1px solid #08918C;
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-size: 1rem;
+  color: #08918C;
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+/* Reframes list (slide 3 left) */
+.what-reframes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.what-reframes li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+}
+.what-reframe__from { color: #9D97A6; }
+.what-reframe__arrow { color: #7631C1; font-weight: 700; }
+.what-reframe__to { color: #353239; font-weight: 600; }
+
+/* Reframe columns (slide 3 right) */
+.what-reframe-cols {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  height: 100%;
+  overflow-y: auto;
+}
+.what-reframe-col {
+  background: rgba(118,49,193,0.15);
+  display: flex;
+  flex-direction: column;
+}
+.what-reframe-col__head {
+  background: #362E52;
+  padding: 12px;
+  flex-shrink: 0;
+}
+.what-reframe-col__from {
+  font-size: 0.625rem;
+  color: rgba(204,191,255,0.8);
+  margin: 0 0 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.what-reframe-col__to {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #fff;
+  margin: 0;
+}
+.what-reframe-col__body {
+  padding: 12px;
+  flex: 1;
+}
+.what-reframe-col__body ul {
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 8px;
+}
+.what-reframe-col__body li {
+  font-size: 0.625rem;
+  color: rgba(255,255,255,0.8);
+  padding: 2px 0;
+  line-height: 1.4;
+}
+.what-reframe-col__label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #9D97A6;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0;
+}
+.what-reframe-col__label--new { color: #C4A8FF; }
+.what-reframe-col__sowhat {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #C4A8FF;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 8px 0 0;
+}
+.what-reframe-col__divider {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin: 8px 0;
+}
+
+/* Lifecycle grid (slide 4) */
+.what-lifecycle {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  flex: 1;
+}
+.what-lifecycle__phase {
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.what-lifecycle__phase--blue { background: #EBF2FF; }
+.what-lifecycle__phase--purple { background: #ECE3FF; }
+.what-lifecycle__phase--green { background: #EBF8EE; }
+.what-lifecycle__phase-bar {
+  height: 6px;
+  background: #7631C1;
+}
+.what-lifecycle__phase--blue .what-lifecycle__phase-bar { background: #0050FF; }
+.what-lifecycle__phase--green .what-lifecycle__phase-bar { background: #0B5C1C; }
+.what-lifecycle__phase-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #353239;
+  padding: 8px 10px 4px;
+  margin: 0;
+}
+.what-lifecycle__stage {
+  background: #fff;
+  border-left: 4px solid #7631C1;
+  margin: 4px 8px;
+  padding: 6px 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #353239;
+  border-radius: 0 3px 3px 0;
+}
+.what-lifecycle__phase--blue .what-lifecycle__stage { border-left-color: #0050FF; }
+.what-lifecycle__phase--green .what-lifecycle__stage { border-left-color: #0B5C1C; }
+.what-lifecycle__gate {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #7631C1;
+  padding: 4px 10px 8px;
+  margin: auto 0 0;
+}
+.what-lifecycle__phase--blue .what-lifecycle__gate { color: #0050FF; }
+.what-lifecycle__phase--green .what-lifecycle__gate { color: #0B5C1C; }
+.what-lifecycle__continuous {
+  background: #FFEAA8;
+  border-top: 3px solid #FEAC00;
+  padding: 8px 12px;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: #353239;
+  border-radius: 4px;
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* ---------- Side arrows ---------- */
+.what-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  font-size: 1.125rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: opacity 0.15s;
+}
+.what-arrow--prev {
+  left: 20px;
+  background: #F4F4F6;
+  color: #9D97A6;
+}
+.what-arrow--next {
+  right: 20px;
+  background: #7631C1;
+  color: #fff;
+}
+.what-arrow:disabled {
+  background: #F4F4F6;
+  color: #C9C6CD;
+  cursor: default;
+}
+
+/* ---------- Slide nav bar ---------- */
+.what-slide-nav {
+  background: #fff;
+  border-top: 1px solid #E5E3E9;
+}
+.what-slide-nav__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.what-tab-prev,
+.what-tab-next {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #E5E3E9;
+  background: #fff;
+  color: #7631C1;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.what-tab-next { background: #7631C1; color: #fff; border-color: #7631C1; }
+.what-tab-prev:disabled,
+.what-tab-next:disabled { background: #F4F4F6; color: #C9C6CD; border-color: #E5E3E9; cursor: default; }
+.what-tab {
+  flex: 1;
+  min-width: 0;
+  background: #F4F4F6;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 14px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.what-tab--active { background: #E3D7FF; }
+.what-tab__num {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #9D97A6;
+  margin-bottom: 4px;
+}
+.what-tab--active .what-tab__num { color: #7631C1; }
+.what-tab__label {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #353239;
+  line-height: 1.4;
+}
+.what-tab--active .what-tab__label { font-weight: 500; }
+.what-slide-count {
+  font-size: 1rem;
+  font-weight: 300;
+  color: #9D97A6;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* ---------- Progress dots ---------- */
+.what-progress {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 0 24px;
+  background: #fff;
+}
+.what-dot {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #C9C6CD;
+  transition: width 0.2s, background 0.2s;
+}
+.what-dot--active {
+  width: 24px;
+  border-radius: 4px;
+  background: #7631C1;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .what-slide__split { grid-template-columns: 1fr; }
+  .what-slide__right--dark { padding: 24px; }
+  .what-reframe-cols { grid-template-columns: repeat(2, 1fr); }
+  .what-lifecycle { grid-template-columns: 1fr; }
+  .what-nav__links { gap: 16px; }
+}
+@media (max-width: 640px) {
+  .what-slide__left { padding: 32px 24px; }
+  .what-slide__right--purple,
+  .what-slide__right--teal { padding: 24px; }
+  .what-slide-nav__inner { flex-wrap: wrap; gap: 8px; }
+  .what-reframe-cols { grid-template-columns: 1fr; }
+  .what-nav__links { display: none; }
+}
