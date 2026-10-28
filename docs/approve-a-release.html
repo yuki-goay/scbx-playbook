@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Approve a release · Agentic PDLC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+
+    /* ═══════════════════════════════════════════════════════════
+       LAYER 1 — ATOMS
+    ═══════════════════════════════════════════════════════════ */
+    :root {
+      /* Colour primitives */
+      --purple-200: #E8DBFF;
+      --purple-600: #7631C1;
+      --purple-700: #462279;
+      --grey-0:     #FAFAFA;
+      --grey-50:    #F5F3F8;
+
+      /* Raw text values */
+      --text-primary-raw:     #14181F;
+      --text-secondary-raw:   #4A5260;
+      --text-muted-raw:       #60636A;
+      --text-placeholder-raw: #8A93A1;
+      --text-on-dark-raw:     #C9CED6;
+      --border-raw:           #BBBEC3;
+      --surface-dark-raw:     #14181F;
+
+      /* ═══════════════════════════════════════════════════════
+         LAYER 2 — SEMANTICS
+      ═══════════════════════════════════════════════════════ */
+      --color-text-primary:     var(--text-primary-raw);
+      --color-text-secondary:   var(--text-secondary-raw);
+      --color-text-muted:       var(--text-muted-raw);
+      --color-text-placeholder: var(--text-placeholder-raw);
+      --color-text-on-dark:     var(--text-on-dark-raw);
+      --color-text-accent:      var(--purple-600);
+
+      --color-surface-page:    #F3F0F7;
+      --color-surface-section: var(--grey-50);
+      --color-surface-card:    #FFFFFF;
+      --color-surface-content: var(--grey-0);
+      --color-surface-dark:    var(--surface-dark-raw);
+
+      --color-border:           var(--border-raw);
+      --color-accent:           var(--purple-600);
+      --color-accent-dark:      var(--purple-700);
+
+      --color-check-done-bg:        var(--text-placeholder-raw);
+      --color-check-todo-border:    var(--border-raw);
+
+      --color-progress-track: #C9CED6;
+      --color-progress-fill:  var(--purple-600);
+
+      --mini-hero-gradient: linear-gradient(180deg, #E8DBFF 2%, #F3F0F7 74%);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       LAYER 3 — BASE RESET
+    ═══════════════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 16px; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--color-text-primary);
+      background: var(--color-surface-page);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    input[type="checkbox"] { cursor: pointer; }
+
+    /* ── NAV ─────────────────────────────────────────────────────── */
+    .site-header {
+      width: 100%;
+      height: 72px;
+      background: linear-gradient(99deg, rgba(79,42,129,0.85) 0%, #462279 77.5%);
+      display: flex;
+      align-items: center;
+      padding: 0 120px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: flex-start;
+      text-decoration: none;
+      font-size: 28px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+
+    .header-logo sup {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-top: 3px;
+      margin-left: 1px;
+    }
+
+    /* ── MINI HERO ───────────────────────────────────────────────── */
+    .mini-hero {
+      width: 100%;
+      height: 194px;
+      background: var(--mini-hero-gradient);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 40px 120px;
+    }
+
+    .mini-hero__inner {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .breadcrumb__link {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--color-text-muted);
+      text-decoration: none;
+    }
+
+    .breadcrumb__link:hover { text-decoration: underline; }
+
+    .breadcrumb__sep {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--color-text-muted);
+    }
+
+    .breadcrumb__current {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-text-accent);
+    }
+
+    .mini-hero__heading {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 44px;
+      color: var(--color-text-primary);
+      letter-spacing: -0.5px;
+    }
+
+    .mini-hero__sub {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 26px;
+      color: var(--color-text-primary);
+    }
+
+    /* ── PAGE BODY (outer wrapper) ──────────────────────────────── */
+    .page-body {
+      padding: 40px 120px 80px;
+    }
+
+    /* Single unified container */
+    .page-container {
+      width: 1200px;
+      background: #FFFFFF;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content-card {
+      padding: 48px 80px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* ── CARD HEADING ────────────────────────────────────────────── */
+    .card-heading {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      line-height: 1.2;
+    }
+
+    /* ── DIVIDER ─────────────────────────────────────────────────── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(74, 82, 96, 0.15);
+      flex-shrink: 0;
+    }
+
+    /* ── DIAGRAM IMAGE ───────────────────────────────────────────── */
+    .diagram-wrap {
+      width: 100%;
+    }
+
+    .diagram-wrap img {
+      width: 1040px;
+      height: auto;
+      display: block;
+      border-radius: 6px;
+    }
+
+    /* ── TEXT SECTION (heading + paragraph) ─────────────────────── */
+    .text-section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .text-section__heading {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-text-secondary);
+      line-height: 24px;
+    }
+
+    .text-section__body {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--color-text-secondary);
+      line-height: 24px;
+    }
+
+    .text-section__body + .text-section__body {
+      margin-top: 8px;
+    }
+
+    .outcomes-list {
+      margin-top: 12px;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .outcomes-list li {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      color: var(--color-text-secondary);
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .outcomes-list li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--color-text-muted);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       CHECKLIST SECTION AREA  (grey band inset inside the container)
+    ═══════════════════════════════════════════════════════════ */
+    .checklist-section {
+      background: #FFFFFF;
+      padding: 24px 80px;
+    }
+
+    .checklist-section__inner {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* ── CHECKLIST CARD ──────────────────────────────────────────── */
+    .checklist-card {
+      background: var(--color-surface-card);
+      border-radius: 12px;
+      padding: 0 40px;
+      overflow: hidden;
+    }
+
+    /* ── SECTION HEADER (badge + title + count) ──────────────────── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .section-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 14px;
+      background: var(--color-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .section-badge__num {
+      font-size: 12px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      flex: 1;
+    }
+
+    .section-count {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--color-text-placeholder);
+    }
+
+    /* ── CHECKLIST ITEMS ─────────────────────────────────────────── */
+    .checklist-items {
+      padding-bottom: 20px;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .checklist-item:last-of-type {
+      border-bottom: none;
+    }
+
+    /* Custom circular checkbox */
+    .checklist-item input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--color-check-todo-border);
+      background: transparent;
+      flex-shrink: 0;
+      position: relative;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .checklist-item input[type="checkbox"]:checked {
+      background: var(--color-check-done-bg);
+      border-color: var(--color-check-done-bg);
+    }
+
+    .checklist-item input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 10px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1;
+    }
+
+    .checklist-item input[type="checkbox"]:hover:not(:checked) {
+      border-color: var(--color-accent);
+    }
+
+    .checklist-item__text {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+      color: var(--color-text-secondary);
+      transition: color 0.15s;
+    }
+
+    .checklist-item.is-done .checklist-item__text {
+      color: var(--color-text-placeholder);
+      text-decoration: line-through;
+    }
+
+    /* Section divider between checklist sections inside the card */
+    .section-block {
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .section-block:last-child {
+      border-bottom: none;
+    }
+
+    /* ── BOTTOM CONTENT (inside the unified container) ──────────── */
+    .bottom-card {
+      background: #FFFFFF;
+      padding: 24px 80px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* ── FOOTER ──────────────────────────────────────────────────── */
+    .site-footer {
+      width: 100%;
+      height: 180px;
+      background: var(--color-surface-dark);
+      padding: 0 120px;
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-nav {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .footer-link {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--color-text-on-dark);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .footer-link:hover { color: #ffffff; }
+
+  </style>
+</head>
+<body>
+
+  <!-- ── HEADER ─────────────────────────────────────────── -->
+  <header class="site-header" role="banner">
+    <a href="index.html" class="header-logo">SCB<sup>✕</sup></a>
+  </header>
+
+  <!-- ── MINI HERO ─────────────────────────────────────── -->
+  <section class="mini-hero" aria-label="Page header">
+    <div class="mini-hero__inner">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html" class="breadcrumb__link">← Home</a>
+        <span class="breadcrumb__sep" aria-hidden="true">/</span>
+        <span class="breadcrumb__current" aria-current="page">Approve a release</span>
+      </nav>
+      <h1 class="mini-hero__heading">Useful Guides</h1>
+      <p class="mini-hero__sub">Discover more to make the most out of your agentic experience. </p>
+    </div>
+  </section>
+
+  <!-- ── MAIN CONTENT ──────────────────────────────────── -->
+  <main>
+
+    <div class="page-body">
+      <div class="page-container">
+
+        <!-- Top content card -->
+        <article class="content-card">
+
+          <h2 class="card-heading">Approve a release</h2>
+
+          <div class="divider"></div>
+
+          <!-- Diagram -->
+          <div class="diagram-wrap">
+            <img src="assets/approve-a-release-diagram.png" alt="Approve a release diagram" width="1040">
+          </div>
+
+          <!-- What are you reviewing? -->
+          <div class="text-section">
+            <h3 class="text-section__heading">What are you reviewing?</h3>
+            <p class="text-section__body">You are reviewing the release candidate and everything that justifies releasing it. That means the build artefacts, the accepted test evidence, the quality and security results, and the deployment package, version and logs that Azure-Deploy produces. Azure-Deploy prepares deployment artefacts, validates configuration and executes an approved deployment to Azure, but it should only be used after the release candidate has passed the required quality, security and readiness checks.</p>
+            <p class="text-section__body">Each approver answers a different question, so know which seat you are in.</p>
+            <ul class="outcomes-list">
+              <li><strong>FDA:</strong> Ensure quality and security evidences are strong enough to proceed</li>
+              <li><strong>FDE:</strong> Ensure release candidate is complete, traceable and ready to ship</li>
+              <li><strong>PO:</strong> Ensure product suitability for real users</li>
+            </ul>
+          </div>
+
+        </article>
+
+        <!-- ── CHECKLIST SECTION (grey band inside the container) ── -->
+        <div class="checklist-section">
+          <div class="checklist-section__inner">
+
+            <!-- Checklist card -->
+            <div class="checklist-card">
+
+          <!-- Section 1 — Reviewing quality and security gate (FDA) -->
+          <div class="section-block" data-section="s1">
+            <div class="section-header">
+              <div class="section-badge" aria-hidden="true">
+                <span class="section-badge__num">1</span>
+              </div>
+              <h2 class="section-title">Reviewing quality and security gate (FDA)</h2>
+              <span class="section-count" id="s1-count">0 of 4</span>
+            </div>
+            <div class="checklist-items" data-items="s1">
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s1" aria-label="Has the test evidence been accepted by the Quality Engineer, with failures, skipped cases and blockers explained?">
+                <span class="checklist-item__text">Has the test evidence been accepted by the Quality Engineer, with failures, skipped cases and blockers explained?</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s1" aria-label="Have security, privacy and compliance controls been addressed, and has the Compliance Reviewer's feedback been resolved?">
+                <span class="checklist-item__text">Have security, privacy and compliance controls been addressed, and has the Compliance Reviewer's feedback been resolved?</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s1" aria-label="Are any known risks written down, with an owner?">
+                <span class="checklist-item__text">Are any known risks written down, with an owner?</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s1" aria-label="Has every promotion from DEV to SIT to QA to PROD been approved by a person?">
+                <span class="checklist-item__text">Has every promotion from DEV to SIT to QA to PROD been approved by a person?</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Section 2 — Reviewing release readiness (FDE) -->
+          <div class="section-block" data-section="s2">
+            <div class="section-header">
+              <div class="section-badge" aria-hidden="true">
+                <span class="section-badge__num">2</span>
+              </div>
+              <h2 class="section-title">Reviewing release readiness (FDE)</h2>
+              <span class="section-count" id="s2-count">0 of 5</span>
+            </div>
+            <div class="checklist-items" data-items="s2">
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s2" aria-label="Does the release candidate contain only approved, reviewed work?">
+                <span class="checklist-item__text">Does the release candidate contain only approved, reviewed work?</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s2" aria-label="Does everything trace from requirement to spec, task, code and test?">
+                <span class="checklist-item__text">Does everything trace from requirement to spec, task, code and test?</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s2" aria-label="Are build artefacts complete and versioned?">
+                <span class="checklist-item__text">Are build artefacts complete and versioned?</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s2" aria-label="Are environment configuration and deployment controls in place?">
+                <span class="checklist-item__text">Are environment configuration and deployment controls in place?</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s2" aria-label="Is there a production safe rollback path, and has someone confirmed it works?">
+                <span class="checklist-item__text">Is there a production safe rollback path, and has someone confirmed it works?</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Section 3 — Reviewing user acceptance (PO) -->
+          <div class="section-block" data-section="s3">
+            <div class="section-header">
+              <div class="section-badge" aria-hidden="true">
+                <span class="section-badge__num">3</span>
+              </div>
+              <h2 class="section-title">Reviewing user acceptance (PO)</h2>
+              <span class="section-count" id="s3-count">0 of 3</span>
+            </div>
+            <div class="checklist-items" data-items="s3">
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s3" aria-label="Does what is shipping match the outcome the squad set out to deliver?">
+                <span class="checklist-item__text">Does what is shipping match the outcome the squad set out to deliver?</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s3" aria-label="Are the release timing and communication to users sorted?">
+                <span class="checklist-item__text">Are the release timing and communication to users sorted?</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s3" aria-label="Is the squad ready to monitor the release once it is live?">
+                <span class="checklist-item__text">Is the squad ready to monitor the release once it is live?</span>
+              </label>
+            </div>
+          </div>
+
+            </div><!-- /.checklist-card -->
+
+          </div><!-- /.checklist-section__inner -->
+        </div><!-- /.checklist-section -->
+
+        <!-- Bottom content (when the output is weak + handoff) -->
+        <article class="bottom-card">
+
+          <div class="text-section">
+            <h3 class="text-section__heading">When the output is weak</h3>
+            <p class="text-section__body">Do not approve on trust or on deadline pressure. If evidence is missing, send it back to the stage that owns it rather than patching it at the gate, so testing gaps go to the Quality Engineer, code issues go back through implementation and review, and configuration problems go to whoever owns the deployment setup.</p>
+            <p class="text-section__body">If Azure-Deploy fails or reports something unexpected, stop the promotion, read the deployment logs and decide whether the fault is in the package, the configuration or the environment. The agent should not be asked to push through a failing validation. If the rollback path is unclear, treat that as a blocker in its own right, because a release you cannot undo needs a higher bar than one you can.</p>
+          </div>
+
+          <div class="text-section">
+            <h3 class="text-section__heading">Handoff</h3>
+            <p class="text-section__body">Once deployment is approved and complete, the release moves into Operate &amp; Learn, where the Ops or System Manager keeps an ongoing review. Production learning then feeds back into the context, requirements and tests for the next increment. Keep the release evidence, since brownfield work in particular depends on it later.</p>
+          </div>
+
+        </article>
+
+      </div><!-- /.page-container -->
+    </div><!-- /.page-body -->
+
+  </main>
+
+  <!-- ── FOOTER ─────────────────────────────────────────── -->
+  <footer class="site-footer"></footer>
+
+  <!-- ── INTERACTIVE CHECKLIST JAVASCRIPT ──────────────── -->
+  <script>
+    (function () {
+      const sectionTotals = { s1: 4, s2: 5, s3: 3 };
+
+      function countSection(sectionId) {
+        return document.querySelectorAll(`input[data-section="${sectionId}"]:checked`).length;
+      }
+
+      function updateSection(sectionId) {
+        const done  = countSection(sectionId);
+        const total = sectionTotals[sectionId];
+        const el    = document.getElementById(sectionId + '-count');
+        if (el) el.textContent = `${done} of ${total}`;
+      }
+
+      function handleChange(e) {
+        const cb      = e.target;
+        const label   = cb.closest('.checklist-item');
+        const section = cb.dataset.section;
+
+        if (cb.checked) {
+          label.classList.add('is-done');
+        } else {
+          label.classList.remove('is-done');
+        }
+
+        updateSection(section);
+      }
+
+      document.querySelectorAll('.checklist-item input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', handleChange);
+      });
+
+      ['s1', 's2', 's3'].forEach(updateSection);
+    })();
+  </script>
+
+</body>
+</html>

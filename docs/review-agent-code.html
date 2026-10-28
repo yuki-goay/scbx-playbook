@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Review agent generated code · Agentic PDLC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+
+    /* ═══════════════════════════════════════════════════════════
+       LAYER 1 — ATOMS
+    ═══════════════════════════════════════════════════════════ */
+    :root {
+      /* Colour primitives */
+      --purple-200: #E8DBFF;
+      --purple-600: #7631C1;
+      --purple-700: #462279;
+      --grey-0:     #FAFAFA;
+      --grey-50:    #F5F3F8;
+
+      /* Raw text values */
+      --text-primary-raw:     #14181F;
+      --text-secondary-raw:   #4A5260;
+      --text-muted-raw:       #60636A;
+      --text-placeholder-raw: #8A93A1;
+      --text-on-dark-raw:     #C9CED6;
+      --border-raw:           #BBBEC3;
+      --surface-dark-raw:     #14181F;
+
+      /* ═══════════════════════════════════════════════════════
+         LAYER 2 — SEMANTICS
+      ═══════════════════════════════════════════════════════ */
+      --color-text-primary:     var(--text-primary-raw);
+      --color-text-secondary:   var(--text-secondary-raw);
+      --color-text-muted:       var(--text-muted-raw);
+      --color-text-placeholder: var(--text-placeholder-raw);
+      --color-text-on-dark:     var(--text-on-dark-raw);
+      --color-text-accent:      var(--purple-600);
+
+      --color-surface-page:    #F3F0F7;
+      --color-surface-section: var(--grey-50);
+      --color-surface-card:    #FFFFFF;
+      --color-surface-content: var(--grey-0);
+      --color-surface-dark:    var(--surface-dark-raw);
+
+      --color-border:           var(--border-raw);
+      --color-accent:           var(--purple-600);
+      --color-accent-dark:      var(--purple-700);
+
+      --color-check-done-bg:        var(--text-placeholder-raw);
+      --color-check-todo-border:    var(--border-raw);
+
+      --color-progress-track: #C9CED6;
+      --color-progress-fill:  var(--purple-600);
+
+      --mini-hero-gradient: linear-gradient(180deg, #E8DBFF 2%, #F3F0F7 74%);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       LAYER 3 — BASE RESET
+    ═══════════════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 16px; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--color-text-primary);
+      background: var(--color-surface-page);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    input[type="checkbox"] { cursor: pointer; }
+
+    /* ── NAV ─────────────────────────────────────────────────────── */
+    .site-header {
+      width: 100%;
+      height: 72px;
+      background: linear-gradient(99deg, rgba(79,42,129,0.85) 0%, #462279 77.5%);
+      display: flex;
+      align-items: center;
+      padding: 0 120px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: flex-start;
+      text-decoration: none;
+      font-size: 28px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+
+    .header-logo sup {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-top: 3px;
+      margin-left: 1px;
+    }
+
+    /* ── MINI HERO ───────────────────────────────────────────────── */
+    .mini-hero {
+      width: 100%;
+      height: 194px;
+      background: var(--mini-hero-gradient);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 40px 120px;
+    }
+
+    .mini-hero__inner {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .breadcrumb__link {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--color-text-muted);
+      text-decoration: none;
+    }
+
+    .breadcrumb__link:hover { text-decoration: underline; }
+
+    .breadcrumb__sep {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--color-text-muted);
+    }
+
+    .breadcrumb__current {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-text-accent);
+    }
+
+    .mini-hero__heading {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 44px;
+      color: var(--color-text-primary);
+      letter-spacing: -0.5px;
+    }
+
+    .mini-hero__sub {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 26px;
+      color: var(--color-text-primary);
+    }
+
+    /* ── PAGE BODY (outer wrapper) ──────────────────────────────── */
+    .page-body {
+      padding: 40px 120px 80px;
+    }
+
+    /* Single unified container */
+    .page-container {
+      width: 1200px;
+      background: #FFFFFF;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content-card {
+      padding: 48px 80px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* ── CARD HEADING ────────────────────────────────────────────── */
+    .card-heading {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      line-height: 1.2;
+    }
+
+    /* ── DIVIDER ─────────────────────────────────────────────────── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(74, 82, 96, 0.15);
+      flex-shrink: 0;
+    }
+
+    /* ── DIAGRAM IMAGE ───────────────────────────────────────────── */
+    .diagram-wrap {
+      width: 100%;
+    }
+
+    .diagram-wrap img {
+      width: 1040px;
+      height: auto;
+      display: block;
+      border-radius: 6px;
+    }
+
+    /* ── TEXT SECTION (heading + paragraph) ─────────────────────── */
+    .text-section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .text-section__heading {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-text-secondary);
+      line-height: 24px;
+    }
+
+    .text-section__body {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--color-text-secondary);
+      line-height: 24px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       CHECKLIST SECTION AREA
+    ═══════════════════════════════════════════════════════════ */
+    .checklist-section {
+      background: #FFFFFF;
+      padding: 24px 80px;
+    }
+
+    .checklist-section__inner {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* ── CHECKLIST CARD ──────────────────────────────────────────── */
+    .checklist-card {
+      background: var(--color-surface-card);
+      border-radius: 12px;
+      padding: 0 40px;
+      overflow: hidden;
+    }
+
+    /* ── SECTION HEADER (badge + title + count) ──────────────────── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .section-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 14px;
+      background: var(--color-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .section-badge__num {
+      font-size: 12px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      flex: 1;
+    }
+
+    .section-count {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--color-text-placeholder);
+    }
+
+    /* ── CHECKLIST ITEMS ─────────────────────────────────────────── */
+    .checklist-items {
+      padding-bottom: 20px;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .checklist-item:last-of-type {
+      border-bottom: none;
+    }
+
+    /* Custom circular checkbox */
+    .checklist-item input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--color-check-todo-border);
+      background: transparent;
+      flex-shrink: 0;
+      position: relative;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .checklist-item input[type="checkbox"]:checked {
+      background: var(--color-check-done-bg);
+      border-color: var(--color-check-done-bg);
+    }
+
+    .checklist-item input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 10px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1;
+    }
+
+    .checklist-item input[type="checkbox"]:hover:not(:checked) {
+      border-color: var(--color-accent);
+    }
+
+    .checklist-item__text {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+      color: var(--color-text-secondary);
+      transition: color 0.15s;
+    }
+
+    .checklist-item.is-done .checklist-item__text {
+      color: var(--color-text-placeholder);
+      text-decoration: line-through;
+    }
+
+    /* Section divider between checklist sections inside the card */
+    .section-block {
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .section-block:last-child {
+      border-bottom: none;
+    }
+
+    /* ── BOTTOM CONTENT (inside the unified container) ──────────── */
+    .bottom-card {
+      background: #FFFFFF;
+      padding: 24px 80px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* ── FOOTER ──────────────────────────────────────────────────── */
+    .site-footer {
+      width: 100%;
+      height: 180px;
+      background: var(--color-surface-dark);
+      padding: 0 120px;
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-nav {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .footer-link {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--color-text-on-dark);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .footer-link:hover { color: #ffffff; }
+
+  </style>
+</head>
+<body>
+
+  <!-- ── HEADER ─────────────────────────────────────────── -->
+  <header class="site-header" role="banner">
+    <a href="index.html" class="header-logo">SCB<sup>✕</sup></a>
+  </header>
+
+  <!-- ── MINI HERO ─────────────────────────────────────── -->
+  <section class="mini-hero" aria-label="Page header">
+    <div class="mini-hero__inner">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html" class="breadcrumb__link">← Home</a>
+        <span class="breadcrumb__sep" aria-hidden="true">/</span>
+        <span class="breadcrumb__current" aria-current="page">Review agent generated code</span>
+      </nav>
+      <h1 class="mini-hero__heading">Useful Guides</h1>
+      <p class="mini-hero__sub">Discover more to make the most out of your agentic experience. </p>
+    </div>
+  </section>
+
+  <!-- ── MAIN CONTENT ──────────────────────────────────── -->
+  <main>
+
+    <div class="page-body">
+      <div class="page-container">
+
+        <!-- Top content card -->
+        <article class="content-card">
+
+          <h2 class="card-heading">Review agent generated code</h2>
+
+          <div class="divider"></div>
+
+          <!-- Diagram -->
+          <div class="diagram-wrap">
+            <img src="assets/review-agent-code-diagram.png" alt="Agent generated code review diagram" width="1040">
+          </div>
+
+          <!-- What are you reviewing? -->
+          <div class="text-section">
+            <h3 class="text-section__heading">What are you reviewing</h3>
+            <p class="text-section__body">You are reviewing the output of the Task-Implementor (called Implementation Builder in the pilot steps). That means source code changes and unit tests, plus the implementation and verification evidence under <code style="font-family:inherit;background:rgba(74,82,96,0.08);padding:1px 5px;border-radius:3px;font-size:15px">output/&lt;RUN_ID&gt;/implement/</code>.</p>
+            <p class="text-section__body">Review it against the approved <code style="font-family:inherit;background:rgba(74,82,96,0.08);padding:1px 5px;border-radius:3px;font-size:15px">tasks.md</code>, the specification and the project standards, not against how you would have written it yourself. The Application Engineer is accountable for implementation and pull request quality, and the FDE holds the code review gate.</p>
+          </div>
+
+        </article>
+
+        <!-- ── CHECKLIST SECTION ── -->
+        <div class="checklist-section">
+          <div class="checklist-section__inner">
+
+            <div class="checklist-card">
+
+              <!-- Section 1 — Reviewing scope and traceability -->
+              <div class="section-block" data-section="s1">
+                <div class="section-header">
+                  <div class="section-badge" aria-hidden="true">
+                    <span class="section-badge__num">1</span>
+                  </div>
+                  <h2 class="section-title">Reviewing scope and traceability</h2>
+                  <span class="section-count" id="s1-count">0 of 3</span>
+                </div>
+                <div class="checklist-items" data-items="s1">
+                  <label class="checklist-item">
+                    <input type="checkbox" data-section="s1" aria-label="Were only approved tasks implemented?">
+                    <span class="checklist-item__text">Were only approved tasks implemented?</span>
+                  </label>
+                  <label class="checklist-item">
+                    <input type="checkbox" data-section="s1" aria-label="Does each change trace back to a task and a specification item?">
+                    <span class="checklist-item__text">Does each change trace back to a task and a specification item?</span>
+                  </label>
+                  <label class="checklist-item">
+                    <input type="checkbox" data-section="s1" aria-label="Has anything been added that nobody asked for?">
+                    <span class="checklist-item__text">Has anything been added that nobody asked for?</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Section 2 — Reviewing completeness -->
+              <div class="section-block" data-section="s2">
+                <div class="section-header">
+                  <div class="section-badge" aria-hidden="true">
+                    <span class="section-badge__num">2</span>
+                  </div>
+                  <h2 class="section-title">Reviewing completeness</h2>
+                  <span class="section-count" id="s2-count">0 of 5</span>
+                </div>
+                <div class="checklist-items" data-items="s2">
+                  <label class="checklist-item">
+                    <input type="checkbox" data-section="s2" aria-label="Are frontend and backend work both complete where the plan required them?">
+                    <span class="checklist-item__text">Are frontend and backend work both complete where the plan required them?</span>
+                  </label>
+                  <label class="checklist-item">
+                    <input type="checkbox" data-section="s2" aria-label="Does each task have its unit tests?">
+                    <span class="checklist-item__text">Does each task have its unit tests?</span>
+                  </label>
+                  <label class="checklist-item">
+                    <input type="checkbox" data-section="s2" aria-label="Is any blocker or gap being presented as complete?">
+                    <span class="checklist-item__text">Is any blocker or gap being presented as complete?</span>
+                  </label>
+                  <label class="checklist-item">
+                    <input type="checkbox" data-section="s2" aria-label="Does the implementation evidence record the commands that were run and their results?">
+                    <span class="checklist-item__text">Does the implementation evidence record the commands that were run and their results?</span>
+                  </label>
+                  <label class="checklist-item">
+                    <input type="checkbox" data-section="s2" aria-label="Were the pre submit checks in tasks.md completed?">
+                    <span class="checklist-item__text">Were the pre submit checks in <code style="font-family:inherit;background:rgba(74,82,96,0.08);padding:1px 5px;border-radius:3px;font-size:13px">tasks.md</code> completed?</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Section 3 — Reviewing quality and controls -->
+              <div class="section-block" data-section="s3">
+                <div class="section-header">
+                  <div class="section-badge" aria-hidden="true">
+                    <span class="section-badge__num">3</span>
+                  </div>
+                  <h2 class="section-title">Reviewing quality and controls</h2>
+                  <span class="section-count" id="s3-count">0 of 4</span>
+                </div>
+                <div class="checklist-items" data-items="s3">
+                  <label class="checklist-item">
+                    <input type="checkbox" data-section="s3" aria-label="Does the code respect the architecture, conventions and standards in the project context?">
+                    <span class="checklist-item__text">Does the code respect the architecture, conventions and standards in the project context?</span>
+                  </label>
+                  <label class="checklist-item">
+                    <input type="checkbox" data-section="s3" aria-label="Has design fidelity been checked against the design evidence for frontend work?">
+                    <span class="checklist-item__text">Has design fidelity been checked against the design evidence for frontend work?</span>
+                  </label>
+                  <label class="checklist-item">
+                    <input type="checkbox" data-section="s3" aria-label="Have security and privacy controls been addressed, including secrets, input validation and sensitive data handling?">
+                    <span class="checklist-item__text">Have security and privacy controls been addressed, including secrets, input validation and sensitive data handling?</span>
+                  </label>
+                  <label class="checklist-item">
+                    <input type="checkbox" data-section="s3" aria-label="Are there subtle architectural violations that pass the tests but break the intent?">
+                    <span class="checklist-item__text">Are there subtle architectural violations that pass the tests but break the intent?</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Section 4 — Reviewing understanding -->
+              <div class="section-block" data-section="s4">
+                <div class="section-header">
+                  <div class="section-badge" aria-hidden="true">
+                    <span class="section-badge__num">4</span>
+                  </div>
+                  <h2 class="section-title">Reviewing understanding</h2>
+                  <span class="section-count" id="s4-count">0 of 1</span>
+                </div>
+                <div class="checklist-items" data-items="s4">
+                  <label class="checklist-item">
+                    <input type="checkbox" data-section="s4" aria-label="Can you explain what the change does and why? If not, it is not ready for review, whoever or whatever wrote it.">
+                    <span class="checklist-item__text">Can you explain what the change does and why? If not, it is not ready for review, whoever or whatever wrote it.</span>
+                  </label>
+                </div>
+              </div>
+
+            </div><!-- /.checklist-card -->
+
+          </div><!-- /.checklist-section__inner -->
+        </div><!-- /.checklist-section -->
+
+        <!-- Bottom content -->
+        <article class="bottom-card">
+
+          <div class="text-section">
+            <h3 class="text-section__heading">When the output is weak</h3>
+            <p class="text-section__body">Resist the urge to quietly rewrite it. Start by diagnosing what context, architectural rule or repository pattern the agent missed, then correct the instruction or the context and have it revise. That way the fix is repeatable and a one off correction becomes a lesson for the next run.</p>
+            <p class="text-section__body">If the agent keeps failing on the same code path, stop retrying. Some tasks look simple but touch code that agents consistently mishandle, and these should go back to human implementation or a hybrid approach. That call belongs to the FDE. Record recurring failures and context gaps so the shared context and ways of working improve.</p>
+          </div>
+
+          <div class="text-section">
+            <h3 class="text-section__heading">Handoff</h3>
+            <p class="text-section__body">After human review, the API Tester starts manually as the next stage, using the same <code style="font-family:inherit;background:rgba(74,82,96,0.08);padding:1px 5px;border-radius:3px;font-size:15px">RUN_ID</code> and the approved API contract artefacts, once the backend is available in an authorised test environment. Functional Automation Test follows, with API results reviewed first where the increment includes backend APIs.</p>
+          </div>
+
+        </article>
+
+      </div><!-- /.page-container -->
+    </div><!-- /.page-body -->
+
+  </main>
+
+  <!-- ── FOOTER ─────────────────────────────────────────── -->
+  <footer class="site-footer"></footer>
+
+  <!-- ── INTERACTIVE CHECKLIST JAVASCRIPT ──────────────── -->
+  <script>
+    (function () {
+      const sectionTotals = { s1: 3, s2: 5, s3: 4, s4: 1 };
+
+      function countSection(sectionId) {
+        return document.querySelectorAll(`input[data-section="${sectionId}"]:checked`).length;
+      }
+
+      function updateSection(sectionId) {
+        const done  = countSection(sectionId);
+        const total = sectionTotals[sectionId];
+        const el    = document.getElementById(sectionId + '-count');
+        if (el) el.textContent = `${done} of ${total}`;
+      }
+
+      function handleChange(e) {
+        const cb      = e.target;
+        const label   = cb.closest('.checklist-item');
+        const section = cb.dataset.section;
+
+        if (cb.checked) {
+          label.classList.add('is-done');
+        } else {
+          label.classList.remove('is-done');
+        }
+
+        updateSection(section);
+      }
+
+      document.querySelectorAll('.checklist-item input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', handleChange);
+      });
+
+      ['s1', 's2', 's3', 's4'].forEach(updateSection);
+    })();
+  </script>
+
+</body>
+</html>
