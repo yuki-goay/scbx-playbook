@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevOps Engineer · Agentic PDLC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+
+    /* ═══════════════════════════════════════════════════════════
+       LAYER 1 — ATOMS
+    ═══════════════════════════════════════════════════════════ */
+    :root {
+      --color-purple-900:   #462279;
+      --color-purple-700:   #7631C1;
+      --color-purple-600:   #8055C3;
+      --color-purple-200:   #D9C2FF;
+      --color-purple-100:   #E8DBFF;
+      --color-purple-050:   #F3F0F7;
+      --color-purple-card:  #9D73DF;
+
+      --color-ink-900:      #14181F;
+      --color-ink-700:      #4A5260;
+      --color-ink-400:      #BEC3CB;
+      --color-ink-200:      rgba(187,190,195,1);
+
+      --color-grey-0:       #FAFAFA;
+      --color-grey-050:     #F5F3F8;
+      --color-surface-dark: #14181F;
+
+      --color-yellow-300:   rgba(255,209,114,1);
+
+      --color-stage-accent-default: rgba(184,147,243,1);
+      --color-stage-accent-hover:   rgba(209,182,255,1);
+      --color-stage-num-default:    rgba(209,182,255,1);
+      --color-stage-ghost:          rgba(118,49,193,0.09);
+      --color-stage-divider:        rgba(217,217,217,1);
+
+      /* ── LAYER 2 — SEMANTICS ─────────────────────────── */
+      --gradient-nav:        linear-gradient(99deg, rgba(79,42,129,0.85) 0%, #462279 77.5%);
+      --gradient-mini-hero:  linear-gradient(180deg, #E8DBFF 2%, #F3F0F7 74%);
+
+      --surface-page:        var(--color-purple-050);
+      --surface-card:        var(--color-grey-0);
+      --surface-agent:       var(--color-grey-050);
+      --surface-icon-bg:     var(--color-purple-100);
+
+      --text-primary:        var(--color-ink-900);
+      --text-secondary:      var(--color-ink-700);
+      --text-muted:          #60636A;
+      --text-on-dark:        #C9CED6;
+
+      --border-divider:      rgba(187,190,195,1);
+    }
+
+    /* ── BASE RESET ──────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--surface-page);
+      color: var(--text-primary);
+      min-width: 1440px;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ─────────────────────────────────────────────── */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      width: 100%;
+      height: 72px;
+      background: var(--gradient-nav);
+      display: flex;
+      align-items: center;
+      padding: 0 120px;
+    }
+    .site-nav__logo {
+      display: flex;
+      align-items: flex-start;
+      text-decoration: none;
+    }
+    .site-nav__logo-text {
+      font-size: 28px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+    .site-nav__logo-sup {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-top: 3px;
+      margin-left: 1px;
+    }
+
+    /* ── MINI HERO ───────────────────────────────────────── */
+    .mini-hero {
+      width: 100%;
+      height: 194px;
+      background: var(--gradient-mini-hero);
+      padding: 40px 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    .mini-hero__inner {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .breadcrumb__home {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+    .breadcrumb__home:hover { color: var(--text-primary); }
+    .breadcrumb__sep {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+    .breadcrumb__active {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-purple-700);
+    }
+    .mini-hero__title {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+    .mini-hero__sub {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 26px;
+    }
+
+    /* ── PAGE BODY ───────────────────────────────────────── */
+    .page-body {
+      padding: 40px 120px 80px;
+    }
+
+    /* ── CONTENT CARD ────────────────────────────────────── */
+    .content-card {
+      background: var(--surface-card);
+      border-radius: 12px;
+      padding: 48px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* ── INTRO ROW ───────────────────────────────────────── */
+    .intro-row {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .intro-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .intro-line {
+      font-size: 28px;
+      line-height: 1.45;
+      color: var(--text-primary);
+      letter-spacing: -0.3px;
+    }
+    .intro-line--bold { font-weight: 700; }
+    .intro-line--reg  { font-weight: 400; }
+    .intro-illustration {
+      width: 180px;
+      height: 180px;
+      flex-shrink: 0;
+      object-fit: contain;
+    }
+
+    /* ── DIVIDER ─────────────────────────────────────────── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border-divider);
+      flex-shrink: 0;
+    }
+
+    /* ── SECTION LABEL ───────────────────────────────────────────── */
+    .section-label {
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 24px;
+    }
+
+    /* ── PDLC STAGE CARDS ────────────────────────────────────────── */
+    .stage-cards-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background: var(--color-purple-900);
+      border-radius: 16px;
+      padding: 40px 43px 43px;
+    }
+
+    .stage-cards-scroll {
+      overflow-x: auto;
+      overflow-y: visible;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .stage-cards-scroll::-webkit-scrollbar { display: none; }
+
+    .stage-cards-row {
+      display: flex;
+      flex-direction: row;
+      gap: 0;
+      width: max-content;
+      align-items: flex-end;
+    }
+
+    /* ── STAGE CARD WRAPPER + INDICATOR ─────────────────────────── */
+    .stage-card-wrapper {
+      position: relative;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .stage-card-wrapper::before {
+      content: '';
+      display: block;
+      height: 30px;
+    }
+
+    .stage-indicator {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: indicator-bounce 1.1s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes indicator-bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0px);  opacity: 0.75; }
+      50%       { transform: translateX(-50%) translateY(5px);  opacity: 1; }
+    }
+
+    /* ── CUSTOM SLIDER TRACK ─────────────────────────────────────── */
+    .stage-cards-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .stage-slider-track {
+      width: 204px;
+      flex-shrink: 0;
+      height: 2px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 99px;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.4);
+    }
+    .stage-slider-thumb {
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      background: #d9d9d9;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0;
+      cursor: grab;
+      transition: left 0.05s;
+    }
+
+    /* ── CONNECTOR BETWEEN CARDS ─────────────────────────────────── */
+    .stage-card-connector {
+      flex-shrink: 0;
+      align-self: center;
+      width: 20px;
+      height: 26px;
+      clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+      background: rgba(184,147,243,0.5);
+      margin-bottom: 93px;
+    }
+
+    /* ── STAGE CARD ──────────────────────────────────────────────── */
+    .stage-card {
+      width: 147px;
+      height: 186px;
+      border-radius: 9.6px;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    /* top accent bar — wider than card, clips at card overflow:hidden */
+    .stage-card__accent {
+      width: 174px;
+      height: 5px;
+      flex-shrink: 0;
+      background: #b893f3;
+      align-self: center;
+    }
+
+    /* card inner content */
+    .stage-card__inner {
+      display: flex;
+      flex-direction: column;
+      padding: 8px 12px 10px;
+      flex: 1;
+      gap: 4px;
+      position: relative;
+    }
+
+    /* ghost + real num */
+    .stage-card__num-section {
+      position: relative;
+      height: 52px;
+    }
+    .stage-card__ghost-num {
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: 51.2px;
+      font-weight: 700;
+      color: var(--color-purple-700);
+      opacity: 0.09;
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+    .stage-card__real-num {
+      position: absolute;
+      bottom: 0;
+      left: 1px;
+      font-size: 35.2px;
+      font-weight: 700;
+      color: var(--color-purple-700);
+      line-height: 1;
+    }
+
+    /* name */
+    .stage-card__name {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-ink-900);
+      margin-top: 2px;
+      line-height: 1.3;
+    }
+
+    /* divider */
+    .stage-card__divider {
+      width: 100%;
+      height: 1px;
+      background: #e0dee5;
+      margin: 4px 0;
+    }
+
+    /* description */
+    .stage-card__desc {
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--color-ink-700);
+      line-height: 1.5;
+    }
+
+    /* ── STAGE DETAIL SECTIONS ───────────────────────────── */
+    .stage-details {
+      display: flex;
+      flex-direction: column;
+      gap: 56px;
+    }
+    .stage-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .stage-detail__title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 28px;
+    }
+    .stage-detail__label {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 20px;
+    }
+    .stage-detail__body {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 22px;
+    }
+    .output-review-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+    .output-review {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .output-review__header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+    }
+    .output-review__icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--color-yellow-300);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .output-review__icon svg { width: 18px; height: 18px; }
+    .output-review__name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+    .output-review__desc {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ── AGENTS ──────────────────────────────────────────── */
+    .agents-section {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .agents-label {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      line-height: 24px;
+    }
+    .agent-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .agent-card {
+      width: 336px;
+      min-height: 271px;
+      background: var(--surface-agent);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .agent-card__icon {
+      width: 48px;
+      height: 48px;
+      background: var(--surface-icon-bg);
+      border-radius: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .agent-card__icon svg { width: 28px; height: 28px; }
+    .agent-card__body {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .agent-card__title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+    .agent-card__desc {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+
+    /* ── FOOTER ──────────────────────────────────────────── */
+    .site-footer {
+      width: 100%;
+      height: 180px;
+      background: var(--color-surface-dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 120px;
+    }
+    .footer-nav { display: flex; gap: 40px; }
+    .footer-link {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-on-dark);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-link:hover { color: #ffffff; }
+
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="site-nav">
+    <a href="index.html" class="site-nav__logo">
+      <span class="site-nav__logo-text">SCB</span><sup class="site-nav__logo-sup">✕</sup>
+    </a>
+  </header>
+
+  <!-- MINI HERO -->
+  <section class="mini-hero">
+    <div class="mini-hero__inner">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html" class="breadcrumb__home">← Home</a>
+        <span class="breadcrumb__sep">/</span>
+        <span class="breadcrumb__active">DevOps Engineer</span>
+      </nav>
+      <h1 class="mini-hero__title">Useful Guides</h1>
+      <p class="mini-hero__sub">Discover more to make the most out of your agentic experience.</p>
+    </div>
+  </section>
+
+  <!-- BODY -->
+  <main class="page-body">
+    <article class="content-card">
+
+      <!-- INTRO ROW -->
+      <div class="intro-row">
+        <div class="intro-text">
+          <p class="intro-line intro-line--bold">As a DevOps Engineer,</p>
+          <p class="intro-line intro-line--reg">you make sure that what was approved is what reaches production,</p>
+          <p class="intro-line intro-line--reg">and that it can be undone if it should not have.</p>
+        </div>
+        <img
+          class="intro-illustration"
+          src="assets/illustrations/devops-engineer.png"
+          alt="DevOps Engineer illustration"
+          width="180"
+          height="180"
+        >
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- PDLC STAGE CARDS -->
+      <div class="stage-cards-wrapper">
+        <div class="stage-cards-header">
+          <p class="section-label">These are where you are most involved in:</p>
+          <div class="stage-slider-track" id="sliderTrack" role="scrollbar"
+               aria-controls="stageScroll" aria-orientation="horizontal">
+            <div class="stage-slider-thumb" id="sliderThumb"></div>
+          </div>
+        </div>
+
+        <div class="stage-cards-scroll" id="stageScroll">
+          <div class="stage-cards-row">
+
+            <!-- Stage 01 -->
+            <div class="stage-card-wrapper">
+              <div class="stage-card" data-stage="01" aria-label="Stage 01: Discover / Context">
+                <div class="stage-card__accent"></div>
+                <div class="stage-card__inner">
+                  <div class="stage-card__num-section">
+                    <span class="stage-card__ghost-num">01</span>
+                    <span class="stage-card__real-num">01</span>
+                  </div>
+                  <span class="stage-card__name">Discover / Context</span>
+                  <div class="stage-card__divider"></div>
+                  <p class="stage-card__desc">Assemble requirements, design and brownfield context as input to the PDLC.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-card-connector" aria-hidden="true"></div>
+
+            <!-- Stage 02 -->
+            <div class="stage-card-wrapper">
+              <div class="stage-card" data-stage="02" aria-label="Stage 02: Specify">
+                <div class="stage-card__accent"></div>
+                <div class="stage-card__inner">
+                  <div class="stage-card__num-section">
+                    <span class="stage-card__ghost-num">02</span>
+                    <span class="stage-card__real-num">02</span>
+                  </div>
+                  <span class="stage-card__name">Specify</span>
+                  <div class="stage-card__divider"></div>
+                  <p class="stage-card__desc">Turn approved requirements into a buildable specification with clear priorities and business decisions.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-card-connector" aria-hidden="true"></div>
+
+            <!-- Stage 03 -->
+            <div class="stage-card-wrapper">
+              <div class="stage-card" data-stage="03" aria-label="Stage 03: Plan">
+                <div class="stage-card__accent"></div>
+                <div class="stage-card__inner">
+                  <div class="stage-card__num-section">
+                    <span class="stage-card__ghost-num">03</span>
+                    <span class="stage-card__real-num">03</span>
+                  </div>
+                  <span class="stage-card__name">Plan</span>
+                  <div class="stage-card__divider"></div>
+                  <p class="stage-card__desc">Validate that scope and delivery plan align with business priorities before work begins.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-card-connector" aria-hidden="true"></div>
+
+            <!-- Stage 04 -->
+            <div class="stage-card-wrapper">
+              <div class="stage-card" data-stage="04" aria-label="Stage 04: Tasks">
+                <div class="stage-card__accent"></div>
+                <div class="stage-card__inner">
+                  <div class="stage-card__num-section">
+                    <span class="stage-card__ghost-num">04</span>
+                    <span class="stage-card__real-num">04</span>
+                  </div>
+                  <span class="stage-card__name">Tasks</span>
+                  <div class="stage-card__divider"></div>
+                  <p class="stage-card__desc">Review task breakdowns and ensure acceptance criteria match your approved specification.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-card-connector" aria-hidden="true"></div>
+
+            <!-- Stage 05 -->
+            <div class="stage-card-wrapper">
+              <div class="stage-card" data-stage="05" aria-label="Stage 05: Implement">
+                <div class="stage-card__accent"></div>
+                <div class="stage-card__inner">
+                  <div class="stage-card__num-section">
+                    <span class="stage-card__ghost-num">05</span>
+                    <span class="stage-card__real-num">05</span>
+                  </div>
+                  <span class="stage-card__name">Implement</span>
+                  <div class="stage-card__divider"></div>
+                  <p class="stage-card__desc">Stay available to unblock decisions as agents build to spec — scope creep still needs your veto.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-card-connector" aria-hidden="true"></div>
+
+            <!-- Stage 06 — role involved -->
+            <div class="stage-card-wrapper">
+              <div class="stage-indicator" aria-hidden="true">
+                <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
+                  <path d="M1 1.5L7 8L13 1.5" stroke="#ffe8b2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="stage-card" data-stage="06" aria-label="Stage 06: Test & Validate">
+                <div class="stage-card__accent"></div>
+                <div class="stage-card__inner">
+                  <div class="stage-card__num-section">
+                    <span class="stage-card__ghost-num">06</span>
+                    <span class="stage-card__real-num">06</span>
+                  </div>
+                  <span class="stage-card__name">Test &amp; Validate</span>
+                  <div class="stage-card__divider"></div>
+                  <p class="stage-card__desc">Confirm that what was built actually delivers the value stated in the PRD, not just that it works.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-card-connector" aria-hidden="true"></div>
+
+            <!-- Stage 07 — role involved -->
+            <div class="stage-card-wrapper">
+              <div class="stage-indicator" aria-hidden="true">
+                <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
+                  <path d="M1 1.5L7 8L13 1.5" stroke="#ffe8b2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="stage-card" data-stage="07" aria-label="Stage 07: Build / Ship">
+                <div class="stage-card__accent"></div>
+                <div class="stage-card__inner">
+                  <div class="stage-card__num-section">
+                    <span class="stage-card__ghost-num">07</span>
+                    <span class="stage-card__real-num">07</span>
+                  </div>
+                  <span class="stage-card__name">Build / Ship</span>
+                  <div class="stage-card__divider"></div>
+                  <p class="stage-card__desc">Give deployment sign-off once you’re satisfied that the right thing ships to the right users.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-card-connector" aria-hidden="true"></div>
+
+            <!-- Stage 08 — role involved -->
+            <div class="stage-card-wrapper">
+              <div class="stage-indicator" aria-hidden="true">
+                <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
+                  <path d="M1 1.5L7 8L13 1.5" stroke="#ffe8b2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="stage-card" data-stage="08" aria-label="Stage 08: GreenLane CI/CD">
+                <div class="stage-card__accent"></div>
+                <div class="stage-card__inner">
+                  <div class="stage-card__num-section">
+                    <span class="stage-card__ghost-num">08</span>
+                    <span class="stage-card__real-num">08</span>
+                  </div>
+                  <span class="stage-card__name">GreenLane CI/CD</span>
+                  <div class="stage-card__divider"></div>
+                  <p class="stage-card__desc">Ensure the pipeline and backlog stay aligned with your approved priorities through each build cycle.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-card-connector" aria-hidden="true"></div>
+
+            <!-- Stage 09 -->
+            <div class="stage-card-wrapper">
+              <div class="stage-card" data-stage="09" aria-label="Stage 09: Operate & Learn">
+                <div class="stage-card__accent"></div>
+                <div class="stage-card__inner">
+                  <div class="stage-card__num-section">
+                    <span class="stage-card__ghost-num">09</span>
+                    <span class="stage-card__real-num">09</span>
+                  </div>
+                  <span class="stage-card__name">Operate &amp; Learn</span>
+                  <div class="stage-card__divider"></div>
+                  <p class="stage-card__desc">Own whether the expected value showed up. Use what the squad learns to feed the next PDLC cycle.</p>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- .stage-cards-row -->
+        </div><!-- .stage-cards-scroll -->
+
+      </div><!-- .stage-cards-wrapper -->
+
+      <!-- STAGE DETAIL SECTIONS -->
+      <div class="stage-details">
+
+        <!-- Stage 6 -->
+        <div class="stage-detail">
+          <h2 class="stage-detail__title">Stage 6. Test &amp; Validate</h2>
+          <p class="stage-detail__label">What you are responsible for</p>
+          <p class="stage-detail__body">Testing runs continuously alongside implementation, and it can only do that if the pipelines and environments are there to support it. You provide the authorised, non-production environments in which the testing agents run, and you make sure code changes trigger the checks they are supposed to.</p>
+          <div class="output-review-grid">
+            <div class="output-review">
+              <div class="output-review__header">
+                <div class="output-review__icon">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="output-review__name">Test environments</span>
+              </div>
+              <p class="output-review__desc">Are they authorised, reachable and kept separate from production? Provide them, or tell the squad early that they are not ready.</p>
+            </div>
+            <div class="output-review">
+              <div class="output-review__header">
+                <div class="output-review__icon">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="output-review__name">Test data</span>
+              </div>
+              <p class="output-review__desc">Are synthetic data and named environment variables used, with no secrets pasted into chat or left in evidence?</p>
+            </div>
+            <div class="output-review">
+              <div class="output-review__header">
+                <div class="output-review__icon">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="output-review__name">Pipeline checks</span>
+              </div>
+              <p class="output-review__desc">Do changes trigger the expected tests and report the results back?</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 7 -->
+        <div class="stage-detail">
+          <h2 class="stage-detail__title">Stage 7. Build / Ship</h2>
+          <p class="stage-detail__label">What you are responsible for</p>
+          <p class="stage-detail__body">You create the releasable build, and only after the required quality gates have passed. Your job is to make sure the release candidate is complete, versioned and repeatable, so the FDE can decide on release readiness with confidence.</p>
+          <div class="output-review-grid">
+            <div class="output-review">
+              <div class="output-review__header">
+                <div class="output-review__icon">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="output-review__name">Gate status</span>
+              </div>
+              <p class="output-review__desc">Have all required quality and security approvals been given?</p>
+            </div>
+            <div class="output-review">
+              <div class="output-review__header">
+                <div class="output-review__icon">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="output-review__name">Build</span>
+              </div>
+              <p class="output-review__desc">Are they complete, versioned and traceable to the approved work?</p>
+            </div>
+            <div class="output-review">
+              <div class="output-review__header">
+                <div class="output-review__icon">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="output-review__name">Environment configuration</span>
+              </div>
+              <p class="output-review__desc">Are they correct for each target environment and free of anything unapproved?</p>
+            </div>
+            <div class="output-review">
+              <div class="output-review__header">
+                <div class="output-review__icon">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="output-review__name">Rollback path</span>
+              </div>
+              <p class="output-review__desc">Does a production-safe rollback exist, and has it been tried in a lower environment?</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 8 -->
+        <div class="stage-detail">
+          <h2 class="stage-detail__title">Stage 8. GreenLane CI/CD</h2>
+          <p class="stage-detail__label">What you are responsible for</p>
+          <p class="stage-detail__body">You run the promotion through DEV, SIT, QA and PROD. The automation does the moving, but every promotion needs a person's approval, and no autonomous production promotion is permitted, however small the change. The release and deployment approvals stay with the named human authorities, and your part is to make each step safe, visible and reversible.</p>
+          <div class="output-review-grid">
+            <div class="output-review">
+              <div class="output-review__header">
+                <div class="output-review__icon">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="output-review__name">Deployment package</span>
+              </div>
+              <p class="output-review__desc">Has Azure-Deploy validated them before anything runs? Proceed, or stop if validation fails.</p>
+            </div>
+            <div class="output-review">
+              <div class="output-review__header">
+                <div class="output-review__icon">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="output-review__name">Deployment logs</span>
+              </div>
+              <p class="output-review__desc">Did the release land as intended in each environment?</p>
+            </div>
+            <div class="output-review">
+              <div class="output-review__header">
+                <div class="output-review__icon">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="output-review__name">Errors</span>
+              </div>
+              <p class="output-review__desc">Is the fault in the package, the configuration or the environment? Find out before retrying, and do not ask the agent to force a failing validation through.</p>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- .stage-details -->
+
+      <div class="divider"></div>
+
+      <!-- AGENTS SECTION -->
+      <div class="agents-section">
+        <p class="agents-label">These are the agents you'll most likely work with:</p>
+        <div class="agent-grid">
+
+          <!-- Azure-Deploy -->
+          <div class="agent-card">
+            <div class="agent-card__icon">
+              <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 20h16M14 4v12M10 12l4 4 4-4" stroke="#7631C1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="4" y="18" width="20" height="6" rx="2" stroke="#7631C1" stroke-width="1.5"/>
+                <circle cx="20" cy="21" r="1" fill="#7631C1"/>
+              </svg>
+            </div>
+            <div class="agent-card__body">
+              <p class="agent-card__title">Azure-Deploy</p>
+              <p class="agent-card__desc">Validates and executes deployment packages across DEV, SIT, QA and PROD environments, reporting status and errors back to the DevOps Engineer for approval at each promotion step.</p>
+            </div>
+          </div>
+
+          <!-- API Testing -->
+          <div class="agent-card">
+            <div class="agent-card__icon">
+              <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="6" width="22" height="16" rx="3" stroke="#7631C1" stroke-width="1.8"/>
+                <path d="M8 14h4M16 14h4" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M13 11v6" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="22" cy="7" r="3.5" fill="#E8DBFF" stroke="#7631C1" stroke-width="1.2"/>
+                <path d="M21 7l.8.8 1.5-1.5" stroke="#7631C1" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="agent-card__body">
+              <p class="agent-card__title">API Testing</p>
+              <p class="agent-card__desc">Runs contract and integration tests against API endpoints, reports failures and contract drift for triage and resolution.</p>
+            </div>
+          </div>
+
+          <!-- Functional Testing -->
+          <div class="agent-card">
+            <div class="agent-card__icon">
+              <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="4" y="4" width="20" height="16" rx="3" stroke="#7631C1" stroke-width="1.8"/>
+                <path d="M4 9h20" stroke="#7631C1" stroke-width="1.5"/>
+                <circle cx="8" cy="6.5" r="1" fill="#7631C1"/>
+                <circle cx="11.5" cy="6.5" r="1" fill="#7631C1"/>
+                <path d="M10 14l2.5 2.5 5-5" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="agent-card__body">
+              <p class="agent-card__title">Functional Testing</p>
+              <p class="agent-card__desc">Executes end-to-end functional test suites against the running application and gathers evidence for QE review — without modifying application code.</p>
+            </div>
+          </div>
+
+        </div><!-- .agent-grid -->
+      </div><!-- .agents-section -->
+
+    </article>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="getting-started.html" class="footer-link">Getting Started</a>
+      <a href="faq.html" class="footer-link">Help &amp; FAQs</a>
+      <a href="#" class="footer-link">Best Practices</a>
+      <a href="#" class="footer-link">Learn More</a>
+      <a href="#" class="footer-link">Playbook PDF</a>
+    </nav>
+  </footer>
+
+  <script>
+    (function () {
+      var scroll = document.getElementById('stageScroll');
+      var track  = document.getElementById('sliderTrack');
+      var thumb  = document.getElementById('sliderThumb');
+      function updateThumb() {
+        var maxScroll = scroll.scrollWidth - scroll.clientWidth;
+        var ratio     = maxScroll > 0 ? scroll.scrollLeft / maxScroll : 0;
+        var trackW    = track.offsetWidth;
+        var thumbW    = 17;
+        thumb.style.left = (ratio * (trackW - thumbW)) + 'px';
+      }
+      updateThumb();
+      scroll.addEventListener('scroll', updateThumb);
+      window.addEventListener('resize', updateThumb);
+      var dragging = false, dragStartX, thumbStartLeft;
+      thumb.addEventListener('mousedown', function (e) {
+        dragging = true; dragStartX = e.clientX; thumbStartLeft = thumb.offsetLeft; e.preventDefault();
+      });
+      document.addEventListener('mousemove', function (e) {
+        if (!dragging) return;
+        var dx = e.clientX - dragStartX; var trackW = track.offsetWidth; var thumbW = 17;
+        var newLeft = Math.max(0, Math.min(trackW - thumbW, thumbStartLeft + dx));
+        var ratio = (trackW - thumbW) > 0 ? newLeft / (trackW - thumbW) : 0;
+        scroll.scrollLeft = ratio * (scroll.scrollWidth - scroll.clientWidth);
+      });
+      document.addEventListener('mouseup', function () { dragging = false; });
+      track.addEventListener('click', function (e) {
+        if (e.target === thumb) return;
+        var trackRect = track.getBoundingClientRect(); var clickX = e.clientX - trackRect.left;
+        var thumbW = 17; var trackW = track.offsetWidth;
+        var ratio = Math.max(0, Math.min(1, (clickX - thumbW / 2) / (trackW - thumbW)));
+        scroll.scrollLeft = ratio * (scroll.scrollWidth - scroll.clientWidth);
+      });
+    })();
+  </script>
+
+</body>
+</html>

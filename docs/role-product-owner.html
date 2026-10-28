@@ -13,24 +13,50 @@
        LAYER 1 — ATOMS
     ═══════════════════════════════════════════════════════════ */
     :root {
-      --purple-600:      #7631C1;
-      --purple-700:      #462279;
-      --grey-0:          #FAFAFA;
-      --text-primary:    #14181F;
-      --text-secondary:  #4A5260;
-      --text-muted:      #60636A;
-      --text-on-dark:    #C9CED6;
-      --surface-dark:    #14181F;
-      --surface-page:    #F3F0F7;
-      --surface-card:    #FAFAFA;
-      --surface-agent:   rgb(245, 243, 248);
-      --surface-icon-bg: #E8DBFF;
+      /* Colour primitives */
+      --color-purple-900:   #462279;
+      --color-purple-700:   #7631C1;
+      --color-purple-600:   #8055C3;
+      --color-purple-200:   #D9C2FF;
+      --color-purple-100:   #E8DBFF;
+      --color-purple-050:   #F3F0F7;
+      --color-purple-card:  #9D73DF;
+
+      --color-ink-900:      #14181F;
+      --color-ink-700:      #4A5260;
+      --color-ink-400:      #BEC3CB;
+      --color-ink-200:      rgba(187,190,195,1);
+
+      --color-grey-0:       #FAFAFA;
+      --color-grey-050:     #F5F3F8;
+      --color-surface-dark: #14181F;
+
+      --color-yellow-300:   rgba(255,209,114,1);
+
+      /* Stage card active accent colours */
+      --color-stage-accent-default: rgba(184,147,243,1);
+      --color-stage-accent-hover:   rgba(209,182,255,1);
+      --color-stage-num-default:    rgba(209,182,255,1);
+      --color-stage-ghost:          rgba(118,49,193,0.09);
+      --color-stage-divider:        rgba(217,217,217,1);
 
       /* ═══════════════════════════════════════════════════════
          LAYER 2 — SEMANTICS
       ═══════════════════════════════════════════════════════ */
       --gradient-nav:        linear-gradient(99deg, rgba(79,42,129,0.85) 0%, #462279 77.5%);
       --gradient-mini-hero:  linear-gradient(180deg, #E8DBFF 2%, #F3F0F7 74%);
+
+      --surface-page:        var(--color-purple-050);
+      --surface-card:        var(--color-grey-0);
+      --surface-agent:       var(--color-grey-050);
+      --surface-icon-bg:     var(--color-purple-100);
+
+      --text-primary:        var(--color-ink-900);
+      --text-secondary:      var(--color-ink-700);
+      --text-muted:          #60636A;
+      --text-on-dark:        #C9CED6;
+
+      --border-divider:      rgba(187,190,195,1);
     }
 
     /* ═══════════════════════════════════════════════════════════
@@ -100,7 +126,6 @@
       gap: 16px;
     }
     .breadcrumb__home {
-      font-family: 'Inter', sans-serif;
       font-size: 12px;
       font-weight: 400;
       color: var(--text-muted);
@@ -115,10 +140,9 @@
     .breadcrumb__active {
       font-size: 12px;
       font-weight: 700;
-      color: var(--purple-600);
+      color: var(--color-purple-700);
     }
     .mini-hero__title {
-      font-family: 'Inter', sans-serif;
       font-size: 36px;
       font-weight: 700;
       color: var(--text-primary);
@@ -126,21 +150,19 @@
       line-height: 1.2;
     }
     .mini-hero__sub {
-      font-family: 'Inter', sans-serif;
       font-size: 16px;
       font-weight: 400;
       color: var(--text-primary);
       line-height: 26px;
     }
 
-    /* ── BODY AREA ───────────────────────────────────────────────── */
+    /* ── PAGE BODY ───────────────────────────────────────────────── */
     .page-body {
       padding: 40px 120px 80px;
     }
 
     /* ── CONTENT CARD ────────────────────────────────────────────── */
     .content-card {
-      width: 1200px;
       background: var(--surface-card);
       border-radius: 12px;
       padding: 48px 80px;
@@ -149,65 +171,323 @@
       gap: 24px;
     }
 
-    /* ── INTRO ───────────────────────────────────────────────────── */
-    .intro-block {
+    /* ── INTRO ROW ───────────────────────────────────────────────── */
+    .intro-row {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .intro-text {
       display: flex;
       flex-direction: column;
       gap: 0;
     }
     .intro-line {
-      font-family: 'Inter', sans-serif;
-      font-size: 24px;
+      font-size: 28px;
       line-height: 1.45;
       color: var(--text-primary);
-      letter-spacing: -0.5px;
+      letter-spacing: -0.3px;
     }
-    .intro-line--bold  { font-weight: 700; }
-    .intro-line--reg   { font-weight: 400; }
+    .intro-line--bold { font-weight: 700; }
+    .intro-line--reg  { font-weight: 400; }
+    .intro-illustration {
+      width: 180px;
+      height: 180px;
+      flex-shrink: 0;
+      object-fit: contain;
+    }
 
     /* ── DIVIDER ─────────────────────────────────────────────────── */
     .divider {
       width: 100%;
       height: 1px;
-      background: rgba(74, 82, 96, 0.15);
+      background: var(--border-divider);
       flex-shrink: 0;
     }
 
-    /* ── SECTION ─────────────────────────────────────────────────── */
-    .section {
+    /* ── SECTION LABEL ───────────────────────────────────────────── */
+    .section-label {
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 24px;
+    }
+
+    /* ── PDLC STAGE CARDS ────────────────────────────────────────── */
+    .stage-cards-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background: var(--color-purple-900);
+      border-radius: 16px;
+      padding: 40px 43px 43px;
+    }
+
+    .stage-cards-scroll {
+      overflow-x: auto;
+      overflow-y: visible;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .stage-cards-scroll::-webkit-scrollbar { display: none; }
+
+    .stage-cards-row {
+      display: flex;
+      flex-direction: row;
+      gap: 0;
+      width: max-content;
+      align-items: flex-end;
+    }
+
+    /* ── STAGE CARD WRAPPER + INDICATOR ─────────────────────────── */
+    .stage-card-wrapper {
+      position: relative;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .stage-card-wrapper::before {
+      content: '';
+      display: block;
+      height: 30px;
+    }
+
+    .stage-indicator {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: indicator-bounce 1.1s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes indicator-bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0px);  opacity: 0.75; }
+      50%       { transform: translateX(-50%) translateY(5px);  opacity: 1; }
+    }
+
+    /* ── CUSTOM SLIDER TRACK ─────────────────────────────────────── */
+    .stage-cards-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .stage-slider-track {
+      width: 204px;
+      flex-shrink: 0;
+      height: 2px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 99px;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.4);
+    }
+    .stage-slider-thumb {
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      background: #d9d9d9;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0;
+      cursor: grab;
+      transition: left 0.05s;
+    }
+
+    /* ── CONNECTOR BETWEEN CARDS ─────────────────────────────────── */
+    .stage-card-connector {
+      flex-shrink: 0;
+      align-self: center;
+      width: 20px;
+      height: 26px;
+      clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+      background: rgba(184,147,243,0.5);
+      margin-bottom: 93px;
+    }
+
+    /* ── STAGE CARD ──────────────────────────────────────────────── */
+    .stage-card {
+      width: 147px;
+      height: 186px;
+      border-radius: 9.6px;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    /* top accent bar — wider than card, clips at card overflow:hidden */
+    .stage-card__accent {
+      width: 174px;
+      height: 5px;
+      flex-shrink: 0;
+      background: #b893f3;
+      align-self: center;
+    }
+
+    /* card inner content */
+    .stage-card__inner {
+      display: flex;
+      flex-direction: column;
+      padding: 8px 12px 10px;
+      flex: 1;
+      gap: 4px;
+      position: relative;
+    }
+
+    /* ghost + real num */
+    .stage-card__num-section {
+      position: relative;
+      height: 52px;
+    }
+    .stage-card__ghost-num {
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: 51.2px;
+      font-weight: 700;
+      color: var(--color-purple-700);
+      opacity: 0.09;
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+    .stage-card__real-num {
+      position: absolute;
+      bottom: 0;
+      left: 1px;
+      font-size: 35.2px;
+      font-weight: 700;
+      color: var(--color-purple-700);
+      line-height: 1;
+    }
+
+    /* name */
+    .stage-card__name {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-ink-900);
+      margin-top: 2px;
+      line-height: 1.3;
+    }
+
+    /* divider */
+    .stage-card__divider {
+      width: 100%;
+      height: 1px;
+      background: #e0dee5;
+      margin: 4px 0;
+    }
+
+    /* description */
+    .stage-card__desc {
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--color-ink-700);
+      line-height: 1.5;
+    }
+
+    /* ── STAGE DETAIL SECTIONS ───────────────────────────────────── */
+    .stage-details {
+      display: flex;
+      flex-direction: column;
+      gap: 56px;
+    }
+
+    .stage-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .stage-detail__title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 28px;
+    }
+    .stage-detail__label {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 20px;
+    }
+    .stage-detail__body {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 22px;
+    }
+
+    /* output review grid */
+    .output-review-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+    .output-review {
+      min-width: 0;
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
-    .section__heading {
-      font-family: 'Inter', sans-serif;
-      font-size: 20px;
+    .output-review__header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+    }
+    .output-review__icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--color-yellow-300);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .output-review__icon svg {
+      width: 18px;
+      height: 18px;
+    }
+    .output-review__name {
+      font-size: 16px;
       font-weight: 700;
       color: var(--text-secondary);
-      line-height: 24px;
     }
-    .section__body {
-      font-family: 'Inter', sans-serif;
-      font-size: 16px;
+    .output-review__desc {
+      font-size: 14px;
       font-weight: 400;
       color: var(--text-secondary);
-      line-height: 24px;
-    }
-    .section__body b {
-      font-weight: 700;
-      color: var(--text-secondary);
+      line-height: 1.5;
     }
 
-    /* ── AGENTS LABEL ────────────────────────────────────────────── */
+    /* ── AGENTS SECTION ──────────────────────────────────────────── */
+    .agents-section {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
     .agents-label {
-      font-family: 'Inter', sans-serif;
       font-size: 16px;
       font-weight: 700;
       color: var(--text-secondary);
-      line-height: 26px;
+      line-height: 24px;
     }
-
-    /* ── AGENT CARDS GRID ────────────────────────────────────────── */
     .agent-grid {
       display: flex;
       flex-wrap: wrap;
@@ -227,15 +507,15 @@
       width: 48px;
       height: 48px;
       background: var(--surface-icon-bg);
-      border-radius: 10px;
+      border-radius: 100px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
     }
     .agent-card__icon svg {
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 28px;
     }
     .agent-card__body {
       display: flex;
@@ -243,19 +523,15 @@
       gap: 8px;
     }
     .agent-card__title {
-      font-family: 'Inter', sans-serif;
       font-size: 24px;
       font-weight: 700;
       color: var(--text-primary);
-      letter-spacing: 0.8px;
-      line-height: 40px;
+      line-height: 1.3;
     }
     .agent-card__desc {
-      font-family: 'Inter', sans-serif;
       font-size: 16px;
       font-weight: 400;
       color: var(--text-primary);
-      letter-spacing: 0.8px;
       line-height: 1.5;
     }
 
@@ -263,7 +539,7 @@
     .site-footer {
       width: 100%;
       height: 180px;
-      background: var(--surface-dark);
+      background: var(--color-surface-dark);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -274,7 +550,6 @@
       gap: 40px;
     }
     .footer-link {
-      font-family: 'Inter', sans-serif;
       font-size: 13px;
       font-weight: 400;
       color: var(--text-on-dark);
@@ -311,110 +586,481 @@
   <main class="page-body">
     <article class="content-card">
 
-      <!-- INTRO -->
-      <div class="intro-block">
-        <p class="intro-line intro-line--bold">As a Product Owner,</p>
-        <p class="intro-line intro-line--reg">you decide what is worth building, and whether it was built right.</p>
+      <!-- INTRO ROW -->
+      <div class="intro-row">
+        <div class="intro-text">
+          <p class="intro-line intro-line--bold">As a Product Owner,</p>
+          <p class="intro-line intro-line--reg">you decide what is worth building,</p>
+          <p class="intro-line intro-line--reg">and whether it was built right.</p>
+        </div>
+        <img
+          class="intro-illustration"
+          src="images/role-illustration-po.png"
+          alt="Product Owner illustration"
+          width="180"
+          height="180"
+        >
       </div>
 
       <div class="divider"></div>
 
-      <!-- RESPONSIBILITIES -->
-      <div class="section">
-        <h2 class="section__heading">What you are responsible for</h2>
-        <p class="section__body">As Product Owner you hold the vision, the roadmap, the backlog and the business outcomes, and you make the trade offs that shape them, from what earns a place in the MVP to what waits and what gets cut. Nothing moves forward until you have said that this is what the squad meant. Agents execute the work, but you answer for whether the value showed up once it shipped.</p>
-      </div>
+      <!-- PDLC STAGE CARDS -->
+      <div class="stage-cards-wrapper">
+        <div class="stage-cards-header">
+          <p class="section-label">These are where you are most involved in:</p>
+          <div class="stage-slider-track" id="sliderTrack" role="scrollbar"
+               aria-controls="stageScroll" aria-orientation="horizontal">
+            <div class="stage-slider-thumb" id="sliderThumb"></div>
+          </div>
+        </div>
 
-      <!-- KEY DECISIONS -->
-      <div class="section">
-        <h2 class="section__heading">Your key decision points</h2>
-        <p class="section__body">Specify approval → Does this spec describe the thing we actually want, or just a confident guess at it?<br>
-Requirements and backlog sign off → Are the priorities, scope and acceptance criteria right?<br>
-Deployment approval (with PM) → Are we ready to put this in front of real users?<br>
-Reuse or regenerate (brownfield) → Is the existing approved BRD or PRD still good enough, or has it gone stale?</p>
-      </div>
+        <div class="stage-cards-scroll" id="stageScroll">
+          <div class="stage-cards-row">
 
-      <!-- WHAT YOU REVIEW -->
-      <div class="section">
-        <h2 class="section__heading">What you review</h2>
-        <p class="section__body">
-          <b>BRD</b><br>
-          Are the right stakeholders named?<br>
-          Are contradictions between them resolved rather than smoothed over?<br>
-          Are objectives quantified?<br>
-          Are scope boundaries clear?<br>
-          <br>
-          <b>PRD</b><br>
-          Is every story tagged P0, P1 or P2?<br>
-          Is the MVP boundary obvious?<br>
-          Are technical constraints and non functional requirements present?<br>
-          <br>
-          <b>Backlog</b><br>
-          Do the epics and stories reflect your priorities?<br>
-          Does each story have Given/When/Then acceptance criteria?<br>
-          Is each story linked to a parent epic?<br>
-          <br>
-          <b>spec.md</b><br>
-          Does it trace back to your requirements?<br>
-          Were open questions answered rather than quietly turned into assumptions?
-        </p>
-      </div>
+            <!-- Stage 01 — PO involved -->
+            <div class="stage-card-wrapper">
+              <div class="stage-indicator" aria-hidden="true">
+                <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
+                  <path d="M1 1.5L7 8L13 1.5" stroke="#ffe8b2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="stage-card" data-stage="01" aria-label="Stage 01: Discover / Context">
+                <div class="stage-card__accent"></div>
+                <div class="stage-card__inner">
+                  <div class="stage-card__num-section">
+                    <span class="stage-card__ghost-num">01</span>
+                    <span class="stage-card__real-num">01</span>
+                  </div>
+                  <span class="stage-card__name">Discover / Context</span>
+                  <div class="stage-card__divider"></div>
+                  <p class="stage-card__desc">Assemble requirements, design and brownfield context as input to the PDLC.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-card-connector" aria-hidden="true"></div>
+
+            <!-- Stage 02 — PO involved -->
+            <div class="stage-card-wrapper">
+              <div class="stage-indicator" aria-hidden="true">
+                <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
+                  <path d="M1 1.5L7 8L13 1.5" stroke="#ffe8b2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="stage-card" data-stage="02" aria-label="Stage 02: Specify">
+                <div class="stage-card__accent"></div>
+                <div class="stage-card__inner">
+                  <div class="stage-card__num-section">
+                    <span class="stage-card__ghost-num">02</span>
+                    <span class="stage-card__real-num">02</span>
+                  </div>
+                  <span class="stage-card__name">Specify</span>
+                  <div class="stage-card__divider"></div>
+                  <p class="stage-card__desc">Turn approved requirements into a buildable specification with clear priorities and business decisions.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-card-connector" aria-hidden="true"></div>
+
+            <!-- Stage 03 -->
+            <div class="stage-card-wrapper">
+              <div class="stage-card" data-stage="03" aria-label="Stage 03: Plan">
+                <div class="stage-card__accent"></div>
+                <div class="stage-card__inner">
+                  <div class="stage-card__num-section">
+                    <span class="stage-card__ghost-num">03</span>
+                    <span class="stage-card__real-num">03</span>
+                  </div>
+                  <span class="stage-card__name">Plan</span>
+                  <div class="stage-card__divider"></div>
+                  <p class="stage-card__desc">Validate that scope and delivery plan align with business priorities before work begins.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-card-connector" aria-hidden="true"></div>
+
+            <!-- Stage 04 -->
+            <div class="stage-card-wrapper">
+              <div class="stage-card" data-stage="04" aria-label="Stage 04: Tasks">
+                <div class="stage-card__accent"></div>
+                <div class="stage-card__inner">
+                  <div class="stage-card__num-section">
+                    <span class="stage-card__ghost-num">04</span>
+                    <span class="stage-card__real-num">04</span>
+                  </div>
+                  <span class="stage-card__name">Tasks</span>
+                  <div class="stage-card__divider"></div>
+                  <p class="stage-card__desc">Review task breakdowns and ensure acceptance criteria match your approved specification.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-card-connector" aria-hidden="true"></div>
+
+            <!-- Stage 05 -->
+            <div class="stage-card-wrapper">
+              <div class="stage-card" data-stage="05" aria-label="Stage 05: Implement">
+                <div class="stage-card__accent"></div>
+                <div class="stage-card__inner">
+                  <div class="stage-card__num-section">
+                    <span class="stage-card__ghost-num">05</span>
+                    <span class="stage-card__real-num">05</span>
+                  </div>
+                  <span class="stage-card__name">Implement</span>
+                  <div class="stage-card__divider"></div>
+                  <p class="stage-card__desc">Stay available to unblock decisions as agents build to spec — scope creep still needs your veto.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-card-connector" aria-hidden="true"></div>
+
+            <!-- Stage 06 -->
+            <div class="stage-card-wrapper">
+              <div class="stage-card" data-stage="06" aria-label="Stage 06: Test &amp; Validate">
+                <div class="stage-card__accent"></div>
+                <div class="stage-card__inner">
+                  <div class="stage-card__num-section">
+                    <span class="stage-card__ghost-num">06</span>
+                    <span class="stage-card__real-num">06</span>
+                  </div>
+                  <span class="stage-card__name">Test &amp; Validate</span>
+                  <div class="stage-card__divider"></div>
+                  <p class="stage-card__desc">Confirm that what was built actually delivers the value stated in the PRD, not just that it works.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-card-connector" aria-hidden="true"></div>
+
+            <!-- Stage 07 -->
+            <div class="stage-card-wrapper">
+              <div class="stage-card" data-stage="07" aria-label="Stage 07: Build / Ship">
+                <div class="stage-card__accent"></div>
+                <div class="stage-card__inner">
+                  <div class="stage-card__num-section">
+                    <span class="stage-card__ghost-num">07</span>
+                    <span class="stage-card__real-num">07</span>
+                  </div>
+                  <span class="stage-card__name">Build / Ship</span>
+                  <div class="stage-card__divider"></div>
+                  <p class="stage-card__desc">Give deployment sign-off once you're satisfied that the right thing ships to the right users.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-card-connector" aria-hidden="true"></div>
+
+            <!-- Stage 08 — PO involved -->
+            <div class="stage-card-wrapper">
+              <div class="stage-indicator" aria-hidden="true">
+                <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
+                  <path d="M1 1.5L7 8L13 1.5" stroke="#ffe8b2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="stage-card" data-stage="08" aria-label="Stage 08: GreenLane CI/CD">
+                <div class="stage-card__accent"></div>
+                <div class="stage-card__inner">
+                  <div class="stage-card__num-section">
+                    <span class="stage-card__ghost-num">08</span>
+                    <span class="stage-card__real-num">08</span>
+                  </div>
+                  <span class="stage-card__name">GreenLane CI/CD</span>
+                  <div class="stage-card__divider"></div>
+                  <p class="stage-card__desc">Ensure the pipeline and backlog stay aligned with your approved priorities through each build cycle.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-card-connector" aria-hidden="true"></div>
+
+            <!-- Stage 09 — PO involved -->
+            <div class="stage-card-wrapper">
+              <div class="stage-indicator" aria-hidden="true">
+                <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
+                  <path d="M1 1.5L7 8L13 1.5" stroke="#ffe8b2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="stage-card" data-stage="09" aria-label="Stage 09: Operate &amp; Learn">
+                <div class="stage-card__accent"></div>
+                <div class="stage-card__inner">
+                  <div class="stage-card__num-section">
+                    <span class="stage-card__ghost-num">09</span>
+                    <span class="stage-card__real-num">09</span>
+                  </div>
+                  <span class="stage-card__name">Operate &amp; Learn</span>
+                  <div class="stage-card__divider"></div>
+                  <p class="stage-card__desc">Own whether the expected value showed up. Use what the squad learns to feed the next PDLC cycle.</p>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- .stage-cards-row -->
+        </div><!-- .stage-cards-scroll -->
+
+      </div><!-- .stage-cards-wrapper -->
+
+      <!-- STAGE DETAIL SECTIONS -->
+      <div class="stage-details">
+
+        <!-- Stage 1 -->
+        <div class="stage-detail">
+          <h2 class="stage-detail__title">Stage 1. Discover/ Context</h2>
+          <p class="stage-detail__label">What you are responsible for</p>
+          <p class="stage-detail__body">Agents can draft a BRD in minutes, but they cannot tell you whether the problem is worth solving. In this stage you make sure the requirements context that every later stage builds on reflects what the business actually needs.</p>
+          <div class="output-review-grid">
+            <div class="output-review">
+              <div class="output-review__header">
+                <div class="output-review__icon">
+                  <!-- document icon -->
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="output-review__name">BRD</span>
+              </div>
+              <p class="output-review__desc">Are the right stakeholders named, contradictions resolved, objectives quantified and scope boundaries clear? Approve it, or send it back with corrections.</p>
+            </div>
+            <div class="output-review">
+              <div class="output-review__header">
+                <div class="output-review__icon">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="output-review__name">PRD</span>
+              </div>
+              <p class="output-review__desc">Is every story tagged P0, P1 or P2, is the MVP boundary obvious, and are technical constraints and non functional requirements present?</p>
+            </div>
+            <div class="output-review">
+              <div class="output-review__header">
+                <div class="output-review__icon">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="output-review__name">BRD</span>
+              </div>
+              <p class="output-review__desc">Are the right stakeholders named, contradictions resolved, objectives quantified and scope boundaries clear? Approve it, or send it back with corrections.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 2 -->
+        <div class="stage-detail">
+          <h2 class="stage-detail__title">Stage 2. Specify</h2>
+          <p class="stage-detail__label">What you are responsible for</p>
+          <p class="stage-detail__body">You turn approved requirements into a buildable specification by owning the priorities and the answers to the business questions that come up.</p>
+          <div class="output-review-grid">
+            <div class="output-review">
+              <div class="output-review__header">
+                <div class="output-review__icon">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="output-review__name">Backlog</span>
+              </div>
+              <p class="output-review__desc">Do the epics and stories reflect your priorities, and does each story have Given/When/Then acceptance criteria and a parent epic? Confirm priority, scope and sequencing.</p>
+            </div>
+            <div class="output-review">
+              <div class="output-review__header">
+                <div class="output-review__icon">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="output-review__name">Clarifications</span>
+              </div>
+              <p class="output-review__desc">Which gaps and conflicts need a business answer?</p>
+            </div>
+            <div class="output-review">
+              <div class="output-review__header">
+                <div class="output-review__icon">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="output-review__name">spec.md</span>
+              </div>
+              <p class="output-review__desc">Does it trace back to your requirements, with open questions resolved?</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 8 -->
+        <div class="stage-detail">
+          <h2 class="stage-detail__title">Stage 8. GreenLane CI/CD</h2>
+          <p class="stage-detail__label">What you are responsible for</p>
+          <p class="stage-detail__body">You turn approved requirements into a buildable specification by owning the priorities and the answers to the business questions that come up.</p>
+          <div class="output-review-grid">
+            <div class="output-review">
+              <div class="output-review__header">
+                <div class="output-review__icon">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="output-review__name">Backlog</span>
+              </div>
+              <p class="output-review__desc">Do the epics and stories reflect your priorities, and does each story have Given/When/Then acceptance criteria and a parent epic? Confirm priority, scope and sequencing.</p>
+            </div>
+            <div class="output-review">
+              <div class="output-review__header">
+                <div class="output-review__icon">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="output-review__name">Clarifications</span>
+              </div>
+              <p class="output-review__desc">Which gaps and conflicts need a business answer?</p>
+            </div>
+            <div class="output-review">
+              <div class="output-review__header">
+                <div class="output-review__icon">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="output-review__name">spec.md</span>
+              </div>
+              <p class="output-review__desc">Does it trace back to your requirements, with open questions resolved?</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 9 -->
+        <div class="stage-detail">
+          <h2 class="stage-detail__title">Stage 9. Operate &amp; Learn</h2>
+          <p class="stage-detail__label">What you are responsible for</p>
+          <p class="stage-detail__body">Product squads own outcomes, not only delivery, so you stay responsible for whether the expected value actually showed up. Ongoing operational review sits with the Ops or System Manager, and your part is to use what they find.</p>
+          <div class="output-review-grid">
+            <div class="output-review">
+              <div class="output-review__header">
+                <div class="output-review__icon">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="output-review__name">Insights and user feedback</span>
+              </div>
+              <p class="output-review__desc">Did the value we expected show up?</p>
+            </div>
+            <div class="output-review">
+              <div class="output-review__header">
+                <div class="output-review__icon">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="output-review__name">Updates to context</span>
+              </div>
+              <p class="output-review__desc">Does what was learned need to feed back into the BRD, PRD or backlog so the next run starts from the truth?</p>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- .stage-details -->
 
       <div class="divider"></div>
 
-      <!-- AGENT CARDS -->
-      <p class="agents-label">These are the agents you'll most likely work with:</p>
-      <div class="agent-grid">
+      <!-- AGENTS SECTION -->
+      <div class="agents-section">
+        <p class="agents-label">These are the agents you'll most likely work with:</p>
+        <div class="agent-grid">
 
-        <div class="agent-card">
-          <div class="agent-card__icon">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 3L12 21M3 12L21 12" stroke="#7631C1" stroke-width="2" stroke-linecap="round"/>
-            </svg>
+          <!-- Research Planner -->
+          <div class="agent-card">
+            <div class="agent-card__icon">
+              <!-- clipboard / research icon -->
+              <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="5" y="4" width="18" height="22" rx="2" stroke="#7631C1" stroke-width="1.8"/>
+                <path d="M10 4V3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v1" stroke="#7631C1" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M9 12h10M9 16h10M9 20h6" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="agent-card__body">
+              <p class="agent-card__title">Research Planner</p>
+              <p class="agent-card__desc">Turns your vision and stakeholder notes into an assumptions log, a research plan, interview guides and screeners.</p>
+            </div>
           </div>
-          <div class="agent-card__body">
-            <p class="agent-card__title">Research Planner</p>
-            <p class="agent-card__desc">Turns your vision and stakeholder notes into an assumptions log, a research plan, interview guides and screeners.</p>
-          </div>
-        </div>
 
-        <div class="agent-card">
-          <div class="agent-card__icon">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 3L12 21M3 12L21 12" stroke="#7631C1" stroke-width="2" stroke-linecap="round"/>
-            </svg>
+          <!-- BRD Builder -->
+          <div class="agent-card">
+            <div class="agent-card__icon">
+              <!-- document layers icon -->
+              <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 5h11l4 4v16H7V5z" stroke="#7631C1" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M18 5v4h4" stroke="#7631C1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M11 13h7M11 17h7M11 21h4" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="agent-card__body">
+              <p class="agent-card__title">BRD Builder</p>
+              <p class="agent-card__desc">Converts business problems, objectives and discovery inputs into a structured and traceable Business Requirements Document.</p>
+            </div>
           </div>
-          <div class="agent-card__body">
-            <p class="agent-card__title">BRD Builder</p>
-            <p class="agent-card__desc">Converts business problems, objectives and discovery inputs into a structured and traceable Business Requirements Document.</p>
-          </div>
-        </div>
 
-        <div class="agent-card">
-          <div class="agent-card__icon">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 3L12 21M3 12L21 12" stroke="#7631C1" stroke-width="2" stroke-linecap="round"/>
-            </svg>
+          <!-- PRD Builder -->
+          <div class="agent-card">
+            <div class="agent-card__icon">
+              <!-- stacked docs icon -->
+              <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 8h12l3 3v13H5V8z" stroke="#7631C1" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M17 8v3h3" stroke="#7631C1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9 14h6M9 18h6M9 22h4" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M8 5h12l3 3" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 2"/>
+              </svg>
+            </div>
+            <div class="agent-card__body">
+              <p class="agent-card__title">PRD Builder</p>
+              <p class="agent-card__desc">Translates approved business direction into detailed, measurable and testable product requirements for downstream design, engineering and validation.</p>
+            </div>
           </div>
-          <div class="agent-card__body">
-            <p class="agent-card__title">PRD Builder</p>
-            <p class="agent-card__desc">Translates approved business direction into detailed, measurable and testable product requirements for downstream design, engineering and validation.</p>
-          </div>
-        </div>
 
-        <div class="agent-card">
-          <div class="agent-card__icon">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 3L12 21M3 12L21 12" stroke="#7631C1" stroke-width="2" stroke-linecap="round"/>
-            </svg>
+          <!-- Jira Backlog Manager -->
+          <div class="agent-card">
+            <div class="agent-card__icon">
+              <!-- backlog / list icon -->
+              <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="5" width="22" height="18" rx="3" stroke="#7631C1" stroke-width="1.8"/>
+                <path d="M8 10h12M8 14h12M8 18h8" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="5.5" cy="10" r="1.5" fill="#7631C1" transform="translate(1 0)"/>
+              </svg>
+            </div>
+            <div class="agent-card__body">
+              <p class="agent-card__title">Jira Backlog Manager</p>
+              <p class="agent-card__desc">Transforms approved product requirements or epics into a backlog of epics, user stories and acceptance criteria.</p>
+            </div>
           </div>
-          <div class="agent-card__body">
-            <p class="agent-card__title">Jira Backlog Manager</p>
-            <p class="agent-card__desc">Transforms approved product requirements or epics into a backlog of epics, user stories and acceptance criteria.</p>
-          </div>
-        </div>
 
-      </div>
+        </div><!-- .agent-grid -->
+      </div><!-- .agents-section -->
 
     </article>
   </main>
@@ -429,6 +1075,56 @@ Reuse or regenerate (brownfield) → Is the existing approved BRD or PRD still g
       <a href="#" class="footer-link">Playbook PDF</a>
     </nav>
   </footer>
+
+  <script>
+    (function () {
+      var scroll = document.getElementById('stageScroll');
+      var track  = document.getElementById('sliderTrack');
+      var thumb  = document.getElementById('sliderThumb');
+
+      /* ── SLIDER ───────────────────────────────────────── */
+      function updateThumb() {
+        var maxScroll = scroll.scrollWidth - scroll.clientWidth;
+        var ratio     = maxScroll > 0 ? scroll.scrollLeft / maxScroll : 0;
+        var trackW    = track.offsetWidth;
+        var thumbW    = 17;
+        thumb.style.left = (ratio * (trackW - thumbW)) + 'px';
+      }
+      updateThumb();
+      scroll.addEventListener('scroll', updateThumb);
+      window.addEventListener('resize', updateThumb);
+
+      /* drag slider thumb */
+      var dragging = false, dragStartX, thumbStartLeft;
+      thumb.addEventListener('mousedown', function (e) {
+        dragging = true;
+        dragStartX = e.clientX;
+        thumbStartLeft = thumb.offsetLeft;
+        e.preventDefault();
+      });
+      document.addEventListener('mousemove', function (e) {
+        if (!dragging) return;
+        var dx     = e.clientX - dragStartX;
+        var trackW = track.offsetWidth;
+        var thumbW = 17;
+        var newLeft = Math.max(0, Math.min(trackW - thumbW, thumbStartLeft + dx));
+        var ratio   = (trackW - thumbW) > 0 ? newLeft / (trackW - thumbW) : 0;
+        scroll.scrollLeft = ratio * (scroll.scrollWidth - scroll.clientWidth);
+      });
+      document.addEventListener('mouseup', function () { dragging = false; });
+
+      /* click on track (outside thumb) */
+      track.addEventListener('click', function (e) {
+        if (e.target === thumb) return;
+        var trackRect = track.getBoundingClientRect();
+        var clickX    = e.clientX - trackRect.left;
+        var thumbW    = 17;
+        var trackW    = track.offsetWidth;
+        var ratio     = Math.max(0, Math.min(1, (clickX - thumbW / 2) / (trackW - thumbW)));
+        scroll.scrollLeft = ratio * (scroll.scrollWidth - scroll.clientWidth);
+      });
+    })();
+  </script>
 
 </body>
 </html>
