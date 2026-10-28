@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic PDLC · Portal Home</title>
+  <style>
+    /* ─── Layer 1: Atoms ─────────────────────────────────────────────── */
+    :root {
+      --color-ink-900:   #14181F;
+      --color-ink-700:   #4A5260;
+      --color-ink-500:   #5C6573;
+      --color-ink-100:   #F3F0F7;
+      --color-white:     #FFFFFF;
+
+      --color-purple-900: #14181F;
+      --color-purple-800: #2B1550;
+      --color-purple-700: #462279;
+      --color-purple-600: #7631C1;
+      --color-purple-500: #8055C3;
+      --color-purple-100: #E8DCFA;
+
+      --color-amber-400:  #FFC13F;
+
+      --gradient-brand: linear-gradient(99deg, rgba(79,42,129,0.85) 0%, #462279 77.5%);
+
+      --font-family:     'DB Heavent', 'DBHeavent', 'DB Heavent Regular', Sarabun, sans-serif;
+
+      --space-4:   4px;
+      --space-8:   8px;
+      --space-16:  16px;
+      --space-20:  20px;
+      --space-24:  24px;
+      --space-36:  36px;
+      --space-40:  40px;
+      --space-64:  64px;
+      --space-120: 120px;
+
+      --radius-16: 16px;
+      --radius-20: 20px;
+      --radius-28: 28px;
+    }
+
+    /* ─── Layer 2: Semantic ──────────────────────────────────────────── */
+    :root {
+      --bg-page:       var(--color-white);
+      --bg-section-alt: var(--color-ink-100);
+      --bg-dark:       var(--color-ink-900);
+      --bg-nav:        var(--gradient-brand);
+      --bg-hero:       var(--gradient-brand);
+
+      --text-primary:  var(--color-ink-900);
+      --text-secondary: var(--color-ink-700);
+      --text-placeholder: var(--color-ink-500);
+      --text-on-dark:  var(--color-ink-100);
+      --text-brand:    var(--color-purple-600);
+
+      --border-divider: rgba(74,82,96,0.15);
+    }
+
+    /* ─── Layer 3: Reset ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    @font-face {
+      font-family: 'DB Heavent';
+      src: local('DB Heavent'), local('DBHeavent'), local('DB Heavent Regular');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'DB Heavent';
+      src: local('DB Heavent Med'), local('DBHeaventMed'), local('DB Heavent Medium');
+      font-weight: 500;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'DB Heavent';
+      src: local('DB Heavent Bold'), local('DBHeaventBold'), local('DB Heavent Bd');
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background: var(--bg-page);
+      color: var(--text-primary);
+      min-width: 1440px;
+      overflow-x: hidden;
+    }
+
+    /* ─── Layer 4: Components ────────────────────────────────────────── */
+
+    /* NAV */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      width: 100%;
+      height: 72px;
+      background: var(--gradient-brand);
+      display: flex;
+      align-items: center;
+      padding: 0 var(--space-120);
+    }
+
+    .site-nav__logo {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+      text-decoration: none;
+    }
+
+    .site-nav__logo-text {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--color-white);
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+
+    .site-nav__logo-sup {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-white);
+      margin-top: 3px;
+      margin-left: 1px;
+    }
+
+    /* HERO */
+    .site-hero {
+      width: 100%;
+      height: 369px; /* 441 - 72 (nav height) */
+      background: var(--gradient-brand);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .site-hero__ellipse {
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    .site-hero__ellipse--left {
+      width: 473px;
+      height: 473px;
+      left: -189px;
+      top: calc(208px - 72px); /* offset by nav */
+      background: radial-gradient(circle, rgba(168,130,220,0.25) 0%, rgba(101,61,170,0.10) 60%, transparent 80%);
+    }
+
+    .site-hero__ellipse--right {
+      width: 389px;
+      height: 389px;
+      right: calc(1440px - 1160px - 389px);
+      top: calc(-119px - 72px);
+      background: radial-gradient(circle, rgba(168,130,220,0.20) 0%, rgba(101,61,170,0.08) 60%, transparent 80%);
+    }
+
+    .site-hero__inner {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 37px var(--space-120) 0; /* 109 - 72 = 37 */
+    }
+
+    .site-hero__content {
+      width: 1200px;
+    }
+
+    .site-hero__heading {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--text-on-dark);
+      line-height: normal;
+      margin-bottom: var(--space-24);
+    }
+
+    .site-hero__body {
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--text-on-dark);
+      line-height: normal;
+      max-width: 880px;
+    }
+
+    /* SECTION SHARED */
+    .portal-section {
+      width: 100%;
+      padding: var(--space-64) var(--space-120);
+    }
+
+    .section-label {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-brand);
+      letter-spacing: 0.02em;
+      margin-bottom: var(--space-24);
+    }
+
+    .section-heading {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 40px;
+      color: var(--text-primary);
+      margin-bottom: var(--space-24);
+    }
+
+    /* ROLES SECTION */
+    .roles-section {
+      background: var(--bg-page);
+    }
+
+    .roles-section__header {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: var(--space-24);
+    }
+
+    .roles-carousel-wrapper {
+      position: relative;
+    }
+
+    .roles-carousel {
+      display: flex;
+      gap: var(--space-24);
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding-bottom: 4px;
+      scroll-behavior: smooth;
+    }
+
+    .roles-carousel::-webkit-scrollbar { display: none; }
+
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--color-white);
+      border: 1px solid var(--border-divider);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 2;
+      transition: opacity 0.2s, background 0.2s;
+    }
+
+    .carousel-nav:hover {
+      background: var(--color-purple-100);
+    }
+
+    .carousel-nav:disabled {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .carousel-nav--prev { left: -20px; }
+    .carousel-nav--next { right: -20px; }
+
+    .carousel-nav svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .role-card {
+      flex: 0 0 266px;
+      width: 266px;
+      height: 306px;
+      background: var(--color-white);
+      border-radius: var(--radius-16);
+      padding: var(--space-24);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-16);
+      box-shadow: 2px 4px 15px rgba(0,0,0,0.20);
+      cursor: pointer;
+      text-decoration: none;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .role-card:hover {
+      box-shadow: 0 8px 24px rgba(118,49,193,0.15), 0 2px 6px rgba(0,0,0,0.06);
+      transform: translateY(-2px);
+    }
+
+    .role-card__illustration {
+      width: 140px;
+      height: 140px;
+      flex-shrink: 0;
+    }
+
+    .role-card__illustration img {
+      width: 140px;
+      height: 140px;
+      display: block;
+    }
+
+    .role-card__name {
+      width: 218px;
+      min-height: 64px;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 32px;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .role-card__arrow {
+      width: 218px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+    }
+
+    .role-card__arrow svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* JTBD SECTION */
+    .jtbd-section {
+      background: var(--bg-section-alt);
+    }
+
+    .jtbd-section__header {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: var(--space-24);
+    }
+
+    .jtbd-content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-40);
+    }
+
+    .jtbd-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-8);
+    }
+
+    .jtbd-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--space-4) var(--space-24);
+      background: var(--color-amber-400);
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #45484E;
+      width: fit-content;
+    }
+
+    .jtbd-items-row {
+      display: grid;
+      grid-template-columns: repeat(3, 376px);
+      gap: 36px;
+    }
+
+    .jtbd-card {
+      display: flex;
+      flex-direction: column;
+      padding-bottom: var(--space-24);
+      border-bottom: 1px solid var(--border-divider);
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .jtbd-card__question-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-24) 0;
+      gap: var(--space-16);
+    }
+
+    .jtbd-card__title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 24px;
+      flex: 1;
+    }
+
+    .jtbd-card__arrow {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .jtbd-card__arrow svg {
+      width: 18px;
+      height: 15px;
+    }
+
+    .jtbd-card__subtitle {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 16px;
+    }
+
+    /* FOOTER */
+    .site-footer {
+      width: 100%;
+      height: 107px;
+      background: var(--bg-dark);
+      display: flex;
+      align-items: center;
+      padding: 0 var(--space-120);
+    }
+
+    .site-footer__links {
+      display: flex;
+      gap: var(--space-36);
+      list-style: none;
+    }
+
+    .site-footer__links a {
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .site-footer__links a:hover {
+      color: var(--color-white);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="site-nav">
+    <a href="index.html" class="site-nav__logo">
+      <span class="site-nav__logo-text">SCB</span><sup class="site-nav__logo-sup">✕</sup>
+    </a>
+  </header>
+
+  <!-- HERO -->
+  <section class="site-hero">
+    <div class="site-hero__ellipse site-hero__ellipse--left"></div>
+    <div class="site-hero__ellipse site-hero__ellipse--right"></div>
+    <div class="site-hero__inner">
+      <div class="site-hero__content">
+        <h1 class="site-hero__heading">Agentic PDLC</h1>
+        <p class="site-hero__body">It is a way of building products where people and agents share the work, from first idea to live service. Agents handle defined tasks using approved context, people set the direction, check the output and approve every major step. Nothing reaches production without a human decision.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BROWSE BY ROLES -->
+  <section class="portal-section roles-section">
+    <div class="roles-section__header">
+      <p class="section-label">BROWSE BY ROLES</p>
+      <h2 class="section-heading">I'm a ...</h2>
+    </div>
+    <div class="roles-carousel-wrapper">
+    <button class="carousel-nav carousel-nav--prev" id="rolesPrev" aria-label="Previous roles" disabled>
+      <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M11 4l-5 5 5 5" stroke="#45484E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="roles-carousel" id="rolesCarousel">
+
+      <!-- Product Owner -->
+      <a href="role-product-owner.html" class="role-card">
+        <div class="role-card__illustration">
+          <img src="assets/illustrations/product-owner.png" alt="Product Owner illustration">
+        </div>
+        <span class="role-card__name">Product Owner</span>
+        <div class="role-card__arrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="#8055C3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Forward Deployed Architect -->
+      <a href="#" class="role-card" style="pointer-events:none;cursor:default;">
+        <div class="role-card__illustration">
+          <img src="assets/illustrations/forward-deployed-architect.png" alt="Forward Deployed Architect illustration">
+        </div>
+        <span class="role-card__name">Forward Deployed Architect</span>
+        <div class="role-card__arrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="#8055C3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Product Designer -->
+      <a href="#" class="role-card" style="pointer-events:none;cursor:default;">
+        <div class="role-card__illustration">
+          <img src="assets/illustrations/product-designer.png" alt="Product Designer illustration">
+        </div>
+        <span class="role-card__name">Product Designer</span>
+        <div class="role-card__arrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="#8055C3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Forward Deployed Engineer -->
+      <a href="#" class="role-card" style="pointer-events:none;cursor:default;">
+        <div class="role-card__illustration">
+          <img src="assets/illustrations/forward-deployed-engineer.png" alt="Forward Deployed Engineer illustration">
+        </div>
+        <span class="role-card__name">Forward Deployed Engineer</span>
+        <div class="role-card__arrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="#8055C3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Application Engineer -->
+      <a href="#" class="role-card" style="pointer-events:none;cursor:default;">
+        <div class="role-card__illustration">
+          <img src="assets/illustrations/application-engineer.png" alt="Application Engineer illustration">
+        </div>
+        <span class="role-card__name">Application Engineer</span>
+        <div class="role-card__arrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="#8055C3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Quality Engineer -->
+      <a href="#" class="role-card" style="pointer-events:none;cursor:default;">
+        <div class="role-card__illustration">
+          <img src="assets/illustrations/quality-engineer.png" alt="Quality Engineer illustration">
+        </div>
+        <span class="role-card__name">Quality Engineer</span>
+        <div class="role-card__arrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="#8055C3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <!-- DevOps Engineer -->
+      <a href="#" class="role-card" style="pointer-events:none;cursor:default;">
+        <div class="role-card__illustration">
+          <img src="assets/illustrations/devops-engineer.png" alt="DevOps Engineer illustration">
+        </div>
+        <span class="role-card__name">DevOps Engineer</span>
+        <div class="role-card__arrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="#8055C3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Site Reliability Engineer -->
+      <a href="#" class="role-card" style="pointer-events:none;cursor:default;">
+        <div class="role-card__illustration">
+          <img src="assets/illustrations/site-reliability-engineer.png" alt="Site Reliability Engineer illustration">
+        </div>
+        <span class="role-card__name">Site Reliability Engineer</span>
+        <div class="role-card__arrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="#8055C3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Security Engineer -->
+      <a href="#" class="role-card" style="pointer-events:none;cursor:default;">
+        <div class="role-card__illustration">
+          <img src="assets/illustrations/security-engineer.png" alt="Security Engineer illustration">
+        </div>
+        <span class="role-card__name">Security Engineer</span>
+        <div class="role-card__arrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="#8055C3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+    </div>
+    <button class="carousel-nav carousel-nav--next" id="rolesNext" aria-label="Next roles">
+      <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7 4l5 5-5 5" stroke="#45484E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    </div>
+  </section>
+
+  <!-- BROWSE BY JOBS-TO-BE-DONE -->
+  <section class="portal-section jtbd-section">
+    <div class="jtbd-section__header">
+      <p class="section-label">BROWSE BY JOBS-TO-BE-DONE</p>
+      <h2 class="section-heading">I need to ...</h2>
+    </div>
+
+    <div class="jtbd-content">
+
+      <!-- LEARN group -->
+      <div class="jtbd-group">
+        <span class="jtbd-pill">LEARN</span>
+        <div class="jtbd-items-row">
+
+          <a href="getting-started.html" class="jtbd-card">
+            <div class="jtbd-card__question-row">
+              <span class="jtbd-card__title">Find a common FAQ</span>
+              <span class="jtbd-card__arrow">
+                <svg viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 7.5h16M10.5 1.5l6 6-6 6" stroke="#8055C3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <span class="jtbd-card__subtitle">I have some burning questions</span>
+          </a>
+
+          <a href="setup.html" class="jtbd-card">
+            <div class="jtbd-card__question-row">
+              <span class="jtbd-card__title">Get started easily</span>
+              <span class="jtbd-card__arrow">
+                <svg viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 7.5h16M10.5 1.5l6 6-6 6" stroke="#8055C3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <span class="jtbd-card__subtitle">I have some burning questions</span>
+          </a>
+
+          <a href="#" class="jtbd-card" style="pointer-events:none;cursor:default;">
+            <div class="jtbd-card__question-row">
+              <span class="jtbd-card__title">Identify project types</span>
+              <span class="jtbd-card__arrow">
+                <svg viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 7.5h16M10.5 1.5l6 6-6 6" stroke="#8055C3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <span class="jtbd-card__subtitle">I have some burning questions</span>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- CHECK group -->
+      <div class="jtbd-group">
+        <span class="jtbd-pill">CHECK</span>
+        <div class="jtbd-items-row" style="grid-template-rows: auto auto; row-gap: 0;">
+
+          <a href="review-brd-prd.html" class="jtbd-card">
+            <div class="jtbd-card__question-row">
+              <span class="jtbd-card__title">Review a BRD or PRD</span>
+              <span class="jtbd-card__arrow">
+                <svg viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 7.5h16M10.5 1.5l6 6-6 6" stroke="#8055C3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <span class="jtbd-card__subtitle">I have some burning questions</span>
+          </a>
+
+          <a href="#" class="jtbd-card" style="pointer-events:none;cursor:default;">
+            <div class="jtbd-card__question-row">
+              <span class="jtbd-card__title">Review a spec or plan</span>
+              <span class="jtbd-card__arrow">
+                <svg viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 7.5h16M10.5 1.5l6 6-6 6" stroke="#8055C3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <span class="jtbd-card__subtitle">I have some burning questions</span>
+          </a>
+
+          <a href="#" class="jtbd-card" style="pointer-events:none;cursor:default;">
+            <div class="jtbd-card__question-row">
+              <span class="jtbd-card__title">Review agent generated code</span>
+              <span class="jtbd-card__arrow">
+                <svg viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 7.5h16M10.5 1.5l6 6-6 6" stroke="#8055C3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <span class="jtbd-card__subtitle">I have some burning questions</span>
+          </a>
+
+          <a href="#" class="jtbd-card" style="pointer-events:none;cursor:default;">
+            <div class="jtbd-card__question-row">
+              <span class="jtbd-card__title">Accept test evidence</span>
+              <span class="jtbd-card__arrow">
+                <svg viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 7.5h16M10.5 1.5l6 6-6 6" stroke="#8055C3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <span class="jtbd-card__subtitle">I have some burning questions</span>
+          </a>
+
+          <a href="#" class="jtbd-card" style="pointer-events:none;cursor:default;">
+            <div class="jtbd-card__question-row">
+              <span class="jtbd-card__title">Approve a release</span>
+              <span class="jtbd-card__arrow">
+                <svg viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 7.5h16M10.5 1.5l6 6-6 6" stroke="#8055C3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <span class="jtbd-card__subtitle">I have some burning questions</span>
+          </a>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <nav>
+      <ul class="site-footer__links">
+        <li><a href="getting-started.html">Getting Started</a></li>
+        <li><a href="faq.html">Help &amp; FAQs</a></li>
+        <li><a href="#">Best Practices</a></li>
+        <li><a href="#">Learn More</a></li>
+        <li><a href="#">Playbook PDF</a></li>
+      </ul>
+    </nav>
+  </footer>
+
+  <script>
+    (function () {
+      const carousel = document.getElementById('rolesCarousel');
+      const prev = document.getElementById('rolesPrev');
+      const next = document.getElementById('rolesNext');
+      const STEP = 290; // ~card width + gap
+
+      function update() {
+        prev.disabled = carousel.scrollLeft <= 0;
+        next.disabled = carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 1;
+      }
+
+      prev.addEventListener('click', function () {
+        carousel.scrollBy({ left: -STEP, behavior: 'smooth' });
+      });
+
+      next.addEventListener('click', function () {
+        carousel.scrollBy({ left: STEP, behavior: 'smooth' });
+      });
+
+      carousel.addEventListener('scroll', update);
+      update();
+    })();
+  </script>
+
+</body>
+</html>

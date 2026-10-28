@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Getting Started — Agentic PDLC Help Centre</title>
+  <style>
+    @font-face {
+      font-family: 'DB Heavent';
+      src: local('DB Heavent'),
+           local('DBHeavent'),
+           local('DB Heavent Regular');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'DB Heavent';
+      src: local('DB Heavent Med'),
+           local('DBHeaventMed'),
+           local('DB Heavent Medium');
+      font-weight: 500;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'DB Heavent';
+      src: local('DB Heavent Bold'),
+           local('DBHeaventBold'),
+           local('DB Heavent Bd');
+      font-weight: 700;
+      font-style: normal;
+    }
+  </style>
+  <style>
+
+    /* ═══════════════════════════════════════════════════════════
+       LAYER 1 — ATOMS
+    ═══════════════════════════════════════════════════════════ */
+    :root {
+      /* Colour primitives */
+      --purple-50:  #F3ECFB;
+      --purple-100: #E3D2F5;
+      --purple-200: #E8DBFF;
+      --purple-600: #7631C1;
+      --purple-700: #462279;
+      --grey-0:     #FAFAFA;
+      --grey-20:    #BBBEC3;
+      --grey-50:    #F5F3F8;
+      --green-600:  #0E7A3E;
+      --green-50:   #F0FFF7;
+
+      /* Raw text values */
+      --text-primary-raw:    #14181F;
+      --text-secondary-raw:  #4A5260;
+      --text-muted-raw:      #60636A;
+      --text-placeholder-raw: #8A93A1;
+      --text-on-dark-raw:    #C9CED6;
+      --border-raw:          #BBBEC3;
+      --surface-dark-raw:    #14181F;
+
+      /* ═══════════════════════════════════════════════════════
+         LAYER 2 — SEMANTICS
+      ═══════════════════════════════════════════════════════ */
+      --color-text-primary:   var(--text-primary-raw);
+      --color-text-secondary: var(--text-secondary-raw);
+      --color-text-muted:     var(--text-muted-raw);
+      --color-text-placeholder: var(--text-placeholder-raw);
+      --color-text-on-dark:   var(--text-on-dark-raw);
+      --color-text-accent:    var(--purple-600);
+      --color-text-breadcrumb-active: var(--purple-600);
+      --color-text-complete:  var(--text-placeholder-raw);
+
+      --color-surface-page:     #F3F0F7;
+      --color-surface-section:  var(--grey-50);
+      --color-surface-card:     #FFFFFF;
+      --color-surface-dark:     var(--surface-dark-raw);
+      --color-surface-prompt:   var(--grey-50);
+
+      --color-border:         var(--border-raw);
+      --color-accent:         var(--purple-600);
+      --color-accent-dark:    var(--purple-700);
+
+      --color-check-done-bg:  var(--text-placeholder-raw);
+      --color-check-todo-bg:  transparent;
+      --color-check-todo-border: var(--border-raw);
+
+      --color-progress-track: #C9CED6;
+      --color-progress-fill:  var(--purple-600);
+
+      --color-you-should-see-border: var(--green-600);
+      --color-you-should-see-label:  var(--green-600);
+
+      /* Mini hero gradient: lavender → white, top to bottom */
+      --mini-hero-gradient: linear-gradient(180deg, #E8DBFF 2%, #ffffff 74%);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       LAYER 3 — BASE RESET
+    ═══════════════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DB Heavent', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--color-text-primary);
+      background: var(--color-surface-page);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    button { font-family: inherit; cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+    input[type="checkbox"] { cursor: pointer; }
+
+    /* ═══════════════════════════════════════════════════════════
+       HEADER / NAV  (72px, purple gradient)
+    ═══════════════════════════════════════════════════════════ */
+    .site-header {
+      width: 100%;
+      height: 72px;
+      background: linear-gradient(99deg, rgba(79,42,129,0.85) 0%, #462279 77.5%);
+      display: flex;
+      align-items: center;
+      padding: 0 120px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .header-logo {
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: baseline;
+      gap: 1px;
+    }
+
+    .header-logo sup {
+      font-size: 11px;
+      font-weight: 700;
+      vertical-align: super;
+    }
+
+    .header-divider {
+      width: 1px;
+      height: 20px;
+      background: rgba(255,255,255,0.3);
+    }
+
+    .header-title {
+      font-size: 14px;
+      font-weight: 400;
+      color: #ffffff;
+      opacity: 0.9;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       MINI HERO  (220px, lavender gradient)
+    ═══════════════════════════════════════════════════════════ */
+    .mini-hero {
+      width: 100%;
+      height: 220px;
+      background: var(--mini-hero-gradient);
+      display: flex;
+      align-items: center;
+      padding: 0 120px;
+    }
+
+    .mini-hero__inner {
+      width: 1200px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .breadcrumb__link {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--color-text-muted);
+      text-decoration: none;
+    }
+
+    .breadcrumb__link:hover { text-decoration: underline; }
+
+    .breadcrumb__sep {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--color-text-muted);
+    }
+
+    .breadcrumb__current {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-text-accent);
+    }
+
+    .mini-hero__heading {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 44px;
+      color: var(--color-text-primary);
+      letter-spacing: -0.5px;
+    }
+
+    .mini-hero__sub {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 26px;
+      color: var(--color-text-primary);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       CHECKLIST SECTION AREA
+    ═══════════════════════════════════════════════════════════ */
+    .checklist-section {
+      background: var(--color-surface-section);
+      padding: 40px 120px 64px;
+    }
+
+    .checklist-section__inner {
+      width: 1200px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Progress bar row */
+    .progress-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding-top: 12px;
+    }
+
+    .progress-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      white-space: nowrap;
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 6px;
+      background: var(--color-progress-track);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--color-progress-fill);
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       CHECKLIST CARD  (white, radius 12)
+    ═══════════════════════════════════════════════════════════ */
+    .checklist-card {
+      background: var(--color-surface-card);
+      border-radius: 12px;
+      padding: 0 40px;
+      overflow: hidden;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       SECTION HEADER  (badge + title + count)
+    ═══════════════════════════════════════════════════════════ */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .section-badge {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--color-accent-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .section-badge__num {
+      font-size: 12px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      flex: 1;
+    }
+
+    .section-count {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--color-text-placeholder);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       CHECKLIST ITEMS
+    ═══════════════════════════════════════════════════════════ */
+    .checklist-items {
+      padding-bottom: 20px;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .checklist-item:last-of-type {
+      border-bottom: none;
+    }
+
+    /* Custom checkbox */
+    .checklist-item input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--color-check-todo-border);
+      background: transparent;
+      flex-shrink: 0;
+      position: relative;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .checklist-item input[type="checkbox"]:checked {
+      background: var(--color-check-done-bg);
+      border-color: var(--color-check-done-bg);
+    }
+
+    .checklist-item input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 10px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1;
+    }
+
+    .checklist-item input[type="checkbox"]:hover:not(:checked) {
+      border-color: var(--color-accent);
+    }
+
+    .checklist-item__text {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+      color: var(--color-text-secondary);
+      transition: color 0.15s;
+    }
+
+    .checklist-item.is-done .checklist-item__text {
+      color: var(--color-text-placeholder);
+      text-decoration: line-through;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       YOU SHOULD SEE BLOCK
+    ═══════════════════════════════════════════════════════════ */
+    .you-should-see {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 14px 16px;
+      margin: 4px 0 16px;
+      background: var(--green-50);
+      border-left: 3px solid var(--color-you-should-see-border);
+      border-radius: 0 6px 6px 0;
+    }
+
+    .you-should-see__icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--color-you-should-see-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .you-should-see__icon-mark {
+      font-size: 11px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1;
+    }
+
+    .you-should-see__body {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .you-should-see__label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-you-should-see-label);
+    }
+
+    .you-should-see__text {
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 20px;
+      color: var(--color-text-secondary);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       PROMPT BLOCK  (sample prompt with copy)
+    ═══════════════════════════════════════════════════════════ */
+    .prompt-block {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      background: var(--color-surface-prompt);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin: 4px 0 0;
+    }
+
+    .prompt-block__text {
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 20px;
+      color: var(--color-text-primary);
+      font-style: italic;
+      flex: 1;
+    }
+
+    .prompt-block__copy {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: var(--purple-200);
+      border: none;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-accent-dark);
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+
+    .prompt-block__copy:hover {
+      background: var(--purple-100);
+    }
+
+    .prompt-block__copy svg {
+      width: 12px;
+      height: 12px;
+      fill: none;
+      stroke: var(--color-accent-dark);
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Section divider between card sections */
+    .section-block {
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .section-block:last-child {
+      border-bottom: none;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════════════════ */
+    .site-footer {
+      background: var(--color-surface-dark);
+      padding: 36px 120px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .footer-brand-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .footer-tagline {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--color-text-on-dark);
+      max-width: 480px;
+    }
+
+    .footer-nav {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .footer-link {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--color-text-on-dark);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .footer-link:hover { color: #ffffff; }
+
+  </style>
+</head>
+<body>
+
+  <!-- ── HEADER ─────────────────────────────────────────── -->
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <span class="header-logo">SCBx<sup>+</sup></span>
+      <div class="header-divider" aria-hidden="true"></div>
+      <span class="header-title">Agentic PDLC Help Centre</span>
+    </div>
+  </header>
+
+  <!-- ── MINI HERO ─────────────────────────────────────── -->
+  <section class="mini-hero" aria-label="Page header">
+    <div class="mini-hero__inner">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html" class="breadcrumb__link">← Home</a>
+        <span class="breadcrumb__sep" aria-hidden="true">/</span>
+        <span class="breadcrumb__current" aria-current="page">Getting Started</span>
+      </nav>
+      <h1 class="mini-hero__heading">Setting up your agentic journey</h1>
+      <p class="mini-hero__sub">Everything you need to set up and begin working with AI agents in your product team.</p>
+    </div>
+  </section>
+
+  <!-- ── MAIN CONTENT ──────────────────────────────────── -->
+  <main>
+    <div class="checklist-section">
+      <div class="checklist-section__inner">
+
+        <!-- Progress row -->
+        <div class="progress-row" aria-live="polite" aria-atomic="true">
+          <span class="progress-label" id="progress-label">0 of 21 tasks complete</span>
+          <div class="progress-track" role="progressbar" aria-labelledby="progress-label" aria-valuemin="0" aria-valuemax="21" aria-valuenow="0">
+            <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <!-- Checklist card -->
+        <div class="checklist-card">
+
+          <!-- ── SECTION 1: Before you start ── -->
+          <div class="section-block" data-section="s1">
+            <div class="section-header">
+              <div class="section-badge" aria-hidden="true">
+                <span class="section-badge__num">1</span>
+              </div>
+              <h2 class="section-title">Before you start</h2>
+              <span class="section-count" id="s1-count">0 of 5</span>
+            </div>
+            <div class="checklist-items" data-items="s1">
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s1" aria-label="VS Code installed on your computer">
+                <span class="checklist-item__text">VS Code installed on your computer</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s1" aria-label="GitHub Copilot Chat switched on in VS Code">
+                <span class="checklist-item__text">GitHub Copilot Chat switched on in VS Code</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s1" aria-label="Access to the approved agents (extension and VSIX file)">
+                <span class="checklist-item__text">Access to the approved agents (extension and VSIX file)</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s1" aria-label="Your source documents ready (requirements, transcript, or statement of work)">
+                <span class="checklist-item__text">Your source documents ready (requirements, transcript, or statement of work)</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s1" aria-label="Access to your backlog platform">
+                <span class="checklist-item__text">Access to your backlog platform</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- ── SECTION 2: Add the HVE Core All extension ── -->
+          <div class="section-block" data-section="s2">
+            <div class="section-header">
+              <div class="section-badge" aria-hidden="true">
+                <span class="section-badge__num">2</span>
+              </div>
+              <h2 class="section-title">Add the HVE Core All extension</h2>
+              <span class="section-count" id="s2-count">0 of 5</span>
+            </div>
+            <div class="checklist-items" data-items="s2">
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s2" aria-label="Open VS Code">
+                <span class="checklist-item__text">Open VS Code</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s2" aria-label="Go to Extensions, search for HVE Core All, and install it">
+                <span class="checklist-item__text">Go to Extensions, search for HVE Core All, and install it</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s2" aria-label="Switch to the Pre-Release Version — this is where the experimental agents live">
+                <span class="checklist-item__text">Switch to the Pre-Release Version — this is where the experimental agents live</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s2" aria-label="Restart VS Code, or run Developer: Reload Window from the command palette">
+                <span class="checklist-item__text">Restart VS Code, or run Developer: Reload Window from the command palette</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s2" aria-label="Open GitHub Copilot Chat and check the Agent Picker">
+                <span class="checklist-item__text">Open GitHub Copilot Chat and check the Agent Picker</span>
+              </label>
+            </div>
+            <div class="you-should-see" role="note">
+              <div class="you-should-see__icon" aria-hidden="true">
+                <span class="you-should-see__icon-mark">✓</span>
+              </div>
+              <div class="you-should-see__body">
+                <span class="you-should-see__label">You should see</span>
+                <span class="you-should-see__text">HVE Core agents appear in the Agent Picker list in Copilot Chat. If not, reload the window and check again.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── SECTION 3: Install the packaged agents ── -->
+          <div class="section-block" data-section="s3">
+            <div class="section-header">
+              <div class="section-badge" aria-hidden="true">
+                <span class="section-badge__num">3</span>
+              </div>
+              <h2 class="section-title">Install the packaged agents</h2>
+              <span class="section-count" id="s3-count">0 of 5</span>
+            </div>
+            <div class="checklist-items" data-items="s3">
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s3" aria-label="Open Extensions in VS Code and choose Install from VSIX">
+                <span class="checklist-item__text">Open Extensions in VS Code and choose Install from VSIX</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s3" aria-label="Select the VSIX file and install it">
+                <span class="checklist-item__text">Select the VSIX file and install it</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s3" aria-label="Open the command palette (Ctrl / Cmd + Shift + P)">
+                <span class="checklist-item__text">Open the command palette (Ctrl / Cmd + Shift + P)</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s3" aria-label="Search for Install Packaged Workspace Folder and run it">
+                <span class="checklist-item__text">Search for Install Packaged Workspace Folder and run it</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s3" aria-label="Confirm a .github folder now appears in your workspace">
+                <span class="checklist-item__text">Confirm a .github folder now appears in your workspace</span>
+              </label>
+            </div>
+            <div class="you-should-see" role="note">
+              <div class="you-should-see__icon" aria-hidden="true">
+                <span class="you-should-see__icon-mark">✓</span>
+              </div>
+              <div class="you-should-see__body">
+                <span class="you-should-see__label">You should see</span>
+                <span class="you-should-see__text">A .github folder appears in your workspace. That folder holds the agents and the project context they use.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── SECTION 4: Try it out with the BRD agent ── -->
+          <div class="section-block" data-section="s4">
+            <div class="section-header">
+              <div class="section-badge" aria-hidden="true">
+                <span class="section-badge__num">4</span>
+              </div>
+              <h2 class="section-title">Try it out with the BRD agent</h2>
+              <span class="section-count" id="s4-count">0 of 6</span>
+            </div>
+            <div class="checklist-items" data-items="s4">
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s4" aria-label="Attach your source material (raw requirements etc.) to chat">
+                <span class="checklist-item__text">Attach your source material (raw requirements etc.) to chat</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s4" aria-label="Select BRD Builder in the Agent Picker">
+                <span class="checklist-item__text">Select BRD Builder in the Agent Picker</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s4" aria-label="Paste the BRD Builder prompt with your project name filled in">
+                <span class="checklist-item__text">Paste the BRD Builder prompt with your project name filled in</span>
+              </label>
+            </div>
+            <!-- Sample prompt block (appears between items 3 and 4) -->
+            <div class="prompt-block" role="note" aria-label="Sample prompt">
+              <p class="prompt-block__text">Create a Business Requirements Document from the attached &lt;your project&gt; stakeholder context. Identify business objectives, reconcile contradictions between stakeholders, define scope boundaries, and produce a structured BRD.</p>
+              <button class="prompt-block__copy" type="button" onclick="copyPrompt(this)" aria-label="Copy sample prompt">
+                <svg viewBox="0 0 16 16" aria-hidden="true">
+                  <rect x="5" y="5" width="9" height="9" rx="1.5"/>
+                  <path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2H3.5A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5"/>
+                </svg>
+                Copy
+              </button>
+            </div>
+            <div class="checklist-items" data-items="s4b" style="padding-top: 4px;">
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s4" aria-label="Open the draft the agent creates in docs/brds/">
+                <span class="checklist-item__text">Open the draft the agent creates in docs/brds/&lt;brd_name.md&gt;</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s4" aria-label="Check stakeholders, objectives, and scope look right">
+                <span class="checklist-item__text">Check stakeholders, objectives, and scope look right</span>
+              </label>
+              <label class="checklist-item">
+                <input type="checkbox" data-section="s4" aria-label="Approve the draft or ask the agent to revise">
+                <span class="checklist-item__text">Approve the draft or ask the agent to revise</span>
+              </label>
+            </div>
+            <div class="you-should-see" role="note">
+              <div class="you-should-see__icon" aria-hidden="true">
+                <span class="you-should-see__icon-mark">✓</span>
+              </div>
+              <div class="you-should-see__body">
+                <span class="you-should-see__label">You should see</span>
+                <span class="you-should-see__text">A structured BRD in docs/brds/ that you have read, checked, and either approved or asked the agent to revise. You are still the one who decides.</span>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /.checklist-card -->
+
+      </div><!-- /.checklist-section__inner -->
+    </div><!-- /.checklist-section -->
+  </main>
+
+  <!-- ── FOOTER ─────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <div class="footer-brand">
+      <span class="footer-brand-name">SCBx · Agentic PDLC</span>
+      <span class="footer-tagline">
+        A self-serve guide for product teams adopting AI-assisted product development.
+      </span>
+    </div>
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="getting-started.html" class="footer-link">Getting Started</a>
+      <a href="faq.html" class="footer-link">Help &amp; FAQs</a>
+      <a href="#" class="footer-link">Best Practices</a>
+      <a href="#" class="footer-link">Learn More</a>
+      <a href="#" class="footer-link">Playbook PDF</a>
+    </nav>
+  </footer>
+
+  <!-- ── INTERACTIVE CHECKLIST JAVASCRIPT ──────────────── -->
+  <script>
+    (function () {
+      const TOTAL = 21;
+      const sectionTotals = { s1: 5, s2: 5, s3: 5, s4: 6 };
+
+      function countSection(sectionId) {
+        return document.querySelectorAll(`input[data-section="${sectionId}"]:checked`).length;
+      }
+
+      function countAll() {
+        return document.querySelectorAll('input[type="checkbox"]:checked').length;
+      }
+
+      function updateProgress() {
+        const done = countAll();
+        const label = document.getElementById('progress-label');
+        const fill  = document.getElementById('progress-fill');
+        const track = fill.parentElement;
+
+        label.textContent = `${done} of ${TOTAL} tasks complete`;
+        const pct = (done / TOTAL * 100).toFixed(1);
+        fill.style.width = pct + '%';
+        track.setAttribute('aria-valuenow', done);
+      }
+
+      function updateSection(sectionId) {
+        const done  = countSection(sectionId);
+        const total = sectionTotals[sectionId];
+        const el    = document.getElementById(sectionId + '-count');
+        if (el) el.textContent = `${done} of ${total}`;
+      }
+
+      function handleChange(e) {
+        const cb      = e.target;
+        const label   = cb.closest('.checklist-item');
+        const section = cb.dataset.section;
+
+        if (cb.checked) {
+          label.classList.add('is-done');
+        } else {
+          label.classList.remove('is-done');
+        }
+
+        updateSection(section);
+        updateProgress();
+      }
+
+      document.querySelectorAll('.checklist-item input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', handleChange);
+      });
+
+      updateProgress();
+      ['s1','s2','s3','s4'].forEach(updateSection);
+    })();
+
+    function copyPrompt(btn) {
+      const text = btn.closest('.prompt-block').querySelector('.prompt-block__text').textContent.trim();
+      navigator.clipboard.writeText(text).then(function () {
+        const orig = btn.innerHTML;
+        btn.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true" style="width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><polyline points="2 8 6 12 14 4"/></svg> Copied';
+        btn.disabled = true;
+        setTimeout(function () {
+          btn.innerHTML = orig;
+          btn.disabled = false;
+        }, 2000);
+      });
+    }
+  </script>
+
+</body>
+</html>

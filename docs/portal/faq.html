@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frequently Asked Questions — Agentic PDLC Help Centre</title>
+  <style>
+    @font-face {
+      font-family: 'DB Heavent';
+      src: local('DB Heavent'),
+           local('DBHeavent'),
+           local('DB Heavent Regular');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'DB Heavent';
+      src: local('DB Heavent Med'),
+           local('DBHeaventMed'),
+           local('DB Heavent Medium');
+      font-weight: 500;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'DB Heavent';
+      src: local('DB Heavent Bold'),
+           local('DBHeaventBold'),
+           local('DB Heavent Bd');
+      font-weight: 700;
+      font-style: normal;
+    }
+  </style>
+  <style>
+
+    /* ═══════════════════════════════════════════════════════════
+       LAYER 1 — ATOMS
+    ═══════════════════════════════════════════════════════════ */
+    :root {
+      /* Colour primitives (from Figma "Colour Styles" collection) */
+      --purple-50:  #F3ECFB;
+      --purple-100: #E3D2F5;
+      --purple-600: #7631C1;
+      --purple-700: #462279;
+      --grey-0:     #FAFAFA;
+      --grey-20:    #BBBEC3;
+      --grey-50:    #F5F3F8;
+      --gold-50:    #FFF9E5;
+
+      /* Raw text values */
+      --text-primary-raw:    #14181F;
+      --text-secondary-raw:  #4A5260;
+      --text-muted-raw:      #60636A;
+      --text-on-dark-raw:    #C9CED6;
+      --border-raw:          #BBBEC3;
+      --surface-dark-raw:    #14181F;
+
+      /* Shadows */
+      --shadow-card: 0 1px 0 var(--border-raw);
+
+      /* ═══════════════════════════════════════════════════════
+         LAYER 2 — SEMANTICS
+      ═══════════════════════════════════════════════════════ */
+      --color-text-primary:   var(--text-primary-raw);
+      --color-text-secondary: var(--text-secondary-raw);
+      --color-text-muted:     var(--text-muted-raw);
+      --color-text-on-dark:   var(--text-on-dark-raw);
+      --color-text-accent:    var(--purple-600);
+      --color-text-breadcrumb-active: var(--purple-600);
+
+      --color-surface-page:   #F3F0F7;
+      --color-surface-card:   var(--grey-0);
+      --color-surface-dark:   var(--surface-dark-raw);
+
+      --color-border:         var(--border-raw);
+      --color-accent:         var(--purple-600);
+      --color-accent-dark:    var(--purple-700);
+
+      /* Mini hero gradient: lavender #E8DBFF → white, top to bottom */
+      --mini-hero-gradient: linear-gradient(180deg, #E8DBFF 2%, #ffffff 74%);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       LAYER 3 — BASE RESET
+    ═══════════════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DB Heavent', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--color-text-primary);
+      background: var(--color-surface-page);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    button { font-family: inherit; cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ═══════════════════════════════════════════════════════════
+       HEADER / NAV  (72px, purple gradient, same as Portal Home)
+    ═══════════════════════════════════════════════════════════ */
+    .site-header {
+      width: 100%;
+      height: 72px;
+      background: linear-gradient(99deg, rgba(79,42,129,0.85) 0%, #462279 77.5%);
+      display: flex;
+      align-items: center;
+      padding: 0 120px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .header-logo {
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: baseline;
+      gap: 1px;
+    }
+
+    .header-logo sup {
+      font-size: 11px;
+      font-weight: 700;
+      vertical-align: super;
+    }
+
+    .header-divider {
+      width: 1px;
+      height: 20px;
+      background: rgba(255,255,255,0.3);
+    }
+
+    .header-title {
+      font-size: 14px;
+      font-weight: 400;
+      color: #ffffff;
+      opacity: 0.9;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       MINI HERO  (220px, white→gold gradient)
+    ═══════════════════════════════════════════════════════════ */
+    .mini-hero {
+      width: 100%;
+      height: 220px;
+      background: var(--mini-hero-gradient);
+      display: flex;
+      align-items: center;
+      padding: 0 120px;
+    }
+
+    .mini-hero__inner {
+      width: 1200px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .breadcrumb__link {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--color-text-muted);
+      text-decoration: none;
+    }
+
+    .breadcrumb__link:hover { text-decoration: underline; }
+
+    .breadcrumb__sep {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--color-text-muted);
+    }
+
+    .breadcrumb__current {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-text-accent);
+    }
+
+    .mini-hero__heading {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 44px;
+      color: var(--color-text-primary);
+      letter-spacing: -0.5px;
+    }
+
+    .mini-hero__sub {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 26px;
+      color: var(--color-text-primary);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       BODY / FAQ CONTENT AREA
+       Figma: padding 48/120/64/120 on 1440 container
+    ═══════════════════════════════════════════════════════════ */
+    .faq-body {
+      width: 100%;
+      padding: 48px 120px 64px;
+    }
+
+    .faq-content {
+      width: 1200px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       FAQ CATEGORY GROUP
+       Each group: category label + list of accordion items
+    ═══════════════════════════════════════════════════════════ */
+    .faq-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .faq-group__label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding-bottom: 4px;
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       ACCORDION ITEM
+       Figma specs:
+         - bg: #fafafa, no border-radius
+         - inner frame: padding 0/24/24/24
+         - question row: padding 24/0/24/0, gap 16, horizontal layout
+         - question text: 16px/500/#14181F, line-height 24
+         - toggle char: 22px/400/#7631c1
+         - answer text: 15px/400/#4A5260, line-height 24
+         - bottom divider: 1px solid #bbbec3
+    ═══════════════════════════════════════════════════════════ */
+    .accordion-item {
+      background: var(--color-surface-card);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+
+    .accordion-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 24px 24px;
+      background: none;
+      border: none;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .accordion-btn:focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: -2px;
+    }
+
+    .accordion-question {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 24px;
+      color: var(--color-text-primary);
+      flex: 1;
+    }
+
+    .accordion-toggle {
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 1;
+      color: var(--color-accent);
+      flex-shrink: 0;
+      width: 24px;
+      text-align: center;
+      transition: transform 0.2s ease;
+      user-select: none;
+    }
+
+    /* Answer panel */
+    .accordion-panel {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.25s ease;
+    }
+
+    .accordion-panel[aria-hidden="false"] {
+      max-height: 2000px;
+    }
+
+    .accordion-answer {
+      padding: 0 24px 24px;
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 24px;
+      color: var(--color-text-secondary);
+      white-space: pre-line;
+    }
+
+    /* Open state — toggle shows − when open */
+    .accordion-item[data-open="true"] .accordion-toggle {
+      /* The toggle char flips from + to − via JS */
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       FOOTER  (same as Portal Home)
+    ═══════════════════════════════════════════════════════════ */
+    .site-footer {
+      background: var(--color-surface-dark);
+      padding: 36px 120px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .footer-brand-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .footer-tagline {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--color-text-on-dark);
+      max-width: 480px;
+    }
+
+    .footer-nav {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-link {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--color-text-on-dark);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .footer-link:hover { color: #ffffff; }
+
+  </style>
+</head>
+<body>
+
+  <!-- ── HEADER ─────────────────────────────────────────── -->
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <span class="header-logo" aria-label="SCBx">SCB<sup>×</sup></span>
+      <div class="header-divider" aria-hidden="true"></div>
+      <span class="header-title">Agentic PDLC Help Centre</span>
+    </div>
+  </header>
+
+  <!-- ── MINI HERO ──────────────────────────────────────── -->
+  <section class="mini-hero" aria-label="Page header">
+    <div class="mini-hero__inner">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html" class="breadcrumb__link">← Home</a>
+        <span class="breadcrumb__sep" aria-hidden="true">/</span>
+        <span class="breadcrumb__current" aria-current="page">FAQs</span>
+      </nav>
+      <h1 class="mini-hero__heading">Frequently Asked Questions</h1>
+      <p class="mini-hero__sub">Browse by topic, or expand any question to read the answer.</p>
+    </div>
+  </section>
+
+  <!-- ── FAQ BODY ───────────────────────────────────────── -->
+  <main class="faq-body" id="main-content">
+    <div class="faq-content">
+
+      <!-- GETTING STARTED -->
+      <section class="faq-group" aria-labelledby="cat-getting-started">
+        <h2 class="faq-group__label" id="cat-getting-started">Getting Started</h2>
+        <div class="faq-list" role="list">
+
+          <div class="accordion-item" role="listitem" data-open="false">
+            <button
+              class="accordion-btn"
+              aria-expanded="false"
+              aria-controls="faq-gs-1-panel"
+              id="faq-gs-1-btn"
+            >
+              <span class="accordion-question">What is Agentic PDLC in one sentence?</span>
+              <span class="accordion-toggle" aria-hidden="true">+</span>
+            </button>
+            <div
+              class="accordion-panel"
+              id="faq-gs-1-panel"
+              role="region"
+              aria-labelledby="faq-gs-1-btn"
+              aria-hidden="true"
+            >
+              <p class="accordion-answer">People and agents share the work across the whole delivery lifecycle. Agents handle defined analysis, generation and validation tasks. People set intent, supply context, review and approve.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item" role="listitem" data-open="false">
+            <button
+              class="accordion-btn"
+              aria-expanded="false"
+              aria-controls="faq-gs-2-panel"
+              id="faq-gs-2-btn"
+            >
+              <span class="accordion-question">What's the difference between greenfield, brownfield and modernisation?</span>
+              <span class="accordion-toggle" aria-hidden="true">+</span>
+            </button>
+            <div
+              class="accordion-panel"
+              id="faq-gs-2-panel"
+              role="region"
+              aria-labelledby="faq-gs-2-btn"
+              aria-hidden="true"
+            >
+              <p class="accordion-answer">Greenfield: you are building something new. Brownfield: you are changing an application you're keeping. Modernisation: you are changing the technical shape of an existing application, such as its architecture or runtime.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item" role="listitem" data-open="false">
+            <button
+              class="accordion-btn"
+              aria-expanded="false"
+              aria-controls="faq-gs-3-panel"
+              id="faq-gs-3-btn"
+            >
+              <span class="accordion-question">Do I have to use every agent?</span>
+              <span class="accordion-toggle" aria-hidden="true">+</span>
+            </button>
+            <div
+              class="accordion-panel"
+              id="faq-gs-3-panel"
+              role="region"
+              aria-labelledby="faq-gs-3-btn"
+              aria-hidden="true"
+            >
+              <p class="accordion-answer">No. Pick agents based on the activities your increment actually needs, not on what's available.</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- CHOOSING THE RIGHT AGENT -->
+      <section class="faq-group" aria-labelledby="cat-choosing">
+        <h2 class="faq-group__label" id="cat-choosing">Choosing the Right Agent</h2>
+        <div class="faq-list" role="list">
+
+          <div class="accordion-item" role="listitem" data-open="false">
+            <button
+              class="accordion-btn"
+              aria-expanded="false"
+              aria-controls="faq-ch-1-panel"
+              id="faq-ch-1-btn"
+            >
+              <span class="accordion-question">How do I know which agent to use?</span>
+              <span class="accordion-toggle" aria-hidden="true">+</span>
+            </button>
+            <div
+              class="accordion-panel"
+              id="faq-ch-1-panel"
+              role="region"
+              aria-labelledby="faq-ch-1-btn"
+              aria-hidden="true"
+            >
+              <p class="accordion-answer">Start from the activity, not the agent name:
+• Plan research before talking to users → Research Planner
+• Make sense of interviews and test results → Insights Synthesizer
+• Structure experiences, screens or a prototype → Experience Architect
+• Gather project, code and standards context → Context Builder
+• Define the business need → BRD Builder
+• Define what the product must do → PRD Builder
+• Turn requirements into epics and stories → Jira Backlog Manager
+• Turn requirements into an implementation ready spec → Spec-Clarify
+• Break the spec into tasks → Task-Planner
+• Write code and unit tests → Task-Implementor
+• Review code and pull requests → Code Review
+• Test APIs → API Testing
+• Test UI behaviour → Functional Testing
+• Deploy to Azure → Azure-Deploy</p>
+            </div>
+          </div>
+
+          <div class="accordion-item" role="listitem" data-open="false">
+            <button
+              class="accordion-btn"
+              aria-expanded="false"
+              aria-controls="faq-ch-2-panel"
+              id="faq-ch-2-btn"
+            >
+              <span class="accordion-question">Do I always need to start with Context Builder?</span>
+              <span class="accordion-toggle" aria-hidden="true">+</span>
+            </button>
+            <div
+              class="accordion-panel"
+              id="faq-ch-2-panel"
+              role="region"
+              aria-labelledby="faq-ch-2-btn"
+              aria-hidden="true"
+            >
+              <p class="accordion-answer">Not always, but it's the safest first step whenever agents will need to understand something that isn't written down in one place. It's most valuable for existing codebases and documentation, and for new projects with no shared reference material.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item" role="listitem" data-open="false">
+            <button
+              class="accordion-btn"
+              aria-expanded="false"
+              aria-controls="faq-ch-3-panel"
+              id="faq-ch-3-btn"
+            >
+              <span class="accordion-question">Can I skip BRD or PRD Builder if I already have those documents?</span>
+              <span class="accordion-toggle" aria-hidden="true">+</span>
+            </button>
+            <div
+              class="accordion-panel"
+              id="faq-ch-3-panel"
+              role="region"
+              aria-labelledby="faq-ch-3-btn"
+              aria-hidden="true"
+            >
+              <p class="accordion-answer">Yes. If you already have a BRD or PRD that is approved, current and fits the work, there's no need to generate it again. Regenerating a good document wastes effort and can quietly replace agreed wording with something new.</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- INPUTS AND CONTEXT -->
+      <section class="faq-group" aria-labelledby="cat-inputs">
+        <h2 class="faq-group__label" id="cat-inputs">Inputs and Context</h2>
+        <div class="faq-list" role="list">
+
+          <div class="accordion-item" role="listitem" data-open="false">
+            <button
+              class="accordion-btn"
+              aria-expanded="false"
+              aria-controls="faq-in-1-panel"
+              id="faq-in-1-btn"
+            >
+              <span class="accordion-question">What counts as "good" input?</span>
+              <span class="accordion-toggle" aria-hidden="true">+</span>
+            </button>
+            <div
+              class="accordion-panel"
+              id="faq-in-1-panel"
+              role="region"
+              aria-labelledby="faq-in-1-btn"
+              aria-hidden="true"
+            >
+              <p class="accordion-answer">Good input is anything you'd be comfortable handing to a new colleague on their first day and saying, "Work from this." The agent has no memory of past meetings, no hallway chats and no sense of "how we do things here." What you give it is everything it knows.
+
+Consider these 4 criteria:
+Approved: Has someone accountable signed this off?
+Current: Is this the latest version, with nothing newer that replaces it?
+Accessible: Can the agent actually open and read it?
+Specific: Is it detailed enough for this task?</p>
+            </div>
+          </div>
+
+          <div class="accordion-item" role="listitem" data-open="false">
+            <button
+              class="accordion-btn"
+              aria-expanded="false"
+              aria-controls="faq-in-2-panel"
+              id="faq-in-2-btn"
+            >
+              <span class="accordion-question">I gave the agent a lot of documents and the output got worse. Why?</span>
+              <span class="accordion-toggle" aria-hidden="true">+</span>
+            </button>
+            <div
+              class="accordion-panel"
+              id="faq-in-2-panel"
+              role="region"
+              aria-labelledby="faq-in-2-btn"
+              aria-hidden="true"
+            >
+              <p class="accordion-answer">More isn't better. An agent can only hold so much in view at once, and every extra document competes for its attention. Past a certain point, you're not adding knowledge, you're adding noise. Think of handing a new colleague a 40 page pack and saying "base your answer on this." They would spend their effort sorting what matters from what doesn't, and some of it would slip through.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item" role="listitem" data-open="false">
+            <button
+              class="accordion-btn"
+              aria-expanded="false"
+              aria-controls="faq-in-3-panel"
+              id="faq-in-3-btn"
+            >
+              <span class="accordion-question">What if the information I need doesn't exist yet?</span>
+              <span class="accordion-toggle" aria-hidden="true">+</span>
+            </button>
+            <div
+              class="accordion-panel"
+              id="faq-in-3-panel"
+              role="region"
+              aria-labelledby="faq-in-3-btn"
+              aria-hidden="true"
+            >
+              <p class="accordion-answer">Tell the agent what you are missing so that it does not make its own assumptions.
+
+When the agent lacks something, it has two options: stop and ask, or fill the hole with a plausible assumption. If you don't tell it which to do, it may pick the second. The assumption then gets built on by every step that follows, and by the time someone spots it, it is baked into requirements, tasks and code.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item" role="listitem" data-open="false">
+            <button
+              class="accordion-btn"
+              aria-expanded="false"
+              aria-controls="faq-in-4-panel"
+              id="faq-in-4-btn"
+            >
+              <span class="accordion-question">Can I just paste in the conversation from last week's meeting?</span>
+              <span class="accordion-toggle" aria-hidden="true">+</span>
+            </button>
+            <div
+              class="accordion-panel"
+              id="faq-in-4-panel"
+              role="region"
+              aria-labelledby="faq-in-4-btn"
+              aria-hidden="true"
+            >
+              <p class="accordion-answer">Yes, raw materials like transcripts will work. Make sure sensitive content has been removed first.</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- WRITING PROMPTS -->
+      <section class="faq-group" aria-labelledby="cat-prompts">
+        <h2 class="faq-group__label" id="cat-prompts">Writing Prompts</h2>
+        <div class="faq-list" role="list">
+
+          <div class="accordion-item" role="listitem" data-open="false">
+            <button
+              class="accordion-btn"
+              aria-expanded="false"
+              aria-controls="faq-wp-1-panel"
+              id="faq-wp-1-btn"
+            >
+              <span class="accordion-question">What makes a prompt strong?</span>
+              <span class="accordion-toggle" aria-hidden="true">+</span>
+            </button>
+            <div
+              class="accordion-panel"
+              id="faq-wp-1-panel"
+              role="region"
+              aria-labelledby="faq-wp-1-btn"
+              aria-hidden="true"
+            >
+              <p class="accordion-answer">There are 5 criteria to consider.
+
+Task: What do you want done?  "Turn this BRD into a product requirements document."
+
+Input: What should it work from? "Use the attached approved BRD and the project context."
+
+Output: What should the result look like?  "Tag every story P0, P1 or P2, and mark the MVP boundary."
+
+Rules: What must it keep or avoid?  "Keep traceability to the BRD. Do not add features that aren't in it."
+
+Unknowns: What should it do when it's unsure?  "List anything you can't confirm as an open question. Do not assume."
+
+Stop point: What should it not do yet? "Do not create anything in the backlog. Give me the plan to review."</p>
+            </div>
+          </div>
+
+          <div class="accordion-item" role="listitem" data-open="false">
+            <button
+              class="accordion-btn"
+              aria-expanded="false"
+              aria-controls="faq-wp-2-panel"
+              id="faq-wp-2-btn"
+            >
+              <span class="accordion-question">What's a useful follow up when I'm unsure about the output?</span>
+              <span class="accordion-toggle" aria-hidden="true">+</span>
+            </button>
+            <div
+              class="accordion-panel"
+              id="faq-wp-2-panel"
+              role="region"
+              aria-labelledby="faq-wp-2-btn"
+              aria-hidden="true"
+            >
+              <p class="accordion-answer">Ask the agent to show its working. Follow up with "what is this based on?" for the agent to critique its own response.
+
+When you're unsure, you're really asking one of five things: where did this come from, what did you assume, what did you miss, how confident are you, and what would change your answer.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item" role="listitem" data-open="false">
+            <button
+              class="accordion-btn"
+              aria-expanded="false"
+              aria-controls="faq-wp-3-panel"
+              id="faq-wp-3-btn"
+            >
+              <span class="accordion-question">How can I help the AI create designs closer to my expectations?</span>
+              <span class="accordion-toggle" aria-hidden="true">+</span>
+            </button>
+            <div
+              class="accordion-panel"
+              id="faq-wp-3-panel"
+              role="region"
+              aria-labelledby="faq-wp-3-btn"
+              aria-hidden="true"
+            >
+              <p class="accordion-answer">Work in layers, not in one go. Start on the component level by describing exactly what you want the agent to create and how the interaction will be. You can also share image or link references to sites that has what you have in mind for the agent to learn from.</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div><!-- /.faq-content -->
+  </main>
+
+  <!-- ── FOOTER ─────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <div class="footer-brand">
+      <span class="footer-brand-name">SCBx · Agentic PDLC</span>
+      <span class="footer-tagline">
+        A self-serve guide for product teams adopting AI-assisted product development.
+      </span>
+    </div>
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="#" class="footer-link">Getting Started</a>
+      <a href="#" class="footer-link">Help &amp; FAQs</a>
+      <a href="#" class="footer-link">Best Practices</a>
+      <a href="#" class="footer-link">Learn More</a>
+      <a href="#" class="footer-link">Playbook PDF</a>
+    </nav>
+  </footer>
+
+  <!-- ── ACCORDION JAVASCRIPT ───────────────────────────── -->
+  <script>
+    (function () {
+      const items = document.querySelectorAll('.accordion-item');
+
+      function openItem(item) {
+        const btn    = item.querySelector('.accordion-btn');
+        const panel  = item.querySelector('.accordion-panel');
+        const toggle = item.querySelector('.accordion-toggle');
+        item.dataset.open       = 'true';
+        btn.setAttribute('aria-expanded', 'true');
+        panel.setAttribute('aria-hidden', 'false');
+        toggle.textContent = '−';
+      }
+
+      function closeItem(item) {
+        const btn    = item.querySelector('.accordion-btn');
+        const panel  = item.querySelector('.accordion-panel');
+        const toggle = item.querySelector('.accordion-toggle');
+        item.dataset.open       = 'false';
+        btn.setAttribute('aria-expanded', 'false');
+        panel.setAttribute('aria-hidden', 'true');
+        toggle.textContent = '+';
+      }
+
+      items.forEach(function (item) {
+        const btn = item.querySelector('.accordion-btn');
+        btn.addEventListener('click', function () {
+          const isOpen = item.dataset.open === 'true';
+          // Close all items first (only 1 open at a time)
+          items.forEach(closeItem);
+          // If it was closed, open it
+          if (!isOpen) openItem(item);
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Setting Up · Agentic PDLC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: rgb(245,243,248);
+      color: rgb(20,24,31);
+      min-width: 1440px;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ──────────────────────────────────────────────────── */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      width: 100%;
+      height: 72px;
+      background: linear-gradient(99deg, rgba(79,42,129,0.85) 0%, #462279 77.5%);
+      display: flex;
+      align-items: center;
+      padding: 0 120px;
+    }
+    .site-nav__logo {
+      display: flex;
+      align-items: flex-start;
+      text-decoration: none;
+    }
+    .site-nav__logo-text {
+      font-size: 28px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+    .site-nav__logo-sup {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-top: 3px;
+      margin-left: 1px;
+    }
+
+    /* ── MINI HERO — light lavender gradient ───────────────────── */
+    .page-hero {
+      width: 100%;
+      height: 194px;
+      background: linear-gradient(156deg, rgb(232,219,255) 2%, rgb(243,240,247) 74%);
+      padding: 40px 120px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+    }
+    .breadcrumb__home {
+      color: rgb(96,99,106);
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .breadcrumb__sep {
+      color: rgb(96,99,106);
+      font-size: 13px;
+      font-weight: 400;
+    }
+    .breadcrumb__active {
+      color: rgb(118,49,193);
+      font-weight: 700;
+    }
+    .hero-title {
+      font-size: 36px;
+      font-weight: 700;
+      color: rgb(20,24,31);
+      line-height: 1.22;
+    }
+    .hero-subtitle {
+      font-size: 16px;
+      font-weight: 400;
+      color: rgb(20,24,31);
+      line-height: 1.5;
+    }
+
+    /* ── OUTER CONTENT AREA ────────────────────────────────────── */
+    .page-body {
+      background: rgb(245,241,247);
+      padding: 40px 120px 64px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    /* ── PROGRESS AREA ─────────────────────────────────────────── */
+    .progress-area {
+      width: 1200px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-bottom: 28px;
+    }
+    .progress-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: rgb(73,82,95);
+    }
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: rgb(200,206,213);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 12%;
+      background: rgb(118,49,193);
+      border-radius: 4px;
+    }
+
+    /* ── CHECKLIST CARD ────────────────────────────────────────── */
+    .checklist-card {
+      width: 1200px;
+      background: #ffffff;
+      padding: 0 40px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── SECTION ───────────────────────────────────────────────── */
+    .checklist-section {
+      display: flex;
+      flex-direction: column;
+      padding: 32px 0;
+      border-bottom: 1px solid rgb(200,206,213);
+    }
+    .checklist-section:last-child { border-bottom: none; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .section-badge {
+      width: 28px;
+      height: 28px;
+      min-width: 28px;
+      background: rgb(118,49,193);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+    .section-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: rgb(19,23,31);
+      flex: 1;
+    }
+    .section-count {
+      font-size: 13px;
+      font-weight: 400;
+      color: rgb(137,146,160);
+    }
+
+    /* ── CHECKLIST ITEMS ───────────────────────────────────────── */
+    .items-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+    }
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 0;
+      border-top: 1px solid rgb(200,206,213);
+    }
+    .checklist-item:first-child { border-top: none; }
+
+    .checklist-item input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border: 2px solid rgb(200,206,213);
+      border-radius: 50%;
+      cursor: pointer;
+      margin-top: 2px;
+      position: relative;
+      transition: background 0.15s, border-color 0.15s;
+      flex-shrink: 0;
+    }
+    .checklist-item input[type="checkbox"]:checked {
+      background: rgb(118,49,193);
+      border-color: rgb(118,49,193);
+    }
+    .checklist-item input[type="checkbox"]:checked::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 5px;
+      width: 6px;
+      height: 9px;
+      border: 2px solid white;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+    }
+    .checklist-item label {
+      font-size: 16px;
+      font-weight: 400;
+      color: rgb(73,82,95);
+      line-height: 1.55;
+      cursor: pointer;
+    }
+
+    /* ── PROMPT BLOCK ──────────────────────────────────────────── */
+    .prompt-wrapper {
+      margin: 4px 0;
+      margin-left: 32px;
+      background: rgb(245,243,248);
+      border-radius: 8px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .prompt-text {
+      font-size: 14px;
+      font-weight: 400;
+      color: rgb(20,24,31);
+      line-height: 1.6;
+      font-style: italic;
+      flex: 1;
+    }
+    .prompt-copy-btn {
+      flex-shrink: 0;
+      background: rgb(232,219,255);
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: rgb(118,49,193);
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      white-space: nowrap;
+    }
+    .prompt-copy-btn:hover { background: rgb(215,196,255); }
+
+    /* ── YOU SHOULD SEE ────────────────────────────────────────── */
+    .success-block {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: rgb(226,245,234);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-top: 8px;
+    }
+    .success-icon {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      background: rgb(14,121,61);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+      font-size: 10px;
+      font-weight: 700;
+      color: white;
+    }
+    .success-body { display: flex; flex-direction: column; gap: 2px; }
+    .success-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgb(14,121,61);
+    }
+    .success-text {
+      font-size: 13px;
+      font-weight: 400;
+      color: rgb(14,121,61);
+      line-height: 1.5;
+    }
+
+    /* ── FOOTER ────────────────────────────────────────────────── */
+    .site-footer {
+      width: 100%;
+      height: 107px;
+      background: rgb(19,23,31);
+      display: flex;
+      align-items: center;
+      padding: 0 120px;
+    }
+    .site-footer__links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .site-footer__links a {
+      font-size: 13px;
+      font-weight: 400;
+      color: rgb(200,206,213);
+      text-decoration: none;
+    }
+    .site-footer__links a:hover { color: #ffffff; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="site-nav">
+    <a href="index.html" class="site-nav__logo">
+      <span class="site-nav__logo-text">SCB</span><sup class="site-nav__logo-sup">✕</sup>
+    </a>
+  </header>
+
+  <!-- MINI HERO — light lavender gradient, dark ink text -->
+  <div class="page-hero">
+    <nav class="breadcrumb">
+      <a href="index.html" class="breadcrumb__home">← Home</a>
+      <span class="breadcrumb__sep">/</span>
+      <span class="breadcrumb__active">Getting Started</span>
+    </nav>
+    <h1 class="hero-title">Setting up your agentic journey</h1>
+    <p class="hero-subtitle">Everything you need to set up and begin working with AI agents in your product team.</p>
+  </div>
+
+  <!-- BODY -->
+  <main class="page-body">
+
+    <!-- PROGRESS -->
+    <div class="progress-area">
+      <p class="progress-label">3 of 25 tasks complete</p>
+      <div class="progress-track">
+        <div class="progress-fill"></div>
+      </div>
+    </div>
+
+    <!-- CHECKLIST CARD -->
+    <div class="checklist-card">
+
+      <!-- SECTION 1: Before you start -->
+      <div class="checklist-section">
+        <div class="section-header">
+          <div class="section-badge">1</div>
+          <span class="section-title">Before you start</span>
+          <span class="section-count">3 of 5</span>
+        </div>
+        <ul class="items-list">
+          <li class="checklist-item">
+            <input type="checkbox" id="b1">
+            <label for="b1">VS Code installed on your computer</label>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="b2">
+            <label for="b2">GitHub Copilot Chat switched on in VS Code</label>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="b3">
+            <label for="b3">Access to the approved agents (extension and VSIX file)</label>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="b4">
+            <label for="b4">Your source documents ready (requirements, transcript, or statement of work)</label>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="b5">
+            <label for="b5">Access to your backlog platform</label>
+          </li>
+        </ul>
+      </div>
+
+      <!-- SECTION 2: Add the HVE Core All extension -->
+      <div class="checklist-section">
+        <div class="section-header">
+          <div class="section-badge">2</div>
+          <span class="section-title">Add the HVE Core All extension</span>
+          <span class="section-count">0 of 5</span>
+        </div>
+        <ul class="items-list">
+          <li class="checklist-item">
+            <input type="checkbox" id="s2-1">
+            <label for="s2-1">Open VS Code</label>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="s2-2">
+            <label for="s2-2">Go to Extensions, search for HVE Core All, and install it</label>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="s2-3">
+            <label for="s2-3">Switch to the Pre-Release Version — this is where the experimental agents live</label>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="s2-4">
+            <label for="s2-4">Restart VS Code, or run Developer: Reload Window from the command palette</label>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="s2-5">
+            <label for="s2-5">Open GitHub Copilot Chat and check the Agent Picker</label>
+          </li>
+        </ul>
+        <div class="success-block">
+          <div class="success-icon">✓</div>
+          <div class="success-body">
+            <p class="success-label">You should see</p>
+            <p class="success-text">HVE Core agents appear in the Agent Picker list in Copilot Chat. If not, reload the window and check again.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 3: Install the packaged agents -->
+      <div class="checklist-section">
+        <div class="section-header">
+          <div class="section-badge">3</div>
+          <span class="section-title">Install the packaged agents</span>
+          <span class="section-count">0 of 5</span>
+        </div>
+        <ul class="items-list">
+          <li class="checklist-item">
+            <input type="checkbox" id="s3-1">
+            <label for="s3-1">Open Extensions in VS Code and choose Install from VSIX</label>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="s3-2">
+            <label for="s3-2">Select the VSIX file and install it</label>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="s3-3">
+            <label for="s3-3">Open the command palette (Ctrl / Cmd + Shift + P)</label>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="s3-4">
+            <label for="s3-4">Search for Install Packaged Workspace Folder and run it</label>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="s3-5">
+            <label for="s3-5">Confirm a .github folder now appears in your workspace</label>
+          </li>
+        </ul>
+        <div class="success-block">
+          <div class="success-icon">✓</div>
+          <div class="success-body">
+            <p class="success-label">You should see</p>
+            <p class="success-text">A .github folder appears in your workspace. That folder holds the agents and the project context they use.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 4: Try it out with the BRD agent -->
+      <div class="checklist-section">
+        <div class="section-header">
+          <div class="section-badge">4</div>
+          <span class="section-title">Try it out with the BRD agent</span>
+          <span class="section-count">0 of 6</span>
+        </div>
+        <ul class="items-list">
+          <li class="checklist-item">
+            <input type="checkbox" id="s4-1">
+            <label for="s4-1">Attach your source material (raw requirements etc.) to chat</label>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="s4-2">
+            <label for="s4-2">Select BRD Builder in the Agent Picker</label>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="s4-3">
+            <label for="s4-3">Paste the BRD Builder prompt with your project name filled in</label>
+          </li>
+        </ul>
+
+        <!-- PROMPT BLOCK -->
+        <div class="prompt-wrapper">
+          <p class="prompt-text">Create a Business Requirements Document from the attached &lt;your project&gt; stakeholder context. Identify business objectives, reconcile contradictions between stakeholders, define scope boundaries, and produce a structured BRD.</p>
+          <button class="prompt-copy-btn" onclick="navigator.clipboard.writeText('Create a Business Requirements Document from the attached <your project> stakeholder context. Identify business objectives, reconcile contradictions between stakeholders, define scope boundaries, and produce a structured BRD.')">Copy</button>
+        </div>
+
+        <ul class="items-list">
+          <li class="checklist-item" style="border-top: 1px solid rgb(200,206,213);">
+            <input type="checkbox" id="s4-4">
+            <label for="s4-4">Open the draft the agent creates in docs/brds/&lt;brd_name.md&gt;</label>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="s4-5">
+            <label for="s4-5">Check stakeholders, objectives, and scope look right</label>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="s4-6">
+            <label for="s4-6">Approve the draft or ask the agent to revise</label>
+          </li>
+        </ul>
+        <div class="success-block">
+          <div class="success-icon">✓</div>
+          <div class="success-body">
+            <p class="success-label">You should see</p>
+            <p class="success-text">A structured BRD in docs/brds/ that you have read, checked, and either approved or asked the agent to revise. You are still the one who decides.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <nav>
+      <ul class="site-footer__links">
+        <li><a href="getting-started.html">Getting Started</a></li>
+        <li><a href="faq.html">Help &amp; FAQs</a></li>
+        <li><a href="#" style="pointer-events:none;cursor:default;">Best Practices</a></li>
+        <li><a href="#" style="pointer-events:none;cursor:default;">Learn More</a></li>
+        <li><a href="#" style="pointer-events:none;cursor:default;">Playbook PDF</a></li>
+      </ul>
+    </nav>
+  </footer>
+
+</body>
+</html>
