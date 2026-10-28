@@ -8,27 +8,43 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+
+    /* ═══════════════════════════════════════════════════════════
+       LAYER 1 — ATOMS
+    ═══════════════════════════════════════════════════════════ */
     :root {
-      --gradient-brand: linear-gradient(99deg, rgba(79,42,129,0.85) 0%, #462279 77.5%);
-      --color-purple:   #7631C1;
-      --color-ink-900:  #14181F;
-      --color-ink-700:  #4A5260;
-      --color-white:    #FFFFFF;
-      --bg-page:        #F3F0F7;
-      --bg-card:        #FAFAFA;
-      --bg-agent-card:  rgb(245,243,248);
-      --bg-dark:        #14181F;
-      --border-divider: rgba(74,82,96,0.15);
+      --purple-600:      #7631C1;
+      --purple-700:      #462279;
+      --grey-0:          #FAFAFA;
+      --text-primary:    #14181F;
+      --text-secondary:  #4A5260;
+      --text-muted:      #60636A;
+      --text-on-dark:    #C9CED6;
+      --surface-dark:    #14181F;
+      --surface-page:    #F3F0F7;
+      --surface-card:    #FAFAFA;
+      --surface-agent:   rgb(245, 243, 248);
+      --surface-icon-bg: #E8DBFF;
+
+      /* ═══════════════════════════════════════════════════════
+         LAYER 2 — SEMANTICS
+      ═══════════════════════════════════════════════════════ */
+      --gradient-nav:        linear-gradient(99deg, rgba(79,42,129,0.85) 0%, #462279 77.5%);
+      --gradient-mini-hero:  linear-gradient(180deg, #E8DBFF 2%, #F3F0F7 74%);
     }
 
+    /* ═══════════════════════════════════════════════════════════
+       LAYER 3 — BASE RESET
+    ═══════════════════════════════════════════════════════════ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Inter', sans-serif;
-      background: var(--bg-page);
-      color: var(--color-ink-900);
+      background: var(--surface-page);
+      color: var(--text-primary);
       min-width: 1440px;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
     /* ── NAV ─────────────────────────────────────────────────────── */
@@ -38,7 +54,7 @@
       z-index: 100;
       width: 100%;
       height: 72px;
-      background: var(--gradient-brand);
+      background: var(--gradient-nav);
       display: flex;
       align-items: center;
       padding: 0 120px;
@@ -51,41 +67,70 @@
     .site-nav__logo-text {
       font-size: 28px;
       font-weight: 700;
-      color: var(--color-white);
+      color: #ffffff;
       letter-spacing: -0.5px;
       line-height: 1;
     }
     .site-nav__logo-sup {
       font-size: 12px;
       font-weight: 700;
-      color: var(--color-white);
+      color: #ffffff;
       margin-top: 3px;
       margin-left: 1px;
     }
 
-    /* ── MINI HERO (breadcrumb only) ─────────────────────────────── */
-    .page-hero {
+    /* ── MINI HERO ───────────────────────────────────────────────── */
+    .mini-hero {
       width: 100%;
-      background: var(--gradient-brand);
-      padding: 24px 120px;
+      height: 194px;
+      background: var(--gradient-mini-hero);
+      padding: 40px 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    .mini-hero__inner {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
     .breadcrumb {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 16px;
+    }
+    .breadcrumb__home {
+      font-family: 'Inter', sans-serif;
       font-size: 12px;
       font-weight: 400;
-      color: rgba(255,255,255,0.65);
-    }
-    .breadcrumb a {
-      color: rgba(255,255,255,0.65);
+      color: var(--text-muted);
       text-decoration: none;
     }
-    .breadcrumb a:hover { color: var(--color-white); }
-    .breadcrumb__sep { color: rgba(255,255,255,0.4); }
+    .breadcrumb__home:hover { color: var(--text-primary); }
+    .breadcrumb__sep {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
     .breadcrumb__active {
-      color: var(--color-white);
+      font-size: 12px;
       font-weight: 700;
+      color: var(--purple-600);
+    }
+    .mini-hero__title {
+      font-family: 'Inter', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+    .mini-hero__sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 26px;
     }
 
     /* ── BODY AREA ───────────────────────────────────────────────── */
@@ -96,7 +141,7 @@
     /* ── CONTENT CARD ────────────────────────────────────────────── */
     .content-card {
       width: 1200px;
-      background: var(--bg-card);
+      background: var(--surface-card);
       border-radius: 12px;
       padding: 48px 80px;
       display: flex;
@@ -105,19 +150,26 @@
     }
 
     /* ── INTRO ───────────────────────────────────────────────────── */
-    .intro-text {
-      font-size: 36px;
-      line-height: 1.3;
-      color: var(--color-ink-900);
+    .intro-block {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
     }
-    .intro-text strong { font-weight: 700; }
-    .intro-text span   { font-weight: 400; }
+    .intro-line {
+      font-family: 'Inter', sans-serif;
+      font-size: 24px;
+      line-height: 1.45;
+      color: var(--text-primary);
+      letter-spacing: -0.5px;
+    }
+    .intro-line--bold  { font-weight: 700; }
+    .intro-line--reg   { font-weight: 400; }
 
     /* ── DIVIDER ─────────────────────────────────────────────────── */
     .divider {
       width: 100%;
       height: 1px;
-      background: var(--border-divider);
+      background: rgba(74, 82, 96, 0.15);
       flex-shrink: 0;
     }
 
@@ -125,77 +177,34 @@
     .section {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 8px;
     }
-    .section h2 {
+    .section__heading {
+      font-family: 'Inter', sans-serif;
       font-size: 20px;
       font-weight: 700;
-      color: var(--color-ink-900);
-      line-height: 1.3;
+      color: var(--text-secondary);
+      line-height: 24px;
     }
-    .section p {
+    .section__body {
+      font-family: 'Inter', sans-serif;
       font-size: 16px;
       font-weight: 400;
-      color: var(--color-ink-700);
-      line-height: 1.6;
+      color: var(--text-secondary);
+      line-height: 24px;
     }
-
-    /* ── DECISIONS LIST ──────────────────────────────────────────── */
-    .decisions-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .decisions-list li {
-      font-size: 16px;
-      font-weight: 400;
-      color: var(--color-ink-700);
-      line-height: 1.6;
-      list-style: none;
-    }
-    .decisions-list li strong {
+    .section__body b {
       font-weight: 700;
-      color: var(--color-ink-900);
-    }
-
-    /* ── REVIEW GRID ─────────────────────────────────────────────── */
-    .review-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px 32px;
-    }
-    .review-group h3 {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--color-ink-900);
-      margin-bottom: 8px;
-    }
-    .review-group ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .review-group ul li {
-      font-size: 16px;
-      font-weight: 400;
-      color: var(--color-ink-700);
-      line-height: 1.5;
-      padding-left: 14px;
-      position: relative;
-    }
-    .review-group ul li::before {
-      content: '–';
-      position: absolute;
-      left: 0;
-      color: var(--color-ink-700);
+      color: var(--text-secondary);
     }
 
     /* ── AGENTS LABEL ────────────────────────────────────────────── */
     .agents-label {
+      font-family: 'Inter', sans-serif;
       font-size: 16px;
       font-weight: 700;
-      color: var(--color-ink-900);
+      color: var(--text-secondary);
+      line-height: 26px;
     }
 
     /* ── AGENT CARDS GRID ────────────────────────────────────────── */
@@ -207,7 +216,7 @@
     .agent-card {
       width: 336px;
       min-height: 271px;
-      background: var(--bg-agent-card);
+      background: var(--surface-agent);
       border-radius: 12px;
       padding: 24px;
       display: flex;
@@ -215,9 +224,9 @@
       gap: 16px;
     }
     .agent-card__icon {
-      width: 42px;
-      height: 42px;
-      background: var(--color-purple);
+      width: 48px;
+      height: 48px;
+      background: var(--surface-icon-bg);
       border-radius: 10px;
       display: flex;
       align-items: center;
@@ -225,8 +234,8 @@
       flex-shrink: 0;
     }
     .agent-card__icon svg {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
     }
     .agent-card__body {
       display: flex;
@@ -234,40 +243,46 @@
       gap: 8px;
     }
     .agent-card__title {
-      font-size: 18px;
+      font-family: 'Inter', sans-serif;
+      font-size: 24px;
       font-weight: 700;
-      color: var(--color-ink-900);
-      line-height: 1.3;
+      color: var(--text-primary);
+      letter-spacing: 0.8px;
+      line-height: 40px;
     }
     .agent-card__desc {
-      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
       font-weight: 400;
-      color: var(--color-ink-700);
-      line-height: 1.6;
+      color: var(--text-primary);
+      letter-spacing: 0.8px;
+      line-height: 1.5;
     }
 
     /* ── FOOTER ──────────────────────────────────────────────────── */
     .site-footer {
       width: 100%;
-      height: 107px;
-      background: var(--bg-dark);
+      height: 180px;
+      background: var(--surface-dark);
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      justify-content: center;
       padding: 0 120px;
     }
-    .site-footer__links {
+    .footer-nav {
       display: flex;
-      gap: 36px;
-      list-style: none;
+      gap: 40px;
     }
-    .site-footer__links a {
+    .footer-link {
+      font-family: 'Inter', sans-serif;
       font-size: 13px;
       font-weight: 400;
-      color: rgba(255,255,255,0.65);
+      color: var(--text-on-dark);
       text-decoration: none;
       transition: color 0.15s;
     }
-    .site-footer__links a:hover { color: var(--color-white); }
+    .footer-link:hover { color: #ffffff; }
+
   </style>
 </head>
 <body>
@@ -280,79 +295,69 @@
   </header>
 
   <!-- MINI HERO -->
-  <div class="page-hero">
-    <nav class="breadcrumb">
-      <a href="index.html">Home</a>
-      <span class="breadcrumb__sep">/</span>
-      <span class="breadcrumb__active">Product Owner</span>
-    </nav>
-  </div>
+  <section class="mini-hero">
+    <div class="mini-hero__inner">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html" class="breadcrumb__home">← Home</a>
+        <span class="breadcrumb__sep">/</span>
+        <span class="breadcrumb__active">Product Owner</span>
+      </nav>
+      <h1 class="mini-hero__title">Useful Guides</h1>
+      <p class="mini-hero__sub">Discover more to make the most out of your agentic experience.</p>
+    </div>
+  </section>
 
   <!-- BODY -->
   <main class="page-body">
     <article class="content-card">
 
       <!-- INTRO -->
-      <p class="intro-text">
-        <strong>As a Product Owner,&nbsp;</strong><span>you decide what is worth building, and whether it was built right.</span>
-      </p>
+      <div class="intro-block">
+        <p class="intro-line intro-line--bold">As a Product Owner,</p>
+        <p class="intro-line intro-line--reg">you decide what is worth building, and whether it was built right.</p>
+      </div>
 
       <div class="divider"></div>
 
       <!-- RESPONSIBILITIES -->
       <div class="section">
-        <h2>What you are responsible for</h2>
-        <p>You own the vision, the priorities, and the sign-off. In an agentic PDLC, you are the primary human decision-maker for the define and validate phases. Agents prepare material for you; you decide whether it is good enough to proceed, and you own the consequences if it is not.</p>
+        <h2 class="section__heading">What you are responsible for</h2>
+        <p class="section__body">As Product Owner you hold the vision, the roadmap, the backlog and the business outcomes, and you make the trade offs that shape them, from what earns a place in the MVP to what waits and what gets cut. Nothing moves forward until you have said that this is what the squad meant. Agents execute the work, but you answer for whether the value showed up once it shipped.</p>
       </div>
 
       <!-- KEY DECISIONS -->
       <div class="section">
-        <h2>Your key decision points</h2>
-        <ul class="decisions-list">
-          <li><strong>Specify approval</strong> → Does this spec describe the thing we actually want, or just a confident guess at it?</li>
-          <li><strong>Requirements and backlog sign off</strong> → Are the priorities, scope and acceptance criteria right?</li>
-          <li><strong>Deployment approval (with PM)</strong> → Are we ready to put this in front of real users?</li>
-          <li><strong>Reuse or regenerate (brownfield)</strong> → Is the existing approved BRD or PRD still good enough, or has it gone stale?</li>
-        </ul>
+        <h2 class="section__heading">Your key decision points</h2>
+        <p class="section__body">Specify approval → Does this spec describe the thing we actually want, or just a confident guess at it?<br>
+Requirements and backlog sign off → Are the priorities, scope and acceptance criteria right?<br>
+Deployment approval (with PM) → Are we ready to put this in front of real users?<br>
+Reuse or regenerate (brownfield) → Is the existing approved BRD or PRD still good enough, or has it gone stale?</p>
       </div>
 
       <!-- WHAT YOU REVIEW -->
       <div class="section">
-        <h2>What you review</h2>
-        <div class="review-grid">
-          <div class="review-group">
-            <h3>BRD</h3>
-            <ul>
-              <li>Are the right stakeholders named?</li>
-              <li>Are contradictions between them resolved rather than smoothed over?</li>
-              <li>Are objectives quantified?</li>
-              <li>Are scope boundaries clear?</li>
-            </ul>
-          </div>
-          <div class="review-group">
-            <h3>PRD</h3>
-            <ul>
-              <li>Is every story tagged P0, P1 or P2?</li>
-              <li>Is the MVP boundary obvious?</li>
-              <li>Are technical constraints and non functional requirements present?</li>
-            </ul>
-          </div>
-          <div class="review-group">
-            <h3>Backlog</h3>
-            <ul>
-              <li>Do the epics and stories reflect your priorities?</li>
-              <li>Does each story have Given/When/Then acceptance criteria?</li>
-              <li>Is each story linked to a parent epic?</li>
-            </ul>
-          </div>
-          <div class="review-group">
-            <h3>spec.md</h3>
-            <ul>
-              <li>Does it trace back to your requirements?</li>
-              <li>Were open questions answered rather than quietly turned into assumptions?</li>
-            </ul>
-          </div>
-        </div>
+        <h2 class="section__heading">What you review</h2>
+        <p class="section__body">
+          <b>BRD</b><br>
+          Are the right stakeholders named?<br>
+          Are contradictions between them resolved rather than smoothed over?<br>
+          Are objectives quantified?<br>
+          Are scope boundaries clear?<br>
+          <br>
+          <b>PRD</b><br>
+          Is every story tagged P0, P1 or P2?<br>
+          Is the MVP boundary obvious?<br>
+          Are technical constraints and non functional requirements present?<br>
+          <br>
+          <b>Backlog</b><br>
+          Do the epics and stories reflect your priorities?<br>
+          Does each story have Given/When/Then acceptance criteria?<br>
+          Is each story linked to a parent epic?<br>
+          <br>
+          <b>spec.md</b><br>
+          Does it trace back to your requirements?<br>
+          Were open questions answered rather than quietly turned into assumptions?
+        </p>
       </div>
 
       <div class="divider"></div>
@@ -363,11 +368,8 @@
 
         <div class="agent-card">
           <div class="agent-card__icon">
-            <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <line x1="11" y1="1" x2="11" y2="21" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
-              <line x1="1" y1="11" x2="21" y2="11" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
-              <line x1="3.64" y1="3.64" x2="18.36" y2="18.36" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
-              <line x1="18.36" y1="3.64" x2="3.64" y2="18.36" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 3L12 21M3 12L21 12" stroke="#7631C1" stroke-width="2" stroke-linecap="round"/>
             </svg>
           </div>
           <div class="agent-card__body">
@@ -378,11 +380,8 @@
 
         <div class="agent-card">
           <div class="agent-card__icon">
-            <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <line x1="11" y1="1" x2="11" y2="21" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
-              <line x1="1" y1="11" x2="21" y2="11" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
-              <line x1="3.64" y1="3.64" x2="18.36" y2="18.36" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
-              <line x1="18.36" y1="3.64" x2="3.64" y2="18.36" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 3L12 21M3 12L21 12" stroke="#7631C1" stroke-width="2" stroke-linecap="round"/>
             </svg>
           </div>
           <div class="agent-card__body">
@@ -393,11 +392,8 @@
 
         <div class="agent-card">
           <div class="agent-card__icon">
-            <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <line x1="11" y1="1" x2="11" y2="21" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
-              <line x1="1" y1="11" x2="21" y2="11" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
-              <line x1="3.64" y1="3.64" x2="18.36" y2="18.36" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
-              <line x1="18.36" y1="3.64" x2="3.64" y2="18.36" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 3L12 21M3 12L21 12" stroke="#7631C1" stroke-width="2" stroke-linecap="round"/>
             </svg>
           </div>
           <div class="agent-card__body">
@@ -408,11 +404,8 @@
 
         <div class="agent-card">
           <div class="agent-card__icon">
-            <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <line x1="11" y1="1" x2="11" y2="21" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
-              <line x1="1" y1="11" x2="21" y2="11" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
-              <line x1="3.64" y1="3.64" x2="18.36" y2="18.36" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
-              <line x1="18.36" y1="3.64" x2="3.64" y2="18.36" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 3L12 21M3 12L21 12" stroke="#7631C1" stroke-width="2" stroke-linecap="round"/>
             </svg>
           </div>
           <div class="agent-card__body">
@@ -428,14 +421,12 @@
 
   <!-- FOOTER -->
   <footer class="site-footer">
-    <nav>
-      <ul class="site-footer__links">
-        <li><a href="getting-started.html">Getting Started</a></li>
-        <li><a href="faq.html">Help &amp; FAQs</a></li>
-        <li><a href="#">Best Practices</a></li>
-        <li><a href="#">Learn More</a></li>
-        <li><a href="#">Playbook PDF</a></li>
-      </ul>
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="getting-started.html" class="footer-link">Getting Started</a>
+      <a href="faq.html" class="footer-link">Help &amp; FAQs</a>
+      <a href="#" class="footer-link">Best Practices</a>
+      <a href="#" class="footer-link">Learn More</a>
+      <a href="#" class="footer-link">Playbook PDF</a>
     </nav>
   </footer>
 
