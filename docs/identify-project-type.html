@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Identify Your Project Type — Agentic PDLC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+
+    /* ═══════════════════════════════════════════════════════════
+       LAYER 1 — ATOMS
+    ═══════════════════════════════════════════════════════════ */
+    :root {
+      --purple-600:  #7631C1;
+      --purple-700:  #462279;
+      --grey-100:    #C9CED6;
+      --grey-200:    #BBBEC3;
+
+      --text-primary:    #14181F;
+      --text-secondary:  #4A5260;
+      --text-muted:      #60636A;
+      --surface-page:    #F3F0F7;
+      --surface-card:    #FFFFFF;
+
+      --progress-track:  var(--grey-100);
+      --progress-fill:   var(--purple-600);
+
+      --mini-hero-gradient: linear-gradient(180deg, #E8DBFF 2%, #F3F0F7 74%);
+      --nav-gradient:       linear-gradient(99deg, rgba(79,42,129,0.85) 0%, #462279 77.5%);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--text-primary);
+      background: var(--surface-page);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-width: 1440px;
+    }
+
+    button { font-family: inherit; cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ═══════════════════════════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════════════════════════ */
+    .site-header {
+      width: 100%;
+      height: 72px;
+      background: var(--nav-gradient);
+      display: flex;
+      align-items: center;
+      padding: 0 120px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: flex-start;
+      text-decoration: none;
+      font-size: 28px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+
+    .header-logo sup {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-top: 3px;
+      margin-left: 1px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       MINI HERO
+    ═══════════════════════════════════════════════════════════ */
+    .mini-hero {
+      width: 100%;
+      height: 194px;
+      background: var(--mini-hero-gradient);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 40px 120px;
+    }
+
+    .mini-hero__inner {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .breadcrumb__link {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .breadcrumb__link:hover { text-decoration: underline; }
+
+    .breadcrumb__sep {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .breadcrumb__current {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--purple-600);
+    }
+
+    .mini-hero__heading {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 44px;
+      color: var(--text-primary);
+      letter-spacing: -0.5px;
+    }
+
+    .mini-hero__sub {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 26px;
+      color: var(--text-primary);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       QUIZ AREA
+    ═══════════════════════════════════════════════════════════ */
+    .quiz-area {
+      background: var(--surface-page);
+      padding: 48px 120px 80px;
+    }
+
+    /* Progress bar */
+    .progress-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .progress-bar-track {
+      flex: 1;
+      height: 4px;
+      background: var(--progress-track);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--progress-fill);
+      border-radius: 99px;
+      transition: width 0.35s ease;
+    }
+
+    .progress-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+      min-width: 56px;
+      text-align: right;
+    }
+
+    /* Quiz card (white wrapper) */
+    .quiz-card {
+      background: var(--surface-card);
+      border-radius: 16px;
+      padding: 40px 48px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* Question header */
+    .quiz-card__meta {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--purple-600);
+      margin-bottom: 8px;
+    }
+
+    .quiz-card__question {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 32px;
+      color: var(--text-primary);
+      letter-spacing: -0.3px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       ANSWER CARDS — exact Figma spec
+    ═══════════════════════════════════════════════════════════ */
+    .answer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .answer-card {
+      height: 305px;
+      border-radius: 24px;
+      border: 1px solid #BBBEC3;
+      background: #FFFFFF;
+      box-shadow: 0px 7px 15px rgba(0, 0, 0, 0.10);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+      padding: 24px 32px;
+      transition: background 0.18s ease, border-color 0.18s ease;
+      user-select: none;
+    }
+
+    .answer-card:hover {
+      background: linear-gradient(180deg, #FFFFFF 0%, #FEFEFF 29%, #DAC4FF 100%);
+      border-color: #4F2A81;
+    }
+
+    .answer-card--selected {
+      background: #462279 !important;
+      border-color: #462279 !important;
+    }
+
+    /* Icon circle */
+    .answer-card__icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 60px;
+      background: linear-gradient(180deg, rgba(70,34,121,1) 0%, rgba(129,63,223,1) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .answer-card--selected .answer-card__icon {
+      background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(209,182,255,1) 100%);
+    }
+
+    .answer-card__letter {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1;
+      color: #FFFFFF;
+    }
+
+    .answer-card--selected .answer-card__letter {
+      color: #633BA1;
+    }
+
+    /* Answer text */
+    .answer-card__text {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.4;
+      color: #14181F;
+      text-align: center;
+    }
+
+    .answer-card--selected .answer-card__text {
+      color: #FFFFFF;
+    }
+
+    /* Quiz nav (Back / Next) */
+    .quiz-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 8px;
+    }
+
+    .btn-back {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.15s;
+    }
+
+    .btn-back:hover { color: var(--text-primary); }
+
+    .btn-back:disabled {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .btn-next {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      background: var(--purple-600);
+      border: none;
+      border-radius: 8px;
+      padding: 12px 28px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.15s, opacity 0.15s;
+    }
+
+    .btn-next:hover { background: var(--purple-700); }
+
+    .btn-next:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       RESULTS SCREEN
+    ═══════════════════════════════════════════════════════════ */
+    #screen-results { display: none; }
+
+    .results-card {
+      background: var(--surface-card);
+      border-radius: 16px;
+      padding: 40px 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .results-card__eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--purple-600);
+    }
+
+    .results-card__heading {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 36px;
+      color: var(--text-primary);
+      letter-spacing: -0.4px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       PROJECT TYPE CARDS — exact Figma spec
+    ═══════════════════════════════════════════════════════════ */
+    .project-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 320px);
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .project-card {
+      width: 320px;
+      height: 380px;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      overflow: hidden;
+      transition: opacity 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .project-card--greenfield {
+      background: linear-gradient(180deg, rgba(243,240,247,1) 0%, rgba(212,242,221,1) 100%);
+      border: 2px solid #92E3A9;
+    }
+
+    .project-card--brownfield {
+      background: linear-gradient(180deg, rgba(243,240,247,1) 31%, rgba(242,216,197,1) 100%);
+      border: 2px solid #C08355;
+    }
+
+    .project-card--modernisation {
+      background: linear-gradient(180deg, rgba(243,240,247,1) 31%, rgba(187,219,244,1) 100%);
+      border: 2px solid #389DF0;
+    }
+
+    .project-card.is-winner {
+      box-shadow: 0px 8px 32px rgba(0,0,0,0.14), 0px 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .project-card.is-other {
+      opacity: 0.3;
+    }
+
+    .project-card.is-all-visible {
+      opacity: 1;
+    }
+
+    /* Illustration container */
+    .project-card__illustration {
+      width: 210px;
+      height: 210px;
+      background: #FFFFFF;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .project-card__illustration img {
+      width: 210px;
+      height: 210px;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* Title + description */
+    .project-card__content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 24px 0;
+      text-align: center;
+    }
+
+    .project-card__title {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #14181F;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .project-card__desc {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: #14181F;
+    }
+
+    /* Results actions */
+    .results-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .link-view-all {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--purple-600);
+      cursor: pointer;
+      display: none;
+    }
+
+    .link-view-all:hover { text-decoration: underline; }
+    .link-view-all.is-visible { display: inline; }
+
+    .btn-retake {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      background: none;
+      border: 1.5px solid var(--grey-200);
+      border-radius: 8px;
+      padding: 12px 28px;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .btn-retake:hover {
+      border-color: var(--purple-600);
+      background: rgba(118,49,193,0.06);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════════════════ */
+    .site-footer {
+      background: #14181F;
+      height: 107px;
+      display: flex;
+      align-items: center;
+      padding: 0 120px;
+    }
+
+    .footer-logo {
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.4px;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .footer-logo sup {
+      font-size: 10px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-top: 3px;
+      margin-left: 1px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="site-header">
+    <a href="index.html" class="header-logo">SCBx<sup>+</sup></a>
+  </header>
+
+  <!-- MINI HERO -->
+  <section class="mini-hero">
+    <div class="mini-hero__inner">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html" class="breadcrumb__link">Home</a>
+        <span class="breadcrumb__sep">›</span>
+        <span class="breadcrumb__current">Identify your project type</span>
+      </nav>
+      <h1 class="mini-hero__heading">Identify your project type</h1>
+      <p class="mini-hero__sub">Take a short quiz to find out more.</p>
+    </div>
+  </section>
+
+  <!-- QUIZ AREA -->
+  <main class="quiz-area">
+
+    <!-- === QUESTION SCREEN === -->
+    <div id="screen-quiz">
+
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-track" role="progressbar" aria-valuemin="0" aria-valuemax="3" aria-valuenow="1">
+          <div class="progress-bar-fill" id="progress-fill" style="width: 33.33%"></div>
+        </div>
+        <span class="progress-label" id="progress-label">1 / 3</span>
+      </div>
+
+      <div class="quiz-card">
+        <div>
+          <p class="quiz-card__meta" id="q-meta">Question 1 / 3</p>
+          <h2 class="quiz-card__question" id="q-text"></h2>
+        </div>
+
+        <div class="answer-grid" id="answer-grid"></div>
+
+        <div class="quiz-nav">
+          <button class="btn-back" id="btn-back" disabled>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back
+          </button>
+          <button class="btn-next" id="btn-next" disabled>
+            <span id="btn-next-label">Next</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- === RESULTS SCREEN === -->
+    <div id="screen-results">
+
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill" style="width: 100%"></div>
+        </div>
+        <span class="progress-label">3 / 3</span>
+      </div>
+
+      <div class="results-card">
+        <p class="results-card__eyebrow">Your result</p>
+        <h2 class="results-card__heading" id="result-heading">Your project type is…</h2>
+      </div>
+
+      <!-- Three project type cards -->
+      <div class="project-cards-grid" id="project-cards-grid">
+
+        <div class="project-card project-card--greenfield" id="card-greenfield">
+          <div class="project-card__illustration">
+            <img src="images/greenfield-illustration.png" alt="Greenfield illustration">
+          </div>
+          <div class="project-card__content">
+            <p class="project-card__title">Greenfield</p>
+            <p class="project-card__desc">You want to create a new product, service, journey or application, including replacing a legacy solution with a newly built target state.</p>
+          </div>
+        </div>
+
+        <div class="project-card project-card--brownfield" id="card-brownfield">
+          <div class="project-card__illustration">
+            <img src="images/brownfield-illustration.png" alt="Brownfield illustration">
+          </div>
+          <div class="project-card__content">
+            <p class="project-card__title">Brownfield</p>
+            <p class="project-card__desc">You want to retain the existing application and deliver a feature, regulatory change or increment.</p>
+          </div>
+        </div>
+
+        <div class="project-card project-card--modernisation" id="card-modernisation">
+          <div class="project-card__illustration">
+            <img src="images/modernisation-illustration.png" alt="Modernisation illustration">
+          </div>
+          <div class="project-card__content">
+            <p class="project-card__title">Modernisation</p>
+            <p class="project-card__desc">You want to transform an existing application by modernising its architecture, technology stack, framework, runtime, database, infrastructure or deployment model.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Actions row -->
+      <div class="results-actions">
+        <a class="link-view-all" id="link-view-all" role="button" tabindex="0">View all project types</a>
+        <button class="btn-retake" id="btn-retake">Retake Quiz</button>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <span class="footer-logo">SCBx<sup>+</sup></span>
+  </footer>
+
+  <script>
+    /* ── Quiz data ───────────────────────────────────────────── */
+    const QUESTIONS = [
+      {
+        text: 'What best describes the starting point of your project?',
+        options: [
+          { letter: 'A', text: 'We are building something brand-new from scratch (or completely replacing an old system with a fresh one).' },
+          { letter: 'B', text: 'We have a working system, and we just need to add a new feature or minor update.' },
+          { letter: 'C', text: 'We have an existing system, but its underlying technology is outdated and needs a major technical overhaul.' },
+        ],
+      },
+      {
+        text: 'What are you primarily working with when you start?',
+        options: [
+          { letter: 'A', text: 'A blank canvas, a business idea, or a customer problem we want to solve.' },
+          { letter: 'B', text: 'A ready-to-go list of tasks, a design, or a standard request for an existing app.' },
+          { letter: 'C', text: 'Old source code, system documentation, and technical maps that we need to study and untangle.' },
+        ],
+      },
+      {
+        text: 'What will be your team\'s main focus?',
+        options: [
+          { letter: 'A', text: 'Designing and building the new product or user experience from the ground up.' },
+          { letter: 'B', text: 'Figuring out the details of the requested change and adding it without breaking the current setup.' },
+          { letter: 'C', text: 'Figuring out how the current system works, upgrading its technology stack or infrastructure, and migrating everything safely.' },
+        ],
+      },
+    ];
+
+    /* ── Scoring logic ───────────────────────────────────────── */
+    function getResult(answers) {
+      const counts = { A: 0, B: 0, C: 0 };
+      answers.forEach(a => counts[a]++);
+
+      if (counts.A >= 2) return 'greenfield';
+      if (counts.B >= 2) return 'brownfield';
+      if (counts.C >= 2) return 'modernisation';
+
+      // Three-way tie: use Q1 as primary tiebreaker
+      const q1 = answers[0];
+      if (q1 === 'A') return 'greenfield';
+      if (q1 === 'C') return 'modernisation';
+
+      // Q1=B: use Q3 as secondary tiebreaker
+      const q3 = answers[2];
+      if (q3 === 'A') return 'greenfield';
+      if (q3 === 'C') return 'modernisation';
+      return 'brownfield';
+    }
+
+    /* ── State ───────────────────────────────────────────────── */
+    let currentQ = 0;
+    const answers = [null, null, null];
+
+    /* ── DOM refs ────────────────────────────────────────────── */
+    const screenQuiz    = document.getElementById('screen-quiz');
+    const screenResults = document.getElementById('screen-results');
+    const progressFill  = document.getElementById('progress-fill');
+    const progressTrack = screenQuiz.querySelector('.progress-bar-track');
+    const progressLabel = document.getElementById('progress-label');
+    const qMeta         = document.getElementById('q-meta');
+    const qText         = document.getElementById('q-text');
+    const answerGrid    = document.getElementById('answer-grid');
+    const btnBack       = document.getElementById('btn-back');
+    const btnNext       = document.getElementById('btn-next');
+    const btnNextLabel  = document.getElementById('btn-next-label');
+    const resultHeading = document.getElementById('result-heading');
+    const cardGreen     = document.getElementById('card-greenfield');
+    const cardBrown     = document.getElementById('card-brownfield');
+    const cardMod       = document.getElementById('card-modernisation');
+    const linkViewAll   = document.getElementById('link-view-all');
+    const btnRetake     = document.getElementById('btn-retake');
+
+    /* ── Render ──────────────────────────────────────────────── */
+    function renderQuestion() {
+      const q = QUESTIONS[currentQ];
+      const step = currentQ + 1;
+
+      qMeta.textContent = `Question ${step} / 3`;
+      qText.textContent = q.text;
+      progressTrack.setAttribute('aria-valuenow', step);
+      progressFill.style.width = `${(step / 3) * 100}%`;
+      progressLabel.textContent = `${step} / 3`;
+
+      btnBack.disabled = currentQ === 0;
+      btnNextLabel.textContent = currentQ === 2 ? 'View results' : 'Next';
+      btnNext.disabled = answers[currentQ] === null;
+
+      answerGrid.innerHTML = '';
+      q.options.forEach(opt => {
+        const card = document.createElement('div');
+        card.className = 'answer-card' + (answers[currentQ] === opt.letter ? ' answer-card--selected' : '');
+        card.setAttribute('role', 'radio');
+        card.setAttribute('aria-checked', answers[currentQ] === opt.letter ? 'true' : 'false');
+        card.setAttribute('tabindex', '0');
+        card.innerHTML = `
+          <div class="answer-card__icon">
+            <span class="answer-card__letter">${opt.letter}</span>
+          </div>
+          <p class="answer-card__text">${opt.text}</p>
+        `;
+        card.addEventListener('click', () => selectAnswer(opt.letter));
+        card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') selectAnswer(opt.letter); });
+        answerGrid.appendChild(card);
+      });
+    }
+
+    function selectAnswer(letter) {
+      answers[currentQ] = letter;
+      renderQuestion();
+    }
+
+    /* ── Navigation ──────────────────────────────────────────── */
+    btnBack.addEventListener('click', () => {
+      if (currentQ > 0) { currentQ--; renderQuestion(); }
+    });
+
+    btnNext.addEventListener('click', () => {
+      if (answers[currentQ] === null) return;
+      if (currentQ < 2) {
+        currentQ++;
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    });
+
+    /* ── Results ─────────────────────────────────────────────── */
+    const RESULT_LABELS = {
+      greenfield:    'Greenfield Development',
+      brownfield:    'Brownfield Enhancement',
+      modernisation: 'Modernisation & Upgrade',
+    };
+
+    function showResults() {
+      const result = getResult(answers);
+
+      screenQuiz.style.display    = 'none';
+      screenResults.style.display = 'block';
+
+      resultHeading.textContent = `Your project type is ${RESULT_LABELS[result]}`;
+
+      const cards = {
+        greenfield:    cardGreen,
+        brownfield:    cardBrown,
+        modernisation: cardMod,
+      };
+
+      Object.entries(cards).forEach(([key, card]) => {
+        card.classList.remove('is-winner', 'is-other', 'is-all-visible');
+        card.classList.add(key === result ? 'is-winner' : 'is-other');
+      });
+
+      linkViewAll.classList.add('is-visible');
+    }
+
+    /* ── View all ────────────────────────────────────────────── */
+    linkViewAll.addEventListener('click', () => {
+      [cardGreen, cardBrown, cardMod].forEach(card => {
+        card.classList.remove('is-winner', 'is-other');
+        card.classList.add('is-all-visible');
+      });
+      linkViewAll.classList.remove('is-visible');
+    });
+
+    linkViewAll.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') linkViewAll.click();
+    });
+
+    /* ── Retake ──────────────────────────────────────────────── */
+    btnRetake.addEventListener('click', () => {
+      currentQ = 0;
+      answers[0] = answers[1] = answers[2] = null;
+      screenResults.style.display = 'none';
+      screenQuiz.style.display    = 'block';
+      linkViewAll.classList.remove('is-visible');
+      renderQuestion();
+    });
+
+    /* ── Init ────────────────────────────────────────────────── */
+    renderQuestion();
+  </script>
+
+</body>
+</html>
