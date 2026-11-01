@@ -411,6 +411,166 @@
 
     .footer-link:hover { color: #ffffff; }
 
+
+    /* ── GUIDE STAGE CAROUSEL ──────────────────────────────────────── */
+    .guide-stage-wrapper {
+      background: #462279;
+      border-radius: 16px;
+      padding: 40px 43px 43px;
+      display: flex;
+      flex-direction: column;
+    }
+    .guide-stage-header {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+    .guide-slider-track {
+      width: 204px;
+      height: 2px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 99px;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.4);
+    }
+    .guide-slider-thumb {
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      background: #d9d9d9;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0;
+      cursor: grab;
+    }
+    .guide-stage-scroll {
+      overflow-x: auto;
+      overflow-y: visible;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .guide-stage-scroll::-webkit-scrollbar { display: none; }
+    .guide-stage-inner {
+      display: flex;
+      flex-direction: column;
+      width: max-content;
+    }
+    .guide-cards-row {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+    }
+    .guide-card-wrapper {
+      position: relative;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .guide-card-wrapper::before {
+      content: '';
+      display: block;
+      height: 46px;
+    }
+    .guide-you-are-here {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      pointer-events: none;
+    }
+    .guide-you-are-here__text {
+      font-size: 11px;
+      font-weight: 600;
+      color: #FFC13F;
+      white-space: nowrap;
+      letter-spacing: 0.02em;
+    }
+    .guide-you-are-here__triangle {
+      display: block;
+      width: 12px;
+      height: 8px;
+    }
+    .guide-stage-card {
+      width: 220px;
+      height: 220px;
+      border-radius: 10px;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .guide-card-wrapper--dim .guide-stage-card {
+      opacity: 0.5;
+    }
+    .guide-stage-card__inner {
+      display: flex;
+      flex-direction: column;
+      padding: 14px 14px 12px;
+      flex: 1;
+      gap: 4px;
+    }
+    .guide-stage-card__num-section {
+      position: relative;
+      height: 54px;
+      flex-shrink: 0;
+    }
+    .guide-stage-card__ghost-num {
+      position: absolute;
+      top: 0;
+      left: -2px;
+      font-size: 54px;
+      font-weight: 700;
+      color: #7631C1;
+      opacity: 0.09;
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+    .guide-stage-card__real-num {
+      position: absolute;
+      bottom: 0;
+      left: 1px;
+      font-size: 36px;
+      font-weight: 700;
+      color: #7631C1;
+      line-height: 1;
+    }
+    .guide-stage-card__name {
+      font-size: 12px;
+      font-weight: 700;
+      color: #14181F;
+      margin-top: 4px;
+      line-height: 1.3;
+    }
+    .guide-stage-card__divider {
+      width: 100%;
+      height: 1px;
+      background: #e0dee5;
+      margin: 4px 0;
+      flex-shrink: 0;
+    }
+    .guide-stage-card__desc {
+      font-size: 10.5px;
+      font-weight: 400;
+      color: #4A5260;
+      line-height: 1.5;
+    }
+    .guide-card-connector {
+      flex-shrink: 0;
+      align-self: flex-end;
+      width: 20px;
+      height: 24px;
+      clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+      background: rgba(184,147,243,0.4);
+      margin-bottom: 98px;
+    }
   </style>
 </head>
 <body>
@@ -436,6 +596,7 @@
   <!-- ── MAIN CONTENT ──────────────────────────────────── -->
   <main>
 
+
     <div class="page-body">
       <div class="page-container">
 
@@ -447,8 +608,151 @@
           <div class="divider"></div>
 
           <!-- Diagram -->
-          <div class="diagram-wrap">
-            <img src="assets/review-agent-code-diagram.png" alt="Agent generated code review diagram" width="1040">
+          <!-- Guide stage carousel -->
+          <div class="guide-stage-wrapper">
+            <div class="guide-stage-header">
+              <div class="guide-slider-track" id="guideSliderTrack"
+                   role="scrollbar" aria-controls="guideStageScroll" aria-orientation="horizontal">
+                <div class="guide-slider-thumb" id="guideSliderThumb"></div>
+              </div>
+            </div>
+            <div class="guide-stage-scroll" id="guideStageScroll">
+              <div class="guide-stage-inner">
+                <div class="guide-cards-row">
+            <div class="guide-card-wrapper">
+              <div class="guide-stage-card" data-stage="01">
+                <div class="guide-stage-card__inner">
+                  <div class="guide-stage-card__num-section">
+                    <span class="guide-stage-card__ghost-num">01</span>
+                    <span class="guide-stage-card__real-num">01</span>
+                  </div>
+                  <span class="guide-stage-card__name">Discover / Context</span>
+                  <div class="guide-stage-card__divider"></div>
+                  <p class="guide-stage-card__desc">Assemble requirements, design and brownfield context as input to the PDLC.</p>
+                </div>
+              </div>
+            </div>
+            <div class="guide-card-connector" aria-hidden="true"></div>
+            <div class="guide-card-wrapper">
+              <div class="guide-stage-card" data-stage="02">
+                <div class="guide-stage-card__inner">
+                  <div class="guide-stage-card__num-section">
+                    <span class="guide-stage-card__ghost-num">02</span>
+                    <span class="guide-stage-card__real-num">02</span>
+                  </div>
+                  <span class="guide-stage-card__name">Specify</span>
+                  <div class="guide-stage-card__divider"></div>
+                  <p class="guide-stage-card__desc">Convert requirements and context into a clear technical specification.</p>
+                </div>
+              </div>
+            </div>
+            <div class="guide-card-connector" aria-hidden="true"></div>
+            <div class="guide-card-wrapper">
+              <div class="guide-stage-card" data-stage="03">
+                <div class="guide-stage-card__inner">
+                  <div class="guide-stage-card__num-section">
+                    <span class="guide-stage-card__ghost-num">03</span>
+                    <span class="guide-stage-card__real-num">03</span>
+                  </div>
+                  <span class="guide-stage-card__name">Plan</span>
+                  <div class="guide-stage-card__divider"></div>
+                  <p class="guide-stage-card__desc">Define the solution approach, architecture impact and high-level design.</p>
+                </div>
+              </div>
+            </div>
+            <div class="guide-card-connector" aria-hidden="true"></div>
+            <div class="guide-card-wrapper">
+              <div class="guide-stage-card" data-stage="04">
+                <div class="guide-stage-card__inner">
+                  <div class="guide-stage-card__num-section">
+                    <span class="guide-stage-card__ghost-num">04</span>
+                    <span class="guide-stage-card__real-num">04</span>
+                  </div>
+                  <span class="guide-stage-card__name">Tasks</span>
+                  <div class="guide-stage-card__divider"></div>
+                  <p class="guide-stage-card__desc">Break the solution down into dependent, actionable development tasks.</p>
+                </div>
+              </div>
+            </div>
+            <div class="guide-card-connector" aria-hidden="true"></div>
+            <div class="guide-card-wrapper">
+              <div class="guide-you-are-here" aria-label="You are here">
+                <span class="guide-you-are-here__text">You are here</span>
+                <svg class="guide-you-are-here__triangle" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+                  <path d="M6 8L0 0H12L6 8Z" fill="#FFC13F"/>
+                </svg>
+              </div>
+              <div class="guide-stage-card" data-stage="05">
+                <div class="guide-stage-card__inner">
+                  <div class="guide-stage-card__num-section">
+                    <span class="guide-stage-card__ghost-num">05</span>
+                    <span class="guide-stage-card__real-num">05</span>
+                  </div>
+                  <span class="guide-stage-card__name">Implement</span>
+                  <div class="guide-stage-card__divider"></div>
+                  <p class="guide-stage-card__desc">Develop code according to the defined tasks, with guardrails and real-time feedback.</p>
+                </div>
+              </div>
+            </div>
+            <div class="guide-card-connector" aria-hidden="true"></div>
+            <div class="guide-card-wrapper guide-card-wrapper--dim">
+              <div class="guide-stage-card" data-stage="06">
+                <div class="guide-stage-card__inner">
+                  <div class="guide-stage-card__num-section">
+                    <span class="guide-stage-card__ghost-num">06</span>
+                    <span class="guide-stage-card__real-num">06</span>
+                  </div>
+                  <span class="guide-stage-card__name">Test &amp; Validate</span>
+                  <div class="guide-stage-card__divider"></div>
+                  <p class="guide-stage-card__desc">Conduct continuous testing in parallel with implementation.</p>
+                </div>
+              </div>
+            </div>
+            <div class="guide-card-connector" aria-hidden="true"></div>
+            <div class="guide-card-wrapper guide-card-wrapper--dim">
+              <div class="guide-stage-card" data-stage="07">
+                <div class="guide-stage-card__inner">
+                  <div class="guide-stage-card__num-section">
+                    <span class="guide-stage-card__ghost-num">07</span>
+                    <span class="guide-stage-card__real-num">07</span>
+                  </div>
+                  <span class="guide-stage-card__name">Build / Ship</span>
+                  <div class="guide-stage-card__divider"></div>
+                  <p class="guide-stage-card__desc">Create a releasable build after all required quality gates have passed.</p>
+                </div>
+              </div>
+            </div>
+            <div class="guide-card-connector" aria-hidden="true"></div>
+            <div class="guide-card-wrapper guide-card-wrapper--dim">
+              <div class="guide-stage-card" data-stage="08">
+                <div class="guide-stage-card__inner">
+                  <div class="guide-stage-card__num-section">
+                    <span class="guide-stage-card__ghost-num">08</span>
+                    <span class="guide-stage-card__real-num">08</span>
+                  </div>
+                  <span class="guide-stage-card__name">GreenLane CI/CD</span>
+                  <div class="guide-stage-card__divider"></div>
+                  <p class="guide-stage-card__desc">Automate promotion through environments from DEV &rarr; SIT &rarr; QA &rarr; PROD.</p>
+                </div>
+              </div>
+            </div>
+            <div class="guide-card-connector" aria-hidden="true"></div>
+            <div class="guide-card-wrapper guide-card-wrapper--dim">
+              <div class="guide-stage-card" data-stage="09">
+                <div class="guide-stage-card__inner">
+                  <div class="guide-stage-card__num-section">
+                    <span class="guide-stage-card__ghost-num">09</span>
+                    <span class="guide-stage-card__real-num">09</span>
+                  </div>
+                  <span class="guide-stage-card__name">Operate &amp; Learn</span>
+                  <div class="guide-stage-card__divider"></div>
+                  <p class="guide-stage-card__desc">Monitor production and feed operational insights back into context.</p>
+                </div>
+              </div>
+            </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- What are you reviewing? -->
@@ -597,7 +901,12 @@
   </main>
 
   <!-- ── FOOTER ─────────────────────────────────────────── -->
-  <footer class="site-footer"></footer>
+  <footer class="site-footer">
+  <ul class="site-footer__links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="agent-catalogue.html">Agent Catalogue</a></li>
+  </ul>
+  </footer>
 
   <!-- ── INTERACTIVE CHECKLIST JAVASCRIPT ──────────────── -->
   <script>
@@ -635,6 +944,54 @@
 
       ['s1', 's2', 's3', 's4'].forEach(updateSection);
     })();
+  </script>
+
+
+  <script>
+  (function () {
+    var track = document.getElementById('guideSliderTrack');
+    var thumb = document.getElementById('guideSliderThumb');
+    var scroll = document.getElementById('guideStageScroll');
+    if (!track || !thumb || !scroll) return;
+    function updateThumb() {
+      var scrollable = scroll.scrollWidth - scroll.clientWidth;
+      if (scrollable <= 0) { thumb.style.left = '0px'; return; }
+      var ratio = scroll.scrollLeft / scrollable;
+      var trackW = track.offsetWidth;
+      var thumbW = 17;
+      thumb.style.left = Math.max(0, Math.min(trackW - thumbW, ratio * (trackW - thumbW))) + 'px';
+    }
+    function checkOverflow() {
+      track.style.display = scroll.scrollWidth > scroll.clientWidth ? '' : 'none';
+    }
+    checkOverflow();
+    updateThumb();
+    scroll.addEventListener('scroll', updateThumb);
+    window.addEventListener('resize', function () { checkOverflow(); updateThumb(); });
+    var dragging = false, dragStartX, thumbStartLeft;
+    thumb.addEventListener('mousedown', function (e) {
+      dragging = true; dragStartX = e.clientX; thumbStartLeft = thumb.offsetLeft; e.preventDefault();
+    });
+    document.addEventListener('mousemove', function (e) {
+      if (!dragging) return;
+      var dx = e.clientX - dragStartX;
+      var trackW = track.offsetWidth;
+      var thumbW = 17;
+      var newLeft = Math.max(0, Math.min(trackW - thumbW, thumbStartLeft + dx));
+      var ratio = (trackW - thumbW) > 0 ? newLeft / (trackW - thumbW) : 0;
+      scroll.scrollLeft = ratio * (scroll.scrollWidth - scroll.clientWidth);
+    });
+    document.addEventListener('mouseup', function () { dragging = false; });
+    track.addEventListener('click', function (e) {
+      if (e.target === thumb) return;
+      var trackRect = track.getBoundingClientRect();
+      var clickX = e.clientX - trackRect.left;
+      var thumbW = 17;
+      var trackW = track.offsetWidth;
+      var ratio = Math.max(0, Math.min(1, (clickX - thumbW / 2) / (trackW - thumbW)));
+      scroll.scrollLeft = ratio * (scroll.scrollWidth - scroll.clientWidth);
+    });
+  })();
   </script>
 
 </body>

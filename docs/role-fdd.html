@@ -405,13 +405,19 @@
     .stage-details {
       display: flex;
       flex-direction: column;
-      gap: 56px;
+      gap: 40px;
     }
 
     .stage-detail {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .stage-detail__left {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 12px;
     }
     .stage-detail__title {
       font-size: 20px;
@@ -434,8 +440,8 @@
 
     .output-review-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 40px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
     }
     .output-review {
       min-width: 0;
@@ -493,18 +499,35 @@
       gap: 16px;
     }
     .agent-card {
-      width: 336px;
-      min-height: 271px;
+      position: relative;
+      width: 248px;
+      height: 248px;
       background: var(--surface-agent);
       border-radius: 12px;
-      padding: 24px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 12px;
+      box-sizing: border-box;
+      border: 1.5px solid var(--border-divider, #E5E7EB);
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), border-color 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      color: inherit;
     }
+      .agent-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, var(--color-purple-50, #F3EEFF) 0%, transparent 60%);
+        opacity: 0;
+        transition: opacity 0.2s;
+        pointer-events: none;
+      }
     .agent-card__icon {
-      width: 48px;
-      height: 48px;
+      width: 40px;
+      height: 40px;
       background: var(--surface-icon-bg);
       border-radius: 100px;
       display: flex;
@@ -513,8 +536,8 @@
       flex-shrink: 0;
     }
     .agent-card__icon svg {
-      width: 28px;
-      height: 28px;
+      width: 22px;
+      height: 22px;
     }
     .agent-card__body {
       display: flex;
@@ -522,16 +545,46 @@
       gap: 8px;
     }
     .agent-card__title {
-      font-size: 24px;
+      font-size: 18px;
       font-weight: 700;
       color: var(--text-primary);
       line-height: 1.3;
     }
     .agent-card__desc {
-      font-size: 16px;
+      font-size: 13px;
       font-weight: 400;
       color: var(--text-primary);
       line-height: 1.5;
+    }
+    .agent-card__link {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--color-purple-100, #E8DCFA);
+      color: var(--color-purple-600, #7631C1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: background 0.18s, color 0.18s;
+    }
+    .agent-card__link:hover {
+      background: var(--color-purple-700, #462279);
+      color: #fff;
+    }
+    .agent-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--color-purple-500, #7631C1);
+      box-shadow: 0 8px 32px rgba(118,49,193,0.12);
+    }
+    .agent-card:hover::before { opacity: 1; }
+    .agent-card:hover .agent-card__link {
+      background: var(--color-purple-700, #462279);
+      color: #fff;
+      transform: translate(2px, -2px);
     }
 
     /* ── FOOTER ──────────────────────────────────────────────────── */
@@ -556,6 +609,21 @@
       transition: color 0.15s;
     }
     .footer-link:hover { color: #ffffff; }
+    .site-footer__links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .site-footer__links a {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-on-dark);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .site-footer__links a:hover { color: #ffffff; }
 
   </style>
 </head>
@@ -801,9 +869,11 @@
 
         <!-- Stage 1 -->
         <div class="stage-detail">
-          <h2 class="stage-detail__title">Stage 1. Discover / Context</h2>
-          <p class="stage-detail__label">What you are responsible for</p>
-          <p class="stage-detail__body">Product sees one problem, engineering builds another, and the gap shows up later as rework. You close that gap early by understanding the real problem before anyone automates it. In this stage you turn user needs into the design context that every later agent will work from, which covers journeys, design system standards, UI patterns and components.</p>
+          <div class="stage-detail__left">
+            <h2 class="stage-detail__title">Stage 1. Discover / Context</h2>
+            <p class="stage-detail__label">What you are responsible for</p>
+            <p class="stage-detail__body">Product sees one problem, engineering builds another, and the gap shows up later as rework. You close that gap early by understanding the real problem before anyone automates it. In this stage you turn user needs into the design context that every later agent will work from, which covers journeys, design system standards, UI patterns and components.</p>
+          </div>
           <div class="output-review-grid">
             <div class="output-review">
               <div class="output-review__header">
@@ -853,18 +923,22 @@
                     <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
                   </svg>
                 </div>
-                <span class="output-review__name">Design context package</span>
+                <span class="output-review__name">Design brief</span>
               </div>
               <p class="output-review__desc">Are the journeys, design system and UI patterns current and authoritative?</p>
             </div>
           </div>
         </div>
 
+        <div class="divider"></div>
+
         <!-- Stage 2 -->
         <div class="stage-detail">
-          <h2 class="stage-detail__title">Stage 2. Specify</h2>
-          <p class="stage-detail__label">What you are responsible for</p>
-          <p class="stage-detail__body">You make sure the specification carries the design intent, not just the functional requirements. Frontend behaviour that is not written down here is behaviour the agent will invent, so your job is to make the design evidence visible and complete.</p>
+          <div class="stage-detail__left">
+            <h2 class="stage-detail__title">Stage 2. Specify</h2>
+            <p class="stage-detail__label">What you are responsible for</p>
+            <p class="stage-detail__body">You make sure the specification carries the design intent, not just the functional requirements. Frontend behaviour that is not written down here is behaviour the agent will invent, so your job is to make the design evidence visible and complete.</p>
+          </div>
           <div class="output-review-grid">
             <div class="output-review">
               <div class="output-review__header">
@@ -888,19 +962,6 @@
                     <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
                   </svg>
                 </div>
-                <span class="output-review__name">Design evidence in spec.md</span>
-              </div>
-              <p class="output-review__desc">Is it identified for every piece of frontend work, with any pending manual uploads clearly flagged?</p>
-            </div>
-            <div class="output-review">
-              <div class="output-review__header">
-                <div class="output-review__icon">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
-                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
-                  </svg>
-                </div>
                 <span class="output-review__name">UI behaviour and states</span>
               </div>
               <p class="output-review__desc">Are interactions, error states and recovery paths specified, and not left to interpretation?</p>
@@ -908,11 +969,15 @@
           </div>
         </div>
 
+        <div class="divider"></div>
+
         <!-- Stage 5 -->
         <div class="stage-detail">
-          <h2 class="stage-detail__title">Stage 5. Implement</h2>
-          <p class="stage-detail__label">What you are responsible for</p>
-          <p class="stage-detail__body">You are the person who can tell whether what was built is what was designed. The code review gate belongs to the FDE, but design fidelity is a named review point, and you are best placed to judge it.</p>
+          <div class="stage-detail__left">
+            <h2 class="stage-detail__title">Stage 5. Implement</h2>
+            <p class="stage-detail__label">What you are responsible for</p>
+            <p class="stage-detail__body">You are the person who can tell whether what was built is what was designed. The code review gate belongs to the FDE, but design fidelity is a named review point, and you are best placed to judge it.</p>
+          </div>
           <div class="output-review-grid">
             <div class="output-review">
               <div class="output-review__header">
@@ -940,7 +1005,7 @@
         <div class="agent-grid">
 
           <!-- Research Planner -->
-          <div class="agent-card">
+          <a class="agent-card" href="agent-catalogue.html#research-planner">
             <div class="agent-card__icon">
               <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="12" cy="12" r="7" stroke="#7631C1" stroke-width="1.8"/>
@@ -952,10 +1017,11 @@
               <p class="agent-card__title">Research Planner</p>
               <p class="agent-card__desc">Generates a structured research plan — objectives, screener criteria, question sets, and session guides — from a discovery brief and product context.</p>
             </div>
-          </div>
+          <div class="agent-card__link" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </a>
 
           <!-- Insights Synthesizer -->
-          <div class="agent-card">
+          <a class="agent-card" href="agent-catalogue.html#insights-synthesizer">
             <div class="agent-card__icon">
               <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M4 20l5-6 4 4 5-8 5 4" stroke="#7631C1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -969,10 +1035,11 @@
               <p class="agent-card__title">Insights Synthesizer</p>
               <p class="agent-card__desc">Synthesises raw research data into structured findings: themes, personas, journey maps and design context packages.</p>
             </div>
-          </div>
+          <div class="agent-card__link" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </a>
 
           <!-- Experience Architect -->
-          <div class="agent-card">
+          <a class="agent-card" href="agent-catalogue.html#experience-architect">
             <div class="agent-card__icon">
               <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="3" y="3" width="10" height="10" rx="2" stroke="#7631C1" stroke-width="1.8"/>
@@ -985,7 +1052,8 @@
               <p class="agent-card__title">Experience Architect</p>
               <p class="agent-card__desc">Translates approved requirements, designs and standards into a complete UX specification covering flows, components, interactions and frontend behaviour.</p>
             </div>
-          </div>
+          <div class="agent-card__link" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </a>
 
         </div><!-- .agent-grid -->
       </div><!-- .agents-section -->
@@ -994,7 +1062,12 @@
   </main>
 
   <!-- FOOTER -->
-  <footer class="site-footer"></footer>
+  <footer class="site-footer">
+  <ul class="site-footer__links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="agent-catalogue.html">Agent Catalogue</a></li>
+  </ul>
+  </footer>
 
   <script>
     (function () {
@@ -1008,9 +1081,13 @@
         var thumbW    = 17;
         thumb.style.left = (ratio * (trackW - thumbW)) + 'px';
       }
+      function checkOverflow() {
+        track.style.display = scroll.scrollWidth > scroll.clientWidth ? '' : 'none';
+      }
+      checkOverflow();
       updateThumb();
       scroll.addEventListener('scroll', updateThumb);
-      window.addEventListener('resize', updateThumb);
+      window.addEventListener('resize', function () { checkOverflow(); updateThumb(); });
       var dragging = false, dragStartX, thumbStartLeft;
       thumb.addEventListener('mousedown', function (e) {
         dragging = true; dragStartX = e.clientX; thumbStartLeft = thumb.offsetLeft; e.preventDefault();

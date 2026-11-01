@@ -399,12 +399,18 @@
     .stage-details {
       display: flex;
       flex-direction: column;
-      gap: 56px;
+      gap: 40px;
     }
     .stage-detail {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .stage-detail__left {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 12px;
     }
     .stage-detail__title {
       font-size: 20px;
@@ -426,8 +432,8 @@
     }
     .output-review-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 40px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
     }
     .output-review {
       min-width: 0;
@@ -482,18 +488,35 @@
       gap: 16px;
     }
     .agent-card {
-      width: 336px;
-      min-height: 271px;
+      position: relative;
+      width: 248px;
+      height: 248px;
       background: var(--surface-agent);
       border-radius: 12px;
-      padding: 24px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 12px;
+      box-sizing: border-box;
+      border: 1.5px solid var(--border-divider, #E5E7EB);
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), border-color 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      color: inherit;
     }
+      .agent-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, var(--color-purple-50, #F3EEFF) 0%, transparent 60%);
+        opacity: 0;
+        transition: opacity 0.2s;
+        pointer-events: none;
+      }
     .agent-card__icon {
-      width: 48px;
-      height: 48px;
+      width: 40px;
+      height: 40px;
       background: var(--surface-icon-bg);
       border-radius: 100px;
       display: flex;
@@ -501,23 +524,48 @@
       justify-content: center;
       flex-shrink: 0;
     }
-    .agent-card__icon svg { width: 28px; height: 28px; }
-    .agent-card__body {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+    .agent-card__icon svg { width: 22px; height: 22px; }
     .agent-card__title {
-      font-size: 24px;
+      font-size: 18px;
       font-weight: 700;
       color: var(--text-primary);
       line-height: 1.3;
     }
     .agent-card__desc {
-      font-size: 16px;
+      font-size: 13px;
       font-weight: 400;
       color: var(--text-primary);
       line-height: 1.5;
+    }
+    .agent-card__link {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--color-purple-100, #E8DCFA);
+      color: var(--color-purple-600, #7631C1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: background 0.18s, color 0.18s;
+    }
+    .agent-card__link:hover {
+      background: var(--color-purple-700, #462279);
+      color: #fff;
+    }
+    .agent-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--color-purple-500, #7631C1);
+      box-shadow: 0 8px 32px rgba(118,49,193,0.12);
+    }
+    .agent-card:hover::before { opacity: 1; }
+    .agent-card:hover .agent-card__link {
+      background: var(--color-purple-700, #462279);
+      color: #fff;
+      transform: translate(2px, -2px);
     }
 
     /* ── FOOTER ──────────────────────────────────────────── */
@@ -539,6 +587,21 @@
       transition: color 0.15s;
     }
     .footer-link:hover { color: #ffffff; }
+    .site-footer__links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .site-footer__links a {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-on-dark);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .site-footer__links a:hover { color: #ffffff; }
 
   </style>
 </head>
@@ -789,9 +852,11 @@
 
         <!-- Stage 2 -->
         <div class="stage-detail">
-          <h2 class="stage-detail__title">Stage 2. Specify</h2>
-          <p class="stage-detail__label">What you are responsible for</p>
-          <p class="stage-detail__body">A requirement that is never written down cannot be built or tested. You make sure the security, privacy and compliance constraints from the requirements reach the specification in a form an agent can follow, because an agent can only apply the controls it has been told about.</p>
+          <div class="stage-detail__left">
+            <h2 class="stage-detail__title">Stage 2. Specify</h2>
+            <p class="stage-detail__label">What you are responsible for</p>
+            <p class="stage-detail__body">A requirement that is never written down cannot be built or tested. You make sure the security, privacy and compliance constraints from the requirements reach the specification in a form an agent can follow.</p>
+          </div>
           <div class="output-review-grid">
             <div class="output-review">
               <div class="output-review__header">
@@ -822,11 +887,15 @@
           </div>
         </div>
 
+        <div class="divider"></div>
+
         <!-- Stage 3 -->
         <div class="stage-detail">
-          <h2 class="stage-detail__title">Stage 3. Plan</h2>
-          <p class="stage-detail__label">What you are responsible for</p>
-          <p class="stage-detail__body">You check that the solution approach does not quietly weaken a control. Design choices, integrations and sequencing all carry security consequences, and the plan is the last place to catch them cheaply. The FDA approves the plan, and your input is part of what that approval relies on.</p>
+          <div class="stage-detail__left">
+            <h2 class="stage-detail__title">Stage 3. Plan</h2>
+            <p class="stage-detail__label">What you are responsible for</p>
+            <p class="stage-detail__body">You check that the solution approach does not quietly weaken a control. Design choices, integrations and sequencing all carry security consequences, and the plan is the last place to catch them. The FDA approves the plan, and your input is part of what that approval relies on.</p>
+          </div>
           <div class="output-review-grid">
             <div class="output-review">
               <div class="output-review__header">
@@ -837,7 +906,7 @@
                     <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
                   </svg>
                 </div>
-                <span class="output-review__name">Architecture and integration approach</span>
+                <span class="output-review__name">Integration approach</span>
               </div>
               <p class="output-review__desc">Do the patterns, data flows and external connections respect the security guardrails?</p>
             </div>
@@ -857,11 +926,15 @@
           </div>
         </div>
 
+        <div class="divider"></div>
+
         <!-- Stage 5 -->
         <div class="stage-detail">
-          <h2 class="stage-detail__title">Stage 5. Implement</h2>
-          <p class="stage-detail__label">What you are responsible for</p>
-          <p class="stage-detail__body">You help make sure the code that agents write respects the controls that were specified. Security and privacy are named checks in the implementation review, and they are the kind of problem that passes every functional test and still fails an audit.</p>
+          <div class="stage-detail__left">
+            <h2 class="stage-detail__title">Stage 5. Implement</h2>
+            <p class="stage-detail__label">What you are responsible for</p>
+            <p class="stage-detail__body">You help make sure the code that agents write respects the controls that were specified. Security and privacy are named checks in the implementation review, and they are the kind of problem that passes every functional test and still fails an audit.</p>
+          </div>
           <div class="output-review-grid">
             <div class="output-review">
               <div class="output-review__header">
@@ -905,11 +978,15 @@
           </div>
         </div>
 
+        <div class="divider"></div>
+
         <!-- Stage 6 -->
         <div class="stage-detail">
-          <h2 class="stage-detail__title">Stage 6. Test &amp; Validate</h2>
-          <p class="stage-detail__label">What you are responsible for</p>
-          <p class="stage-detail__body">You help judge whether the security evidence is real. The Quality Engineer accepts the test evidence and the FDA holds the Quality &amp; Security gate, and your part is to make sure the evidence behind that gate is more than a tick in a box.</p>
+          <div class="stage-detail__left">
+            <h2 class="stage-detail__title">Stage 6. Test &amp; Validate</h2>
+            <p class="stage-detail__label">What you are responsible for</p>
+            <p class="stage-detail__body">You work with the Quality Engineer and the FDA to ensure quality and security.</p>
+          </div>
           <div class="output-review-grid">
             <div class="output-review">
               <div class="output-review__header">
@@ -975,33 +1052,16 @@
         <p class="agents-label">These are the agents you'll most likely work with:</p>
         <div class="agent-grid">
 
-          <!-- Context Builder -->
-          <div class="agent-card">
-            <div class="agent-card__icon">
-              <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14 4C8.477 4 4 8.477 4 14s4.477 10 10 10 10-4.477 10-10S19.523 4 14 4z" stroke="#7631C1" stroke-width="1.5"/>
-                <path d="M14 10v4l3 3" stroke="#7631C1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M10 8h8M10 20h8" stroke="#7631C1" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
-              </svg>
-            </div>
-            <div class="agent-card__body">
-              <p class="agent-card__title">Context Builder</p>
-              <p class="agent-card__desc">Brings compliance information and standards into the project context. Review its output to ensure security material is complete, current, and correctly scoped before the squad begins building.</p>
-            </div>
-          </div>
-
           <!-- Code Review -->
-          <div class="agent-card">
+          <a class="agent-card" href="agent-catalogue.html#code-review">
             <div class="agent-card__icon">
               <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M9 10l-4 4 4 4M19 10l4 4-4 4" stroke="#7631C1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M16 7l-4 14" stroke="#7631C1" stroke-width="1.8" stroke-linecap="round"/>
               </svg>
             </div>
-            <div class="agent-card__body">
-              <p class="agent-card__title">Code Review</p>
-              <p class="agent-card__desc">Checks generated code before merge. This is where security and privacy controls are examined — review alongside it to verify that the controls specified at Stage 2 are present and correctly implemented.</p>
-            </div>
+            <p class="agent-card__title">Code Review</p>
+            <p class="agent-card__desc">Checks generated code before merge. This is where security and privacy controls are examined — review alongside it to verify that the controls specified at Stage 2 are present and correctly implemented.</p>
           </div>
 
           <!-- API Testing -->
@@ -1014,20 +1074,24 @@
                 <path d="M20 9l.8.8L22 8" stroke="#7631C1" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
-            <div class="agent-card__body">
-              <p class="agent-card__title">API Testing</p>
-              <p class="agent-card__desc">Produces the authorisation, validation and error cases that show whether the controls actually hold. Review the evidence it generates to confirm the security test coverage is genuine, not just a pass mark.</p>
-            </div>
+            <p class="agent-card__title">API Testing</p>
+            <p class="agent-card__desc">Produces the authorisation, validation and error cases that show whether the controls actually hold. Review the evidence it generates to confirm the security test coverage is genuine, not just a pass mark.</p>
           </div>
 
-        </div><!-- .agent-grid -->
+        
+          <div class="agent-card__link" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></a><!-- .agent-grid -->
       </div><!-- .agents-section -->
 
     </article>
   </main>
 
   <!-- FOOTER -->
-  <footer class="site-footer"></footer>
+  <footer class="site-footer">
+  <ul class="site-footer__links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="agent-catalogue.html">Agent Catalogue</a></li>
+  </ul>
+  </footer>
 
   <script>
     (function () {
@@ -1041,9 +1105,13 @@
         var thumbW    = 17;
         thumb.style.left = (ratio * (trackW - thumbW)) + 'px';
       }
+      function checkOverflow() {
+        track.style.display = scroll.scrollWidth > scroll.clientWidth ? '' : 'none';
+      }
+      checkOverflow();
       updateThumb();
       scroll.addEventListener('scroll', updateThumb);
-      window.addEventListener('resize', updateThumb);
+      window.addEventListener('resize', function () { checkOverflow(); updateThumb(); });
       var dragging = false, dragStartX, thumbStartLeft;
       thumb.addEventListener('mousedown', function (e) {
         dragging = true; dragStartX = e.clientX; thumbStartLeft = thumb.offsetLeft; e.preventDefault();

@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agents Catalogue · Agentic PDLC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ─── Atoms ─────────────────────────────────────────────────────────── */
+    :root {
+      --color-ink-900:   #14181F;
+      --color-ink-700:   #4A5260;
+      --color-ink-500:   #5C6573;
+      --color-ink-200:   #D8D4DF;
+      --color-ink-100:   #F3F0F7;
+      --color-white:     #FFFFFF;
+
+      --color-purple-900: #14181F;
+      --color-purple-800: #2B1550;
+      --color-purple-700: #462279;
+      --color-purple-600: #7631C1;
+      --color-purple-500: #8055C3;
+      --color-purple-100: #E8DCFA;
+      --color-purple-50:  #F5F0FC;
+
+      --color-amber-400:  #FFC13F;
+      --color-teal-500:   #0D9488;
+      --color-teal-100:   #CCFBF1;
+      --color-blue-500:   #2563EB;
+      --color-blue-100:   #DBEAFE;
+
+      --gradient-brand: linear-gradient(99deg, rgba(79,42,129,0.85) 0%, #462279 77.5%);
+
+      --font-family: 'Inter', sans-serif;
+
+      --space-4:   4px;
+      --space-8:   8px;
+      --space-12:  12px;
+      --space-16:  16px;
+      --space-20:  20px;
+      --space-24:  24px;
+      --space-32:  32px;
+      --space-40:  40px;
+      --space-48:  48px;
+      --space-64:  64px;
+      --space-80:  80px;
+      --space-120: 120px;
+
+      --radius-8:  8px;
+      --radius-12: 12px;
+      --radius-16: 16px;
+      --radius-20: 20px;
+    }
+
+    /* ─── Semantic tokens ───────────────────────────────────────────────── */
+    :root {
+      --bg-page:        var(--color-white);
+      --bg-section-alt: var(--color-ink-100);
+      --bg-nav:         var(--gradient-brand);
+      --text-primary:   var(--color-ink-900);
+      --text-secondary: var(--color-ink-700);
+      --text-muted:     var(--color-ink-500);
+      --text-brand:     var(--color-purple-600);
+      --border-divider: rgba(74,82,96,0.15);
+    }
+
+    /* ─── Reset ─────────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-family);
+      background: var(--bg-page);
+      color: var(--text-primary);
+      min-width: 1280px;
+      overflow-x: hidden;
+    }
+
+    /* ─── Nav ────────────────────────────────────────────────────────────── */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      width: 100%;
+      height: 72px;
+      background: var(--gradient-brand);
+      display: flex;
+      align-items: center;
+      padding: 0 var(--space-120);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+      text-decoration: none;
+    }
+    .nav-logo-text {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--color-white);
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+    .nav-logo-sup {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-white);
+      margin-top: 3px;
+      margin-left: 1px;
+    }
+
+    /* ─── Breadcrumb ─────────────────────────────────────────────────────── */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: var(--space-24);
+    }
+    .breadcrumb__link {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+    .breadcrumb__link:hover { text-decoration: underline; }
+    .breadcrumb__sep {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .breadcrumb__current {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-purple-700, #462279);
+    }
+
+    /* ─── Footer ─────────────────────────────────────────────────────────── */
+    .site-footer {
+      width: 100%;
+      background: var(--color-surface-dark, #1A1033);
+      display: flex;
+      align-items: center;
+      padding: 0 var(--space-120);
+      height: 107px;
+      margin-top: auto;
+    }
+    .site-footer__links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .site-footer__links a {
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .site-footer__links a:hover { color: #fff; }
+
+    /* ─── Hero ───────────────────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(180deg, var(--color-purple-50) 0%, var(--color-white) 100%);
+      padding: var(--space-80) var(--space-120) var(--space-64);
+      border-bottom: 1px solid var(--border-divider);
+    }
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .hero-title {
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      color: var(--text-primary);
+      max-width: 640px;
+      margin-bottom: var(--space-16);
+    }
+    .hero-desc {
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      max-width: 600px;
+    }
+
+    /* ─── Grid section ───────────────────────────────────────────────────── */
+    .catalogue-section {
+      padding: var(--space-64) var(--space-120);
+    }
+    .catalogue-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-12);
+      margin-bottom: var(--space-32);
+    }
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+    .section-pill {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-brand);
+      background: var(--color-purple-100);
+      border-radius: 99px;
+      padding: 3px 10px;
+    }
+
+    /* ─── Agent cards ────────────────────────────────────────────────────── */
+    .agent-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--space-16);
+    }
+
+    .agent-card {
+      background: var(--color-white);
+      border: 1.5px solid var(--border-divider);
+      border-radius: var(--radius-16);
+      padding: var(--space-24);
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1),
+                  border-color 0.2s,
+                  box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-12);
+      position: relative;
+      overflow: hidden;
+    }
+    .agent-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--color-purple-50) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .agent-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--color-purple-500);
+      box-shadow: 0 8px 32px rgba(118,49,193,0.12);
+    }
+    .agent-card:hover::before { opacity: 1; }
+
+    .card-id {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-icon img { display: block; }
+
+    .card-name {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+      line-height: 1.3;
+      position: relative;
+    }
+    .card-desc {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      position: relative;
+    }
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+    .card-model {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-brand);
+      background: var(--color-purple-100);
+      border-radius: 99px;
+      padding: 3px 9px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 120px;
+    }
+    .card-arrow {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--color-ink-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, transform 0.2s;
+      flex-shrink: 0;
+    }
+    .agent-card:hover .card-arrow {
+      background: var(--color-purple-700);
+      transform: translate(2px, -2px);
+    }
+    .card-arrow svg { display: block; }
+    .agent-card:hover .card-arrow svg path { stroke: white; }
+
+    /* ─── Overlay ────────────────────────────────────────────────────────── */
+    .overlay-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(20,24,31,0.6);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-24);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    .overlay-backdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .overlay-panel {
+      background: var(--color-white);
+      border-radius: var(--radius-20);
+      width: 100%;
+      max-width: 880px;
+      max-height: 88vh;
+      overflow-y: auto;
+      transform: translateY(20px) scale(0.97);
+      transition: transform 0.3s cubic-bezier(0.34,1.2,0.64,1), opacity 0.25s;
+      opacity: 0;
+      position: relative;
+    }
+    .overlay-backdrop.open .overlay-panel {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    /* scrollbar in panel */
+    .overlay-panel::-webkit-scrollbar { width: 6px; }
+    .overlay-panel::-webkit-scrollbar-track { background: transparent; }
+    .overlay-panel::-webkit-scrollbar-thumb { background: var(--color-ink-200); border-radius: 99px; }
+
+    .overlay-header {
+      padding: var(--space-32) var(--space-40) var(--space-24);
+      border-bottom: 1px solid var(--border-divider);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-20);
+      position: sticky;
+      top: 0;
+      background: var(--color-white);
+      z-index: 10;
+    }
+    .overlay-icon {
+      width: 56px;
+      height: 56px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .overlay-icon img { display: block; }
+    .overlay-meta { flex: 1; }
+    .overlay-id {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: var(--space-4);
+    }
+    .overlay-name {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--text-primary);
+      margin-bottom: var(--space-8);
+    }
+    .overlay-tagline {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+    .overlay-model-badge {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-brand);
+      background: var(--color-purple-100);
+      border-radius: 99px;
+      padding: 5px 12px;
+      white-space: nowrap;
+      align-self: flex-start;
+      margin-top: 4px;
+    }
+    .overlay-close {
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 50%;
+      background: var(--color-ink-100);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+    .overlay-close:hover { background: var(--color-ink-200); }
+
+    .overlay-body {
+      padding: var(--space-32) var(--space-40);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-32);
+    }
+
+    .detail-block {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-8);
+    }
+    .detail-block.full { grid-column: 1 / -1; }
+
+    .detail-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .detail-label::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.4;
+    }
+    .detail-content {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+    .detail-content strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .prompt-block {
+      grid-column: 1 / -1;
+      background: var(--color-ink-900);
+      border-radius: var(--radius-12);
+      padding: var(--space-20) var(--space-24);
+    }
+    .prompt-block-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: var(--space-12);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .prompt-block-label span {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-amber-400);
+    }
+    .prompt-text {
+      font-size: 13px;
+      font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* hidden until JS populates */
+    .agent-card[data-hidden="true"] { display: none; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">
+    <span class="nav-logo-text">SCB</span><sup class="nav-logo-sup">x</sup>
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html" class="breadcrumb__link">← Home</a>
+      <span class="breadcrumb__sep" aria-hidden="true">/</span>
+      <span class="breadcrumb__current" aria-current="page">Agent Catalogue</span>
+    </nav>
+    <h1 class="hero-title">Agents Catalogue</h1>
+    <p class="hero-desc">Every agent in the delivery lifecycle, what it does, what it needs, and what it hands back.</p>
+  </div>
+</section>
+
+<!-- CATALOGUE GRID -->
+<main class="catalogue-section">
+  <div class="catalogue-inner">
+
+    <!-- Design agents -->
+    <div class="section-header" id="group-design">
+      <h2 class="section-title">Design agents</h2>
+    </div>
+    <div class="agent-grid" id="grid-design"></div>
+
+    <div style="height: var(--space-64)"></div>
+
+    <!-- Coding agents -->
+    <div class="section-header" id="group-coding">
+      <h2 class="section-title">Coding &amp; planning agents</h2>
+    </div>
+    <div class="agent-grid" id="grid-coding"></div>
+
+    <div style="height: var(--space-64)"></div>
+
+    <!-- Testing agents -->
+    <div class="section-header" id="group-testing">
+      <h2 class="section-title">Testing agents</h2>
+    </div>
+    <div class="agent-grid" id="grid-testing"></div>
+
+    <div style="height: var(--space-64)"></div>
+
+    <!-- Deploy agents -->
+    <div class="section-header" id="group-deploy">
+      <h2 class="section-title">Deployment agents</h2>
+    </div>
+    <div class="agent-grid" id="grid-deploy"></div>
+
+    <div style="height: var(--space-80)"></div>
+  </div>
+</main>
+
+<!-- OVERLAY -->
+<div class="overlay-backdrop" id="overlay" role="dialog" aria-modal="true" aria-labelledby="overlay-name">
+  <div class="overlay-panel" id="overlay-panel">
+    <div class="overlay-header">
+      <div class="overlay-icon" id="overlay-icon"></div>
+      <div class="overlay-meta">
+        <div class="overlay-name" id="overlay-name"></div>
+        <div class="overlay-tagline" id="overlay-tagline"></div>
+      </div>
+      <div class="overlay-model-badge" id="overlay-model"></div>
+      <button class="overlay-close" id="overlay-close" aria-label="Close">
+        <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8" stroke="#4A5260" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="overlay-body" id="overlay-body"></div>
+  </div>
+</div>
+
+<script>
+/* ─── Agent data ─────────────────────────────────────────────────────────── */
+const agents = [
+  {
+    id: 'A.1', group: 'design', icon: 'icons/research-planner.svg',
+    name: 'Research Planner',
+    tagline: 'Gets the team ready before anyone talks to a user.',
+    desc: 'Turns the vision and early stakeholder notes into a clear list of assumptions, a research plan, interview guides and screeners, so fieldwork starts with real questions instead of guesses.',
+    useWhen: 'Kickoff has produced the vision and objectives; stakeholder interviews or earlier findings have changed what we need to ask; or a gate asks for the plan to be revised.',
+    inputs: 'Vision and objectives, stakeholder and expert interview notes, briefs and earlier work.',
+    output: 'Assumptions log, research plan, interview guides and screeners.',
+    humanReview: 'A person signs off the plan before fieldwork starts.',
+    prompt: `@Research Planner Here's the project brief [paste or attach]. We need to understand [project objective]. Plan the research for this — include research questions, participant criteria, and a recommended method.`,
+    model: 'GPT-6.1 Terra',
+  },
+  {
+    id: 'A.2', group: 'design', icon: 'icons/insights-synthesizer.svg',
+    name: 'Insights Synthesizer',
+    tagline: 'Makes sense of what users told us.',
+    desc: 'Files and tags raw sessions as evidence, then drafts insights, personas, blueprints and test findings — each one traceable to where it came from.',
+    useWhen: 'A person has conducted discovery sessions and has raw materials of requirements and findings.',
+    inputs: 'Transcripts, raw notes, research plan, and images.',
+    output: 'Tagged evidence, insights, personas, blueprints and test findings.',
+    humanReview: 'A person checks raw transcripts for sensitive content before the agent sees them. People then review the drafts and the evidence behind them.',
+    prompt: `@Insights Synthesizer I've added our session notes from last week's interviews to the workspace. Organise and synthesise the evidence. Give me personas and need statements from the synthesis.`,
+    model: 'Claude Sonnet 5.5',
+  },
+  {
+    id: 'A.3', group: 'design', icon: 'icons/experience-architect.svg',
+    name: 'Experience Architect',
+    tagline: 'Turns decisions into something people can see and try.',
+    desc: 'Drafts the structure of the experience, the design language and the detailed screens. Builds a working concept prototype from the approved design system and checks designs against principles and standards.',
+    useWhen: 'The user journey, screen inventory, and design system are available to create detailed designs.',
+    inputs: 'Canvas briefs, screen inventory, user journey, and sample images or links.',
+    output: 'The IA, design language, detailed screens and check results.',
+    humanReview: 'A person approves the briefs before any design is built. Designers then review the screens and the check results.',
+    prompt: `@Experience Architect This is a mobile app for users to lock FX rates for transaction. It follows conventional, modern banking app interface and interaction design. Use the insights discovered to create a representative user journey, screen inventory, and IA.`,
+    model: 'Claude Sonnet 5.5',
+  },
+  {
+    id: 'A.4', group: 'coding', icon: 'icons/context-builder.svg',
+    name: 'Context Builder',
+    tagline: 'Creates a unified project context for downstream agents.',
+    desc: 'Brings together reference material, project documentation, source code, configuration and tests, and supplements these with business, stakeholder, compliance and technical context.',
+    useWhen: 'Creating project context from scratch; starting a new project or onboarding an existing codebase; or establishing business, technical and standards documentation.',
+    inputs: 'Confluence link or attached documents; legacy project documentation; source code, configuration and tests; business, compliance and stakeholder information.',
+    output: 'Unified project context with CTX-* trace IDs; technology-specific standards; additional user-provided standards indexed under .github/contexts/.',
+    humanReview: 'Review the generated context for completeness and accuracy, confirm applicable material has been captured, and resolve gaps before downstream use.',
+    prompt: `@Context Builder Analyze the available project documentation, source code, tests, configuration, architecture, business context, and engineering standards. Build a unified project context indexed with CTX identifiers. Separate confirmed facts, derived context, and missing information, and flag material inconsistencies.`,
+    model: 'GPT-6.1 Terra',
+  },
+  {
+    id: 'A.5', group: 'coding', icon: 'icons/brd-builder.svg',
+    name: 'BRD Builder',
+    tagline: 'Converts business problems into a structured BRD.',
+    desc: 'Supports the discovery, definition, and governance of business requirements. Helps teams convert an initial business idea or problem statement into a structured BRD ready for stakeholder review.',
+    useWhen: 'The team needs to define the business problem, establish objectives and outcomes, identify stakeholders, document current-state challenges, or establish governance before detailed design begins.',
+    inputs: 'Business problem statements, transformation objectives, workshop notes, stakeholder interviews, existing process documents, policies, customer feedback, and known risks.',
+    output: 'Executive summary, business context, objectives, stakeholder details, current-state challenges, in/out-of-scope items, business requirements, success measures, assumptions, dependencies, and governance information.',
+    humanReview: 'Business owners, product leadership, architecture, security, governance, and delivery stakeholders review before the BRD becomes the approved input to PRD creation.',
+    prompt: `Create a BRD for the SCBx AI-enabled Product Development Lifecycle initiative.
+
+Business context:
+- Product squads currently use different engineering practices and tools.
+- The initiative should introduce reusable AI agents across requirements,
+  design, development, testing, security, and release activities.
+- Expected outcomes include improved delivery consistency, stronger
+  traceability, reduced manual effort, and better governance.
+
+Capture:
+- Business problem and drivers
+- Current-state challenges
+- Stakeholders and decision roles
+- In-scope and out-of-scope areas
+- Target business outcomes
+- Measurable success indicators
+- Business requirements
+- Assumptions, dependencies, constraints, and risks
+- Governance and approval criteria`,
+    model: 'GPT-6.1 Terra',
+  },
+  {
+    id: 'A.6', group: 'coding', icon: 'icons/prd-builder.svg',
+    name: 'PRD Builder',
+    tagline: 'Translates approved business direction into product requirements.',
+    desc: 'Converts an approved BRD into detailed, measurable, and actionable product requirements. Defines what the product must do, how it should behave, which quality attributes it must satisfy, and how completion will be verified.',
+    useWhen: 'After an approved BRD is in place and the team needs to define product users, describe capabilities, capture functional and non-functional requirements, or establish acceptance criteria.',
+    inputs: 'Approved BRD, product vision and roadmap, user personas, user research, existing process flows, architecture constraints, regulatory requirements, and source-system details.',
+    output: 'Product overview, goals, target users, scope, features, functional and non-functional requirements, user journeys, data and integration requirements, security requirements, acceptance criteria, and traceability to BRD objectives.',
+    humanReview: 'Product owners, business analysts, solution architects, engineering leads, security stakeholders, test leads, and operations teams review before the PRD is approved.',
+    prompt: `Create a PRD for an AI-assisted backlog and requirements-management
+capability for the SCBx AI-enabled Product Development Lifecycle.
+
+Target users:
+- Product owners
+- Business analysts
+- Solution architects
+- Developers
+- Test engineers
+
+Define requirements for:
+- Importing an approved BRD
+- Generating and refining epics, features, and user stories
+- Maintaining traceability from business requirements to backlog items
+- Generating measurable acceptance criteria
+- Identifying ambiguity, conflicts, and missing information
+- Requiring human review before backlog changes are published
+- Integrating with the approved engineering toolchain
+- Recording source references and change history`,
+    model: 'Claude Sonnet 5.5',
+  },
+  {
+    id: 'A.7', group: 'coding', icon: 'icons/jira-backlog-manager.svg',
+    name: 'Jira Backlog Manager',
+    tagline: 'Turns approved requirements into a structured delivery backlog.',
+    desc: 'Transforms approved product requirements or epics into a structured delivery backlog. Drafts epics, user stories and acceptance criteria and helps maintain relationships and consistency across backlog items.',
+    useWhen: 'Backlog decomposition or maintenance is required.',
+    inputs: 'Approved PRD, epics, story standards and backlog context.',
+    output: 'Draft epics, stories and backlog updates.',
+    humanReview: 'Product Owner or Business Analyst reviews priority, scope and acceptance criteria.',
+    prompt: `Discover Jira issues from the attached PRD. Plan a Jira backlog for the <project> project.
+
+Use the research findings and architecture decisions to inform the issue hierarchy and backlog structure. Plan Epics as parent-level issues and Stories as child issues associated with the relevant Epic.
+
+Use the "Epic" issue type for epics and the "Story" issue type for user stories. Also plan priority labels (P0-must-have, P1-should-have, P2-future) and domain labels (billing-agent, technical-agent, general-agent, infrastructure, observability).
+
+Each Jira issue must include Acceptance Criteria in Given / When / Then format. Focus on P0 items first. These will form the MVP sprint scope.
+
+Important: Do not create any issues in Jira yet. Only produce the discovery and backlog plan so that it can be reviewed and approved first.`,
+    model: 'Claude Sonnet 5.5',
+  },
+  {
+    id: 'A.8', group: 'coding', icon: 'icons/spec-clarify.svg',
+    name: 'Spec-Clarify',
+    tagline: 'Converts requirements into an implementation-ready specification.',
+    desc: 'Identifies missing information, conflicting assumptions and unresolved questions before planning or coding begins. The specification becomes the main implementation reference only after accountable roles have resolved and approved the open points.',
+    useWhen: 'Before planning and implementation for a bounded increment.',
+    inputs: 'Approved requirements, design, architecture, context and standards.',
+    output: 'spec.md, acceptance criteria and clarification questions.',
+    humanReview: 'FDE coordinates clarification; accountable business and technical roles approve resolved content.',
+    prompt: `Create an implementation-ready technical specification for Jira story <#>.
+
+Analyze the requirements, existing codebase, project standards, APIs, and available design evidence. Determine frontend and backend change scope independently and produce traceable SPEC-* requirements mapped to the source FRs/NFRs.
+
+Reuse existing components and contracts where appropriate. Do not invent missing behavior. Capture unresolved decisions as CLAR-* items and block the handoff until they are resolved.
+
+Generate all required specification, contract, design-evidence, traceability, and compliance artifacts, then run the specification review gate and report the final status.`,
+    model: 'GPT-6.1 Sol',
+  },
+  {
+    id: 'A.9', group: 'coding', icon: 'icons/task-planner.svg',
+    name: 'Task-Planner',
+    tagline: 'Decomposes a specification into ordered implementation tasks.',
+    desc: 'Makes dependencies, sequencing and expected outcomes explicit so work can be executed in controlled increments. The FDE or engineering lead checks that the plan covers the approved scope and does not introduce unsupported design decisions.',
+    useWhen: 'After specification and plan approval.',
+    inputs: 'spec.md, plan.md, project context and engineering standards.',
+    output: 'tasks.md and dependency sequence.',
+    humanReview: 'FDE or engineering lead validates completeness and ordering.',
+    prompt: `Create the implementation plan and task breakdown for RUN_ID=<RUN_ID>.
+Use the reviewed specification, preserve requirement traceability, and define dependencies,
+verification, and unit-test work for each implementation task. Do not implement the tasks.`,
+    model: 'GPT-6.1 Sol',
+  },
+  {
+    id: 'A.10', group: 'coding', icon: 'icons/task-implementor.svg',
+    name: 'Task-Implementor',
+    tagline: 'Executes bounded tasks from the approved spec and plan.',
+    desc: 'Produces source-code changes and unit tests within the supplied repository context, standards and guardrails. The Application Engineer remains accountable for understanding the change, resolving failures and confirming that the pull request is suitable for review.',
+    useWhen: 'For bounded, approved implementation work.',
+    inputs: 'Approved tasks, codebase, standards, context and test expectations.',
+    output: 'Source code and unit tests.',
+    humanReview: 'Application Engineer remains accountable for implementation and pull-request quality.',
+    prompt: `Implement the approved tasks for RUN_ID=<RUN_ID> from output/<RUN_ID>/plan/tasks.md.
+Follow the approved specification and project standards and record implementation and verification evidence.`,
+    model: 'GPT-5.3-Codex',
+  },
+  {
+    id: 'A.11', group: 'testing', icon: 'icons/api-testing.svg',
+    name: 'API Testing',
+    tagline: 'Generates and executes API tests against approved specifications.',
+    desc: 'Uses approved interface specifications, acceptance criteria and test standards to produce test assets, results and evidence. The Quality Engineer confirms that coverage is sufficient and decides whether the evidence can be accepted.',
+    useWhen: 'Where the increment exposes or changes APIs.',
+    inputs: 'Approved API specification, acceptance criteria and test standards.',
+    output: 'API test assets, results and evidence.',
+    humanReview: 'Quality Engineer validates coverage and accepts test evidence.',
+    prompt: `Read output/<RUN_ID>/specify/spec.md and determine API scope.
+If API In Scope is NO, record the API testing activity as NOT_APPLICABLE.
+If API In Scope is YES, test every API specified in spec.md using RUN_ID=<RUN_ID>
+and API_BASE_URL=<authorized-test-url> when needed.
+Generate and execute the Playwright API suite, preserve evidence, and report failures,
+contract drift, coverage gaps, and blockers. Do not modify application code to make tests pass.`,
+    model: 'GPT-5.3-Codex',
+  },
+  {
+    id: 'A.12', group: 'testing', icon: 'icons/functional-testing.svg',
+    name: 'Functional Testing',
+    tagline: 'Converts requirements into repeatable functional tests.',
+    desc: 'Prepares test scenarios, cases, data, executable scripts and execution evidence for functional, role-based, negative and boundary conditions. The Quality Engineer reviews coverage and results and retains the quality decision.',
+    useWhen: 'For functional, role-based, negative and boundary testing in approved environments.',
+    inputs: 'PRD, stories, acceptance criteria, designs, APIs and test standards.',
+    output: 'Test strategy, test cases, data, executable scripts and execution evidence.',
+    humanReview: 'Quality Engineer reviews coverage, scripts and results and retains the quality decision.',
+    prompt: `Read output/<RUN_ID>/specify/spec.md and determine UI scope.
+If UI In Scope is NO and DESIGN_EVIDENCE_STATUS is NOT_REQUIRED, record the
+functional testing activity as NOT_APPLICABLE.
+If UI In Scope is YES, test every specified UI behavior using RUN_ID=<RUN_ID>
+and APP_URL=<authorized-test-url> when needed.
+Generate and execute reproducible Playwright tests, preserve evidence, and report coverage,
+failures, and blockers. Use the implemented behavior and approved requirements as evidence;
+do not modify application behavior to make tests pass.`,
+    model: 'GPT-6 Sol',
+  },
+  {
+    id: 'A.13', group: 'deploy', icon: 'icons/azure-deploy.svg',
+    name: 'Azure-Deploy',
+    tagline: 'Prepares and executes approved Azure deployments.',
+    desc: 'Prepares deployment artefacts, validates configuration and executes an approved deployment to Azure. Should be used only after the release candidate has passed required quality, security and readiness checks.',
+    useWhen: 'Only after release readiness and required approvals.',
+    inputs: 'Approved release candidate, environment configuration and deployment controls.',
+    output: 'Deployment package, deployed version and logs.',
+    humanReview: 'Release and deployment approvals remain with the named human authorities.',
+    prompt: `Analyze the current repository and deploy the application to Azure end-to-end. Discover all deployable components and dependencies, assess deployment readiness, design the Azure architecture, select appropriate services/SKUs/region, validate quota, estimate cost, generate secure Bicep/Terraform, provision infrastructure, deploy the application, run required database migrations, and verify application health. Preserve the existing service topology and ensure every Azure resource is provisioned through IaC only. Follow the Azure Deployment Agent's complete mandatory workflow and stop at each required scaffold and deployment approval gate before proceeding.`,
+    model: 'GPT-6 Sol',
+  },
+];
+
+/* ─── Render cards ───────────────────────────────────────────────────────── */
+const arrowSVG = `<svg width="14" height="14" fill="none" viewBox="0 0 14 14"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="#4A5260" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+function renderCards(filter) {
+  const groups = { design: [], coding: [], testing: [], deploy: [] };
+  agents.forEach(a => groups[a.group].push(a));
+
+  let total = 0;
+  Object.entries(groups).forEach(([group, list]) => {
+    const grid = document.getElementById('grid-' + group);
+    const header = document.getElementById('group-' + group)?.parentElement || grid?.previousElementSibling;
+    const section = grid?.closest('.catalogue-section') || grid?.parentElement;
+    grid.innerHTML = '';
+
+    const visible = list.filter(a => filter === 'all' || a.group === filter);
+    visible.forEach(agent => {
+      const card = document.createElement('div');
+      card.className = 'agent-card';
+      card.setAttribute('data-id', agent.id);
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('role', 'button');
+      card.setAttribute('aria-label', `View details for ${agent.name}`);
+      card.innerHTML = `
+        <div class="card-icon ${agent.group}"><img src="${agent.icon}" alt="${agent.name} icon" width="40" height="40"></div>
+        <div class="card-name">${agent.name}</div>
+        <div class="card-desc">${agent.desc}</div>
+        <div class="card-footer">
+          <span class="card-model">${agent.model}</span>
+          <div class="card-arrow">${arrowSVG}</div>
+        </div>`;
+      card.addEventListener('click', () => openOverlay(agent));
+      card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openOverlay(agent); } });
+      grid.appendChild(card);
+      total++;
+    });
+
+    // hide empty group headers
+    const groupSection = grid.closest('[id^="group"]') || grid;
+    const groupWrapper = document.getElementById('group-' + group);
+    const shouldHide = visible.length === 0;
+    if (groupWrapper) groupWrapper.parentElement && (groupWrapper.parentElement.style.display = shouldHide ? 'none' : '');
+    // Simple approach: hide the whole subsection
+    const spacerAfter = grid.nextElementSibling;
+    grid.style.display = visible.length === 0 ? 'none' : '';
+    if (groupWrapper) groupWrapper.style.display = visible.length === 0 ? 'none' : '';
+    if (spacerAfter && spacerAfter.tagName === 'DIV') spacerAfter.style.display = visible.length === 0 ? 'none' : '';
+  });
+
+  // count unused — filter removed
+}
+
+/* ─── Overlay ────────────────────────────────────────────────────────────── */
+const backdrop = document.getElementById('overlay');
+const closeBtn = document.getElementById('overlay-close');
+
+function openOverlay(agent) {
+  document.getElementById('overlay-icon').className = `overlay-icon ${agent.group}`;
+  document.getElementById('overlay-icon').innerHTML = `<img src="${agent.icon}" alt="${agent.name} icon" width="56" height="56">`;
+  document.getElementById('overlay-name').textContent = agent.name;
+  document.getElementById('overlay-tagline').textContent = agent.tagline;
+  document.getElementById('overlay-model').textContent = '✦ ' + agent.model;
+
+  document.getElementById('overlay-body').innerHTML = `
+    <div class="detail-block">
+      <div class="detail-label">Use when</div>
+      <div class="detail-content">${agent.useWhen}</div>
+    </div>
+    <div class="detail-block">
+      <div class="detail-label">Human review</div>
+      <div class="detail-content">${agent.humanReview}</div>
+    </div>
+    <div class="detail-block">
+      <div class="detail-label">Approved inputs</div>
+      <div class="detail-content">${agent.inputs}</div>
+    </div>
+    <div class="detail-block">
+      <div class="detail-label">Output</div>
+      <div class="detail-content">${agent.output}</div>
+    </div>
+    <div class="prompt-block">
+      <div class="prompt-block-label"><span></span>Sample prompt</div>
+      <pre class="prompt-text">${escapeHtml(agent.prompt)}</pre>
+    </div>`;
+
+  backdrop.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  closeBtn.focus();
+}
+
+function closeOverlay() {
+  backdrop.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function escapeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+closeBtn.addEventListener('click', closeOverlay);
+backdrop.addEventListener('click', e => { if (e.target === backdrop) closeOverlay(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeOverlay(); });
+
+/* ─── Init ───────────────────────────────────────────────────────────────── */
+renderCards('all');
+
+/* ─── Hash deep-link ─────────────────────────────────────────────────────── */
+function slugify(name) {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
+function openAgentBySlug(slug) {
+  const match = agents.find(a => slugify(a.name) === slug);
+  if (match) openOverlay(match);
+}
+
+// Open overlay from URL hash on load
+if (window.location.hash) {
+  openAgentBySlug(window.location.hash.slice(1));
+}
+
+// Support back/forward navigation
+window.addEventListener('hashchange', () => {
+  if (window.location.hash) {
+    openAgentBySlug(window.location.hash.slice(1));
+  } else {
+    closeOverlay();
+  }
+});
+
+</script>
+
+<footer class="site-footer">
+  <ul class="site-footer__links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="agent-catalogue.html">Agent Catalogue</a></li>
+  </ul>
+</footer>
+</body>
+</html>

@@ -399,12 +399,18 @@
     .stage-details {
       display: flex;
       flex-direction: column;
-      gap: 56px;
+      gap: 40px;
     }
     .stage-detail {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .stage-detail__left {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 12px;
     }
     .stage-detail__title {
       font-size: 20px;
@@ -426,8 +432,8 @@
     }
     .output-review-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 40px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
     }
     .output-review {
       min-width: 0;
@@ -482,18 +488,35 @@
       gap: 16px;
     }
     .agent-card {
-      width: 336px;
-      min-height: 271px;
+      position: relative;
+      width: 248px;
+      height: 248px;
       background: var(--surface-agent);
       border-radius: 12px;
-      padding: 24px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 12px;
+      box-sizing: border-box;
+      border: 1.5px solid var(--border-divider, #E5E7EB);
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), border-color 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      color: inherit;
     }
+      .agent-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, var(--color-purple-50, #F3EEFF) 0%, transparent 60%);
+        opacity: 0;
+        transition: opacity 0.2s;
+        pointer-events: none;
+      }
     .agent-card__icon {
-      width: 48px;
-      height: 48px;
+      width: 40px;
+      height: 40px;
       background: var(--surface-icon-bg);
       border-radius: 100px;
       display: flex;
@@ -501,23 +524,53 @@
       justify-content: center;
       flex-shrink: 0;
     }
-    .agent-card__icon svg { width: 28px; height: 28px; }
+    .agent-card__icon svg { width: 22px; height: 22px; }
     .agent-card__body {
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
     .agent-card__title {
-      font-size: 24px;
+      font-size: 18px;
       font-weight: 700;
       color: var(--text-primary);
       line-height: 1.3;
     }
     .agent-card__desc {
-      font-size: 16px;
+      font-size: 13px;
       font-weight: 400;
       color: var(--text-primary);
       line-height: 1.5;
+    }
+    .agent-card__link {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--color-purple-100, #E8DCFA);
+      color: var(--color-purple-600, #7631C1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: background 0.18s, color 0.18s;
+    }
+    .agent-card__link:hover {
+      background: var(--color-purple-700, #462279);
+      color: #fff;
+    }
+    .agent-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--color-purple-500, #7631C1);
+      box-shadow: 0 8px 32px rgba(118,49,193,0.12);
+    }
+    .agent-card:hover::before { opacity: 1; }
+    .agent-card:hover .agent-card__link {
+      background: var(--color-purple-700, #462279);
+      color: #fff;
+      transform: translate(2px, -2px);
     }
 
     /* ── FOOTER ──────────────────────────────────────────── */
@@ -539,6 +592,21 @@
       transition: color 0.15s;
     }
     .footer-link:hover { color: #ffffff; }
+    .site-footer__links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .site-footer__links a {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-on-dark);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .site-footer__links a:hover { color: #ffffff; }
 
   </style>
 </head>
@@ -784,9 +852,11 @@
 
         <!-- Stage 4 -->
         <div class="stage-detail">
-          <h2 class="stage-detail__title">Stage 4. Tasks</h2>
-          <p class="stage-detail__label">What you are responsible for</p>
-          <p class="stage-detail__body">Before an agent writes anything, someone has to describe the work clearly enough that it can be done correctly. That is increasingly your job. Writing a bounded specification forces you to think the problem through first, and it is one of the best ways to build engineering judgement.</p>
+          <div class="stage-detail__left">
+            <h2 class="stage-detail__title">Stage 4. Tasks</h2>
+            <p class="stage-detail__label">What you are responsible for</p>
+            <p class="stage-detail__body">Before an agent writes anything, someone has to describe the work clearly enough that it can be done correctly. Writing a bounded specification forces you to think the problem through first, and it is one of the best ways to build engineering judgement.</p>
+          </div>
           <div class="output-review-grid">
             <div class="output-review">
               <div class="output-review__header">
@@ -830,11 +900,15 @@
           </div>
         </div>
 
+        <div class="divider"></div>
+
         <!-- Stage 5 -->
         <div class="stage-detail">
-          <h2 class="stage-detail__title">Stage 5. Implement</h2>
-          <p class="stage-detail__label">What you are responsible for</p>
-          <p class="stage-detail__body">You remain accountable for implementation and pull request quality, even when an agent produced the change. That means you understand what the code does, you resolve the failures, and you only put a pull request forward when it is genuinely ready. Reviewing agent output is a core part of the job, and for engineers earlier in their careers it is also how judgement gets built.</p>
+          <div class="stage-detail__left">
+            <h2 class="stage-detail__title">Stage 5. Implement</h2>
+            <p class="stage-detail__label">What you are responsible for</p>
+            <p class="stage-detail__body">You remain accountable for implementation and pull request quality, even when an agent produced the change. That means you understand what the code does, you resolve the failures, and you only put a pull request forward when it is genuinely ready.</p>
+          </div>
           <div class="output-review-grid">
             <div class="output-review">
               <div class="output-review__header">
@@ -845,22 +919,9 @@
                     <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
                   </svg>
                 </div>
-                <span class="output-review__name">Agent generated code and unit tests</span>
+                <span class="output-review__name">Agent generated code</span>
               </div>
               <p class="output-review__desc">Do they trace to approved tasks, respect the architecture and standards, and contain nothing nobody asked for?</p>
-            </div>
-            <div class="output-review">
-              <div class="output-review__header">
-                <div class="output-review__icon">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
-                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
-                  </svg>
-                </div>
-                <span class="output-review__name">Implementation and verification evidence</span>
-              </div>
-              <p class="output-review__desc">Do the focused checks pass, and do the records show the commands and results?</p>
             </div>
             <div class="output-review">
               <div class="output-review__header">
@@ -878,11 +939,15 @@
           </div>
         </div>
 
+        <div class="divider"></div>
+
         <!-- Stage 6 -->
         <div class="stage-detail">
-          <h2 class="stage-detail__title">Stage 6. Test &amp; Validate</h2>
-          <p class="stage-detail__label">What you are responsible for</p>
-          <p class="stage-detail__body">You make the fixes when testing finds a real defect. The test agents report problems but must not change application code to make tests pass, so a genuine defect comes back through you, goes through implementation and review again, and is not patched at the test stage.</p>
+          <div class="stage-detail__left">
+            <h2 class="stage-detail__title">Stage 6. Test &amp; Validate</h2>
+            <p class="stage-detail__label">What you are responsible for</p>
+            <p class="stage-detail__body">You make the fixes when testing finds a real defect. The test agents report problems but must not change application code to make tests pass, so a genuine defect comes back through you, but you review, fix, and implement again.</p>
+          </div>
           <div class="output-review-grid">
             <div class="output-review">
               <div class="output-review__header">
@@ -936,7 +1001,7 @@
         <div class="agent-grid">
 
           <!-- Task-Implementor -->
-          <div class="agent-card">
+          <a class="agent-card" href="agent-catalogue.html#task-implementor">
             <div class="agent-card__icon">
               <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M8 10l-4 4 4 4" stroke="#7631C1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -948,10 +1013,11 @@
               <p class="agent-card__title">Task-Implementor</p>
               <p class="agent-card__desc">Executes individual tasks from tasks.md — writing code, unit tests and verification records — and submits output for engineering code review.</p>
             </div>
-          </div>
+          <div class="agent-card__link" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </a>
 
           <!-- Code Review -->
-          <div class="agent-card">
+          <a class="agent-card" href="agent-catalogue.html#code-review">
             <div class="agent-card__icon">
               <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M10 9l-4 5 4 5" stroke="#7631C1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -964,10 +1030,11 @@
               <p class="agent-card__title">Code Review</p>
               <p class="agent-card__desc">Reviews agent-generated code against approved tasks, architecture standards and security baselines, and flags issues for the engineer to resolve before merging.</p>
             </div>
-          </div>
+          <div class="agent-card__link" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </a>
 
           <!-- Task-Planner -->
-          <div class="agent-card">
+          <a class="agent-card" href="agent-catalogue.html#task-planner">
             <div class="agent-card__icon">
               <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="4" y="4" width="20" height="20" rx="3" stroke="#7631C1" stroke-width="1.8"/>
@@ -979,10 +1046,11 @@
               <p class="agent-card__title">Task-Planner</p>
               <p class="agent-card__desc">Breaks an approved specification into a sequenced task list with dependencies, acceptance criteria and pre-submit check plans ready for engineering review.</p>
             </div>
-          </div>
+          <div class="agent-card__link" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </a>
 
           <!-- API Testing -->
-          <div class="agent-card">
+          <a class="agent-card" href="agent-catalogue.html#api-testing">
             <div class="agent-card__icon">
               <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="3" y="6" width="22" height="16" rx="3" stroke="#7631C1" stroke-width="1.8"/>
@@ -996,10 +1064,11 @@
               <p class="agent-card__title">API Testing</p>
               <p class="agent-card__desc">Runs contract and integration tests against API endpoints, reports failures and contract drift back to the engineer for triage and resolution.</p>
             </div>
-          </div>
+          <div class="agent-card__link" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </a>
 
           <!-- Functional Testing -->
-          <div class="agent-card">
+          <a class="agent-card" href="agent-catalogue.html#functional-testing">
             <div class="agent-card__icon">
               <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="4" y="4" width="20" height="16" rx="3" stroke="#7631C1" stroke-width="1.8"/>
@@ -1013,7 +1082,8 @@
               <p class="agent-card__title">Functional Testing</p>
               <p class="agent-card__desc">Executes end-to-end functional test suites against the running application, reports defects and blocked cases back to the engineer without modifying application code.</p>
             </div>
-          </div>
+          <div class="agent-card__link" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </a>
 
         </div><!-- .agent-grid -->
       </div><!-- .agents-section -->
@@ -1022,7 +1092,12 @@
   </main>
 
   <!-- FOOTER -->
-  <footer class="site-footer"></footer>
+  <footer class="site-footer">
+  <ul class="site-footer__links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="agent-catalogue.html">Agent Catalogue</a></li>
+  </ul>
+  </footer>
 
   <script>
     (function () {
@@ -1036,9 +1111,13 @@
         var thumbW    = 17;
         thumb.style.left = (ratio * (trackW - thumbW)) + 'px';
       }
+      function checkOverflow() {
+        track.style.display = scroll.scrollWidth > scroll.clientWidth ? '' : 'none';
+      }
+      checkOverflow();
       updateThumb();
       scroll.addEventListener('scroll', updateThumb);
-      window.addEventListener('resize', updateThumb);
+      window.addEventListener('resize', function () { checkOverflow(); updateThumb(); });
       var dragging = false, dragStartX, thumbStartLeft;
       thumb.addEventListener('mousedown', function (e) {
         dragging = true; dragStartX = e.clientX; thumbStartLeft = thumb.offsetLeft; e.preventDefault();
