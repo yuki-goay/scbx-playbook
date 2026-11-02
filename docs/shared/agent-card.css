@@ -1,0 +1,172 @@
+/* ═══════════════════════════════════════════════════════════
+   Agent Card — shared reusable component
+   Used in: agent-catalogue.html, identify-project-type.html,
+            all role-*.html pages
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Block ─────────────────────────────────────────────────── */
+.agent-card {
+  background: #FFFFFF;
+  border: 1.5px solid rgba(74,82,96,0.15);
+  border-radius: 16px;
+  padding: 20px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s cubic-bezier(0.34,1.4,0.64,1),
+              border-color 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  color: inherit;
+  box-sizing: border-box;
+}
+
+/* hover gradient overlay */
+.agent-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #F3EEFF 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+
+/* ── Hover state ───────────────────────────────────────────── */
+.agent-card:hover {
+  transform: translateY(-3px);
+  border-color: #8055C3;
+  box-shadow: 0 8px 32px rgba(118,49,193,0.12);
+}
+
+.agent-card:hover::before { opacity: 1; }
+
+/* ── Active / pressed state ────────────────────────────────── */
+.agent-card:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(118,49,193,0.1);
+}
+
+/* ── Focus state (keyboard) ────────────────────────────────── */
+.agent-card:focus-visible {
+  outline: 2px solid #7631C1;
+  outline-offset: 2px;
+}
+
+/* ── Top row: ID chip + icon ───────────────────────────────── */
+.agent-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+}
+
+.agent-card__id {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-purple-600, #7631C1);
+  line-height: 1;
+  padding-top: 2px;
+}
+
+/* ── Icon ──────────────────────────────────────────────────── */
+.agent-card__icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.agent-card__icon img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.agent-card__icon svg {
+  width: 40px;
+  height: 40px;
+  display: block;
+}
+
+/* ── Name ──────────────────────────────────────────────────── */
+.agent-card__name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary, #1A1A2E);
+  line-height: 1.3;
+  position: relative;
+}
+
+/* ── Description ───────────────────────────────────────────── */
+.agent-card__desc {
+  font-size: 13px;
+  color: var(--text-secondary, #4A5260);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+  position: relative;
+}
+
+/* ── Footer row ────────────────────────────────────────────── */
+.agent-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  position: relative;
+}
+
+/* ── Badge ─────────────────────────────────────────────────── */
+.agent-card__badge {
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 3px 10px;
+}
+
+/* model badge (catalogue) */
+.agent-card__badge--model {
+  color: var(--color-purple-700, #462279);
+  background: var(--color-purple-100, #E8DCFA);
+  letter-spacing: 0;
+}
+
+/* role classification badges (identify-project-type) */
+.agent-card__badge--core        { color: #145F39; background: #D4F2DD; letter-spacing: 0.03em; text-transform: uppercase; }
+.agent-card__badge--recommended { color: #7631C1; background: #E8DCFA; letter-spacing: 0.03em; text-transform: uppercase; }
+.agent-card__badge--optional    { color: #60636A; background: rgba(74,82,96,0.1); letter-spacing: 0.03em; text-transform: uppercase; }
+
+/* ── Arrow CTA ─────────────────────────────────────────────── */
+.agent-card__arrow {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-ink-100, #EAECEF);
+  color: var(--color-purple-700, #462279);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-left: auto;
+  transition: background 0.15s, transform 0.2s, color 0.15s;
+}
+
+.agent-card__arrow svg { display: block; }
+.agent-card__arrow svg path { stroke: currentColor; }
+
+.agent-card:hover .agent-card__arrow {
+  background: var(--color-purple-700, #462279);
+  color: #fff;
+  transform: translate(2px, -2px);
+}

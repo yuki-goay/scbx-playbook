@@ -7,6 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared/agent-card.css">
+  <link rel="stylesheet" href="shared/agent-overlay.css">
   <style>
 
     /* ═══════════════════════════════════════════════════════════
@@ -494,99 +496,10 @@
       line-height: 24px;
     }
     .agent-grid {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 227px);
       gap: 16px;
     }
-    .agent-card {
-      position: relative;
-      width: 248px;
-      height: 248px;
-      background: var(--surface-agent);
-      border-radius: 12px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      box-sizing: border-box;
-      border: 1.5px solid var(--border-divider, #E5E7EB);
-      cursor: pointer;
-      overflow: hidden;
-      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), border-color 0.2s, box-shadow 0.2s;
-      text-decoration: none;
-      color: inherit;
-    }
-      .agent-card::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(135deg, var(--color-purple-50, #F3EEFF) 0%, transparent 60%);
-        opacity: 0;
-        transition: opacity 0.2s;
-        pointer-events: none;
-      }
-    .agent-card__icon {
-      width: 40px;
-      height: 40px;
-      background: var(--surface-icon-bg);
-      border-radius: 100px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .agent-card__icon svg {
-      width: 22px;
-      height: 22px;
-    }
-    .agent-card__body {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .agent-card__title {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text-primary);
-      line-height: 1.3;
-    }
-    .agent-card__desc {
-      font-size: 13px;
-      font-weight: 400;
-      color: var(--text-primary);
-      line-height: 1.5;
-    }
-    .agent-card__link {
-      position: absolute;
-      bottom: 14px;
-      right: 14px;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: var(--color-purple-100, #E8DCFA);
-      color: var(--color-purple-600, #7631C1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      transition: background 0.18s, color 0.18s;
-    }
-    .agent-card__link:hover {
-      background: var(--color-purple-700, #462279);
-      color: #fff;
-    }
-    .agent-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--color-purple-500, #7631C1);
-      box-shadow: 0 8px 32px rgba(118,49,193,0.12);
-    }
-    .agent-card:hover::before { opacity: 1; }
-    .agent-card:hover .agent-card__link {
-      background: var(--color-purple-700, #462279);
-      color: #fff;
-      transform: translate(2px, -2px);
-    }
-
     /* ── FOOTER ──────────────────────────────────────────────────── */
     .site-footer {
       width: 100%;
@@ -1006,56 +919,45 @@
 
           <!-- Research Planner -->
           <a class="agent-card" href="agent-catalogue.html#research-planner">
-            <div class="agent-card__icon">
-              <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="7" stroke="#7631C1" stroke-width="1.8"/>
-                <path d="M17.5 17.5L23 23" stroke="#7631C1" stroke-width="1.8" stroke-linecap="round"/>
-                <path d="M12 9v3M12 12h3" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
+            <div class="agent-card__top">
+              <span class="agent-card__id">A.1</span>
+              <div class="agent-card__icon"><img src="icons/research-planner.svg" alt="Research Planner icon" width="40" height="40"></div>
             </div>
-            <div class="agent-card__body">
-              <p class="agent-card__title">Research Planner</p>
-              <p class="agent-card__desc">Generates a structured research plan — objectives, screener criteria, question sets, and session guides — from a discovery brief and product context.</p>
+            <p class="agent-card__name">Research Planner</p>
+            <p class="agent-card__desc">Generates a structured research plan — objectives, screener criteria, question sets, and session guides — from a discovery brief and product context.</p>
+            <div class="agent-card__footer">
+              <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             </div>
-          <div class="agent-card__link" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           </a>
 
           <!-- Insights Synthesizer -->
           <a class="agent-card" href="agent-catalogue.html#insights-synthesizer">
-            <div class="agent-card__icon">
-              <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4 20l5-6 4 4 5-8 5 4" stroke="#7631C1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                <circle cx="9" cy="14" r="1.5" fill="#7631C1"/>
-                <circle cx="13" cy="18" r="1.5" fill="#7631C1"/>
-                <circle cx="18" cy="10" r="1.5" fill="#7631C1"/>
-                <circle cx="23" cy="14" r="1.5" fill="#7631C1"/>
-              </svg>
+            <div class="agent-card__top">
+              <span class="agent-card__id">A.2</span>
+              <div class="agent-card__icon"><img src="icons/insights-synthesizer.svg" alt="Insights Synthesizer icon" width="40" height="40"></div>
             </div>
-            <div class="agent-card__body">
-              <p class="agent-card__title">Insights Synthesizer</p>
-              <p class="agent-card__desc">Synthesises raw research data into structured findings: themes, personas, journey maps and design context packages.</p>
+            <p class="agent-card__name">Insights Synthesizer</p>
+            <p class="agent-card__desc">Synthesises raw research data into structured findings: themes, personas, journey maps and design context packages.</p>
+            <div class="agent-card__footer">
+              <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             </div>
-          <div class="agent-card__link" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           </a>
 
           <!-- Experience Architect -->
           <a class="agent-card" href="agent-catalogue.html#experience-architect">
-            <div class="agent-card__icon">
-              <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="3" y="3" width="10" height="10" rx="2" stroke="#7631C1" stroke-width="1.8"/>
-                <rect x="15" y="3" width="10" height="10" rx="2" stroke="#7631C1" stroke-width="1.8"/>
-                <rect x="3" y="15" width="10" height="10" rx="2" stroke="#7631C1" stroke-width="1.8"/>
-                <rect x="15" y="15" width="10" height="10" rx="2" stroke="#7631C1" stroke-width="1.8"/>
-              </svg>
+            <div class="agent-card__top">
+              <span class="agent-card__id">A.3</span>
+              <div class="agent-card__icon"><img src="icons/experience-architect.svg" alt="Experience Architect icon" width="40" height="40"></div>
             </div>
-            <div class="agent-card__body">
-              <p class="agent-card__title">Experience Architect</p>
-              <p class="agent-card__desc">Translates approved requirements, designs and standards into a complete UX specification covering flows, components, interactions and frontend behaviour.</p>
+            <p class="agent-card__name">Experience Architect</p>
+            <p class="agent-card__desc">Translates approved requirements, designs and standards into a complete UX specification covering flows, components, interactions and frontend behaviour.</p>
+            <div class="agent-card__footer">
+              <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             </div>
-          <div class="agent-card__link" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           </a>
 
         </div><!-- .agent-grid -->
+        <p class="view-catalogue-link"><a href="agent-catalogue.html">View agent catalogue →</a></p>
       </div><!-- .agents-section -->
 
     </article>
@@ -1109,6 +1011,25 @@
       });
     })();
   </script>
+
+  <div class="agent-ov-backdrop" id="agent-overlay" role="dialog" aria-modal="true" aria-labelledby="agent-overlay-name">
+    <div class="agent-ov-panel" id="agent-overlay-panel">
+      <div class="agent-ov-header">
+        <div class="agent-ov-icon" id="agent-overlay-icon"></div>
+        <div class="agent-ov-meta">
+          <div class="agent-ov-name" id="agent-overlay-name"></div>
+          <div class="agent-ov-tagline" id="agent-overlay-tagline"></div>
+        </div>
+        <div class="agent-ov-model-badge" id="agent-overlay-model"></div>
+        <button class="agent-ov-close" id="agent-overlay-close" aria-label="Close">
+          <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8" stroke="#4A5260" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="agent-ov-body" id="agent-overlay-body"></div>
+    </div>
+  </div>
+  <script src="shared/agent-overlay.js"></script>
+
 
 </body>
 </html>

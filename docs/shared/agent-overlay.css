@@ -1,0 +1,203 @@
+/* ─── Agent Overlay — shared across all role pages ───────────────────────── */
+/* Uses hardcoded colors (no CSS variable dependencies) to work on all pages. */
+
+.agent-ov-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(20,24,31,0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+.agent-ov-backdrop.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.agent-ov-panel {
+  background: #ffffff;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 880px;
+  max-height: 88vh;
+  overflow-y: auto;
+  transform: translateY(20px) scale(0.97);
+  transition: transform 0.3s cubic-bezier(0.34,1.2,0.64,1), opacity 0.25s;
+  opacity: 0;
+  position: relative;
+}
+.agent-ov-backdrop.open .agent-ov-panel {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.agent-ov-panel::-webkit-scrollbar { width: 6px; }
+.agent-ov-panel::-webkit-scrollbar-track { background: transparent; }
+.agent-ov-panel::-webkit-scrollbar-thumb { background: #e2e6ed; border-radius: 99px; }
+
+.agent-ov-header {
+  padding: 32px 40px 24px;
+  border-bottom: 1px solid #e8eaf0;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  position: sticky;
+  top: 0;
+  background: #ffffff;
+  z-index: 10;
+}
+.agent-ov-icon {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.agent-ov-icon img { display: block; }
+.agent-ov-meta { flex: 1; }
+.agent-ov-id {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8b92a5;
+  margin-bottom: 4px;
+}
+.agent-ov-name {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: #14181f;
+  margin-bottom: 8px;
+}
+.agent-ov-tagline {
+  font-size: 15px;
+  color: #4a5260;
+  line-height: 1.55;
+}
+.agent-ov-model-badge {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b3fa0;
+  background: #f0e8fa;
+  border-radius: 99px;
+  padding: 5px 12px;
+  white-space: nowrap;
+  align-self: flex-start;
+  margin-top: 4px;
+}
+.agent-ov-close {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: #f2f3f5;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+.agent-ov-close:hover { background: #e2e6ed; }
+
+.agent-ov-body {
+  padding: 32px 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.agent-ov-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.agent-ov-detail.full { grid-column: 1 / -1; }
+
+.agent-ov-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #8b92a5;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.agent-ov-label::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.4;
+}
+.agent-ov-content {
+  font-size: 14px;
+  color: #4a5260;
+  line-height: 1.65;
+}
+.agent-ov-content strong {
+  color: #14181f;
+  font-weight: 600;
+}
+
+.agent-ov-prompt-block {
+  grid-column: 1 / -1;
+  background: #14181f;
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+.agent-ov-prompt-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.agent-ov-prompt-label span {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f59e0b;
+}
+.agent-ov-prompt-text {
+  font-size: 13px;
+  font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+/* "View agent catalogue" link below the agent grid */
+.view-catalogue-link {
+  margin-top: 20px;
+  text-align: center;
+}
+.view-catalogue-link a {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b3fa0;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.view-catalogue-link a:hover {
+  opacity: 0.75;
+}

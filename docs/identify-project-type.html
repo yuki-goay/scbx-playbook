@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared/agent-card.css">
   <style>
 
     /* ═══════════════════════════════════════════════════════════
@@ -389,6 +390,7 @@
       justify-content: center;
       gap: 0;
       overflow: hidden;
+      cursor: pointer;
       transition: opacity 0.3s ease, box-shadow 0.3s ease;
     }
 
@@ -471,17 +473,6 @@
       justify-content: space-between;
     }
 
-    .link-view-all {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--purple-600);
-      cursor: pointer;
-      display: none;
-    }
-
-    .link-view-all:hover { text-decoration: underline; }
-    .link-view-all.is-visible { display: inline; }
-
     .btn-retake {
       font-size: 15px;
       font-weight: 600;
@@ -539,6 +530,284 @@
       color: #ffffff;
       margin-top: 3px;
       margin-left: 1px;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       AGENT DETAIL SECTION
+    ═══════════════════════════════════════════════════════ */
+
+    .agent-detail-section {
+      margin-top: 48px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(74,82,96,0.14);
+    }
+
+    .agent-detail-section__heading {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 24px;
+      letter-spacing: -0.3px;
+    }
+
+    /* ── Panels ─────────────────────────────────────────── */
+    .pt-panel { display: none; }
+    .pt-panel.is-active { display: block; }
+
+    /* ── Lifecycle accordion ─────────────────────────────── */
+    .lifecycle-accordion {
+      border: 1.5px solid rgba(74,82,96,0.12);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 10px;
+      background: #FFFFFF;
+    }
+
+    .lifecycle-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 22px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+      background: #FFFFFF;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.15s;
+      gap: 12px;
+    }
+
+    .lifecycle-header:hover { background: #F8F6FC; }
+    .lifecycle-header[aria-expanded="true"] { background: #FFFFFF; }
+
+    .lifecycle-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .lifecycle-meta-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .lifecycle-agent-count {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .lifecycle-chevron {
+      transition: transform 0.22s ease;
+      flex-shrink: 0;
+    }
+
+    .lifecycle-header[aria-expanded="true"] .lifecycle-chevron {
+      transform: rotate(180deg);
+    }
+
+    .lifecycle-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.25s ease;
+      padding: 0 22px;
+    }
+
+    .lifecycle-body.is-open {
+      max-height: 1400px;
+      padding: 0 22px 22px;
+    }
+
+    /* ── Detail agent grid ──────────────────────────────── */
+    .detail-agent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 227px);
+      gap: 14px;
+    }
+
+    /* ── Agent overlay ──────────────────────────────────── */
+    .agent-ov-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(20,24,31,0.55);
+      backdrop-filter: blur(6px);
+      z-index: 400;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+
+    .agent-ov-backdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .agent-ov-panel {
+      background: white;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 860px;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: translateY(18px) scale(0.97);
+      transition: transform 0.3s cubic-bezier(0.34,1.2,0.64,1), opacity 0.25s;
+      opacity: 0;
+      margin: 0 32px;
+    }
+
+    .agent-ov-backdrop.open .agent-ov-panel {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .agent-ov-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 28px 28px 22px;
+      border-bottom: 1px solid rgba(74,82,96,0.1);
+      position: sticky;
+      top: 0;
+      background: white;
+      z-index: 1;
+    }
+
+    .agent-ov-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 13px;
+      background: #F3F0F7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .agent-ov-icon img { width: 38px; height: 38px; object-fit: contain; }
+
+    .agent-ov-meta { flex: 1; min-width: 0; }
+
+    .agent-ov-id {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--purple-600);
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .agent-ov-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .agent-ov-tagline {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 3px;
+    }
+
+    .agent-ov-model {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--purple-600);
+      background: #F5F0FC;
+      border: 1px solid rgba(118,49,193,0.2);
+      border-radius: 8px;
+      padding: 6px 12px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      letter-spacing: 0.2px;
+    }
+
+    .agent-ov-close {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      border: 1.5px solid rgba(74,82,96,0.15);
+      background: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, border-color 0.15s;
+      flex-shrink: 0;
+    }
+
+    .agent-ov-close:hover { background: #F3F0F7; border-color: rgba(74,82,96,0.3); }
+
+    .agent-ov-body {
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .ov-detail-block { display: flex; flex-direction: column; gap: 7px; }
+    .ov-detail-block--full { grid-column: 1 / -1; }
+
+    .ov-detail-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .ov-detail-content {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .ov-prompt-block {
+      grid-column: 1 / -1;
+      background: #1A1E27;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .ov-prompt-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 18px 8px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+    }
+
+    .ov-prompt-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #F59E0B;
+      display: inline-block;
+    }
+
+    .ov-prompt-text {
+      font-size: 12.5px;
+      font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+      color: rgba(255,255,255,0.78);
+      line-height: 1.75;
+      white-space: pre-wrap;
+      word-break: break-word;
+      padding: 0 18px 18px;
     }
 
   </style>
@@ -620,7 +889,7 @@
       <!-- Three project type cards -->
       <div class="project-cards-grid" id="project-cards-grid">
 
-        <div class="project-card project-card--greenfield" id="card-greenfield">
+        <div class="project-card project-card--greenfield" id="card-greenfield" role="button" tabindex="0">
           <div class="project-card__illustration">
             <img src="images/greenfield-illustration.png" alt="Greenfield illustration">
           </div>
@@ -630,7 +899,7 @@
           </div>
         </div>
 
-        <div class="project-card project-card--brownfield" id="card-brownfield">
+        <div class="project-card project-card--brownfield" id="card-brownfield" role="button" tabindex="0">
           <div class="project-card__illustration">
             <img src="images/brownfield-illustration.png" alt="Brownfield illustration">
           </div>
@@ -640,7 +909,7 @@
           </div>
         </div>
 
-        <div class="project-card project-card--modernisation" id="card-modernisation">
+        <div class="project-card project-card--modernisation" id="card-modernisation" role="button" tabindex="0">
           <div class="project-card__illustration">
             <img src="images/modernisation-illustration.png" alt="Modernisation illustration">
           </div>
@@ -654,13 +923,40 @@
 
       <!-- Actions row -->
       <div class="results-actions">
-        <a class="link-view-all" id="link-view-all" role="button" tabindex="0">View all project types</a>
         <button class="btn-retake" id="btn-retake">Retake Quiz</button>
+      </div>
+
+      <!-- Agent lifecycle detail section -->
+      <div class="agent-detail-section" id="agent-detail-section" style="display:none">
+        <h3 class="agent-detail-section__heading">Agents for your project type</h3>
+
+        <div class="pt-panel" id="panel-greenfield"    role="tabpanel"></div>
+        <div class="pt-panel" id="panel-brownfield"    role="tabpanel"></div>
+        <div class="pt-panel" id="panel-modernisation" role="tabpanel"></div>
       </div>
 
     </div>
 
   </main>
+
+  <!-- Agent overlay -->
+  <div class="agent-ov-backdrop" id="agent-ov" role="dialog" aria-modal="true" aria-labelledby="agent-ov-name">
+    <div class="agent-ov-panel">
+      <div class="agent-ov-header">
+        <div class="agent-ov-icon" id="agent-ov-icon"></div>
+        <div class="agent-ov-meta">
+          <div class="agent-ov-id" id="agent-ov-id"></div>
+          <div class="agent-ov-name" id="agent-ov-name"></div>
+          <div class="agent-ov-tagline" id="agent-ov-tagline"></div>
+        </div>
+        <div class="agent-ov-model" id="agent-ov-model"></div>
+        <button class="agent-ov-close" id="agent-ov-close" aria-label="Close">
+          <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12" stroke="#4A5260" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="agent-ov-body" id="agent-ov-body"></div>
+    </div>
+  </div>
 
   <!-- FOOTER -->
   <footer class="site-footer">
@@ -740,7 +1036,6 @@
     const cardGreen     = document.getElementById('card-greenfield');
     const cardBrown     = document.getElementById('card-brownfield');
     const cardMod       = document.getElementById('card-modernisation');
-    const linkViewAll   = document.getElementById('link-view-all');
     const btnRetake     = document.getElementById('btn-retake');
 
     /* ── Render ──────────────────────────────────────────────── */
@@ -823,21 +1118,8 @@
         card.classList.add(key === result ? 'is-winner' : 'is-other');
       });
 
-      linkViewAll.classList.add('is-visible');
+      initDetailSection(result);
     }
-
-    /* ── View all ────────────────────────────────────────────── */
-    linkViewAll.addEventListener('click', () => {
-      [cardGreen, cardBrown, cardMod].forEach(card => {
-        card.classList.remove('is-winner', 'is-other');
-        card.classList.add('is-all-visible');
-      });
-      linkViewAll.classList.remove('is-visible');
-    });
-
-    linkViewAll.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') linkViewAll.click();
-    });
 
     /* ── Retake ──────────────────────────────────────────────── */
     btnRetake.addEventListener('click', () => {
@@ -845,8 +1127,416 @@
       answers[0] = answers[1] = answers[2] = null;
       screenResults.style.display = 'none';
       screenQuiz.style.display    = 'block';
-      linkViewAll.classList.remove('is-visible');
       renderQuestion();
+    });
+
+    /* ── Agent detail: data ──────────────────────────────────── */
+    const DETAIL_AGENTS = {
+      'A.1': {
+        name: 'Research Planner',
+        tagline: 'Gets the team ready before anyone talks to a user.',
+        desc: 'Turns the vision and early stakeholder notes into a clear list of assumptions, a research plan, interview guides and screeners.',
+        icon: 'icons/research-planner.svg',
+        model: 'GPT-6.1 Terra',
+        useWhen: 'Kickoff has produced the vision and objectives; stakeholder interviews or earlier findings have changed what we need to ask; or a gate asks for the plan to be revised.',
+        inputs: 'Vision and objectives, stakeholder and expert interview notes, briefs and earlier work.',
+        output: 'Assumptions log, research plan, interview guides and screeners.',
+        humanReview: 'A person signs off the plan before fieldwork starts.',
+        prompt: '@Research Planner Here\'s the project brief [paste or attach]. We need to understand [project objective]. Plan the research for this — include research questions, participant criteria, and a recommended method.',
+      },
+      'A.2': {
+        name: 'Insights Synthesizer',
+        tagline: 'Makes sense of what users told us.',
+        desc: 'Files and tags raw sessions as evidence, then drafts insights, personas, blueprints and test findings — each one traceable back to where it came from.',
+        icon: 'icons/insights-synthesizer.svg',
+        model: 'Claude Sonnet 5.5',
+        useWhen: 'A person has conducted discovery sessions and has raw materials of requirements and findings.',
+        inputs: 'Transcripts, raw notes, research plan, and images.',
+        output: 'Tagged evidence, insights, personas, blueprints and test findings.',
+        humanReview: 'A person checks raw transcripts for sensitive content before the agent sees them.',
+        prompt: '@Insights Synthesizer I\'ve added our session notes from last week\'s interviews to the workspace. Organise and synthesise the evidence. Give me personas and need statements from the synthesis.',
+      },
+      'A.3': {
+        name: 'Experience Architect',
+        tagline: 'Turns decisions into something people can see and try.',
+        desc: 'Drafts the structure of the experience, the design language and the detailed screens. Builds a working concept prototype from the approved design system.',
+        icon: 'icons/experience-architect.svg',
+        model: 'Claude Sonnet 5.5',
+        useWhen: 'The user journey, screen inventory, and design system are available to create detailed designs.',
+        inputs: 'Canvas briefs, screen inventory, user journey, and sample images or links.',
+        output: 'The IA, design language, detailed screens and check results.',
+        humanReview: 'A person approves the briefs before any design is built. Designers then review the screens.',
+        prompt: '@Experience Architect This is a mobile app for users to lock FX rates for transaction. Use the insights discovered to create a representative user journey, screen inventory, and IA.',
+      },
+      'A.4': {
+        name: 'Context Builder',
+        tagline: 'Creates a unified project context for downstream agents.',
+        desc: 'Brings together reference material, project documentation, source code, configuration and tests, supplemented with business, stakeholder, compliance and technical context.',
+        icon: 'icons/context-builder.svg',
+        model: 'GPT-6.1 Terra',
+        useWhen: 'Creating project context from scratch; starting a new project or onboarding an existing codebase; or establishing business, technical and standards documentation.',
+        inputs: 'Confluence link or attached documents; legacy project documentation; source code, configuration and tests; business, compliance and stakeholder information.',
+        output: 'Unified project context with CTX-* trace IDs; technology-specific standards; additional user-provided standards.',
+        humanReview: 'Review the generated context for completeness and accuracy before downstream use.',
+        prompt: '@Context Builder Analyze the available project documentation, source code, tests, configuration, architecture, business context, and engineering standards. Build a unified project context indexed with CTX identifiers.',
+      },
+      'A.5': {
+        name: 'BRD Builder',
+        tagline: 'Converts business problems into a structured BRD.',
+        desc: 'Supports the discovery, definition, and governance of business requirements. Converts an initial business idea into a structured BRD ready for stakeholder review.',
+        icon: 'icons/brd-builder.svg',
+        model: 'GPT-6.1 Terra',
+        useWhen: 'The team needs to define the business problem, establish objectives and outcomes, identify stakeholders, or establish governance before detailed design begins.',
+        inputs: 'Business problem statements, transformation objectives, workshop notes, stakeholder interviews, existing process documents, policies, and known risks.',
+        output: 'Executive summary, business context, objectives, stakeholder details, current-state challenges, scope items, business requirements, success measures.',
+        humanReview: 'Business owners, product leadership, architecture, security, governance, and delivery stakeholders review before the BRD is approved.',
+        prompt: 'Create a BRD for the initiative. Capture: business problem and drivers, current-state challenges, stakeholders, in-scope and out-of-scope areas, target business outcomes, success indicators, business requirements, assumptions, dependencies, constraints, risks, governance and approval criteria.',
+      },
+      'A.6': {
+        name: 'PRD Builder',
+        tagline: 'Translates approved business direction into product requirements.',
+        desc: 'Converts an approved BRD into detailed, measurable, and actionable product requirements. Defines what the product must do and how completion will be verified.',
+        icon: 'icons/prd-builder.svg',
+        model: 'Claude Sonnet 5.5',
+        useWhen: 'After an approved BRD is in place and the team needs to define product users, describe capabilities, capture functional and non-functional requirements, or establish acceptance criteria.',
+        inputs: 'Approved BRD, product vision and roadmap, user personas, user research, existing process flows, architecture constraints, regulatory requirements, and source-system details.',
+        output: 'Product overview, goals, target users, scope, features, functional and non-functional requirements, user journeys, data and integration requirements, acceptance criteria.',
+        humanReview: 'Product owners, business analysts, solution architects, engineering leads, security, test leads, and operations teams review before the PRD is approved.',
+        prompt: 'Create a PRD for the product capability. Define requirements for importing an approved BRD, generating and refining epics, features, and user stories, maintaining traceability, and requiring human review before backlog changes are published.',
+      },
+      'A.7': {
+        name: 'Jira Backlog Manager',
+        tagline: 'Turns approved requirements into a structured delivery backlog.',
+        desc: 'Transforms approved product requirements or epics into a structured delivery backlog. Drafts epics, user stories and acceptance criteria.',
+        icon: 'icons/jira-backlog-manager.svg',
+        model: 'Claude Sonnet 5.5',
+        useWhen: 'Backlog decomposition or maintenance is required.',
+        inputs: 'Approved PRD, epics, story standards and backlog context.',
+        output: 'Draft epics, stories and backlog updates.',
+        humanReview: 'Product Owner or Business Analyst reviews priority, scope and acceptance criteria.',
+        prompt: 'Discover Jira issues from the attached PRD. Plan a Jira backlog for the <project> project. Use the "Epic" issue type for epics and "Story" for user stories. Include Acceptance Criteria in Given / When / Then format. Focus on P0 items first. Do not create any issues in Jira yet — only produce the discovery and backlog plan for review.',
+      },
+      'A.8': {
+        name: 'Spec-Clarify',
+        tagline: 'Converts requirements into an implementation-ready specification.',
+        desc: 'Identifies missing information, conflicting assumptions and unresolved questions before planning or coding begins. The specification is the main implementation reference after accountable roles approve it.',
+        icon: 'icons/spec-clarify.svg',
+        model: 'GPT-6.1 Sol',
+        useWhen: 'Before planning and implementation for a bounded increment.',
+        inputs: 'Approved requirements, design, architecture, context and standards.',
+        output: 'spec.md, acceptance criteria and clarification questions.',
+        humanReview: 'FDE coordinates clarification; accountable business and technical roles approve resolved content.',
+        prompt: 'Create an implementation-ready technical specification for Jira story <#>. Analyze the requirements, existing codebase, project standards, APIs, and available design evidence. Capture unresolved decisions as CLAR-* items and block the handoff until they are resolved.',
+      },
+      'A.9': {
+        name: 'Task-Planner',
+        tagline: 'Decomposes a specification into ordered implementation tasks.',
+        desc: 'Makes dependencies, sequencing and expected outcomes explicit so work can be executed in controlled increments. The FDE or engineering lead checks coverage against approved scope.',
+        icon: 'icons/task-planner.svg',
+        model: 'GPT-6.1 Sol',
+        useWhen: 'After specification and plan approval.',
+        inputs: 'spec.md, plan.md, project context and engineering standards.',
+        output: 'tasks.md and dependency sequence.',
+        humanReview: 'FDE or engineering lead validates completeness and ordering.',
+        prompt: 'Create the implementation plan and task breakdown for RUN_ID=<RUN_ID>. Use the reviewed specification, preserve requirement traceability, and define dependencies, verification, and unit-test work for each implementation task. Do not implement the tasks.',
+      },
+      'A.10': {
+        name: 'Task-Implementor',
+        tagline: 'Executes bounded tasks from the approved spec and plan.',
+        desc: 'Produces source-code changes and unit tests within the supplied repository context, standards and guardrails. The Application Engineer remains accountable for the change.',
+        icon: 'icons/task-implementor.svg',
+        model: 'GPT-5.3-Codex',
+        useWhen: 'For bounded, approved implementation work.',
+        inputs: 'Approved tasks, codebase, standards, context and test expectations.',
+        output: 'Source code and unit tests.',
+        humanReview: 'Application Engineer remains accountable for implementation and pull-request quality.',
+        prompt: 'Implement the approved tasks for RUN_ID=<RUN_ID> from output/<RUN_ID>/plan/tasks.md. Follow the approved specification and project standards and record implementation and verification evidence.',
+      },
+      'A.11': {
+        name: 'API Testing',
+        tagline: 'Generates and executes API tests against approved specifications.',
+        desc: 'Uses approved interface specifications, acceptance criteria and test standards to produce test assets, results and evidence. The Quality Engineer confirms coverage is sufficient.',
+        icon: 'icons/api-testing.svg',
+        model: 'GPT-5.3-Codex',
+        useWhen: 'Where the increment exposes or changes APIs.',
+        inputs: 'Approved API specification, acceptance criteria and test standards.',
+        output: 'API test assets, results and evidence.',
+        humanReview: 'Quality Engineer validates coverage and accepts test evidence.',
+        prompt: 'Read output/<RUN_ID>/specify/spec.md and determine API scope. If API In Scope is YES, test every API specified. Generate and execute the Playwright API suite, preserve evidence, and report failures, contract drift, coverage gaps, and blockers.',
+      },
+      'A.12': {
+        name: 'Functional Testing',
+        tagline: 'Converts requirements into repeatable functional tests.',
+        desc: 'Prepares test scenarios, cases, data, executable scripts and execution evidence for functional, role-based, negative and boundary conditions.',
+        icon: 'icons/functional-testing.svg',
+        model: 'GPT-6 Sol',
+        useWhen: 'For functional, role-based, negative and boundary testing in approved environments.',
+        inputs: 'PRD, stories, acceptance criteria, designs, APIs and test standards.',
+        output: 'Test strategy, test cases, data, executable scripts and execution evidence.',
+        humanReview: 'Quality Engineer reviews coverage, scripts and results and retains the quality decision.',
+        prompt: 'Read output/<RUN_ID>/specify/spec.md and determine UI scope. If UI In Scope is YES, test every specified UI behavior. Generate and execute reproducible Playwright tests, preserve evidence, and report coverage, failures, and blockers.',
+      },
+      'A.13': {
+        name: 'Azure-Deploy',
+        tagline: 'Prepares and executes approved Azure deployments.',
+        desc: 'Prepares deployment artefacts, validates configuration and executes an approved deployment to Azure. Use only after the release candidate has passed required quality, security and readiness checks.',
+        icon: 'icons/azure-deploy.svg',
+        model: 'GPT-6 Sol',
+        useWhen: 'Only after release readiness and required approvals.',
+        inputs: 'Approved release candidate, environment configuration and deployment controls.',
+        output: 'Deployment package, deployed version and logs.',
+        humanReview: 'Release and deployment approvals remain with the named human authorities.',
+        prompt: 'Analyze the current repository and deploy the application to Azure end-to-end. Discover all deployable components and dependencies, assess deployment readiness, design the Azure architecture, provision infrastructure, deploy the application, run required database migrations, and verify application health.',
+      },
+    };
+
+    const LIFECYCLE_MAP = {
+      greenfield: [
+        { group: '1. Discover and Frame', agents: [
+          { id: 'A.1', role: 'Recommended', why: 'Plans the research needed to define the user problem, personas and opportunity — essential before any requirement is written.' },
+          { id: 'A.2', role: 'Recommended', why: 'Synthesises discovery outputs into validated findings that inform the BRD and experience direction.' },
+        ]},
+        { group: '2. Contextualize', agents: [
+          { id: 'A.4', role: 'Recommended', why: 'Establishes the approved enterprise, domain, product and engineering context that all downstream agents depend on.' },
+        ]},
+        { group: '3. Define Requirements', agents: [
+          { id: 'A.5', role: 'Recommended', why: 'Drafts the Business Requirements Document from discovery notes — required because no prior BRD exists.' },
+          { id: 'A.6', role: 'Recommended', why: 'Converts the approved BRD into a structured Product Requirements Document before backlog creation.' },
+        ]},
+        { group: '4. Design Experience and Architecture', agents: [
+          { id: 'A.3', role: 'Recommended', why: 'Defines the target user journey, interaction model and design-system alignment for the new product.' },
+        ]},
+        { group: '5. Create Backlog and Specification', agents: [
+          { id: 'A.7', role: 'Recommended', why: 'Splits approved epics into Jira user stories and seeds the backlog for the new product.' },
+          { id: 'A.8', role: 'Recommended', why: 'Builds the executable specification from context and resolves requirement gaps before coding begins.' },
+        ]},
+        { group: '6. Plan and Decompose', agents: [
+          { id: 'A.9', role: 'Recommended', why: 'Breaks the approved specification into a dependency-aware task plan for implementation.' },
+        ]},
+        { group: '7. Build', agents: [
+          { id: 'A.10', role: 'Recommended', why: 'Writes code and unit tests against the approved plan.' },
+        ]},
+        { group: '8. Validate', agents: [
+          { id: 'A.11', role: 'Recommended', why: 'Generates and runs API tests from the new specifications — no existing test suite to inherit.' },
+          { id: 'A.12', role: 'Recommended', why: 'Turns requirements into Playwright scripts to validate the new journeys end-to-end.' },
+        ]},
+        { group: '9. Release', agents: [
+          { id: 'A.13', role: 'Recommended', why: 'Prepares, validates and executes the first production deployment through approved release gates.' },
+        ]},
+      ],
+      brownfield: [
+        { group: '1. Discover and Frame', agents: [
+          { id: 'A.1', role: 'Optional', why: 'Use only when the enhancement is poorly defined or the user problem has not been validated. Skip if the change is already approved and specified.' },
+          { id: 'A.2', role: 'Optional', why: 'Use if discovery was required for this increment. Not needed when existing research or validated requirements already cover the change.' },
+        ]},
+        { group: '2. Contextualize', agents: [
+          { id: 'A.4', role: 'Recommended', why: 'Ingests the existing codebase, architecture, APIs and approved artefacts to form the context package for the change.' },
+        ]},
+        { group: '3. Define Requirements', agents: [
+          { id: 'A.5', role: 'Optional', why: 'Only required if existing requirements are incomplete or materially outdated. Approved artefacts should be reused.' },
+          { id: 'A.6', role: 'Optional', why: 'Only required if no approved PRD or equivalent artefact exists for this increment.' },
+        ]},
+        { group: '4. Design Experience and Architecture', agents: [
+          { id: 'A.3', role: 'Recommended', why: 'Use for user-facing changes to assess UX impact, maintain design-system compliance and define the interaction delta.' },
+        ]},
+        { group: '5. Create Backlog and Specification', agents: [
+          { id: 'A.7', role: 'Optional',    why: 'Use to create or update stories when existing backlog artefacts are insufficient for the increment.' },
+          { id: 'A.8', role: 'Recommended', why: 'Clarifies the change against existing context and resolves gaps before implementation. Essential for safe delivery into an existing system.' },
+        ]},
+        { group: '6. Plan and Decompose', agents: [
+          { id: 'A.9', role: 'Recommended', why: 'Creates a dependency-aware plan for the approved change within the existing architecture constraints.' },
+        ]},
+        { group: '7. Build', agents: [
+          { id: 'A.10', role: 'Recommended', why: 'Implements the approved change against the plan, within the defined scope and architecture.' },
+        ]},
+        { group: '8. Validate', agents: [
+          { id: 'A.11', role: 'Recommended', why: 'Validates affected API contracts and ensures the change does not break existing integrations.' },
+          { id: 'A.12', role: 'Recommended', why: 'Covers affected journeys and regression paths to confirm the change did not break the existing application.' },
+        ]},
+        { group: '9. Release', agents: [
+          { id: 'A.13', role: 'Recommended', why: 'Prepares and executes the controlled release, including rollback readiness for the changed application.' },
+        ]},
+      ],
+      modernisation: [
+        { group: '1. Discover and Frame', agents: [
+          { id: 'A.1', role: 'Optional', why: 'Apply only if the modernisation involves a significant UX redesign or the user problem needs reframing. Skip for pure technical transformation.' },
+          { id: 'A.2', role: 'Optional', why: 'Only relevant if discovery was required to define the target state. Not applicable for technically-driven modernisation.' },
+        ]},
+        { group: '2. Contextualize', agents: [
+          { id: 'A.4', role: 'Recommended', why: 'The highest-priority agent for this path. Ingests source code, architecture documentation, component inventory and dependency maps — the foundation for all analysis and planning.' },
+        ]},
+        { group: '3. Define Requirements', agents: [
+          { id: 'A.5', role: 'Recommended', why: 'Use to scope the transformation — defines business objectives, constraints and what the modernised state must achieve before architecture decisions are made.' },
+          { id: 'A.6', role: 'Recommended', why: 'Converts the approved transformation scope into a structured product document if one does not already exist.' },
+        ]},
+        { group: '4. Design Experience and Architecture', agents: [
+          { id: 'A.3', role: 'Optional', why: 'Use when the modernisation includes an experience redesign or design-system migration alongside the technical change.' },
+        ]},
+        { group: '5. Create Backlog and Specification', agents: [
+          { id: 'A.7', role: 'Optional',    why: 'Use to create or update the backlog for migration waves and modernisation increments.' },
+          { id: 'A.8', role: 'Recommended', why: 'Used to untangle legacy behaviour — clarifies what the existing system does before implementing the modernised equivalent.' },
+        ]},
+        { group: '6. Plan and Decompose', agents: [
+          { id: 'A.9', role: 'Recommended', why: 'Plans implementation and migration waves, dependencies, environment steps and rollback checkpoints.' },
+        ]},
+        { group: '7. Build', agents: [
+          { id: 'A.10', role: 'Recommended', why: 'Implements the approved modernisation or migration increment against the plan.' },
+        ]},
+        { group: '8. Validate', agents: [
+          { id: 'A.11', role: 'Recommended', why: 'Validates API contracts against the modernised system. Regression coverage against the existing API surface is critical.' },
+          { id: 'A.12', role: 'Recommended', why: 'Confirms functional equivalence between the existing and modernised system — the primary quality gate for this path.' },
+        ]},
+        { group: '9. Release', agents: [
+          { id: 'A.13', role: 'Recommended', why: 'Executes the controlled release for each modernisation increment, including the required rollback approach and environment verification.' },
+        ]},
+      ],
+    };
+
+    /* ── Agent detail: rendering ─────────────────────────────── */
+    const ARROW_SVG = `<svg width="11" height="11" fill="none" viewBox="0 0 14 14"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="#4A5260" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    const CHEVRON_SVG = `<svg class="lifecycle-chevron" width="18" height="18" fill="none" viewBox="0 0 18 18"><path d="M4.5 6.75L9 11.25l4.5-4.5" stroke="#60636A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+    function buildAgentCard({ id, role, why }) {
+      const a = DETAIL_AGENTS[id];
+      const roleLower = role.toLowerCase();
+      return `<div class="agent-card" role="button" tabindex="0" data-agent-id="${id}">
+        <div class="agent-card__top">
+          <span class="agent-card__id">${id}</span>
+          <div class="agent-card__icon"><img src="${a.icon}" alt="" width="40" height="40"></div>
+        </div>
+        <div class="agent-card__name">${a.name}</div>
+        <div class="agent-card__desc">${why}</div>
+        <div class="agent-card__footer">
+          <span class="agent-card__badge agent-card__badge--${roleLower}">${role}</span>
+          <div class="agent-card__arrow">${ARROW_SVG}</div>
+        </div>
+      </div>`;
+    }
+
+    function buildDetailPanel(type) {
+      const panel = document.getElementById('panel-' + type);
+      panel.innerHTML = '';
+      LIFECYCLE_MAP[type].forEach(({ group, agents }) => {
+        const acc = document.createElement('div');
+        acc.className = 'lifecycle-accordion';
+        acc.innerHTML = `
+          <button class="lifecycle-header" aria-expanded="false">
+            <span class="lifecycle-title-wrap">${group}</span>
+            <span class="lifecycle-meta-wrap">
+              <span class="lifecycle-agent-count">${agents.length} agent${agents.length !== 1 ? 's' : ''}</span>
+              ${CHEVRON_SVG}
+            </span>
+          </button>
+          <div class="lifecycle-body">
+            <div class="detail-agent-grid">${agents.map(buildAgentCard).join('')}</div>
+          </div>`;
+        const hdr  = acc.querySelector('.lifecycle-header');
+        const body = acc.querySelector('.lifecycle-body');
+        hdr.addEventListener('click', () => {
+          const open = hdr.getAttribute('aria-expanded') === 'true';
+          hdr.setAttribute('aria-expanded', String(!open));
+          body.classList.toggle('is-open', !open);
+        });
+        panel.appendChild(acc);
+      });
+    }
+
+    function activatePtTab(type) {
+      document.querySelectorAll('.pt-panel').forEach(p =>
+        p.classList.toggle('is-active', p.id === 'panel-' + type));
+    }
+
+    function selectProjectCard(type) {
+      const allCards = { greenfield: cardGreen, brownfield: cardBrown, modernisation: cardMod };
+      Object.entries(allCards).forEach(([key, card]) => {
+        card.classList.remove('is-winner', 'is-other', 'is-all-visible');
+        card.classList.add(key === type ? 'is-winner' : 'is-other');
+      });
+      initDetailSection(type);
+    }
+
+    function initDetailSection(winner) {
+      const section = document.getElementById('agent-detail-section');
+      section.style.display = 'block';
+
+      if (!section.dataset.built) {
+        ['greenfield', 'brownfield', 'modernisation'].forEach(buildDetailPanel);
+
+        [
+          [cardGreen, 'greenfield'],
+          [cardBrown, 'brownfield'],
+          [cardMod,   'modernisation'],
+        ].forEach(([card, type]) => {
+          card.addEventListener('click', () => selectProjectCard(type));
+          card.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') selectProjectCard(type);
+          });
+        });
+
+        section.addEventListener('click', e => {
+          const card = e.target.closest('.agent-card[data-agent-id]');
+          if (card) openAgentOverlay(card.dataset.agentId);
+        });
+        section.addEventListener('keydown', e => {
+          const card = e.target.closest('.agent-card[data-agent-id]');
+          if ((e.key === 'Enter' || e.key === ' ') && card) {
+            e.preventDefault();
+            openAgentOverlay(card.dataset.agentId);
+          }
+        });
+
+        section.dataset.built = '1';
+      }
+
+      activatePtTab(winner);
+    }
+
+    /* ── Agent overlay ───────────────────────────────────────── */
+    const agentOv      = document.getElementById('agent-ov');
+    const agentOvClose = document.getElementById('agent-ov-close');
+
+    function openAgentOverlay(id) {
+      const a = DETAIL_AGENTS[id];
+      if (!a) return;
+      document.getElementById('agent-ov-icon').innerHTML    = `<img src="${a.icon}" alt="${a.name}" width="38" height="38">`;
+      document.getElementById('agent-ov-id').textContent    = id;
+      document.getElementById('agent-ov-name').textContent  = a.name;
+      document.getElementById('agent-ov-tagline').textContent = a.tagline;
+      document.getElementById('agent-ov-model').textContent = '✦ ' + a.model;
+      document.getElementById('agent-ov-body').innerHTML = `
+        <div class="ov-detail-block">
+          <div class="ov-detail-label">Use when</div>
+          <div class="ov-detail-content">${a.useWhen}</div>
+        </div>
+        <div class="ov-detail-block">
+          <div class="ov-detail-label">Human review</div>
+          <div class="ov-detail-content">${a.humanReview}</div>
+        </div>
+        <div class="ov-detail-block">
+          <div class="ov-detail-label">Approved inputs</div>
+          <div class="ov-detail-content">${a.inputs}</div>
+        </div>
+        <div class="ov-detail-block">
+          <div class="ov-detail-label">Output</div>
+          <div class="ov-detail-content">${a.output}</div>
+        </div>
+        <div class="ov-prompt-block ov-detail-block--full">
+          <div class="ov-prompt-label"><span class="ov-prompt-dot"></span>Example prompt</div>
+          <div class="ov-prompt-text">${a.prompt.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+        </div>`;
+      agentOv.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeAgentOverlay() {
+      agentOv.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    agentOvClose.addEventListener('click', closeAgentOverlay);
+    agentOv.addEventListener('click', e => { if (e.target === agentOv) closeAgentOverlay(); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && agentOv.classList.contains('open')) closeAgentOverlay();
     });
 
     /* ── Init ────────────────────────────────────────────────── */
