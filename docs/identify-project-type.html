@@ -1217,7 +1217,7 @@
         prompt: 'Discover Jira issues from the attached PRD. Plan a Jira backlog for the <project> project. Use the "Epic" issue type for epics and "Story" for user stories. Include Acceptance Criteria in Given / When / Then format. Focus on P0 items first. Do not create any issues in Jira yet — only produce the discovery and backlog plan for review.',
       },
       'A.8': {
-        name: 'Spec-Clarify',
+        name: 'Technical Specifier',
         tagline: 'Converts requirements into an implementation-ready specification.',
         desc: 'Identifies missing information, conflicting assumptions and unresolved questions before planning or coding begins. The specification is the main implementation reference after accountable roles approve it.',
         icon: 'icons/spec-clarify.svg',
@@ -1229,7 +1229,7 @@
         prompt: 'Create an implementation-ready technical specification for Jira story <#>. Analyze the requirements, existing codebase, project standards, APIs, and available design evidence. Capture unresolved decisions as CLAR-* items and block the handoff until they are resolved.',
       },
       'A.9': {
-        name: 'Task-Planner',
+        name: 'Implementation Planner',
         tagline: 'Decomposes a specification into ordered implementation tasks.',
         desc: 'Makes dependencies, sequencing and expected outcomes explicit so work can be executed in controlled increments. The FDE or engineering lead checks coverage against approved scope.',
         icon: 'icons/task-planner.svg',
@@ -1241,7 +1241,7 @@
         prompt: 'Create the implementation plan and task breakdown for RUN_ID=<RUN_ID>. Use the reviewed specification, preserve requirement traceability, and define dependencies, verification, and unit-test work for each implementation task. Do not implement the tasks.',
       },
       'A.10': {
-        name: 'Task-Implementor',
+        name: 'Implementation Builder',
         tagline: 'Executes bounded tasks from the approved spec and plan.',
         desc: 'Produces source-code changes and unit tests within the supplied repository context, standards and guardrails. The Application Engineer remains accountable for the change.',
         icon: 'icons/task-implementor.svg',

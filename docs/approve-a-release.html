@@ -526,36 +526,45 @@
       width: 12px;
       height: 8px;
     }
-    .guide-stage-card {
-      width: 220px;
-      height: 220px;
-      border-radius: 10px;
+        .guide-stage-card {
+      width: 147px;
+      height: 186px;
+      border-radius: 9.6px;
       background: #ffffff;
       display: flex;
       flex-direction: column;
-      flex-shrink: 0;
       overflow: hidden;
+      flex-shrink: 0;
+      position: relative;
     }
     .guide-card-wrapper--dim .guide-stage-card {
       opacity: 0.5;
     }
+    .guide-stage-card__accent {
+      width: 174px;
+      height: 5px;
+      flex-shrink: 0;
+      background: #b893f3;
+      align-self: center;
+    }
     .guide-stage-card__inner {
       display: flex;
       flex-direction: column;
-      padding: 14px 14px 12px;
+      padding: 8px 12px 10px;
       flex: 1;
       gap: 4px;
+      position: relative;
     }
     .guide-stage-card__num-section {
       position: relative;
-      height: 54px;
+      height: 52px;
       flex-shrink: 0;
     }
     .guide-stage-card__ghost-num {
       position: absolute;
       top: 0;
-      left: -2px;
-      font-size: 54px;
+      left: 0;
+      font-size: 51.2px;
       font-weight: 700;
       color: #7631C1;
       opacity: 0.09;
@@ -566,16 +575,16 @@
       position: absolute;
       bottom: 0;
       left: 1px;
-      font-size: 36px;
+      font-size: 35.2px;
       font-weight: 700;
       color: #7631C1;
       line-height: 1;
     }
     .guide-stage-card__name {
-      font-size: 12px;
+      font-size: 16px;
       font-weight: 700;
       color: #14181F;
-      margin-top: 4px;
+      margin-top: 2px;
       line-height: 1.3;
     }
     .guide-stage-card__divider {
@@ -650,84 +659,78 @@
                 <div class="guide-cards-row">
             <div class="guide-card-wrapper">
               <div class="guide-stage-card" data-stage="01">
+                <div class="guide-stage-card__accent"></div>
                 <div class="guide-stage-card__inner">
                   <div class="guide-stage-card__num-section">
                     <span class="guide-stage-card__ghost-num">01</span>
                     <span class="guide-stage-card__real-num">01</span>
                   </div>
-                  <span class="guide-stage-card__name">Discover / Context</span>
-                  <div class="guide-stage-card__divider"></div>
-                  <p class="guide-stage-card__desc">Assemble requirements, design and brownfield context as input to the PDLC.</p>
+                  <span class="guide-stage-card__name">Discover &amp; Frame</span>
                 </div>
               </div>
             </div>
             <div class="guide-card-connector" aria-hidden="true"></div>
             <div class="guide-card-wrapper">
               <div class="guide-stage-card" data-stage="02">
+                <div class="guide-stage-card__accent"></div>
                 <div class="guide-stage-card__inner">
                   <div class="guide-stage-card__num-section">
                     <span class="guide-stage-card__ghost-num">02</span>
                     <span class="guide-stage-card__real-num">02</span>
                   </div>
-                  <span class="guide-stage-card__name">Specify</span>
-                  <div class="guide-stage-card__divider"></div>
-                  <p class="guide-stage-card__desc">Convert requirements and context into a clear technical specification.</p>
+                  <span class="guide-stage-card__name">Contextualise</span>
                 </div>
               </div>
             </div>
             <div class="guide-card-connector" aria-hidden="true"></div>
             <div class="guide-card-wrapper">
               <div class="guide-stage-card" data-stage="03">
+                <div class="guide-stage-card__accent"></div>
                 <div class="guide-stage-card__inner">
                   <div class="guide-stage-card__num-section">
                     <span class="guide-stage-card__ghost-num">03</span>
                     <span class="guide-stage-card__real-num">03</span>
                   </div>
-                  <span class="guide-stage-card__name">Plan</span>
-                  <div class="guide-stage-card__divider"></div>
-                  <p class="guide-stage-card__desc">Define the solution approach, architecture impact and high-level design.</p>
+                  <span class="guide-stage-card__name">Define requirements</span>
                 </div>
               </div>
             </div>
             <div class="guide-card-connector" aria-hidden="true"></div>
             <div class="guide-card-wrapper">
               <div class="guide-stage-card" data-stage="04">
+                <div class="guide-stage-card__accent"></div>
                 <div class="guide-stage-card__inner">
                   <div class="guide-stage-card__num-section">
                     <span class="guide-stage-card__ghost-num">04</span>
                     <span class="guide-stage-card__real-num">04</span>
                   </div>
-                  <span class="guide-stage-card__name">Tasks</span>
-                  <div class="guide-stage-card__divider"></div>
-                  <p class="guide-stage-card__desc">Break the solution down into dependent, actionable development tasks.</p>
+                  <span class="guide-stage-card__name">Design experience and architecture</span>
                 </div>
               </div>
             </div>
             <div class="guide-card-connector" aria-hidden="true"></div>
             <div class="guide-card-wrapper">
               <div class="guide-stage-card" data-stage="05">
+                <div class="guide-stage-card__accent"></div>
                 <div class="guide-stage-card__inner">
                   <div class="guide-stage-card__num-section">
                     <span class="guide-stage-card__ghost-num">05</span>
                     <span class="guide-stage-card__real-num">05</span>
                   </div>
-                  <span class="guide-stage-card__name">Implement</span>
-                  <div class="guide-stage-card__divider"></div>
-                  <p class="guide-stage-card__desc">Develop code according to the defined tasks, with guardrails and real-time feedback.</p>
+                  <span class="guide-stage-card__name">Create backlog &amp; specs</span>
                 </div>
               </div>
             </div>
             <div class="guide-card-connector" aria-hidden="true"></div>
             <div class="guide-card-wrapper">
               <div class="guide-stage-card" data-stage="06">
+                <div class="guide-stage-card__accent"></div>
                 <div class="guide-stage-card__inner">
                   <div class="guide-stage-card__num-section">
                     <span class="guide-stage-card__ghost-num">06</span>
                     <span class="guide-stage-card__real-num">06</span>
                   </div>
-                  <span class="guide-stage-card__name">Test &amp; Validate</span>
-                  <div class="guide-stage-card__divider"></div>
-                  <p class="guide-stage-card__desc">Conduct continuous testing in parallel with implementation.</p>
+                  <span class="guide-stage-card__name">Plan and decompose</span>
                 </div>
               </div>
             </div>
@@ -740,42 +743,39 @@
                 </svg>
               </div>
               <div class="guide-stage-card" data-stage="07">
+                <div class="guide-stage-card__accent"></div>
                 <div class="guide-stage-card__inner">
                   <div class="guide-stage-card__num-section">
                     <span class="guide-stage-card__ghost-num">07</span>
                     <span class="guide-stage-card__real-num">07</span>
                   </div>
-                  <span class="guide-stage-card__name">Build / Ship</span>
-                  <div class="guide-stage-card__divider"></div>
-                  <p class="guide-stage-card__desc">Create a releasable build after all required quality gates have passed.</p>
+                  <span class="guide-stage-card__name">Build</span>
                 </div>
               </div>
             </div>
             <div class="guide-card-connector" aria-hidden="true"></div>
             <div class="guide-card-wrapper guide-card-wrapper--dim">
               <div class="guide-stage-card" data-stage="08">
+                <div class="guide-stage-card__accent"></div>
                 <div class="guide-stage-card__inner">
                   <div class="guide-stage-card__num-section">
                     <span class="guide-stage-card__ghost-num">08</span>
                     <span class="guide-stage-card__real-num">08</span>
                   </div>
-                  <span class="guide-stage-card__name">GreenLane CI/CD</span>
-                  <div class="guide-stage-card__divider"></div>
-                  <p class="guide-stage-card__desc">Automate promotion through environments from DEV &rarr; SIT &rarr; QA &rarr; PROD.</p>
+                  <span class="guide-stage-card__name">Validate</span>
                 </div>
               </div>
             </div>
             <div class="guide-card-connector" aria-hidden="true"></div>
             <div class="guide-card-wrapper guide-card-wrapper--dim">
               <div class="guide-stage-card" data-stage="09">
+                <div class="guide-stage-card__accent"></div>
                 <div class="guide-stage-card__inner">
                   <div class="guide-stage-card__num-section">
                     <span class="guide-stage-card__ghost-num">09</span>
                     <span class="guide-stage-card__real-num">09</span>
                   </div>
-                  <span class="guide-stage-card__name">Operate &amp; Learn</span>
-                  <div class="guide-stage-card__divider"></div>
-                  <p class="guide-stage-card__desc">Monitor production and feed operational insights back into context.</p>
+                  <span class="guide-stage-card__name">Release</span>
                 </div>
               </div>
             </div>

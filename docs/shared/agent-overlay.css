@@ -157,6 +157,7 @@
   background: #14181f;
   border-radius: 12px;
   padding: 20px 24px;
+  position: relative;
 }
 .agent-ov-prompt-label {
   font-size: 11px;
@@ -168,6 +169,35 @@
   display: flex;
   align-items: center;
   gap: 8px;
+}
+.agent-ov-prompt-copy {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+  color: rgba(255,255,255,0.5);
+}
+.agent-ov-prompt-copy:hover {
+  background: rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.9);
+}
+.agent-ov-prompt-copy svg {
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+.agent-ov-prompt-copy--copied {
+  background: rgba(118,199,130,0.18) !important;
+  color: #76c782 !important;
 }
 .agent-ov-prompt-label span {
   display: inline-block;

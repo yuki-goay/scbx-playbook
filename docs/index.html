@@ -425,6 +425,88 @@
     .site-footer__links a:hover {
       color: var(--color-white);
     }
+
+    /* ─── Quick-links section ────────────────────────────────────────── */
+    .quicklinks-section {
+      padding: 32px var(--space-40);
+      background: var(--bg-page);
+    }
+    .quicklinks-row {
+      display: flex;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .quicklink-card {
+      flex: 1;
+      border-radius: var(--radius-20);
+      padding: 36px 32px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      text-decoration: none;
+      transition: filter 0.15s ease, transform 0.15s ease;
+      position: relative;
+      overflow: hidden;
+      min-height: 210px;
+    }
+    .quicklink-card:hover {
+      filter: brightness(1.06);
+      transform: translateY(-2px);
+    }
+    .quicklink-card--1 { background: #7631C1; }
+    .quicklink-card--2 { background: #9B59D9; }
+    .quicklink-card--3 { background: #5E2399; }
+    .quicklink-card__icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .quicklink-card__icon svg {
+      width: 20px;
+      height: 20px;
+    }
+    .quicklink-card__body {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+    .quicklink-card__title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.25;
+      margin: 0;
+    }
+    .quicklink-card__sub {
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.78);
+      margin: 0;
+      line-height: 1.4;
+    }
+    .quicklink-card__arrow {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .quicklink-card__arrow svg {
+      width: 14px;
+      height: 14px;
+    }
   </style>
 </head>
 <body>
@@ -445,6 +527,55 @@
         <h1 class="site-hero__heading">Agentic PDLC</h1>
         <p class="site-hero__body">It is a way of building products where people and agents share the work, from first idea to live service. Agents handle defined tasks using approved context, people set the direction, check the output and approve every major step. Nothing reaches production without a human decision.</p>
       </div>
+    </div>
+  </section>
+
+  <!-- QUICK LINKS -->
+  <section class="quicklinks-section">
+    <div class="quicklinks-row">
+
+      <!-- Getting Started -->
+      <a href="getting-started.html" class="quicklink-card quicklink-card--1">
+        <div class="quicklink-card__arrow" aria-hidden="true">
+          <svg viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="quicklink-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M10 2L12.5 7.5H18L13.5 11L15.5 17L10 13.5L4.5 17L6.5 11L2 7.5H7.5L10 2Z" stroke="#ffffff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="quicklink-card__body">
+          <p class="quicklink-card__title">Getting Started</p>
+          <p class="quicklink-card__sub">Your first steps with the Agentic PDLC — tools, setup, and what to do first.</p>
+        </div>
+      </a>
+
+      <!-- Agent Catalogue -->
+      <a href="agent-catalogue.html" class="quicklink-card quicklink-card--2">
+        <div class="quicklink-card__arrow" aria-hidden="true">
+          <svg viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="quicklink-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="6" height="6" rx="1.5" stroke="#ffffff" stroke-width="1.6"/><rect x="11" y="3" width="6" height="6" rx="1.5" stroke="#ffffff" stroke-width="1.6"/><rect x="3" y="11" width="6" height="6" rx="1.5" stroke="#ffffff" stroke-width="1.6"/><rect x="11" y="11" width="6" height="6" rx="1.5" stroke="#ffffff" stroke-width="1.6"/></svg>
+        </div>
+        <div class="quicklink-card__body">
+          <p class="quicklink-card__title">Agent Catalogue</p>
+          <p class="quicklink-card__sub">Browse every agent available across the PDLC, with capabilities and usage guidance.</p>
+        </div>
+      </a>
+
+      <!-- FAQs -->
+      <a href="faq.html" class="quicklink-card quicklink-card--3">
+        <div class="quicklink-card__arrow" aria-hidden="true">
+          <svg viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="quicklink-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="#ffffff" stroke-width="1.6"/><path d="M10 14v-1" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/><path d="M10 11.5c0-2 3-2 3-4a3 3 0 1 0-6 0" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <div class="quicklink-card__body">
+          <p class="quicklink-card__title">FAQs</p>
+          <p class="quicklink-card__sub">Answers to the most common questions about agents, workflows, and governance.</p>
+        </div>
+      </a>
+
     </div>
   </section>
 
@@ -599,10 +730,10 @@
 
       <!-- LEARN group -->
       <div class="jtbd-group">
-        <span class="jtbd-pill">LEARN</span>
+        <span class="jtbd-pill" style="display: none;">LEARN</span>
         <div class="jtbd-items-row">
 
-          <a href="faq.html" class="jtbd-card">
+          <a href="faq.html" class="jtbd-card" style="display: none;">
             <div class="jtbd-card__question-row">
               <span class="jtbd-card__title">Find answers to FAQs</span>
               <span class="jtbd-card__arrow">
@@ -614,7 +745,7 @@
             <span class="jtbd-card__subtitle">Get quick answers without interrupting your squad.</span>
           </a>
 
-          <a href="getting-started.html" class="jtbd-card">
+          <a href="getting-started.html" class="jtbd-card" style="display: none;">
             <div class="jtbd-card__question-row">
               <span class="jtbd-card__title">Get easily started</span>
               <span class="jtbd-card__arrow">
@@ -626,7 +757,7 @@
             <span class="jtbd-card__subtitle">Set up your first agentic workflow in minutes.</span>
           </a>
 
-          <a href="identify-project-type.html" class="jtbd-card">
+          <a href="identify-project-type.html" class="jtbd-card" style="display: none;">
             <div class="jtbd-card__question-row">
               <span class="jtbd-card__title">Identify project types</span>
               <span class="jtbd-card__arrow">
@@ -643,7 +774,7 @@
 
       <!-- CHECK group -->
       <div class="jtbd-group">
-        <span class="jtbd-pill">CHECK</span>
+        <span class="jtbd-pill" style="display: none;">CHECK</span>
         <div class="jtbd-items-row" style="grid-template-rows: auto auto; row-gap: 0;">
 
           <a href="review-brd-prd.html" class="jtbd-card">

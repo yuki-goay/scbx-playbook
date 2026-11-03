@@ -131,7 +131,7 @@ Important: Do not create any issues in Jira yet. Only produce the discovery and 
   {
     slug: 'spec-clarify',
     id: 'A.8', group: 'coding', icon: 'icons/spec-clarify.svg',
-    name: 'Spec-Clarify',
+    name: 'Technical Specifier',
     tagline: 'Converts requirements into an implementation-ready specification.',
     useWhen: 'Before planning and implementation for a bounded increment.',
     inputs: 'Approved requirements, design, architecture, context and standards.',
@@ -149,7 +149,7 @@ Generate all required specification, contract, design-evidence, traceability, an
   {
     slug: 'task-planner',
     id: 'A.9', group: 'coding', icon: 'icons/task-planner.svg',
-    name: 'Task-Planner',
+    name: 'Implementation Planner',
     tagline: 'Decomposes a specification into ordered implementation tasks.',
     useWhen: 'After specification and plan approval.',
     inputs: 'spec.md, plan.md, project context and engineering standards.',
@@ -163,7 +163,7 @@ verification, and unit-test work for each implementation task. Do not implement 
   {
     slug: 'task-implementor',
     id: 'A.10', group: 'coding', icon: 'icons/task-implementor.svg',
-    name: 'Task-Implementor',
+    name: 'Implementation Builder',
     tagline: 'Executes bounded tasks from the approved spec and plan.',
     useWhen: 'For bounded, approved implementation work.',
     inputs: 'Approved tasks, codebase, standards, context and test expectations.',
@@ -227,7 +227,7 @@ do not modify application behavior to make tests pass.`,
     iconHtml: '<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="20" fill="#E8D5F5"/><path d="M14 20l4 4 8-8" stroke="#6B3FA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 14h-8a2 2 0 00-2 2v8" stroke="#6B3FA0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     name: 'Code Review',
     tagline: 'Human review of agent-generated code before the pull request advances.',
-    useWhen: 'After Task-Implementor has produced code and unit tests, and before the pull request is approved. The engineer reads the diff, verifies correctness and standards compliance, and either approves or sends it back.',
+    useWhen: 'After Implementation Builder has produced code and unit tests, and before the pull request is approved. The engineer reads the diff, verifies correctness and standards compliance, and either approves or sends it back.',
     inputs: 'Pull request diff, approved specification, project standards, and context.',
     output: 'Approved pull request, or a list of issues to resolve.',
     humanReview: 'This step is the human review. The engineer — not an agent — makes the approval decision.',
@@ -300,6 +300,12 @@ function openAgentOverlay(slug) {
     bodyHtml += `
     <div class="agent-ov-prompt-block">
       <div class="agent-ov-prompt-label"><span></span>Sample prompt</div>
+      <button class="agent-ov-prompt-copy" type="button" onclick="_copyAgentPrompt(this)" aria-label="Copy sample prompt">
+        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="5.5" y="5.5" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M10.5 5.5V4a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 4v7A1.5 1.5 0 0 0 4 12.5h1.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+      </button>
       <pre class="agent-ov-prompt-text">${_escHtml(agent.prompt)}</pre>
     </div>`;
   }
@@ -309,6 +315,18 @@ function openAgentOverlay(slug) {
   backdrop.classList.add('open');
   document.body.style.overflow = 'hidden';
   document.getElementById('agent-overlay-close').focus();
+}
+
+function _copyAgentPrompt(btn) {
+  const text = btn.closest('.agent-ov-prompt-block').querySelector('.agent-ov-prompt-text').textContent.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.classList.add('agent-ov-prompt-copy--copied');
+    btn.innerHTML = `<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 8.5l3.5 3.5 6.5-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    setTimeout(() => {
+      btn.classList.remove('agent-ov-prompt-copy--copied');
+      btn.innerHTML = `<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5.5" y="5.5" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 5.5V4a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 4v7A1.5 1.5 0 0 0 4 12.5h1.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>`;
+    }, 2000);
+  });
 }
 
 function closeAgentOverlay() {
