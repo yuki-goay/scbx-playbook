@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tips and Tricks:Agentic PDLC Help Centre</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+
+    :root {
+      --purple-50:  #F3ECFB;
+      --purple-100: #E3D2F5;
+      --purple-600: #7631C1;
+      --purple-700: #462279;
+      --grey-0:     #FAFAFA;
+      --grey-20:    #BBBEC3;
+      --grey-50:    #F5F3F8;
+
+      --text-primary-raw:    #14181F;
+      --text-secondary-raw:  #4A5260;
+      --text-muted-raw:      #60636A;
+      --text-on-dark-raw:    #C9CED6;
+      --border-raw:          #BBBEC3;
+      --surface-dark-raw:    #14181F;
+
+      --color-text-primary:   var(--text-primary-raw);
+      --color-text-secondary: var(--text-secondary-raw);
+      --color-text-muted:     var(--text-muted-raw);
+      --color-text-on-dark:   var(--text-on-dark-raw);
+      --color-text-accent:    var(--purple-600);
+
+      --color-surface-page:   #F3F0F7;
+      --color-surface-card:   var(--grey-0);
+      --color-surface-dark:   var(--surface-dark-raw);
+
+      --color-border:         var(--border-raw);
+      --color-accent:         var(--purple-600);
+      --color-accent-dark:    var(--purple-700);
+
+      --mini-hero-gradient: linear-gradient(180deg, #E8DBFF 2%, #F3F0F7 74%);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--color-text-primary);
+      background: var(--color-surface-page);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    button { font-family: inherit; cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── HEADER ───────────────────────────────────────────── */
+    .site-header {
+      width: 100%;
+      height: 72px;
+      background: linear-gradient(99deg, rgba(79,42,129,0.85) 0%, #462279 77.5%);
+      display: flex;
+      align-items: center;
+      padding: 0 120px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .header-logo {
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: baseline;
+      gap: 1px;
+    }
+
+    .header-logo sup { font-size: 11px; font-weight: 700; vertical-align: super; }
+
+    .header-divider { width: 1px; height: 20px; background: rgba(255,255,255,0.3); }
+
+    .header-title { font-size: 14px; font-weight: 400; color: #ffffff; opacity: 0.9; }
+
+    /* ── MINI HERO ────────────────────────────────────────── */
+    .mini-hero {
+      width: 100%;
+      height: 194px;
+      background: var(--mini-hero-gradient);
+      display: flex;
+      padding: 40px 120px;
+    }
+
+    .mini-hero__inner {
+      width: 1200px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .breadcrumb { display: flex; align-items: center; gap: 16px; }
+
+    .breadcrumb__link { font-size: 12px; font-weight: 400; color: var(--color-text-muted); }
+    .breadcrumb__link:hover { text-decoration: underline; }
+    .breadcrumb__sep { font-size: 13px; color: var(--color-text-muted); }
+    .breadcrumb__current { font-size: 12px; font-weight: 700; color: var(--color-text-accent); }
+
+    .mini-hero__heading {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 44px;
+      color: var(--color-text-primary);
+      letter-spacing: -0.5px;
+    }
+
+    .mini-hero__sub {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 26px;
+      color: var(--color-text-primary);
+    }
+
+    /* ── BODY ─────────────────────────────────────────────── */
+    .tips-body {
+      width: 100%;
+      padding: 48px 120px 64px;
+    }
+
+    /* ── CARD GRID ────────────────────────────────────────── */
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      width: 1200px;
+    }
+
+    /* ── TIP CARD ─────────────────────────────────────────── */
+    .tip-card {
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 28px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      cursor: pointer;
+      transition: box-shadow 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+      position: relative;
+      text-align: left;
+    }
+
+    .tip-card:hover {
+      box-shadow: 0 4px 20px rgba(118,49,193,0.12);
+      border-color: var(--color-accent);
+      transform: translateY(-2px);
+    }
+
+    .tip-card:focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 2px;
+    }
+
+    .tip-card__icon {
+      width: 36px;
+      height: 36px;
+      background: var(--purple-50);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .tip-card__icon svg { display: block; }
+
+    .tip-card__title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 24px;
+      color: var(--color-text-primary);
+    }
+
+    .tip-card__desc {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 22px;
+      color: var(--color-text-secondary);
+      flex: 1;
+    }
+
+    .tip-card__arrow {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-accent);
+      margin-top: 4px;
+    }
+
+    /* ── OVERLAY ──────────────────────────────────────────── */
+    .overlay-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 400;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .overlay-backdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .overlay-panel {
+      width: 100%;
+      max-width: 680px;
+      max-height: 80vh;
+      background: #ffffff;
+      border-radius: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      transform: scale(0.96) translateY(8px);
+      transition: transform 0.2s ease;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+
+    .overlay-backdrop.open .overlay-panel {
+      transform: scale(1) translateY(0);
+    }
+
+    .overlay-panel::-webkit-scrollbar { width: 6px; }
+    .overlay-panel::-webkit-scrollbar-track { background: transparent; }
+    .overlay-panel::-webkit-scrollbar-thumb { background: #BBBEC3; border-radius: 99px; }
+
+    .overlay-header {
+      padding: 28px 32px 24px;
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      background: #ffffff;
+      z-index: 1;
+    }
+
+    .overlay-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--purple-50);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .overlay-title {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 28px;
+      color: var(--color-text-primary);
+      flex: 1;
+    }
+
+    .overlay-close {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      border-radius: 6px;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+
+    .overlay-close:hover { background: var(--grey-50); }
+
+    .overlay-body {
+      padding: 32px;
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 26px;
+      color: var(--color-text-secondary);
+    }
+
+    .overlay-body h1, .overlay-body h2, .overlay-body h3 {
+      color: var(--color-text-primary);
+      font-weight: 700;
+      margin: 24px 0 10px;
+      line-height: 1.3;
+    }
+    .overlay-body h1 { font-size: 20px; margin-top: 0; }
+    .overlay-body h2 { font-size: 17px; }
+    .overlay-body h3 { font-size: 15px; }
+
+    .overlay-body p { margin: 0 0 14px; }
+    .overlay-body p:last-child { margin-bottom: 0; }
+
+    .overlay-body ul, .overlay-body ol {
+      margin: 0 0 14px 20px;
+    }
+    .overlay-body li { margin-bottom: 6px; }
+
+    .overlay-body strong { font-weight: 600; color: var(--color-text-primary); }
+    .overlay-body em { font-style: italic; }
+
+    .overlay-body code {
+      font-family: 'Menlo', 'Consolas', monospace;
+      font-size: 13px;
+      background: var(--purple-50);
+      color: var(--purple-700);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .overlay-body hr {
+      border: none;
+      border-top: 1px solid var(--color-border);
+      margin: 20px 0;
+    }
+
+    .overlay-loading {
+      padding: 48px 32px;
+      text-align: center;
+      color: var(--color-text-muted);
+      font-size: 14px;
+    }
+
+    /* ── FOOTER ───────────────────────────────────────────── */
+    .site-footer {
+      background: var(--color-surface-dark);
+      height: 180px;
+      padding: 0 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .footer-nav { display: flex; gap: 40px; width: 1200px; }
+
+    .footer-link {
+      font-size: 13px;
+      font-weight: 400;
+      color: #C9CED6;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .footer-link:hover { color: #ffffff; }
+
+  </style>
+</head>
+<body>
+
+  <!-- ── HEADER ─────────────────────────────────────────── -->
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a href="index.html" class="header-logo" aria-label="SCBx home">SCB<sup>×</sup></a>
+      <div class="header-divider" aria-hidden="true"></div>
+      <span class="header-title">Agentic PDLC Help Centre</span>
+    </div>
+  </header>
+
+  <!-- ── MINI HERO ──────────────────────────────────────── -->
+  <section class="mini-hero" aria-label="Page header">
+    <div class="mini-hero__inner">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html" class="breadcrumb__link">← Home</a>
+        <span class="breadcrumb__sep" aria-hidden="true">/</span>
+        <span class="breadcrumb__current" aria-current="page">Tips and tricks</span>
+      </nav>
+      <h1 class="mini-hero__heading">Tips and tricks</h1>
+      <p class="mini-hero__sub">Practical guidance to help you get the most out of agentic workflows.</p>
+    </div>
+  </section>
+
+  <!-- ── CARDS ──────────────────────────────────────────── -->
+  <main class="tips-body" id="main-content">
+    <div class="tips-grid" id="tips-grid">
+
+      <button class="tip-card" data-tip="dos-donts" aria-haspopup="dialog">
+        <div class="tip-card__icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M10 2L12.09 7.26L17.78 7.27L13.44 10.47L15.08 15.73L10 12.9L4.92 15.73L6.56 10.47L2.22 7.27L7.91 7.26L10 2Z" stroke="#7631C1" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="tip-card__title">Dos and Don'ts of Agentic PDLC</div>
+        <div class="tip-card__arrow">
+          Read more
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </button>
+
+      <button class="tip-card" data-tip="optimise-performance" aria-haspopup="dialog">
+        <div class="tip-card__icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M10 3v2M10 15v2M3 10H1M19 10h-2M5.05 5.05L3.64 3.64M16.36 16.36l-1.41-1.41M5.05 14.95l-1.41 1.41M16.36 3.64l-1.41 1.41" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="10" cy="10" r="3.5" stroke="#7631C1" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="tip-card__title">How to optimise agent performance</div>
+        <div class="tip-card__arrow">
+          Read more
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </button>
+
+      <button class="tip-card" data-tip="good-prompt" aria-haspopup="dialog">
+        <div class="tip-card__icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <rect x="3" y="4" width="14" height="12" rx="2" stroke="#7631C1" stroke-width="1.5"/>
+            <path d="M6 8h8M6 11h5" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="tip-card__title">How to write a good prompt</div>
+        <div class="tip-card__arrow">
+          Read more
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </button>
+
+      <button class="tip-card" data-tip="contextualisation" aria-haspopup="dialog">
+        <div class="tip-card__icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <circle cx="10" cy="10" r="7" stroke="#7631C1" stroke-width="1.5"/>
+            <path d="M10 7v3l2 2" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="tip-card__title">More about Contextualisation</div>
+        <div class="tip-card__arrow">
+          Read more
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </button>
+
+      <button class="tip-card" data-tip="select-model" aria-haspopup="dialog">
+        <div class="tip-card__icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M4 6h12M4 10h8M4 14h4" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="15" cy="13" r="3" stroke="#7631C1" stroke-width="1.5"/>
+            <path d="M17.5 15.5l1.5 1.5" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="tip-card__title">How to select the right model</div>
+        <div class="tip-card__arrow">
+          Read more
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </button>
+
+      <button class="tip-card" data-tip="token-usage" aria-haspopup="dialog">
+        <div class="tip-card__icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M10 3C6.13 3 3 6.13 3 10s3.13 7 7 7 7-3.13 7-7-3.13-7-7-7z" stroke="#7631C1" stroke-width="1.5"/>
+            <path d="M10 6v4l3 2" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="tip-card__title">Optimising token usage</div>
+        <div class="tip-card__arrow">
+          Read more
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </button>
+
+      <button class="tip-card" data-tip="continuous-improvement" aria-haspopup="dialog">
+        <div class="tip-card__icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M4 10a6 6 0 1 1 1.5 3.9" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M4 14.5V10h4.5" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="tip-card__title">Continuous improvement</div>
+        <div class="tip-card__arrow">
+          Read more
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </button>
+
+      <button class="tip-card" data-tip="others" aria-haspopup="dialog">
+        <div class="tip-card__icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <circle cx="6" cy="10" r="1.5" fill="#7631C1"/>
+            <circle cx="10" cy="10" r="1.5" fill="#7631C1"/>
+            <circle cx="14" cy="10" r="1.5" fill="#7631C1"/>
+          </svg>
+        </div>
+        <div class="tip-card__title">Others</div>
+        <div class="tip-card__arrow">
+          Read more
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </button>
+
+    </div>
+  </main>
+
+  <!-- ── OVERLAY ────────────────────────────────────────── -->
+  <div class="overlay-backdrop" id="overlay" role="dialog" aria-modal="true" aria-labelledby="overlay-title">
+    <div class="overlay-panel" id="overlay-panel">
+      <div class="overlay-header">
+        <div class="overlay-icon" id="overlay-icon"></div>
+        <div class="overlay-title" id="overlay-title"></div>
+        <button class="overlay-close" id="overlay-close" aria-label="Close">
+          <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8" stroke="#4A5260" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="overlay-body" id="overlay-body">
+        <!-- Content will be injected here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ─────────────────────────────────────────── -->
+  <footer class="site-footer" role="contentinfo">
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="index.html" class="footer-link">Home</a>
+    </nav>
+  </footer>
+
+  <script>
+    var COMING_SOON = '<p style="color:#9ca3af;font-style:italic;">Content coming soon.</p>';
+
+    var tips = {
+      'dos-donts': {
+        title: "Dos and Don'ts of Agentic PDLC",
+        icon: '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L12.09 7.26L17.78 7.27L13.44 10.47L15.08 15.73L10 12.9L4.92 15.73L6.56 10.47L2.22 7.27L7.91 7.26L10 2Z" stroke="#7631C1" stroke-width="1.5" stroke-linejoin="round"/></svg>',
+        body: '<h2>Problem definition</h2><p><strong>Do:</strong> Define the problem, intended outcome and bounded unit of work before invoking an agent.</p><p><strong>Don\'t:</strong> Ask an agent to solve an unclear problem or determine the product outcome without accountable human direction.</p><h2>Context</h2><p><strong>Do:</strong> Provide current, approved and relevant requirements, architecture, standards, decisions and source files.</p><p><strong>Don\'t:</strong> Load every available document into the session or assume that more context always improves quality.</p><h2>Source of truth</h2><p><strong>Do:</strong> Identify which requirements, specifications, designs, code and standards are authoritative.</p><p><strong>Don\'t:</strong> Provide multiple conflicting versions without stating which source takes precedence.</p><h2>Task scope</h2><p><strong>Do:</strong> Give the agent one clear objective with a defined completion or stopping condition.</p><p><strong>Don\'t:</strong> Combine discovery, design, implementation, testing and approval into one open-ended request.</p><h2>Prompt design</h2><p><strong>Do:</strong> State the objective, inputs, constraints, expected output and acceptance criteria explicitly.</p><p><strong>Don\'t:</strong> Use vague requests such as "build this", "fix this" or "make this better".</p><h2>Clarification</h2><p><strong>Do:</strong> Require the agent to record missing information, conflicts and unresolved decisions.</p><p><strong>Don\'t:</strong> Allow the agent to silently fill material gaps with unsupported assumptions.</p><h2>Examples</h2><p><strong>Do:</strong> Provide relevant examples, established patterns, schemas or tests where they clarify the desired result.</p><p><strong>Don\'t:</strong> Add examples that are obsolete, contradictory or unrelated to the task.</p><h2>Task decomposition</h2><p><strong>Do:</strong> Separate complex work into focused lifecycle stages such as specify, plan, implement and validate.</p><p><strong>Don\'t:</strong> Ask one session to perform a large change end to end without intermediate review points.</p><h2>Model selection</h2><p><strong>Do:</strong> Match model capability and reasoning depth to the complexity of the task.</p><p><strong>Don\'t:</strong> Default to the most capable or expensive model for every activity.</p><h2>Token efficiency</h2><p><strong>Do:</strong> Remove duplicated, obsolete and irrelevant context while retaining the information needed for safe execution.</p><p><strong>Don\'t:</strong> Minimise prompt length at the expense of grounding, constraints or quality.</p><h2>Conversation history</h2><p><strong>Do:</strong> Start a clean session when moving to a materially different lifecycle activity where the workflow requires a context reset.</p><p><strong>Don\'t:</strong> Allow outdated instructions, failed approaches and unrelated conversation history to accumulate indefinitely.</p><h2>Tool access</h2><p><strong>Do:</strong> Give the agent only the approved tools and permissions required for the task.</p><p><strong>Don\'t:</strong> Provide broad tool, write or production access because it may be useful later.</p><h2>Implementation</h2><p><strong>Do:</strong> Require work to follow the approved specification, architecture, standards and task scope.</p><p><strong>Don\'t:</strong> Permit the agent to expand scope, change architecture or introduce dependencies without approval.</p><h2>Validation</h2><p><strong>Do:</strong> Apply tests, linters, security scans, build checks, evaluations and human review.</p><p><strong>Don\'t:</strong> Accept an output because it appears plausible, complete or confidently written.</p><h2>Approval</h2><p><strong>Do:</strong> Keep material product, architecture, security, quality and release decisions with accountable people.</p><p><strong>Don\'t:</strong> Allow the agent that generated an output to be its sole reviewer or approver.</p><h2>Feedback</h2><p><strong>Do:</strong> Capture recurring failures and improve shared context, instructions, evaluations or workflows.</p><p><strong>Don\'t:</strong> Correct the same issue manually in every session without addressing the underlying cause.</p>'
+      },
+      'optimise-performance': {
+        title: 'How to optimise agent performance',
+        icon: '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3v2M10 15v2M3 10H1M19 10h-2M5.05 5.05L3.64 3.64M16.36 16.36l-1.41-1.41M5.05 14.95l-1.41 1.41M16.36 3.64l-1.41 1.41" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="10" r="3.5" stroke="#7631C1" stroke-width="1.5"/></svg>',
+        body: '<p>Agent performance depends on the quality of the task definition, context, and prompt — not just the model. When output is inadequate, diagnose the cause before changing the model or reprompting.</p><h2>Start with a clear task</h2><ul><li>Define the intended outcome, inputs, constraints, and acceptance criteria before invoking the agent.</li><li>Decompose complex work into focused stages: specify, plan, implement, validate.</li><li>Give the agent one objective per session with a defined stopping condition.</li></ul><h2>Provide the right context</h2><ul><li>Include current, approved, and relevant requirements, architecture decisions, standards, and source files.</li><li>Remove duplicated, obsolete, or irrelevant material — quality context, not maximum context.</li><li>Start a new session when moving to a materially different lifecycle stage.</li></ul><h2>When output is inadequate</h2><p>Don\'t just fix the output. Ask what needs to improve in the system around the agent:</p><ul><li>Was the intended outcome sufficiently clear?</li><li>Was the specification complete and unambiguous?</li><li>Was important business, technical or project context missing?</li><li>Did the agent have the right instructions and tools?</li><li>Was the work too broad or complex to delegate as a single task?</li></ul><h2>Build on what works</h2><p>Capture effective prompts, specifications, and context approaches as reusable templates. When a pattern consistently produces good results, codify it so other squads don\'t need to rediscover it.</p><p><strong>Practical rule:</strong> If the same correction is needed in every session, the prompt, context, or agent instruction needs to change — not just the output.</p>'
+      },
+      'good-prompt': {
+        title: 'How to write a good prompt',
+        icon: '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="14" height="12" rx="2" stroke="#7631C1" stroke-width="1.5"/><path d="M6 8h8M6 11h5" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round"/></svg>',
+        body: '<p>A good prompt gives the agent everything it needs to produce a useful, reviewable output — and nothing it doesn\'t. Vague requests like "build this" or "fix this" leave the agent to fill gaps with assumptions, which produces inconsistent results.</p><h2>The five things every prompt should include</h2><ul><li><strong>Objective:</strong> What do you want the agent to produce? State it as a specific, bounded outcome.</li><li><strong>Inputs:</strong> What context, documents, code, or data should the agent use? Attach or reference the approved sources.</li><li><strong>Constraints:</strong> What standards, architecture decisions, scope limits, or quality requirements must the output respect?</li><li><strong>Expected output:</strong> What should the result look like? Specify the format, structure, or level of detail where it matters.</li><li><strong>Acceptance criteria:</strong> How will you know the output is good enough? Name the conditions it must meet.</li></ul><h2>What a good prompt looks like in practice</h2><p>Compare these two approaches for the same task:</p><p><strong>Weak:</strong> "Write a technical spec for the login feature."</p><p><strong>Strong:</strong> "Create an implementation-ready technical specification for the login feature described in story #42. Use the approved architecture and security standards in the project context. The spec should cover data flow, API contracts, error handling, and acceptance criteria. Flag any dependencies or unresolved decisions."</p><h2>Common mistakes to avoid</h2><ul><li>Combining multiple objectives in one prompt — give the agent one task at a time</li><li>Omitting constraints, leaving the agent free to make architectural or scope decisions it shouldn\'t</li><li>Providing conflicting sources without stating which one takes precedence</li><li>Asking for output without specifying the format, causing the agent to choose a format that doesn\'t fit your workflow</li></ul><p><strong>Practical rule:</strong> If you can\'t tell from your prompt alone whether the output is correct, the prompt needs more specificity.</p>'
+      },
+      'contextualisation': {
+        title: 'More about Contextualisation',
+        icon: '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#7631C1" stroke-width="1.5"/><path d="M10 7v3l2 2" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        body: '<p>Good contextualisation helps agents understand the environment they\'re working in. Before starting, make sure you have:</p><ul><li>An approved enterprise and domain context:the boundaries, standards, and conventions agents should follow</li><li>A project context package:relevant requirements, architecture decisions, APIs, dependencies, and existing code</li><li>A current-state snapshot:the application landscape, infrastructure, and engineering environment the agent will operate within</li></ul><p>The more accurate and specific your context, the more relevant and reliable the agent\'s output will be.</p>'
+      },
+      'select-model': {
+        title: 'How to select the right model',
+        icon: '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 6h12M4 10h8M4 14h4" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round"/><circle cx="15" cy="13" r="3" stroke="#7631C1" stroke-width="1.5"/><path d="M17.5 15.5l1.5 1.5" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round"/></svg>',
+        body: '<p>Not every task needs the most capable or expensive model. Matching model capability to task complexity improves quality, speed, and cost.</p><h2>Match model to task type</h2><p>Different tasks call for different model strengths:</p><ul><li><strong>Strategic analysis and long-context reasoning</strong> (research planning, business requirements, context building): use a model with strong analytical and reasoning depth.</li><li><strong>Synthesis, design, and product requirements</strong> (insights, experience design, PRD): use a model with strong language and synthesis capability.</li><li><strong>Technical specification and implementation planning</strong>: use a model with strong code and architecture reasoning.</li><li><strong>Code generation and test automation</strong>: use a code-optimised model.</li></ul><h2>Key questions to ask</h2><ul><li>How much reasoning depth does this task require?</li><li>Is the task primarily analytical, creative, or generative?</li><li>How long and complex is the context the model needs to process?</li><li>How often will this task run, and does latency or cost matter?</li></ul><h2>Common mistakes to avoid</h2><ul><li>Defaulting to the most capable model for every task regardless of complexity</li><li>Using a lightweight model for tasks that require deep reasoning or long-context understanding</li><li>Failing to revisit model choice when task scope or context changes significantly</li></ul><p><strong>Practical rule:</strong> Start with the model recommended for the agent. Only upgrade if the task consistently exceeds that model\'s capability — and document why.</p>'
+      },
+      'token-usage': {
+        title: 'Optimising token usage',
+        icon: '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3C6.13 3 3 6.13 3 10s3.13 7 7 7 7-3.13 7-7-3.13-7-7-7z" stroke="#7631C1" stroke-width="1.5"/><path d="M10 6v4l3 2" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        body: '<p>Reduce tokens without losing quality by:</p><ul><li>Removing duplicated requirements and repeated background explanations</li><li>Referencing governed context instead of repeatedly pasting the same material</li><li>Removing obsolete or irrelevant material</li><li>Using structured inputs instead of long narrative descriptions where appropriate</li><li>Starting new sessions at appropriate lifecycle boundaries</li><li>Requesting only the output required for the task, not lengthy explanations by default</li><li>Restricting tool lists to the tools required for the activity</li><li>Reusing stable prompt templates for recurring activities</li><li>Making targeted corrections instead of regenerating an entire artefact unnecessarily</li><li>Preserving approved artefacts between stages rather than asking the agent to reconstruct them</li></ul><h2>Do not reduce tokens by:</h2><ul><li>Omitting security, architecture or acceptance constraints</li><li>Removing examples that materially define expected behaviour</li><li>Replacing authoritative source material with an unverified summary</li><li>Asking the agent to infer context that should be explicit</li><li>Suppressing evidence required for review, traceability or audit</li></ul>'
+      },
+      'continuous-improvement': {
+        title: 'Continuous improvement',
+        icon: '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10a6 6 0 1 1 1.5 3.9" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round"/><path d="M4 14.5V10h4.5" stroke="#7631C1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        body: '<p>Every delivery cycle should generate learning that improves the Agentic PDLC system.</p><p>When an agent requires repeated intervention or produces an inadequate result, don\'t just fix the output — also ask what needs to improve in the system around the agent:</p><ul><li>Was the intended outcome sufficiently clear?</li><li>Was the specification complete and unambiguous?</li><li>Was important business, technical or project context missing?</li><li>Did the agent have the right instructions and tools?</li><li>Was the work too broad or complex to delegate as a single task?</li><li>Was a human review or decision needed earlier?</li></ul><p>Learning should operate as a continuous loop: <strong>Apply → Observe → Learn → Codify → Reuse → Improve</strong></p><p>Recurring lessons should be incorporated into:</p><ul><li>Agents and agent instructions</li><li>Project and organisational context</li><li>Specifications and reusable patterns</li><li>Standards and ways of working</li><li>Examples and learning materials</li><li>The Agentic PDLC Playbook</li></ul><p>This allows learning from one squad to improve the experience of subsequent squads.</p>'
+      },
+      'others': {
+        title: 'Others',
+        icon: '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="6" cy="10" r="1.5" fill="#7631C1"/><circle cx="10" cy="10" r="1.5" fill="#7631C1"/><circle cx="14" cy="10" r="1.5" fill="#7631C1"/></svg>',
+        body: '<h2>Start with the right work</h2><p>Begin with bounded, well-understood delivery work where the intended outcome, requirements and relevant context can be made sufficiently clear. Use early delivery to learn and refine the approach before applying it more broadly.</p><h2>Make knowledge explicit</h2><p>Agents depend on accessible context. Where important knowledge exists only in people\'s heads, conversations or fragmented documentation, capture the relevant conventions, architecture, requirements, constraints and decisions so they can be reused consistently.</p><h2>Learn by doing</h2><p>Do not separate training from delivery for too long. Combine role-based learning with coached application so that teams develop practical judgement about delegation, context and the review of agent outputs.</p><h2>Break work into reviewable steps</h2><p>Smaller, bounded tasks are easier to specify, delegate and verify. They also make it easier to identify where context or instructions need to improve.</p><h2>Treat poor output as a learning signal</h2><p>When an agent produces an inadequate result, avoid repeatedly fixing only the output. Determine whether the specification, context, instructions, available knowledge or way of working needs to improve.</p><h2>Keep people involved in the decisions that matter</h2><p>Agents can take on more execution, but squads continue to set intent, decide what can be delegated, assess whether outputs are acceptable and intervene when required.</p><h2>Make successful practices reusable</h2><p>When a squad develops an effective specification, context approach, agent instruction or working practice, capture it so that other squads do not need to rediscover it.</p><h2>Share lessons from failure as well as success</h2><p>Examples of what did not work can help teams recognise common problems earlier. Champions, retrospectives and review clinics provide useful ways to share those lessons.</p><h2>Avoid running two delivery models indefinitely</h2><p>Temporary duplication may be necessary during transition. Once the new approach has been proven and approved, simplify or retire redundant activities and artefacts.</p><h2>Reduce support as capability increases</h2><p>A squad should need less hands-on support as it gains experience. Continued dependence on central support may indicate that capability, guidance, context or tooling still needs to improve.</p><p><strong>Practical rule:</strong> When something works, make it reusable. When something repeatedly fails, improve the system around the agent rather than repeatedly fixing the individual output.</p>'
+      }
+    };
+
+    var backdrop = document.getElementById('overlay');
+    var closeBtn = document.getElementById('overlay-close');
+
+    function openOverlay(key) {
+      var tip = tips[key];
+      if (!tip) return;
+      document.getElementById('overlay-title').textContent = tip.title;
+      document.getElementById('overlay-icon').innerHTML = tip.icon;
+      document.getElementById('overlay-body').innerHTML = tip.body;
+      backdrop.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeOverlay() {
+      backdrop.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.tip-card').forEach(function(card) {
+      card.addEventListener('click', function() { openOverlay(card.dataset.tip); });
+    });
+
+    closeBtn.addEventListener('click', closeOverlay);
+
+    backdrop.addEventListener('click', function(e) {
+      if (e.target === backdrop) closeOverlay();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeOverlay();
+    });
+  </script>
+
+</body>
+</html>

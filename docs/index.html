@@ -507,6 +507,38 @@
       width: 14px;
       height: 14px;
     }
+
+    /* LIFECYCLE DIAGRAM SECTION */
+    .lifecycle-section {
+      width: 100%;
+      padding: var(--space-64) var(--space-120);
+      background: var(--bg-section-alt);
+    }
+    .lifecycle-section__inner {
+      max-width: 1200px;
+    }
+    .lifecycle-section__desc {
+      font-size: 18px;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-48);
+      white-space: nowrap;
+    }
+    .lifecycle-diagram-wrap {
+      overflow-x: auto;
+      border-radius: 12px;
+      background: #fff;
+      padding: var(--space-32);
+    }
+    .lifecycle-diagram-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    @media (max-width: 768px) {
+      .lifecycle-section {
+        padding: var(--space-48) var(--space-24);
+      }
+    }
   </style>
 </head>
 <body>
@@ -525,7 +557,7 @@
     <div class="site-hero__inner">
       <div class="site-hero__content">
         <h1 class="site-hero__heading">Agentic PDLC</h1>
-        <p class="site-hero__body">It is a way of building products where people and agents share the work, from first idea to live service. Agents handle defined tasks using approved context, people set the direction, check the output and approve every major step. Nothing reaches production without a human decision.</p>
+        <p class="site-hero__body">Agentic PDLC uses the same governed end-to-end workflow for accelerating the digital product lifeycycle - helping product squads progress through enterprise context and specification, planning, implementation and validation to production and ongoing learning, supported by a tailored agentic toolkit.</p>
       </div>
     </div>
   </section>
@@ -563,7 +595,7 @@
       </a>
 
       <!-- Tips and tricks -->
-      <a href="faq.html" class="quicklink-card quicklink-card--3">
+      <a href="tips-and-tricks.html" class="quicklink-card quicklink-card--3">
         <div class="quicklink-card__arrow" aria-hidden="true">
           <svg viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
@@ -576,6 +608,18 @@
         </div>
       </a>
 
+    </div>
+  </section>
+
+  <!-- LIFECYCLE DIAGRAM -->
+  <section class="lifecycle-section">
+    <div class="lifecycle-section__inner">
+      <p class="section-label">THE LIFECYCLE</p>
+      <h2 class="section-heading">Agentic PDLC at a glance</h2>
+      <p class="lifecycle-section__desc">How context, agents and human decisions connect across the eleven stages.</p>
+      <div class="lifecycle-diagram-wrap">
+        <img src="assets/agentic-lifecycle-diagram.png" alt="Agentic PDLC lifecycle diagram showing eleven stages from Mobilise and Assess through to Operate and Improve, with agent assignments and context inputs." class="lifecycle-diagram-img">
+      </div>
     </div>
   </section>
 
@@ -733,17 +777,6 @@
         <span class="jtbd-pill" style="display: none;">LEARN</span>
         <div class="jtbd-items-row">
 
-          <a href="faq.html" class="jtbd-card" style="display: none;">
-            <div class="jtbd-card__question-row">
-              <span class="jtbd-card__title">Find answers to FAQs</span>
-              <span class="jtbd-card__arrow">
-                <svg viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1 7.5h16M10.5 1.5l6 6-6 6" stroke="#8055C3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-            </div>
-            <span class="jtbd-card__subtitle">Get quick answers without interrupting your squad.</span>
-          </a>
 
           <a href="getting-started.html" class="jtbd-card" style="display: none;">
             <div class="jtbd-card__question-row">

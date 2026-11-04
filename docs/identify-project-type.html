@@ -1276,18 +1276,6 @@
         humanReview: 'Quality Engineer reviews coverage, scripts and results and retains the quality decision.',
         prompt: 'Read output/<RUN_ID>/specify/spec.md and determine UI scope. If UI In Scope is YES, test every specified UI behavior. Generate and execute reproducible Playwright tests, preserve evidence, and report coverage, failures, and blockers.',
       },
-      'A.13': {
-        name: 'Azure-Deploy',
-        tagline: 'Prepares and executes approved Azure deployments.',
-        desc: 'Prepares deployment artefacts, validates configuration and executes an approved deployment to Azure. Use only after the release candidate has passed required quality, security and readiness checks.',
-        icon: 'icons/azure-deploy.svg',
-        model: 'GPT-6 Sol',
-        useWhen: 'Only after release readiness and required approvals.',
-        inputs: 'Approved release candidate, environment configuration and deployment controls.',
-        output: 'Deployment package, deployed version and logs.',
-        humanReview: 'Release and deployment approvals remain with the named human authorities.',
-        prompt: 'Analyze the current repository and deploy the application to Azure end-to-end. Discover all deployable components and dependencies, assess deployment readiness, design the Azure architecture, provision infrastructure, deploy the application, run required database migrations, and verify application health.',
-      },
     };
 
     const LIFECYCLE_MAP = {
@@ -1320,9 +1308,6 @@
           { id: 'A.11', role: 'Recommended', why: 'Generates and runs API tests from the new specifications — no existing test suite to inherit.' },
           { id: 'A.12', role: 'Recommended', why: 'Turns requirements into Playwright scripts to validate the new journeys end-to-end.' },
         ]},
-        { group: '9. Release', agents: [
-          { id: 'A.13', role: 'Recommended', why: 'Prepares, validates and executes the first production deployment through approved release gates.' },
-        ]},
       ],
       brownfield: [
         { group: '1. Discover and Frame', agents: [
@@ -1353,9 +1338,6 @@
           { id: 'A.11', role: 'Recommended', why: 'Validates affected API contracts and ensures the change does not break existing integrations.' },
           { id: 'A.12', role: 'Recommended', why: 'Covers affected journeys and regression paths to confirm the change did not break the existing application.' },
         ]},
-        { group: '9. Release', agents: [
-          { id: 'A.13', role: 'Recommended', why: 'Prepares and executes the controlled release, including rollback readiness for the changed application.' },
-        ]},
       ],
       modernisation: [
         { group: '1. Discover and Frame', agents: [
@@ -1385,9 +1367,6 @@
         { group: '8. Validate', agents: [
           { id: 'A.11', role: 'Recommended', why: 'Validates API contracts against the modernised system. Regression coverage against the existing API surface is critical.' },
           { id: 'A.12', role: 'Recommended', why: 'Confirms functional equivalence between the existing and modernised system — the primary quality gate for this path.' },
-        ]},
-        { group: '9. Release', agents: [
-          { id: 'A.13', role: 'Recommended', why: 'Executes the controlled release for each modernisation increment, including the required rollback approach and environment verification.' },
         ]},
       ],
     };

@@ -414,6 +414,117 @@
 
     /* hidden until JS populates */
     .agent-card[data-hidden="true"] { display: none; }
+
+    /* ─── Agent Universe section ────────────────────────────────────────────── */
+    .universe-section {
+      padding: 0 var(--space-120) var(--space-80);
+      border-top: 1px solid var(--border-divider);
+    }
+    .universe-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: var(--space-32);
+    }
+    .universe-header {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-12);
+      margin-bottom: var(--space-8);
+    }
+    .universe-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+    .universe-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: var(--space-16);
+      line-height: 1.5;
+    }
+    .universe-search {
+      position: relative;
+      margin-bottom: var(--space-32);
+      max-width: 400px;
+    }
+    .universe-search__icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: var(--text-muted);
+    }
+    .universe-search__input {
+      width: 100%;
+      padding: 10px 14px 10px 40px;
+      font-size: 14px;
+      color: var(--text-primary);
+      background: var(--color-ink-100);
+      border: 1.5px solid var(--color-ink-200);
+      border-radius: var(--radius-8, 8px);
+      outline: none;
+      box-sizing: border-box;
+      transition: border-color 0.15s;
+    }
+    .universe-search__input::placeholder {
+      color: var(--text-muted);
+    }
+    .universe-search__input:focus {
+      border-color: var(--color-ink-400, #888);
+    }
+    .universe-card--hidden {
+      display: none;
+    }
+    .universe-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-16);
+    }
+    .universe-card {
+      background: var(--color-ink-100);
+      border: 1.5px dashed var(--color-ink-200);
+      border-radius: var(--radius-16);
+      padding: var(--space-24);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-12);
+      cursor: default;
+      user-select: none;
+    }
+    .universe-card__phase {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-ink-500);
+    }
+    .universe-card__phase::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-ink-200);
+      flex-shrink: 0;
+    }
+    .universe-card__name {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+      line-height: 1.25;
+    }
+    .universe-card__desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      flex: 1;
+    }
   </style>
 </head>
 <body>
@@ -464,17 +575,259 @@
     </div>
     <div class="agent-grid" id="grid-testing"></div>
 
-    <div style="height: var(--space-64)"></div>
-
-    <!-- Deploy agents -->
-    <div class="section-header" id="group-deploy">
-      <h2 class="section-title">Deployment agents</h2>
-    </div>
-    <div class="agent-grid" id="grid-deploy"></div>
-
-    <div style="height: var(--space-80)"></div>
+    <div style="height: var(--space-32)"></div>
   </div>
 </main>
+
+<!-- AGENT UNIVERSE -->
+<section class="universe-section" aria-labelledby="universe-heading">
+  <div class="universe-inner">
+    <div class="universe-header">
+      <h2 class="universe-title" id="universe-heading">Agent Universe</h2>
+    </div>
+    <p class="universe-subtitle">These agents are optional. Use them when they fit your project.</p>
+
+    <div class="universe-search">
+      <svg class="universe-search__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <input id="universe-search-input" class="universe-search__input" type="search" placeholder="Search for agent title..." aria-label="Search optional agents by title">
+    </div>
+
+    <div class="universe-grid" id="universe-grid">
+
+      <div class="universe-card">
+        <div class="universe-card__name">ADR Creation</div>
+        <div class="universe-card__desc">Interactive AI coaching for collaborative architectural decision record creation with guided discovery, research integration, and progressive documentation building.</div>
+        <span class="universe-card__phase">Planning &amp; Implementation</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">agile-coach</div>
+        <div class="universe-card__desc">Conversational agent that helps create or refine goal-oriented user stories with clear acceptance criteria for any tracking tool.</div>
+        <span class="universe-card__phase">Planning &amp; Agile Delivery</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">API Test</div>
+        <div class="universe-card__desc">Running backend API tests with Playwright.</div>
+        <span class="universe-card__phase">Development / Implementation</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">Arch Diagram Builder</div>
+        <div class="universe-card__desc">Architecture diagram builder agent that builds high quality ASCII-art diagrams.</div>
+        <span class="universe-card__phase">Documentation</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">Backlog Manager</div>
+        <div class="universe-card__desc">Helps to plan backlog.</div>
+        <span class="universe-card__phase">Requirements &amp; Planning</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">Code2DesignDiag</div>
+        <div class="universe-card__desc">Generate design document and flow chart of the logic from legacy source code.</div>
+        <span class="universe-card__phase">Architecture &amp; Design</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">Code2Doc</div>
+        <div class="universe-card__desc">Generate documentation for legacy source code.</div>
+        <span class="universe-card__phase">Documentation</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">code-review-full</div>
+        <div class="universe-card__desc">Orchestrator that runs functional and standards code reviews via subagents and produces a merged report.</div>
+        <span class="universe-card__phase">Development &amp; Implementation</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">code-review-functional</div>
+        <div class="universe-card__desc">Pre-PR branch diff reviewer for functional correctness, error handling, edge cases, and testing gaps.</div>
+        <span class="universe-card__phase">Development &amp; Implementation</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">code-review-standards</div>
+        <div class="universe-card__desc">Skills-based code reviewer for local changes and PRs — applies project-defined coding standards via dynamic skill loading.</div>
+        <span class="universe-card__phase">Development &amp; Implementation</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">Coding Standards</div>
+        <div class="universe-card__desc">Skills-based code reviewer for local changes and PRs — applies project-defined coding standards via dynamic skill loading.</div>
+        <span class="universe-card__phase">Code Review &amp; Quality</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">doc-ops</div>
+        <div class="universe-card__desc">Autonomous documentation operations agent for pattern compliance, accuracy verification, and gap detection.</div>
+        <span class="universe-card__phase">Cross-cutting</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">dt-learning-tutor</div>
+        <div class="universe-card__desc">Design Thinking learning tutor providing structured curriculum, comprehension checks, and adaptive pacing.</div>
+        <span class="universe-card__phase">Enablement &amp; Learning</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">DTCoach</div>
+        <div class="universe-card__desc">Design Thinking coach guiding teams through the 9-method HVE framework with Think/Speak/Empower philosophy.</div>
+        <span class="universe-card__phase">Cross-cutting</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">eval-dataset-creator</div>
+        <div class="universe-card__desc">Creates evaluation datasets and documentation for AI agent testing using interview-driven data curation.</div>
+        <span class="universe-card__phase">Testing &amp; Evaluation</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">experiment-designer</div>
+        <div class="universe-card__desc">Conversational coach that guides users through designing a Minimum Viable Experiment with structured hypothesis formation, vetting, and experiment planning.</div>
+        <span class="universe-card__phase">Discovery &amp; Prototyping</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">finding-deep-verifier</div>
+        <div class="universe-card__desc">Deep adversarial verification of FAIL and PARTIAL findings for a single security skill.</div>
+        <span class="universe-card__phase">Validation &amp; Quality Assurance</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">FunctionalTest</div>
+        <div class="universe-card__desc">Execute frontend functional tests.</div>
+        <span class="universe-card__phase">Development / Implementation</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">implementation-validator</div>
+        <div class="universe-card__desc">Validates implementation quality against architectural requirements, design principles, and code standards with severity-graded findings.</div>
+        <span class="universe-card__phase">Development</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">jira-prd-to-wit</div>
+        <div class="universe-card__desc">Product Manager expert for analysing PRDs and planning Jira issue hierarchies without mutating Jira.</div>
+        <span class="universe-card__phase">Backlog Management</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">Jira2Code</div>
+        <div class="universe-card__desc">Implementing code from the Jira story given.</div>
+        <span class="universe-card__phase">Planning</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">meeting-analyst</div>
+        <div class="universe-card__desc">Meeting transcript analyser that extracts product requirements for PRD creation via work-iq-mcp.</div>
+        <span class="universe-card__phase">Requirements &amp; Planning</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">memory</div>
+        <div class="universe-card__desc">Conversation memory persistence for session continuity across agent interactions.</div>
+        <span class="universe-card__phase">Cross-cutting</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">pptx</div>
+        <div class="universe-card__desc">Creates, updates, and manages PowerPoint slide decks using YAML-driven content with python-pptx.</div>
+        <span class="universe-card__phase">Cross-cutting</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">PR Review</div>
+        <div class="universe-card__desc">Comprehensive pull request review assistant ensuring code quality, security, and convention compliance before changes are merged.</div>
+        <span class="universe-card__phase">Code Review &amp; Quality</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">RAI Planner</div>
+        <div class="universe-card__desc">Responsible AI assessment planning agent with a 6-phase conversational workflow. Guides planning against NIST AI RMF 1.0, preparing security model, impact assessment, and backlog handoff.</div>
+        <span class="universe-card__phase">Cross-cutting Governance</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">ReleaseNotesGen</div>
+        <div class="universe-card__desc">Compose and refine launch-ready release notes with contributor callouts and export-friendly output.</div>
+        <span class="universe-card__phase">Documentation</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">report-generator</div>
+        <div class="universe-card__desc">Collates verified security skill assessment findings and generates a comprehensive vulnerability report.</div>
+        <span class="universe-card__phase">Cross-cutting</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">Security Planner</div>
+        <div class="universe-card__desc">Phase-based security planner that produces security models, standards mappings, and backlog handoff artefacts with AI/ML component detection and RAI Planner integration.</div>
+        <span class="universe-card__phase">Requirements &amp; Design</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">security-reviewer</div>
+        <div class="universe-card__desc">Security skill assessment orchestrator for codebase profiling and vulnerability reporting.</div>
+        <span class="universe-card__phase">Design &amp; Development &amp; Testing</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">skill-assessor</div>
+        <div class="universe-card__desc">Assesses a single security knowledge skill against the codebase, reading vulnerability references and returning structured findings.</div>
+        <span class="universe-card__phase">Cross-cutting</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">sssc-planner</div>
+        <div class="universe-card__desc">Guides users through a six-phase assessment of their repository's supply chain security posture against OpenSSF Scorecard, SLSA, Sigstore, and SBOM standards.</div>
+        <span class="universe-card__phase">Security &amp; Compliance</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">Story2DesignDoc</div>
+        <div class="universe-card__desc">Generate sequence diagrams and a design document for the user story, turning a Jira story into visual architecture artefacts.</div>
+        <span class="universe-card__phase">Architecture &amp; Design</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">system-architecture-reviewer</div>
+        <div class="universe-card__desc">System architecture reviewer for design trade-offs, ADR creation, and well-architected alignment.</div>
+        <span class="universe-card__phase">Governance &amp; Validation</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">test-streamlit-dashboard</div>
+        <div class="universe-card__desc">Automated testing for Streamlit dashboards using Playwright with issue tracking and reporting.</div>
+        <span class="universe-card__phase">Development</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">ux-ui-designer</div>
+        <div class="universe-card__desc">UX research specialist for Jobs-to-be-Done analysis, user journey mapping, and accessibility requirements.</div>
+        <span class="universe-card__phase">Requirements &amp; Development</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">UX/UI Development</div>
+        <div class="universe-card__desc">Set of agents that produces research plan, synthesises user findings, and generates Figma designs.</div>
+        <span class="universe-card__phase">Development / Implementation</span>
+      </div>
+
+      <div class="universe-card">
+        <div class="universe-card__name">ValidateStory</div>
+        <div class="universe-card__desc">Check if any ambiguities and acceptance criteria is clear in the given user story.</div>
+        <span class="universe-card__phase">Development / Implementation</span>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <!-- OVERLAY -->
 <div class="overlay-backdrop" id="overlay" role="dialog" aria-modal="true" aria-labelledby="overlay-name">
@@ -706,25 +1059,13 @@ failures, and blockers. Use the implemented behavior and approved requirements a
 do not modify application behavior to make tests pass.`,
     model: 'GPT-6 Sol',
   },
-  {
-    id: 'A.13', group: 'deploy', icon: 'icons/azure-deploy.svg',
-    name: 'Azure-Deploy',
-    tagline: 'Prepares and executes approved Azure deployments.',
-    desc: 'Prepares deployment artefacts, validates configuration and executes an approved deployment to Azure. Should be used only after the release candidate has passed required quality, security and readiness checks.',
-    useWhen: 'Only after release readiness and required approvals.',
-    inputs: 'Approved release candidate, environment configuration and deployment controls.',
-    output: 'Deployment package, deployed version and logs.',
-    humanReview: 'Release and deployment approvals remain with the named human authorities.',
-    prompt: `Analyze the current repository and deploy the application to Azure end-to-end. Discover all deployable components and dependencies, assess deployment readiness, design the Azure architecture, select appropriate services/SKUs/region, validate quota, estimate cost, generate secure Bicep/Terraform, provision infrastructure, deploy the application, run required database migrations, and verify application health. Preserve the existing service topology and ensure every Azure resource is provisioned through IaC only. Follow the Azure Deployment Agent's complete mandatory workflow and stop at each required scaffold and deployment approval gate before proceeding.`,
-    model: 'GPT-6 Sol',
-  },
 ];
 
 /* ─── Render cards ───────────────────────────────────────────────────────── */
 const arrowSVG = `<svg width="14" height="14" fill="none" viewBox="0 0 14 14"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="#4A5260" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
 function renderCards(filter) {
-  const groups = { design: [], coding: [], testing: [], deploy: [] };
+  const groups = { design: [], coding: [], testing: [] };
   agents.forEach(a => groups[a.group].push(a));
 
   let total = 0;
@@ -760,15 +1101,12 @@ function renderCards(filter) {
     });
 
     // hide empty group headers
-    const groupSection = grid.closest('[id^="group"]') || grid;
     const groupWrapper = document.getElementById('group-' + group);
     const shouldHide = visible.length === 0;
-    if (groupWrapper) groupWrapper.parentElement && (groupWrapper.parentElement.style.display = shouldHide ? 'none' : '');
-    // Simple approach: hide the whole subsection
     const spacerAfter = grid.nextElementSibling;
-    grid.style.display = visible.length === 0 ? 'none' : '';
-    if (groupWrapper) groupWrapper.style.display = visible.length === 0 ? 'none' : '';
-    if (spacerAfter && spacerAfter.tagName === 'DIV') spacerAfter.style.display = visible.length === 0 ? 'none' : '';
+    grid.style.display = shouldHide ? 'none' : '';
+    if (groupWrapper) groupWrapper.style.display = shouldHide ? 'none' : '';
+    if (spacerAfter && spacerAfter.tagName === 'DIV') spacerAfter.style.display = shouldHide ? 'none' : '';
   });
 
   // count unused — filter removed
@@ -852,6 +1190,7 @@ window.addEventListener('hashchange', () => {
   }
 });
 
+
 </script>
 
 <footer class="site-footer">
@@ -860,5 +1199,16 @@ window.addEventListener('hashchange', () => {
     <li><a href="agent-catalogue.html">Agent Catalogue</a></li>
   </ul>
 </footer>
+
+<script>
+document.getElementById('universe-search-input').addEventListener('input', function () {
+  var query = this.value.trim().toLowerCase();
+  document.querySelectorAll('#universe-grid .universe-card').forEach(function (card) {
+    var name = card.querySelector('.universe-card__name');
+    var match = name && name.textContent.toLowerCase().includes(query);
+    card.style.display = (query && !match) ? 'none' : '';
+  });
+});
+</script>
 </body>
 </html>
