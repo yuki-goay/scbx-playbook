@@ -868,7 +868,7 @@ const agents = [
     tagline: 'Makes sense of what users told us.',
     desc: 'Files and tags raw sessions as evidence, then drafts insights, personas, blueprints and test findings — each one traceable to where it came from.',
     useWhen: 'A person has conducted discovery sessions and has raw materials of requirements and findings.',
-    inputs: 'Transcripts, raw notes, research plan, and images.',
+    inputs: 'Checked raw material, tagged and de-identified evidence, personas, jobs and pain points, prioritised features, the to-be blueprint, experience principles, the hi-fi prototype and pass criteria.',
     output: 'Tagged evidence, insights, personas, blueprints and test findings.',
     humanReview: 'A person checks raw transcripts for sensitive content before the agent sees them. People then review the drafts and the evidence behind them.',
     prompt: `@Insights Synthesizer I've added our session notes from last week's interviews to the workspace. Organise and synthesise the evidence. Give me personas and need statements from the synthesis.`,
@@ -880,10 +880,18 @@ const agents = [
     tagline: 'Turns decisions into something people can see and try.',
     desc: 'Drafts the structure of the experience, the design language and the detailed screens. Builds a working concept prototype from the approved design system and checks designs against principles and standards.',
     useWhen: 'The user journey, screen inventory, and design system are available to create detailed designs.',
-    inputs: 'Canvas briefs, screen inventory, user journey, and sample images or links.',
-    output: 'The IA, design language, detailed screens and check results.',
+    inputs: 'Feature requirements, existing designs, sample images or links.',
+    output: 'Canvas briefs, IA, design language, screen inventory, detailed screens and check results.',
     humanReview: 'A person approves the briefs before any design is built. Designers then review the screens and the check results.',
-    prompt: `@Experience Architect This is a mobile app for users to lock FX rates for transaction. It follows conventional, modern banking app interface and interaction design. Use the insights discovered to create a representative user journey, screen inventory, and IA.`,
+    prompt: `@Experience Architect This is a [mobile app] for users to [lock FX rates for transaction]. It follows conventional, modern banking app interface and interaction design. Use the insights discovered to create a representative user journey, screen inventory, and IA.
+
+---
+
+@Experience Architect Create a design system and the tokens file. Use #2E2E32 and #595B63 for text, and the primary blue is #316DDD with #5C88DA and #4870BD alongside it. Use Arial as the main font.
+
+---
+
+@Experience Architect You are working on a new feature to allow users to compare credit cards for this website https://www.cardx.co.th/en . You want to retain the exact design system of this website, following the typography, colour styles, and visual semantics. Create the user journey and design brief for this feature.`,
     model: 'Claude Sonnet 5.5',
   },
   {
@@ -892,8 +900,8 @@ const agents = [
     tagline: 'Creates a unified project context for downstream agents.',
     desc: 'Brings together reference material, project documentation, source code, configuration and tests, and supplements these with business, stakeholder, compliance and technical context.',
     useWhen: 'Creating project context from scratch; starting a new project or onboarding an existing codebase; or establishing business, technical and standards documentation.',
-    inputs: 'Confluence link or attached documents; legacy project documentation; source code, configuration and tests; business, compliance and stakeholder information.',
-    output: 'Unified project context with CTX-* trace IDs; technology-specific standards; additional user-provided standards indexed under .github/contexts/.',
+    inputs: 'Confluence link where provided; otherwise attached Word or PDF documents; available legacy project documentation; source code, configuration and tests; business, client-domain, stakeholder and compliance information; and, for greenfield projects, technology stack and business overview.',
+    output: 'Unified project context with CTX-* trace IDs; technology-specific standards based on best practices; and additional user-provided standards preserved and indexed under .github/contexts/.',
     humanReview: 'Review the generated context for completeness and accuracy, confirm applicable material has been captured, and resolve gaps before downstream use.',
     prompt: `@Context Builder Analyze the available project documentation, source code, tests, configuration, architecture, business context, and engineering standards. Build a unified project context indexed with CTX identifiers. Separate confirmed facts, derived context, and missing information, and flag material inconsistencies.`,
     model: 'GPT-6.1 Terra',
@@ -904,8 +912,8 @@ const agents = [
     tagline: 'Converts business problems into a structured BRD.',
     desc: 'Supports the discovery, definition, and governance of business requirements. Helps teams convert an initial business idea or problem statement into a structured BRD ready for stakeholder review.',
     useWhen: 'The team needs to define the business problem, establish objectives and outcomes, identify stakeholders, document current-state challenges, or establish governance before detailed design begins.',
-    inputs: 'Business problem statements, transformation objectives, workshop notes, stakeholder interviews, existing process documents, policies, customer feedback, and known risks.',
-    output: 'Executive summary, business context, objectives, stakeholder details, current-state challenges, in/out-of-scope items, business requirements, success measures, assumptions, dependencies, and governance information.',
+    inputs: 'Business problem statements; transformation objectives; workshop notes; stakeholder interviews; existing process documents; policies and standards; customer or employee feedback; business metrics and key performance indicators; existing architecture or programme documentation; and known assumptions, risks and dependencies.',
+    output: 'Executive summary; business context and problem statement; business objectives and expected outcomes; stakeholder and user-group details; current-state challenges; in-scope and out-of-scope items; business requirements; business rules; success measures; assumptions and constraints; dependencies and risks; governance and approval information; and traceability to supporting sources where applicable.',
     humanReview: 'Business owners, product leadership, architecture, security, governance, and delivery stakeholders review before the BRD becomes the approved input to PRD creation.',
     prompt: `Create a BRD for the SCBx AI-enabled Product Development Lifecycle initiative.
 
@@ -934,8 +942,8 @@ Capture:
     tagline: 'Translates approved business direction into product requirements.',
     desc: 'Converts an approved BRD into detailed, measurable, and actionable product requirements. Defines what the product must do, how it should behave, which quality attributes it must satisfy, and how completion will be verified.',
     useWhen: 'After an approved BRD is in place and the team needs to define product users, describe capabilities, capture functional and non-functional requirements, or establish acceptance criteria.',
-    inputs: 'Approved BRD, product vision and roadmap, user personas, user research, existing process flows, architecture constraints, regulatory requirements, and source-system details.',
-    output: 'Product overview, goals, target users, scope, features, functional and non-functional requirements, user journeys, data and integration requirements, security requirements, acceptance criteria, and traceability to BRD objectives.',
+    inputs: 'Approved BRD; product vision and roadmap; user personas; user research; existing process flows; architecture constraints; regulatory and security requirements; source-system and integration details; existing backlog items; service-level objectives; operational and support requirements; and reference applications or existing codebase context.',
+    output: 'Product overview and problem statement; product goals and non-goals; target users and personas; product scope; features and capabilities; functional requirements; non-functional requirements; user journeys or workflows; data and integration requirements; roles and access requirements; security, privacy, compliance and audit requirements; performance, scalability, availability and resilience requirements; observability and operational requirements; error and exception handling; measurable acceptance criteria; dependencies, assumptions, constraints and risks; and traceability to BRD objectives and source evidence.',
     humanReview: 'Product owners, business analysts, solution architects, engineering leads, security stakeholders, test leads, and operations teams review before the PRD is approved.',
     prompt: `Create a PRD for an AI-assisted backlog and requirements-management
 capability for the SCBx AI-enabled Product Development Lifecycle.
@@ -955,7 +963,15 @@ Define requirements for:
 - Identifying ambiguity, conflicts, and missing information
 - Requiring human review before backlog changes are published
 - Integrating with the approved engineering toolchain
-- Recording source references and change history`,
+- Recording source references and change history
+
+Include:
+- Functional and non-functional requirements
+- Roles and access boundaries
+- Data and integration requirements
+- Security, privacy, audit, and observability requirements
+- Error and exception handling
+- Acceptance criteria and validation evidence`,
     model: 'Claude Sonnet 5.5',
   },
   {
@@ -1002,8 +1018,8 @@ Generate all required specification, contract, design-evidence, traceability, an
     tagline: 'Decomposes a specification into ordered implementation tasks.',
     desc: 'Makes dependencies, sequencing and expected outcomes explicit so work can be executed in controlled increments. The FDE or engineering lead checks that the plan covers the approved scope and does not introduce unsupported design decisions.',
     useWhen: 'After specification and plan approval.',
-    inputs: 'spec.md, plan.md, project context and engineering standards.',
-    output: 'tasks.md and dependency sequence.',
+    inputs: 'spec.md, project context and engineering standards.',
+    output: 'plan.md, tasks.md and dependency sequence.',
     humanReview: 'FDE or engineering lead validates completeness and ordering.',
     prompt: `Create the implementation plan and task breakdown for RUN_ID=<RUN_ID>.
 Use the reviewed specification, preserve requirement traceability, and define dependencies,
