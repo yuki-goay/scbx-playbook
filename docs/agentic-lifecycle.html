@@ -1,0 +1,2057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic Lifecycle by Project Type — Agentic PDLC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared/agent-card.css">
+  <style>
+
+    /* ═══════════════════════════════════════════════════════════
+       LAYER 1 — ATOMS
+    ═══════════════════════════════════════════════════════════ */
+    :root {
+      --purple-600:  #7631C1;
+      --purple-700:  #462279;
+      --grey-100:    #C9CED6;
+      --grey-200:    #BBBEC3;
+
+      --text-primary:    #14181F;
+      --text-secondary:  #4A5260;
+      --text-muted:      #60636A;
+      --surface-page:    #F3F0F7;
+      --surface-card:    #FFFFFF;
+
+      --progress-track:  var(--grey-100);
+      --progress-fill:   var(--purple-600);
+
+      --mini-hero-gradient: linear-gradient(180deg, #E8DBFF 2%, #F3F0F7 74%);
+      --nav-gradient:       linear-gradient(99deg, rgba(79,42,129,0.85) 0%, #462279 77.5%);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--text-primary);
+      background: var(--surface-page);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-width: 1440px;
+    }
+
+    button { font-family: inherit; cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ═══════════════════════════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════════════════════════ */
+    .site-header {
+      width: 100%;
+      height: 72px;
+      background: var(--nav-gradient);
+      display: flex;
+      align-items: center;
+      padding: 0 120px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: flex-start;
+      text-decoration: none;
+      font-size: 28px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+
+    .header-logo sup {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-top: 3px;
+      margin-left: 1px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       MINI HERO
+    ═══════════════════════════════════════════════════════════ */
+    .mini-hero {
+      width: 100%;
+      height: 194px;
+      background: var(--mini-hero-gradient);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 40px 120px;
+    }
+
+    .mini-hero__inner {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .breadcrumb__link {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .breadcrumb__link:hover { text-decoration: underline; }
+
+    .breadcrumb__sep {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .breadcrumb__current {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--purple-600);
+    }
+
+    .mini-hero__heading {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 44px;
+      color: var(--text-primary);
+      letter-spacing: -0.5px;
+    }
+
+    .mini-hero__sub {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 26px;
+      color: var(--text-primary);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       QUIZ AREA
+    ═══════════════════════════════════════════════════════════ */
+    .quiz-area {
+      background: var(--surface-page);
+      padding: 48px 120px 80px;
+    }
+
+    /* Progress bar */
+    .progress-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .progress-bar-track {
+      flex: 1;
+      height: 4px;
+      background: var(--progress-track);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--progress-fill);
+      border-radius: 99px;
+      transition: width 0.35s ease;
+    }
+
+    .progress-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+      min-width: 56px;
+      text-align: right;
+    }
+
+    /* Quiz card (white wrapper) */
+    .quiz-card {
+      background: var(--surface-card);
+      border-radius: 16px;
+      padding: 40px 48px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* Question header */
+    .quiz-card__meta {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--purple-600);
+      margin-bottom: 8px;
+    }
+
+    .quiz-card__question {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 32px;
+      color: var(--text-primary);
+      letter-spacing: -0.3px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       ANSWER CARDS — exact Figma spec
+    ═══════════════════════════════════════════════════════════ */
+    .answer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .answer-card {
+      height: 305px;
+      border-radius: 24px;
+      border: 1px solid #BBBEC3;
+      background: #FFFFFF;
+      box-shadow: 0px 7px 15px rgba(0, 0, 0, 0.10);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+      padding: 24px 32px;
+      transition: background 0.18s ease, border-color 0.18s ease;
+      user-select: none;
+    }
+
+    .answer-card:hover {
+      background: linear-gradient(180deg, #FFFFFF 0%, #FEFEFF 29%, #DAC4FF 100%);
+      border-color: #4F2A81;
+    }
+
+    .answer-card--selected {
+      background: #462279 !important;
+      border-color: #462279 !important;
+    }
+
+    /* Icon circle */
+    .answer-card__icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 60px;
+      background: linear-gradient(180deg, rgba(70,34,121,1) 0%, rgba(129,63,223,1) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .answer-card--selected .answer-card__icon {
+      background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(209,182,255,1) 100%);
+    }
+
+    .answer-card__letter {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1;
+      color: #FFFFFF;
+    }
+
+    .answer-card--selected .answer-card__letter {
+      color: #633BA1;
+    }
+
+    /* Answer text */
+    .answer-card__text {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.4;
+      color: #14181F;
+      text-align: center;
+    }
+
+    .answer-card--selected .answer-card__text {
+      color: #FFFFFF;
+    }
+
+    /* Quiz nav (Back / Next) */
+    .quiz-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 8px;
+    }
+
+    .btn-back {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.15s;
+    }
+
+    .btn-back:hover { color: var(--text-primary); }
+
+    .btn-back:disabled {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .btn-next {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      background: var(--purple-600);
+      border: none;
+      border-radius: 8px;
+      padding: 12px 28px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.15s, opacity 0.15s;
+    }
+
+    .btn-next:hover { background: var(--purple-700); }
+
+    .btn-next:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       RESULTS SCREEN
+    ═══════════════════════════════════════════════════════════ */
+
+    .results-card {
+      background: var(--surface-card);
+      border-radius: 16px;
+      padding: 40px 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .results-card__eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--purple-600);
+    }
+
+    .results-card__heading {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 36px;
+      color: var(--text-primary);
+      letter-spacing: -0.4px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       PROJECT TYPE CARDS — exact Figma spec
+    ═══════════════════════════════════════════════════════════ */
+    .project-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 320px);
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .project-card {
+      width: 320px;
+      height: 380px;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      overflow: hidden;
+      cursor: pointer;
+      transition: opacity 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .project-card--greenfield {
+      background: linear-gradient(180deg, rgba(243,240,247,1) 0%, rgba(212,242,221,1) 100%);
+      border: 2px solid #92E3A9;
+    }
+
+    .project-card--brownfield {
+      background: linear-gradient(180deg, rgba(243,240,247,1) 31%, rgba(242,216,197,1) 100%);
+      border: 2px solid #C08355;
+    }
+
+    .project-card--modernisation {
+      background: linear-gradient(180deg, rgba(243,240,247,1) 31%, rgba(187,219,244,1) 100%);
+      border: 2px solid #389DF0;
+    }
+
+    .project-card.is-winner {
+      box-shadow: 0px 8px 32px rgba(0,0,0,0.14), 0px 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .project-card.is-other {
+      opacity: 0.3;
+    }
+
+    .project-card.is-all-visible {
+      opacity: 1;
+    }
+
+    /* Illustration container */
+    .project-card__illustration {
+      width: 210px;
+      height: 210px;
+      background: #FFFFFF;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .project-card__illustration img {
+      width: 210px;
+      height: 210px;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* Title + description */
+    .project-card__content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 24px 0;
+      text-align: center;
+    }
+
+    .project-card__title {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #14181F;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .project-card__desc {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: #14181F;
+    }
+
+    /* Results actions */
+    .results-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .btn-retake {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      background: none;
+      border: 1.5px solid var(--grey-200);
+      border-radius: 8px;
+      padding: 12px 28px;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .btn-retake:hover {
+      border-color: var(--purple-600);
+      background: rgba(118,49,193,0.06);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════════════════ */
+    .site-footer {
+      background: #14181F;
+      height: 107px;
+      display: flex;
+      align-items: center;
+      padding: 0 120px;
+    }
+
+    .site-footer__links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .site-footer__links a {
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .site-footer__links a:hover { color: #fff; }
+
+    .footer-logo {
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.4px;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .footer-logo sup {
+      font-size: 10px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-top: 3px;
+      margin-left: 1px;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       AGENT DETAIL SECTION
+    ═══════════════════════════════════════════════════════ */
+
+    .agent-detail-section {
+      margin-top: 48px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(74,82,96,0.14);
+    }
+
+    .agent-detail-section__heading {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 24px;
+      letter-spacing: -0.3px;
+    }
+
+    /* ── Panels ─────────────────────────────────────────── */
+    .pt-panel { display: none; }
+    .pt-panel.is-active { display: block; }
+
+    /* ── Lifecycle accordion ─────────────────────────────── */
+    .lifecycle-accordion {
+      border: 1.5px solid rgba(74,82,96,0.12);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 10px;
+      background: #FFFFFF;
+    }
+
+    .lifecycle-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 22px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+      background: #FFFFFF;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.15s;
+      gap: 12px;
+    }
+
+    .lifecycle-header:hover { background: #F8F6FC; }
+    .lifecycle-header[aria-expanded="true"] { background: #FFFFFF; }
+
+    .lifecycle-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .lifecycle-meta-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .lifecycle-agent-count {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .lifecycle-chevron {
+      transition: transform 0.22s ease;
+      flex-shrink: 0;
+    }
+
+    .lifecycle-header[aria-expanded="true"] .lifecycle-chevron {
+      transform: rotate(180deg);
+    }
+
+    .lifecycle-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.25s ease;
+      padding: 0 22px;
+    }
+
+    .lifecycle-body.is-open {
+      max-height: 1400px;
+      padding: 0 22px 22px;
+    }
+
+    /* ── Detail agent grid ──────────────────────────────── */
+    .detail-agent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 227px);
+      gap: 14px;
+    }
+
+    /* ── Agent overlay ──────────────────────────────────── */
+    .agent-ov-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(20,24,31,0.55);
+      backdrop-filter: blur(6px);
+      z-index: 400;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+
+    .agent-ov-backdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .agent-ov-panel {
+      background: white;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 860px;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: translateY(18px) scale(0.97);
+      transition: transform 0.3s cubic-bezier(0.34,1.2,0.64,1), opacity 0.25s;
+      opacity: 0;
+      margin: 0 32px;
+    }
+
+    .agent-ov-backdrop.open .agent-ov-panel {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .agent-ov-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 28px 28px 22px;
+      border-bottom: 1px solid rgba(74,82,96,0.1);
+      position: sticky;
+      top: 0;
+      background: white;
+      z-index: 1;
+    }
+
+    .agent-ov-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 13px;
+      background: #F3F0F7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .agent-ov-icon img { width: 38px; height: 38px; object-fit: contain; }
+
+    .agent-ov-meta { flex: 1; min-width: 0; }
+
+    .agent-ov-id {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--purple-600);
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .agent-ov-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .agent-ov-tagline {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 3px;
+    }
+
+    .agent-ov-model {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--purple-600);
+      background: #F5F0FC;
+      border: 1px solid rgba(118,49,193,0.2);
+      border-radius: 8px;
+      padding: 6px 12px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      letter-spacing: 0.2px;
+    }
+
+    .agent-ov-close {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      border: 1.5px solid rgba(74,82,96,0.15);
+      background: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, border-color 0.15s;
+      flex-shrink: 0;
+    }
+
+    .agent-ov-close:hover { background: #F3F0F7; border-color: rgba(74,82,96,0.3); }
+
+    .agent-ov-body {
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .ov-detail-block { display: flex; flex-direction: column; gap: 7px; }
+    .ov-detail-block--full { grid-column: 1 / -1; }
+
+    .ov-detail-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .ov-detail-content {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .ov-prompt-block {
+      grid-column: 1 / -1;
+      background: #1A1E27;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .ov-prompt-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 18px 8px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+    }
+
+    .ov-prompt-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #F59E0B;
+      display: inline-block;
+    }
+
+    .ov-prompt-text {
+      font-size: 12.5px;
+      font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+      color: rgba(255,255,255,0.78);
+      line-height: 1.75;
+      white-space: pre-wrap;
+      word-break: break-word;
+      padding: 0 18px 18px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       STAGE CAROUSEL
+    ═══════════════════════════════════════════════════════════ */
+    .stage-cards-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background: var(--purple-700);
+      border-radius: 16px;
+      padding: 40px 43px 108px;
+      overflow: hidden;
+    }
+
+    .stage-cards-scroll {
+      overflow-x: auto;
+      overflow-y: visible;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .stage-cards-scroll::-webkit-scrollbar { display: none; }
+
+    .stage-cards-row {
+      display: flex;
+      flex-direction: row;
+      gap: 0;
+      width: max-content;
+      align-items: flex-end;
+    }
+
+    .stage-card-wrapper {
+      position: relative;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .stage-card-wrapper::before {
+      content: '';
+      display: block;
+      height: 30px;
+    }
+
+    .stage-indicator {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 30px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      animation: indicator-bounce 1.1s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .stage-card-wrapper.is-active .stage-indicator {
+      display: flex;
+    }
+
+    @keyframes indicator-bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0px);  opacity: 0.75; }
+      50%       { transform: translateX(-50%) translateY(5px);  opacity: 1; }
+    }
+
+    .stage-card {
+      width: 147px;
+      height: 186px;
+      border-radius: 9.6px;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      flex-shrink: 0;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.18s ease, opacity 0.2s ease, box-shadow 0.18s ease;
+      user-select: none;
+      outline: none;
+    }
+
+    .stage-card:hover { transform: translateY(-3px); }
+
+    .stage-card:focus-visible {
+      box-shadow: 0 0 0 3px #ffe8b2;
+    }
+
+    .stage-card__accent {
+      width: 174px;
+      height: 5px;
+      flex-shrink: 0;
+      background: #b893f3;
+      align-self: center;
+      transition: background 0.18s ease;
+    }
+
+    .stage-card__inner {
+      display: flex;
+      flex-direction: column;
+      padding: 8px 12px 10px;
+      flex: 1;
+      gap: 4px;
+      position: relative;
+    }
+
+    .stage-card__num-section {
+      position: relative;
+      height: 52px;
+    }
+
+    .stage-card__ghost-num {
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: 51.2px;
+      font-weight: 700;
+      color: var(--purple-600);
+      opacity: 0.09;
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+
+    .stage-card__real-num {
+      position: absolute;
+      bottom: 0;
+      left: 1px;
+      font-size: 35.2px;
+      font-weight: 700;
+      color: var(--purple-600);
+      line-height: 1;
+    }
+
+    .stage-card__name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-top: 2px;
+      line-height: 1.3;
+    }
+
+    .stage-cards-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .stage-slider-track {
+      width: 204px;
+      flex-shrink: 0;
+      height: 2px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 99px;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.4);
+    }
+    .stage-slider-thumb {
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      background: #d9d9d9;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0;
+      cursor: grab;
+      transition: left 0.05s;
+    }
+
+    .stage-card-connector {
+      flex-shrink: 0;
+      align-self: center;
+      width: 20px;
+      height: 26px;
+      clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+      background: rgba(184,147,243,0.5);
+      margin-bottom: 93px;
+    }
+
+    /* Active / inactive card states */
+    .stage-card-wrapper.is-inactive .stage-card {
+      opacity: 0.3;
+    }
+    .stage-card-wrapper.is-inactive .stage-card:hover {
+      opacity: 0.55;
+      transform: translateY(-2px);
+    }
+    .stage-card-wrapper.is-active .stage-card__accent {
+      background: var(--purple-600);
+    }
+    .stage-card-wrapper.is-active .stage-card {
+      box-shadow: 0 0 0 2px rgba(184,147,243,0.9);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       GREENFIELD STAGE DETAIL SECTIONS
+    ═══════════════════════════════════════════════════════════ */
+    .gf-stage-details {
+      background: #FFFFFF;
+      border-top: 1px solid rgba(74,82,96,0.1);
+      margin: 36px -43px -108px;
+      border-radius: 0 0 16px 16px;
+      overflow: hidden;
+    }
+
+    .gf-stage-detail {
+      display: none;
+    }
+
+    .gf-stage-detail.is-visible {
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      gap: 48px;
+      padding: 40px 43px 44px;
+    }
+
+    .gf-stage-detail__title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #14181F;
+      margin-bottom: 10px;
+      letter-spacing: -0.3px;
+    }
+
+    .gf-stage-detail__label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #9298A4;
+      margin-bottom: 16px;
+    }
+
+    .gf-stage-detail__tasks {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .gf-stage-detail__tasks li {
+      font-size: 14px;
+      color: #4A5260;
+      line-height: 1.65;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .gf-stage-detail__tasks li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 6px;
+      height: 6px;
+      background: #7631C1;
+      border-radius: 50%;
+    }
+
+    .gf-stage-detail__right {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .gf-agents-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #9298A4;
+    }
+
+    .gf-agent-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .gf-no-agents {
+      font-size: 14px;
+      color: #9298A4;
+      line-height: 1.65;
+    }
+
+    .divider {
+      height: 1px;
+      background: rgba(74,82,96,0.12);
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="site-header">
+    <a href="index.html" class="header-logo">SCBx<sup>+</sup></a>
+  </header>
+
+  <!-- MINI HERO -->
+  <section class="mini-hero">
+    <div class="mini-hero__inner">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html" class="breadcrumb__link">Home</a>
+        <span class="breadcrumb__sep">›</span>
+        <span class="breadcrumb__current">Agentic lifecycle by project type</span>
+      </nav>
+      <h1 class="mini-hero__heading">Agentic lifecycle by project type</h1>
+    </div>
+  </section>
+
+  <!-- LIFECYCLE AREA -->
+  <main class="quiz-area">
+
+    <!-- Three project type cards -->
+    <div class="project-cards-grid" id="project-cards-grid">
+
+      <div class="project-card project-card--greenfield is-winner" id="card-greenfield" role="button" tabindex="0">
+          <div class="project-card__illustration">
+            <img src="images/greenfield-illustration.png" alt="Greenfield illustration">
+          </div>
+          <div class="project-card__content">
+            <p class="project-card__title">Greenfield</p>
+            <p class="project-card__desc">You want to create a new product, service, journey or application, including replacing a legacy solution with a newly built target state.</p>
+          </div>
+        </div>
+
+        <div class="project-card project-card--brownfield is-other" id="card-brownfield" role="button" tabindex="0">
+          <div class="project-card__illustration">
+            <img src="images/brownfield-illustration.png" alt="Brownfield illustration">
+          </div>
+          <div class="project-card__content">
+            <p class="project-card__title">Brownfield</p>
+            <p class="project-card__desc">You want to retain the existing application and deliver a feature, regulatory change or increment.</p>
+          </div>
+        </div>
+
+        <div class="project-card project-card--modernisation is-other" id="card-modernisation" role="button" tabindex="0">
+          <div class="project-card__illustration">
+            <img src="images/modernisation-illustration.png" alt="Modernisation illustration">
+          </div>
+          <div class="project-card__content">
+            <p class="project-card__title">Modernisation</p>
+            <p class="project-card__desc">You want to transform an existing application by modernising its architecture, technology stack, framework, runtime, database, infrastructure or deployment model.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Agent lifecycle detail section -->
+      <div class="agent-detail-section" id="agent-detail-section">
+        <h3 class="agent-detail-section__heading">Your project lifecycle</h3>
+
+        <div class="pt-panel" id="panel-greenfield"    role="tabpanel"></div>
+        <div class="pt-panel" id="panel-brownfield"    role="tabpanel"></div>
+        <div class="pt-panel" id="panel-modernisation" role="tabpanel"></div>
+      </div>
+
+  </main>
+
+  <!-- Agent overlay -->
+  <div class="agent-ov-backdrop" id="agent-ov" role="dialog" aria-modal="true" aria-labelledby="agent-ov-name">
+    <div class="agent-ov-panel">
+      <div class="agent-ov-header">
+        <div class="agent-ov-icon" id="agent-ov-icon"></div>
+        <div class="agent-ov-meta">
+          <div class="agent-ov-id" id="agent-ov-id"></div>
+          <div class="agent-ov-name" id="agent-ov-name"></div>
+          <div class="agent-ov-tagline" id="agent-ov-tagline"></div>
+        </div>
+        <div class="agent-ov-model" id="agent-ov-model"></div>
+        <button class="agent-ov-close" id="agent-ov-close" aria-label="Close">
+          <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12" stroke="#4A5260" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="agent-ov-body" id="agent-ov-body"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <ul class="site-footer__links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="agent-catalogue.html">Agent Catalogue</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    /* ── DOM refs ────────────────────────────────────────────── */
+    const cardGreen = document.getElementById('card-greenfield');
+    const cardBrown = document.getElementById('card-brownfield');
+    const cardMod   = document.getElementById('card-modernisation');
+
+    /* ── Agent detail: data ──────────────────────────────────── */
+    const DETAIL_AGENTS = {
+      'A.1': {
+        name: 'Research Planner',
+        tagline: 'Gets the team ready before anyone talks to a user.',
+        desc: 'Turns the vision and early stakeholder notes into a clear list of assumptions, a research plan, interview guides and screeners.',
+        icon: 'icons/research-planner.svg',
+        model: 'GPT-6.1 Terra',
+        useWhen: 'Kickoff has produced the vision and objectives; stakeholder interviews or earlier findings have changed what we need to ask; or a gate asks for the plan to be revised.',
+        inputs: 'Vision and objectives, stakeholder and expert interview notes, briefs and earlier work.',
+        output: 'Assumptions log, research plan, interview guides and screeners.',
+        humanReview: 'A person signs off the plan before fieldwork starts.',
+        prompt: '@Research Planner Here\'s the project brief [paste or attach]. We need to understand [project objective]. Plan the research for this — include research questions, participant criteria, and a recommended method.',
+      },
+      'A.2': {
+        name: 'Insights Synthesizer',
+        tagline: 'Makes sense of what users told us.',
+        desc: 'Files and tags raw sessions as evidence, then drafts insights, personas, blueprints and test findings — each one traceable back to where it came from.',
+        icon: 'icons/insights-synthesizer.svg',
+        model: 'Claude Sonnet 5.5',
+        useWhen: 'A person has conducted discovery sessions and has raw materials of requirements and findings.',
+        inputs: 'Checked raw material, tagged and de-identified evidence, personas, jobs and pain points, prioritised features, the to-be blueprint, experience principles, the hi-fi prototype and pass criteria.',
+        output: 'Tagged evidence, insights, personas, blueprints and test findings.',
+        humanReview: 'A person checks raw transcripts for sensitive content before the agent sees them.',
+        prompt: '@Insights Synthesizer I\'ve added our session notes from last week\'s interviews to the workspace. Organise and synthesise the evidence. Give me personas and need statements from the synthesis.',
+      },
+      'A.3': {
+        name: 'Experience Architect',
+        tagline: 'Turns decisions into something people can see and try.',
+        desc: 'Drafts the structure of the experience, the design language and the detailed screens. Builds a working concept prototype from the approved design system.',
+        icon: 'icons/experience-architect.svg',
+        model: 'Claude Sonnet 5.5',
+        useWhen: 'The user journey, screen inventory, and design system are available to create detailed designs.',
+        inputs: 'Feature requirements, existing designs, sample images or links.',
+        output: 'Canvas briefs, IA, design language, screen inventory, detailed screens and check results.',
+        humanReview: 'A person approves the briefs before any design is built. Designers then review the screens.',
+        prompt: '@Experience Architect This is a mobile app for users to lock FX rates for transaction. Use the insights discovered to create a representative user journey, screen inventory, and IA.',
+      },
+      'A.4': {
+        name: 'Context Builder',
+        tagline: 'Creates a unified project context for downstream agents.',
+        desc: 'Brings together reference material, project documentation, source code, configuration and tests, supplemented with business, stakeholder, compliance and technical context.',
+        icon: 'icons/context-builder.svg',
+        model: 'GPT-6.1 Terra',
+        useWhen: 'Creating project context from scratch; starting a new project or onboarding an existing codebase; or establishing business, technical and standards documentation.',
+        inputs: 'Confluence link where provided; otherwise attached Word or PDF documents; available legacy project documentation; source code, configuration and tests; business, client-domain, stakeholder and compliance information; and, for greenfield projects, technology stack and business overview.',
+        output: 'Unified project context with CTX-* trace IDs; technology-specific standards based on best practices; and additional user-provided standards preserved and indexed under .github/contexts/.',
+        humanReview: 'Review the generated context for completeness and accuracy before downstream use.',
+        prompt: '@Context Builder Analyze the available project documentation, source code, tests, configuration, architecture, business context, and engineering standards. Build a unified project context indexed with CTX identifiers.',
+      },
+      'A.5': {
+        name: 'BRD Builder',
+        tagline: 'Converts business problems into a structured BRD.',
+        desc: 'Supports the discovery, definition, and governance of business requirements. Converts an initial business idea into a structured BRD ready for stakeholder review.',
+        icon: 'icons/brd-builder.svg',
+        model: 'GPT-6.1 Terra',
+        useWhen: 'The team needs to define the business problem, establish objectives and outcomes, identify stakeholders, or establish governance before detailed design begins.',
+        inputs: 'Business problem statements; transformation objectives; workshop notes; stakeholder interviews; existing process documents; policies and standards; customer or employee feedback; business metrics and key performance indicators; existing architecture or programme documentation; and known assumptions, risks and dependencies.',
+        output: 'Executive summary; business context and problem statement; business objectives and expected outcomes; stakeholder and user-group details; current-state challenges; in-scope and out-of-scope items; business requirements; business rules; success measures; assumptions and constraints; dependencies and risks; governance and approval information; and traceability to supporting sources where applicable.',
+        humanReview: 'Business owners, product leadership, architecture, security, governance, and delivery stakeholders review before the BRD is approved.',
+        prompt: 'Create a BRD for the initiative. Capture: business problem and drivers, current-state challenges, stakeholders, in-scope and out-of-scope areas, target business outcomes, success indicators, business requirements, assumptions, dependencies, constraints, risks, governance and approval criteria.',
+      },
+      'A.6': {
+        name: 'PRD Builder',
+        tagline: 'Translates approved business direction into product requirements.',
+        desc: 'Converts an approved BRD into detailed, measurable, and actionable product requirements. Defines what the product must do and how completion will be verified.',
+        icon: 'icons/prd-builder.svg',
+        model: 'Claude Sonnet 5.5',
+        useWhen: 'After an approved BRD is in place and the team needs to define product users, describe capabilities, capture functional and non-functional requirements, or establish acceptance criteria.',
+        inputs: 'Approved BRD; product vision and roadmap; user personas; user research; existing process flows; architecture constraints; regulatory and security requirements; source-system and integration details; existing backlog items; service-level objectives; operational and support requirements; and reference applications or existing codebase context.',
+        output: 'Product overview and problem statement; product goals and non-goals; target users and personas; product scope; features and capabilities; functional requirements; non-functional requirements; user journeys or workflows; data and integration requirements; roles and access requirements; security, privacy, compliance and audit requirements; performance, scalability, availability and resilience requirements; observability and operational requirements; error and exception handling; measurable acceptance criteria; dependencies, assumptions, constraints and risks; and traceability to BRD objectives and source evidence.',
+        humanReview: 'Product owners, business analysts, solution architects, engineering leads, security, test leads, and operations teams review before the PRD is approved.',
+        prompt: 'Create a PRD for the product capability. Define requirements for importing an approved BRD, generating and refining epics, features, and user stories, maintaining traceability, and requiring human review before backlog changes are published.',
+      },
+      'A.7': {
+        name: 'Jira Backlog Manager',
+        tagline: 'Turns approved requirements into a structured delivery backlog.',
+        desc: 'Transforms approved product requirements or epics into a structured delivery backlog. Drafts epics, user stories and acceptance criteria.',
+        icon: 'icons/jira-backlog-manager.svg',
+        model: 'Claude Sonnet 5.5',
+        useWhen: 'Backlog decomposition or maintenance is required.',
+        inputs: 'Approved PRD, epics, story standards and backlog context.',
+        output: 'Draft epics, stories and backlog updates.',
+        humanReview: 'Product Owner or Business Analyst reviews priority, scope and acceptance criteria.',
+        prompt: 'Discover Jira issues from the attached PRD. Plan a Jira backlog for the <project> project. Use the "Epic" issue type for epics and "Story" for user stories. Include Acceptance Criteria in Given / When / Then format. Focus on P0 items first. Do not create any issues in Jira yet — only produce the discovery and backlog plan for review.',
+      },
+      'A.8': {
+        name: 'Technical Specifier',
+        tagline: 'Converts requirements into an implementation-ready specification.',
+        desc: 'Identifies missing information, conflicting assumptions and unresolved questions before planning or coding begins. The specification is the main implementation reference after accountable roles approve it.',
+        icon: 'icons/spec-clarify.svg',
+        model: 'GPT-6.1 Sol',
+        useWhen: 'Before planning and implementation for a bounded increment.',
+        inputs: 'Approved requirements, design, architecture, context and standards.',
+        output: 'spec.md, acceptance criteria and clarification questions.',
+        humanReview: 'FDE coordinates clarification; accountable business and technical roles approve resolved content.',
+        prompt: 'Create an implementation-ready technical specification for Jira story <#>. Analyze the requirements, existing codebase, project standards, APIs, and available design evidence. Capture unresolved decisions as CLAR-* items and block the handoff until they are resolved.',
+      },
+      'A.9': {
+        name: 'Implementation Planner',
+        tagline: 'Decomposes a specification into ordered implementation tasks.',
+        desc: 'Makes dependencies, sequencing and expected outcomes explicit so work can be executed in controlled increments. The FDE or engineering lead checks coverage against approved scope.',
+        icon: 'icons/task-planner.svg',
+        model: 'GPT-6.1 Sol',
+        useWhen: 'After specification and plan approval.',
+        inputs: 'spec.md, project context and engineering standards.',
+        output: 'plan.md, tasks.md and dependency sequence.',
+        humanReview: 'FDE or engineering lead validates completeness and ordering.',
+        prompt: 'Create the implementation plan and task breakdown for RUN_ID=<RUN_ID>. Use the reviewed specification, preserve requirement traceability, and define dependencies, verification, and unit-test work for each implementation task. Do not implement the tasks.',
+      },
+      'A.10': {
+        name: 'Implementation Builder',
+        tagline: 'Executes bounded tasks from the approved spec and plan.',
+        desc: 'Produces source-code changes and unit tests within the supplied repository context, standards and guardrails. The Application Engineer remains accountable for the change.',
+        icon: 'icons/task-implementor.svg',
+        model: 'GPT-5.3-Codex',
+        useWhen: 'For bounded, approved implementation work.',
+        inputs: 'Approved tasks, codebase, standards, context and test expectations.',
+        output: 'Source code and unit tests.',
+        humanReview: 'Application Engineer remains accountable for implementation and pull-request quality.',
+        prompt: 'Implement the approved tasks for RUN_ID=<RUN_ID> from output/<RUN_ID>/plan/tasks.md. Follow the approved specification and project standards and record implementation and verification evidence.',
+      },
+      'A.11': {
+        name: 'API Testing',
+        tagline: 'Generates and executes API tests against approved specifications.',
+        desc: 'Uses approved interface specifications, acceptance criteria and test standards to produce test assets, results and evidence. The Quality Engineer confirms coverage is sufficient.',
+        icon: 'icons/api-testing.svg',
+        model: 'GPT-5.3-Codex',
+        useWhen: 'Where the increment exposes or changes APIs.',
+        inputs: 'Approved API specification, acceptance criteria and test standards.',
+        output: 'API test assets, results and evidence.',
+        humanReview: 'Quality Engineer validates coverage and accepts test evidence.',
+        prompt: 'Read output/<RUN_ID>/specify/spec.md and determine API scope. If API In Scope is YES, test every API specified. Generate and execute the Playwright API suite, preserve evidence, and report failures, contract drift, coverage gaps, and blockers.',
+      },
+      'A.12': {
+        name: 'Functional Testing',
+        tagline: 'Converts requirements into repeatable functional tests.',
+        desc: 'Prepares test scenarios, cases, data, executable scripts and execution evidence for functional, role-based, negative and boundary conditions.',
+        icon: 'icons/functional-testing.svg',
+        model: 'GPT-6 Sol',
+        useWhen: 'For functional, role-based, negative and boundary testing in approved environments.',
+        inputs: 'PRD, stories, acceptance criteria, designs, APIs and test standards.',
+        output: 'Test strategy, test cases, data, executable scripts and execution evidence.',
+        humanReview: 'Quality Engineer reviews coverage, scripts and results and retains the quality decision.',
+        prompt: 'Read output/<RUN_ID>/specify/spec.md and determine UI scope. If UI In Scope is YES, test every specified UI behavior. Generate and execute reproducible Playwright tests, preserve evidence, and report coverage, failures, and blockers.',
+      },
+    };
+
+    const LIFECYCLE_MAP = {
+      greenfield: [
+        { group: '1. Discover and Frame', agents: [
+          { id: 'A.1', role: 'Recommended', why: 'Plans the research needed to define the user problem, personas and opportunity — essential before any requirement is written.' },
+          { id: 'A.2', role: 'Recommended', why: 'Synthesises discovery outputs into validated findings that inform the BRD and experience direction.' },
+        ]},
+        { group: '2. Contextualize', agents: [
+          { id: 'A.4', role: 'Recommended', why: 'Establishes the approved enterprise, domain, product and engineering context that all downstream agents depend on.' },
+        ]},
+        { group: '3. Define Requirements', agents: [
+          { id: 'A.5', role: 'Recommended', why: 'Drafts the Business Requirements Document from discovery notes — required because no prior BRD exists.' },
+          { id: 'A.6', role: 'Recommended', why: 'Converts the approved BRD into a structured Product Requirements Document before backlog creation.' },
+        ]},
+        { group: '4. Design Experience and Architecture', agents: [
+          { id: 'A.3', role: 'Recommended', why: 'Defines the target user journey, interaction model and design-system alignment for the new product.' },
+        ]},
+        { group: '5. Create Backlog and Specification', agents: [
+          { id: 'A.7', role: 'Recommended', why: 'Splits approved epics into Jira user stories and seeds the backlog for the new product.' },
+          { id: 'A.8', role: 'Recommended', why: 'Builds the executable specification from context and resolves requirement gaps before coding begins.' },
+        ]},
+        { group: '6. Plan and Decompose', agents: [
+          { id: 'A.9', role: 'Recommended', why: 'Breaks the approved specification into a dependency-aware task plan for implementation.' },
+        ]},
+        { group: '7. Build', agents: [
+          { id: 'A.10', role: 'Recommended', why: 'Writes code and unit tests against the approved plan.' },
+        ]},
+        { group: '8. Validate', agents: [
+          { id: 'A.11', role: 'Recommended', why: 'Generates and runs API tests from the new specifications — no existing test suite to inherit.' },
+          { id: 'A.12', role: 'Recommended', why: 'Turns requirements into Playwright scripts to validate the new journeys end-to-end.' },
+        ]},
+      ],
+      brownfield: [
+        { group: '1. Mobilize and Assess', agents: [] },
+        { group: '2. Discover and Frame', agents: [
+          { id: 'A.1', role: 'Optional', why: 'Use only when the enhancement is poorly defined or the user problem has not been validated. Skip if the change is already approved and specified.' },
+          { id: 'A.2', role: 'Optional', why: 'Use if discovery was required for this increment. Not needed when existing research or validated requirements already cover the change.' },
+        ]},
+        { group: '3. Contextualize', agents: [
+          { id: 'A.4', role: 'Recommended', why: 'Ingests the existing codebase, architecture, APIs and approved artefacts to form the context package for the change.' },
+        ]},
+        { group: '4. Define Requirements', agents: [
+          { id: 'A.5', role: 'Optional', why: 'Only required if existing requirements are incomplete or materially outdated. Approved artefacts should be reused.' },
+          { id: 'A.6', role: 'Optional', why: 'Only required if no approved PRD or equivalent artefact exists for this increment.' },
+        ]},
+        { group: '5. Design Experience and Architecture', agents: [
+          { id: 'A.3', role: 'Optional', why: 'Use for user-facing changes to assess UX impact, maintain design-system compliance and define the interaction delta.' },
+        ]},
+        { group: '6. Create Backlog and Specification', agents: [
+          { id: 'A.7', role: 'Optional',    why: 'Use to create or update stories when existing backlog artefacts are insufficient for the increment.' },
+          { id: 'A.8', role: 'Recommended', why: 'Clarifies the change against existing context and resolves gaps before implementation. Essential for safe delivery into an existing system.' },
+        ]},
+        { group: '7. Plan and Decompose', agents: [
+          { id: 'A.9', role: 'Recommended', why: 'Creates a dependency-aware plan for the approved change within the existing architecture constraints.' },
+        ]},
+        { group: '8. Build', agents: [
+          { id: 'A.10', role: 'Recommended', why: 'Implements the approved change against the plan, within the defined scope and architecture.' },
+        ]},
+        { group: '9. Validate', agents: [
+          { id: 'A.11', role: 'Recommended', why: 'Validates affected API contracts and ensures the change does not break existing integrations.' },
+          { id: 'A.12', role: 'Recommended', why: 'Covers affected journeys and regression paths to confirm the change did not break the existing application.' },
+        ]},
+        { group: '10. Release', agents: [] },
+        { group: '11. Operate and Improve', agents: [] },
+      ],
+      modernisation: [
+        { group: '1. Mobilize and Assess', agents: [] },
+        { group: '2. Discover and Frame', agents: [
+          { id: 'A.1', role: 'Optional', why: 'Apply only if the modernisation involves a significant UX redesign or the user problem needs reframing. Skip for pure technical transformation.' },
+          { id: 'A.2', role: 'Optional', why: 'Only relevant if discovery was required to define the target state. Not applicable for technically-driven modernisation.' },
+        ]},
+        { group: '3. Contextualize', agents: [
+          { id: 'A.4', role: 'Recommended', why: 'The highest-priority agent for this path. Ingests source code, architecture documentation, component inventory and dependency maps — the foundation for all analysis and planning.' },
+        ]},
+        { group: '4. Define Requirements', agents: [
+          { id: 'A.5', role: 'Recommended', why: 'Use to scope the transformation — defines business objectives, constraints and what the modernised state must achieve before architecture decisions are made.' },
+          { id: 'A.6', role: 'Recommended', why: 'Converts the approved transformation scope into a structured product document if one does not already exist.' },
+        ]},
+        { group: '5. Design Experience and Architecture', agents: [
+          { id: 'A.3', role: 'Optional', why: 'Use when the modernisation includes an experience redesign or design-system migration alongside the technical change.' },
+        ]},
+        { group: '6. Create Backlog and Specification', agents: [
+          { id: 'A.7', role: 'Optional',    why: 'Use to create or update the backlog for migration waves and modernisation increments.' },
+          { id: 'A.8', role: 'Recommended', why: 'Used to untangle legacy behaviour — clarifies what the existing system does before implementing the modernised equivalent.' },
+        ]},
+        { group: '7. Plan and Decompose', agents: [
+          { id: 'A.9', role: 'Recommended', why: 'Plans implementation and migration waves, dependencies, environment steps and rollback checkpoints.' },
+        ]},
+        { group: '8. Build', agents: [
+          { id: 'A.10', role: 'Recommended', why: 'Implements the approved modernisation or migration increment against the plan.' },
+        ]},
+        { group: '9. Validate', agents: [
+          { id: 'A.11', role: 'Recommended', why: 'Validates API contracts against the modernised system. Regression coverage against the existing API surface is critical.' },
+          { id: 'A.12', role: 'Recommended', why: 'Confirms functional equivalence between the existing and modernised system — the primary quality gate for this path.' },
+        ]},
+        { group: '10. Release', agents: [] },
+        { group: '11. Operate and Improve', agents: [] },
+      ],
+    };
+
+    /* ── Agent detail: rendering ─────────────────────────────── */
+    const ARROW_SVG = `<svg width="11" height="11" fill="none" viewBox="0 0 14 14"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="#4A5260" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    const CHEVRON_SVG = `<svg class="lifecycle-chevron" width="18" height="18" fill="none" viewBox="0 0 18 18"><path d="M4.5 6.75L9 11.25l4.5-4.5" stroke="#60636A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+    function buildAgentCard({ id, role, why }) {
+      const a = DETAIL_AGENTS[id];
+      const roleLower = role.toLowerCase();
+      return `<div class="agent-card" role="button" tabindex="0" data-agent-id="${id}">
+        <div class="agent-card__top">
+          <span class="agent-card__id">${id}</span>
+          <div class="agent-card__icon"><img src="${a.icon}" alt="" width="40" height="40"></div>
+        </div>
+        <div class="agent-card__name">${a.name}</div>
+        <div class="agent-card__desc">${why}</div>
+        <div class="agent-card__footer">
+          <span class="agent-card__badge agent-card__badge--${roleLower}">${role}</span>
+          <div class="agent-card__arrow">${ARROW_SVG}</div>
+        </div>
+      </div>`;
+    }
+
+    function buildGreenfieldPanel() {
+      const panel = document.getElementById('panel-greenfield');
+      panel.innerHTML = '';
+
+      const GF_STAGES = [
+        { num: '01', name: 'Mobilise &amp; Assess',
+          tasks: ['Select an appropriate project', 'Define a bounded delivery increment'],
+          agents: [{ id: 'A.1', role: 'Recommended', why: 'Plans the research needed to define the user problem, personas and opportunity — essential before any requirement is written.' }] },
+        { num: '02', name: 'Discover &amp; Frame',
+          tasks: ['Mandatory for net-new products and journeys', 'Define customer problem and personas', 'Define desired outcomes, journey and value hypothesis', 'Identify any constraints'],
+          agents: [{ id: 'A.2', role: 'Recommended', why: 'Synthesises discovery outputs into validated findings that inform the BRD and experience direction.' }] },
+        { num: '03', name: 'Contextualise',
+          tasks: ['Establish approved enterprise, domain context', 'Establish project context required by the agents'],
+          agents: [{ id: 'A.4', role: 'Recommended', why: 'Establishes the approved enterprise, domain, product and engineering context that all downstream agents depend on.' }] },
+        { num: '04', name: 'Define Requirements',
+          tasks: ['Develop the BRD and PRD from approved discovery outputs', 'Obtain business, product and architecture approval'],
+          agents: [
+            { id: 'A.5', role: 'Recommended', why: 'Drafts the Business Requirements Document from discovery notes — required because no prior BRD exists.' },
+            { id: 'A.6', role: 'Recommended', why: 'Converts the approved BRD into a structured Product Requirements Document before backlog creation.' },
+          ] },
+        { num: '05', name: 'Design Experience &amp; Architecture',
+          tasks: ['Define journey and interaction design', 'Apply design-system requirements', 'Define target architecture, APIs/events and data design', 'Address security and observability by design'],
+          agents: [{ id: 'A.3', role: 'Recommended', why: 'Defines the target user journey, interaction model and design-system alignment for the new product.' }] },
+        { num: '06', name: 'Create Backlog &amp; Specs',
+          tasks: ['Convert approved requirements and designs into implementable work', 'Maintain traceability'],
+          agents: [
+            { id: 'A.7', role: 'Recommended', why: 'Splits approved epics into Jira user stories and seeds the backlog for the new product.' },
+            { id: 'A.8', role: 'Recommended', why: 'Builds the executable specification from context and resolves requirement gaps before coding begins.' },
+          ] },
+        { num: '07', name: 'Plan &amp; Decompose',
+          tasks: ['Create a dependency-aware implementation plan', 'Base the plan on the approved specification'],
+          agents: [{ id: 'A.9', role: 'Recommended', why: 'Breaks the approved specification into a dependency-aware task plan for implementation.' }] },
+        { num: '08', name: 'Build',
+          tasks: ['Implement the bounded increment against the approved plan and specification'],
+          agents: [{ id: 'A.10', role: 'Recommended', why: 'Writes code and unit tests against the approved plan.' }] },
+        { num: '09', name: 'Validate',
+          tasks: ['Validate against approved business and technical requirements', 'Validate security and operational requirements'],
+          agents: [
+            { id: 'A.11', role: 'Recommended', why: 'Generates and runs API tests from the new specifications — no existing test suite to inherit.' },
+            { id: 'A.12', role: 'Recommended', why: 'Turns requirements into Playwright scripts to validate the new journeys end-to-end.' },
+          ] },
+        { num: '10', name: 'Release',
+          tasks: ['Prepare the increment for controlled release', 'Obtain required authorisation'],
+          agents: [] },
+        { num: '11', name: 'Operate &amp; Improve',
+          tasks: ['Monitor operational outcomes', 'Improve the product, context packages and agent chain'],
+          agents: [] },
+      ];
+
+      /* — carousel — */
+      const INDICATOR_SVG = `<svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 1.5L7 8L13 1.5" stroke="#ffe8b2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+      let carouselHTML = `<div class="stage-cards-wrapper"><div class="stage-cards-header"><div class="stage-slider-track" id="gfSliderTrack" role="scrollbar" aria-controls="gfStageScroll" aria-orientation="horizontal"><div class="stage-slider-thumb" id="gfSliderThumb"></div></div></div><div class="stage-cards-scroll" id="gfStageScroll"><div class="stage-cards-row">`;
+      GF_STAGES.forEach((stage, i) => {
+        if (i > 0) carouselHTML += `<div class="stage-card-connector" aria-hidden="true"></div>`;
+        carouselHTML += `
+          <div class="stage-card-wrapper" data-stage="${stage.num}">
+            <div class="stage-indicator" aria-hidden="true">${INDICATOR_SVG}</div>
+            <div class="stage-card" data-stage="${stage.num}" tabindex="0" role="button" aria-label="Stage ${stage.num}">
+              <div class="stage-card__accent"></div>
+              <div class="stage-card__inner">
+                <div class="stage-card__num-section">
+                  <span class="stage-card__ghost-num">${stage.num}</span>
+                  <span class="stage-card__real-num">${stage.num}</span>
+                </div>
+                <span class="stage-card__name">${stage.name}</span>
+              </div>
+            </div>
+          </div>`;
+      });
+      carouselHTML += `</div></div>`;
+
+      /* — detail sections below carousel — */
+      let detailHTML = `<div class="gf-stage-details">`;
+      GF_STAGES.forEach(stage => {
+        const tasksHTML  = stage.tasks.map(t => `<li>${t}</li>`).join('');
+        const rightHTML  = stage.agents.length > 0
+          ? `
+             <div class="gf-agent-grid">${stage.agents.map(buildAgentCard).join('')}</div>`
+          : `<p class="gf-no-agents">No dedicated agents at this stage. Human-led review and decision-making.</p>`;
+        detailHTML += `
+          <div class="gf-stage-detail" data-stage="${stage.num}">
+            <div class="gf-stage-detail__left">
+              <h3 class="gf-stage-detail__title">Stage ${stage.num}. ${stage.name}</h3>
+              
+              <ul class="gf-stage-detail__tasks">${tasksHTML}</ul>
+            </div>
+            <div class="gf-stage-detail__right">${rightHTML}</div>
+          </div>`;
+      });
+      detailHTML += `</div></div>`;
+
+      panel.innerHTML = carouselHTML + detailHTML;
+
+      /* — slider — */
+      (function() {
+        var scroll = panel.querySelector('#gfStageScroll');
+        var track  = panel.querySelector('#gfSliderTrack');
+        var thumb  = panel.querySelector('#gfSliderThumb');
+        function updateThumb() {
+          var maxScroll = scroll.scrollWidth - scroll.clientWidth;
+          var ratio = maxScroll > 0 ? scroll.scrollLeft / maxScroll : 0;
+          var trackW = track.offsetWidth; var thumbW = 17;
+          thumb.style.left = (ratio * (trackW - thumbW)) + 'px';
+        }
+        function checkOverflow() {
+          track.style.display = scroll.scrollWidth > scroll.clientWidth ? '' : 'none';
+        }
+        function refresh() { checkOverflow(); updateThumb(); }
+        scroll._refreshSlider = refresh;
+        requestAnimationFrame(refresh);
+        scroll.addEventListener('scroll', updateThumb);
+        window.addEventListener('resize', refresh);
+        var dragging = false, dragStartX, thumbStartLeft;
+        thumb.addEventListener('mousedown', function(e) {
+          dragging = true; dragStartX = e.clientX; thumbStartLeft = thumb.offsetLeft; e.preventDefault();
+        });
+        document.addEventListener('mousemove', function(e) {
+          if (!dragging) return;
+          var dx = e.clientX - dragStartX; var trackW = track.offsetWidth; var thumbW = 17;
+          var newLeft = Math.max(0, Math.min(trackW - thumbW, thumbStartLeft + dx));
+          var ratio = (trackW - thumbW) > 0 ? newLeft / (trackW - thumbW) : 0;
+          scroll.scrollLeft = ratio * (scroll.scrollWidth - scroll.clientWidth);
+        });
+        document.addEventListener('mouseup', function() { dragging = false; });
+        track.addEventListener('click', function(e) {
+          if (e.target === thumb) return;
+          var trackRect = track.getBoundingClientRect(); var clickX = e.clientX - trackRect.left;
+          var thumbW = 17; var trackW = track.offsetWidth;
+          var ratio = Math.max(0, Math.min(1, (clickX - thumbW / 2) / (trackW - thumbW)));
+          scroll.scrollLeft = ratio * (scroll.scrollWidth - scroll.clientWidth);
+        });
+      })();
+
+      /* — interaction — */
+      function activateGfStage(num) {
+        panel.querySelectorAll('.stage-card-wrapper').forEach(w => {
+          w.classList.toggle('is-active',   w.dataset.stage === num);
+          w.classList.toggle('is-inactive', w.dataset.stage !== num);
+        });
+        panel.querySelectorAll('.gf-stage-detail').forEach(d => {
+          d.classList.toggle('is-visible', d.dataset.stage === num);
+        });
+      }
+
+      panel.querySelectorAll('.stage-card').forEach(card => {
+        card.addEventListener('click', () => activateGfStage(card.dataset.stage));
+        card.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateGfStage(card.dataset.stage); }
+        });
+      });
+
+      activateGfStage('01');
+    }
+
+    function buildBrownfieldPanel() {
+      const panel = document.getElementById('panel-brownfield');
+      panel.innerHTML = '';
+
+      const BF_STAGES = [
+        { num: '01', name: 'Mobilize and Assess',
+          tasks: ['Select the bounded change', 'Assess existing project artefacts, environment and readiness'],
+          agents: LIFECYCLE_MAP.brownfield[0].agents },
+        { num: '02', name: 'Discover and Frame',
+          tasks: ['Use where the enhancement is poorly defined', 'Reframe unclear or conflicting requirements'],
+          agents: LIFECYCLE_MAP.brownfield[1].agents },
+        { num: '03', name: 'Contextualize',
+          tasks: ['Establish the approved context package', 'Include relevant requirements, architecture, APIs, dependencies, code and existing decisions'],
+          agents: LIFECYCLE_MAP.brownfield[2].agents },
+        { num: '04', name: 'Define Requirements',
+          tasks: ['Start from the existing approved requirement or change request', 'Clarify requirements and update acceptance criteria', 'Regenerate BRD/PRD only if artefacts are incomplete or outdated'],
+          agents: LIFECYCLE_MAP.brownfield[3].agents },
+        { num: '05', name: 'Design Experience and Architecture',
+          tasks: ['Assess change impacts and compatibility', 'Work within existing architecture constraints', 'Reuse established components', 'Assess interface and regression risk'],
+          agents: LIFECYCLE_MAP.brownfield[4].agents },
+        { num: '06', name: 'Create Backlog and Specification',
+          tasks: ['Reuse approved backlog and specifications where sufficient', 'Clarify or regenerate only where existing material cannot support implementation'],
+          agents: LIFECYCLE_MAP.brownfield[5].agents },
+        { num: '07', name: 'Plan and Decompose',
+          tasks: ['Create a dependency-aware plan for the approved change'],
+          agents: LIFECYCLE_MAP.brownfield[6].agents },
+        { num: '08', name: 'Build',
+          tasks: ['Implement the approved change within the defined scope and architecture'],
+          agents: LIFECYCLE_MAP.brownfield[7].agents },
+        { num: '09', name: 'Validate',
+          tasks: ['Validate against approved requirements', 'Include relevant integration and regression testing'],
+          agents: LIFECYCLE_MAP.brownfield[8].agents },
+        { num: '10', name: 'Release',
+          tasks: ['Prepare the change for controlled release', 'Obtain required authorisation'],
+          agents: LIFECYCLE_MAP.brownfield[9].agents },
+        { num: '11', name: 'Operate and Improve',
+          tasks: ['Monitor the changed application', 'Feed production learning into requirements and tests', 'Update relevant context'],
+          agents: LIFECYCLE_MAP.brownfield[10].agents },
+      ];
+
+      /* — carousel — */
+      const INDICATOR_SVG = `<svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 1.5L7 8L13 1.5" stroke="#ffe8b2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+      let carouselHTML = `<div class="stage-cards-wrapper"><div class="stage-cards-header"><div class="stage-slider-track" id="bfSliderTrack" role="scrollbar" aria-controls="bfStageScroll" aria-orientation="horizontal"><div class="stage-slider-thumb" id="bfSliderThumb"></div></div></div><div class="stage-cards-scroll" id="bfStageScroll"><div class="stage-cards-row">`;
+      BF_STAGES.forEach((stage, i) => {
+        if (i > 0) carouselHTML += `<div class="stage-card-connector" aria-hidden="true"></div>`;
+        carouselHTML += `
+          <div class="stage-card-wrapper" data-stage="${stage.num}">
+            <div class="stage-indicator" aria-hidden="true">${INDICATOR_SVG}</div>
+            <div class="stage-card" data-stage="${stage.num}" tabindex="0" role="button" aria-label="Stage ${stage.num}">
+              <div class="stage-card__accent"></div>
+              <div class="stage-card__inner">
+                <div class="stage-card__num-section">
+                  <span class="stage-card__ghost-num">${stage.num}</span>
+                  <span class="stage-card__real-num">${stage.num}</span>
+                </div>
+                <span class="stage-card__name">${stage.name}</span>
+              </div>
+            </div>
+          </div>`;
+      });
+      carouselHTML += `</div></div>`;
+
+      /* — detail sections below carousel — */
+      let detailHTML = `<div class="gf-stage-details">`;
+      BF_STAGES.forEach(stage => {
+        const tasksHTML = stage.tasks.map(t => `<li>${t}</li>`).join('');
+        const rightHTML = stage.agents.length > 0
+          ? `
+             <div class="gf-agent-grid">${stage.agents.map(buildAgentCard).join('')}</div>`
+          : `<p class="gf-no-agents">No dedicated agents at this stage. Human-led review and decision-making.</p>`;
+        detailHTML += `
+          <div class="gf-stage-detail" data-stage="${stage.num}">
+            <div class="gf-stage-detail__left">
+              <h3 class="gf-stage-detail__title">Stage ${stage.num}. ${stage.name}</h3>
+              
+              <ul class="gf-stage-detail__tasks">${tasksHTML}</ul>
+            </div>
+            <div class="gf-stage-detail__right">${rightHTML}</div>
+          </div>`;
+      });
+      detailHTML += `</div></div>`;
+
+      panel.innerHTML = carouselHTML + detailHTML;
+
+      /* — slider — */
+      (function() {
+        var scroll = panel.querySelector('#bfStageScroll');
+        var track  = panel.querySelector('#bfSliderTrack');
+        var thumb  = panel.querySelector('#bfSliderThumb');
+        function updateThumb() {
+          var maxScroll = scroll.scrollWidth - scroll.clientWidth;
+          var ratio = maxScroll > 0 ? scroll.scrollLeft / maxScroll : 0;
+          var trackW = track.offsetWidth; var thumbW = 17;
+          thumb.style.left = (ratio * (trackW - thumbW)) + 'px';
+        }
+        function checkOverflow() {
+          track.style.display = scroll.scrollWidth > scroll.clientWidth ? '' : 'none';
+        }
+        function refresh() { checkOverflow(); updateThumb(); }
+        scroll._refreshSlider = refresh;
+        requestAnimationFrame(refresh);
+        scroll.addEventListener('scroll', updateThumb);
+        window.addEventListener('resize', refresh);
+        var dragging = false, dragStartX, thumbStartLeft;
+        thumb.addEventListener('mousedown', function(e) {
+          dragging = true; dragStartX = e.clientX; thumbStartLeft = thumb.offsetLeft; e.preventDefault();
+        });
+        document.addEventListener('mousemove', function(e) {
+          if (!dragging) return;
+          var dx = e.clientX - dragStartX; var trackW = track.offsetWidth; var thumbW = 17;
+          var newLeft = Math.max(0, Math.min(trackW - thumbW, thumbStartLeft + dx));
+          var ratio = (trackW - thumbW) > 0 ? newLeft / (trackW - thumbW) : 0;
+          scroll.scrollLeft = ratio * (scroll.scrollWidth - scroll.clientWidth);
+        });
+        document.addEventListener('mouseup', function() { dragging = false; });
+        track.addEventListener('click', function(e) {
+          if (e.target === thumb) return;
+          var trackRect = track.getBoundingClientRect(); var clickX = e.clientX - trackRect.left;
+          var thumbW = 17; var trackW = track.offsetWidth;
+          var ratio = Math.max(0, Math.min(1, (clickX - thumbW / 2) / (trackW - thumbW)));
+          scroll.scrollLeft = ratio * (scroll.scrollWidth - scroll.clientWidth);
+        });
+      })();
+
+      /* — interaction — */
+      function activateBfStage(num) {
+        panel.querySelectorAll('.stage-card-wrapper').forEach(w => {
+          w.classList.toggle('is-active',   w.dataset.stage === num);
+          w.classList.toggle('is-inactive', w.dataset.stage !== num);
+        });
+        panel.querySelectorAll('.gf-stage-detail').forEach(d => {
+          d.classList.toggle('is-visible', d.dataset.stage === num);
+        });
+      }
+
+      panel.querySelectorAll('.stage-card').forEach(card => {
+        card.addEventListener('click', () => activateBfStage(card.dataset.stage));
+        card.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateBfStage(card.dataset.stage); }
+        });
+      });
+
+      activateBfStage('01');
+    }
+
+    function buildModernisationPanel() {
+      const panel = document.getElementById('panel-modernisation');
+      panel.innerHTML = '';
+
+      const MOD_STAGES = [
+        { num: '01', name: 'Mobilize and Assess',
+          tasks: ['Select the bounded modernisation increment', 'Assess the existing application, environment'],
+          agents: LIFECYCLE_MAP.modernisation[0].agents },
+        { num: '02', name: 'Discover and Frame',
+          tasks: ['Use where the underlying problem or desired outcome needs to be reframed before modernisation'],
+          agents: LIFECYCLE_MAP.modernisation[1].agents },
+        { num: '03', name: 'Contextualize',
+          tasks: ['Establish approved current-state context', 'Capture the application, architecture, dependencies and engineering environment'],
+          agents: LIFECYCLE_MAP.modernisation[2].agents },
+        { num: '04', name: 'Define Requirements',
+          tasks: ['Analyse the source', 'Obtain SME verification', 'Develop the BRD and PRD', 'Obtain architecture approval'],
+          agents: LIFECYCLE_MAP.modernisation[3].agents },
+        { num: '05', name: 'Design Experience and Architecture',
+          tasks: ['Map current state to target state', 'Define coexistence and data migration approach', 'Define strangler or phased replacement patterns', 'Plan decommissioning, rollback and feature controls'],
+          agents: LIFECYCLE_MAP.modernisation[4].agents },
+        { num: '06', name: 'Create Backlog and Specification',
+          tasks: ['Create the backlog and specification required for the approved modernisation approach'],
+          agents: LIFECYCLE_MAP.modernisation[5].agents },
+        { num: '07', name: 'Plan and Decompose',
+          tasks: ['Plan implementation or migration waves', 'Define dependencies, testing and environments', 'Define review checkpoints and rollback steps'],
+          agents: LIFECYCLE_MAP.modernisation[6].agents },
+        { num: '08', name: 'Build',
+          tasks: ['Implement the approved modernisation or migration increment within the defined scope'],
+          agents: LIFECYCLE_MAP.modernisation[7].agents },
+        { num: '09', name: 'Validate',
+          tasks: ['Validate against approved requirements', 'Confirm alignment to the target state'],
+          agents: LIFECYCLE_MAP.modernisation[8].agents },
+        { num: '10', name: 'Release',
+          tasks: ['Prepare the modernised increment for controlled release', 'Include the required rollback approach', 'Obtain required authorisation'],
+          agents: LIFECYCLE_MAP.modernisation[9].agents },
+        { num: '11', name: 'Operate and Improve',
+          tasks: ['Monitor the modernised environment', 'Use operational learning to improve the product and context', 'Apply learning to subsequent modernisation increments'],
+          agents: LIFECYCLE_MAP.modernisation[10].agents },
+      ];
+
+      const INDICATOR_SVG = `<svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 1.5L7 8L13 1.5" stroke="#ffe8b2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+      let carouselHTML = `<div class="stage-cards-wrapper"><div class="stage-cards-header"><div class="stage-slider-track" id="modSliderTrack" role="scrollbar" aria-controls="modStageScroll" aria-orientation="horizontal"><div class="stage-slider-thumb" id="modSliderThumb"></div></div></div><div class="stage-cards-scroll" id="modStageScroll"><div class="stage-cards-row">`;
+      MOD_STAGES.forEach((stage, i) => {
+        if (i > 0) carouselHTML += `<div class="stage-card-connector" aria-hidden="true"></div>`;
+        carouselHTML += `
+          <div class="stage-card-wrapper" data-stage="${stage.num}">
+            <div class="stage-indicator" aria-hidden="true">${INDICATOR_SVG}</div>
+            <div class="stage-card" data-stage="${stage.num}" tabindex="0" role="button" aria-label="Stage ${stage.num}">
+              <div class="stage-card__accent"></div>
+              <div class="stage-card__inner">
+                <div class="stage-card__num-section">
+                  <span class="stage-card__ghost-num">${stage.num}</span>
+                  <span class="stage-card__real-num">${stage.num}</span>
+                </div>
+                <span class="stage-card__name">${stage.name}</span>
+              </div>
+            </div>
+          </div>`;
+      });
+      carouselHTML += `</div></div>`;
+
+      let detailHTML = `<div class="gf-stage-details">`;
+      MOD_STAGES.forEach(stage => {
+        const tasksHTML = stage.tasks.map(t => `<li>${t}</li>`).join('');
+        const rightHTML = stage.agents.length > 0
+          ? `
+             <div class="gf-agent-grid">${stage.agents.map(buildAgentCard).join('')}</div>`
+          : `<p class="gf-no-agents">No dedicated agents at this stage. Human-led review and decision-making.</p>`;
+        detailHTML += `
+          <div class="gf-stage-detail" data-stage="${stage.num}">
+            <div class="gf-stage-detail__left">
+              <h3 class="gf-stage-detail__title">Stage ${stage.num}. ${stage.name}</h3>
+              
+              <ul class="gf-stage-detail__tasks">${tasksHTML}</ul>
+            </div>
+            <div class="gf-stage-detail__right">${rightHTML}</div>
+          </div>`;
+      });
+      detailHTML += `</div></div>`;
+
+      panel.innerHTML = carouselHTML + detailHTML;
+
+      (function() {
+        var scroll = panel.querySelector('#modStageScroll');
+        var track  = panel.querySelector('#modSliderTrack');
+        var thumb  = panel.querySelector('#modSliderThumb');
+        function updateThumb() {
+          var maxScroll = scroll.scrollWidth - scroll.clientWidth;
+          var ratio = maxScroll > 0 ? scroll.scrollLeft / maxScroll : 0;
+          var trackW = track.offsetWidth; var thumbW = 17;
+          thumb.style.left = (ratio * (trackW - thumbW)) + 'px';
+        }
+        function checkOverflow() {
+          track.style.display = scroll.scrollWidth > scroll.clientWidth ? '' : 'none';
+        }
+        function refresh() { checkOverflow(); updateThumb(); }
+        scroll._refreshSlider = refresh;
+        requestAnimationFrame(refresh);
+        scroll.addEventListener('scroll', updateThumb);
+        window.addEventListener('resize', refresh);
+        var dragging = false, dragStartX, thumbStartLeft;
+        thumb.addEventListener('mousedown', function(e) {
+          dragging = true; dragStartX = e.clientX; thumbStartLeft = thumb.offsetLeft; e.preventDefault();
+        });
+        document.addEventListener('mousemove', function(e) {
+          if (!dragging) return;
+          var dx = e.clientX - dragStartX; var trackW = track.offsetWidth; var thumbW = 17;
+          var newLeft = Math.max(0, Math.min(trackW - thumbW, thumbStartLeft + dx));
+          var ratio = (trackW - thumbW) > 0 ? newLeft / (trackW - thumbW) : 0;
+          scroll.scrollLeft = ratio * (scroll.scrollWidth - scroll.clientWidth);
+        });
+        document.addEventListener('mouseup', function() { dragging = false; });
+        track.addEventListener('click', function(e) {
+          if (e.target === thumb) return;
+          var trackRect = track.getBoundingClientRect(); var clickX = e.clientX - trackRect.left;
+          var thumbW = 17; var trackW = track.offsetWidth;
+          var ratio = Math.max(0, Math.min(1, (clickX - thumbW / 2) / (trackW - thumbW)));
+          scroll.scrollLeft = ratio * (scroll.scrollWidth - scroll.clientWidth);
+        });
+      })();
+
+      function activateModStage(num) {
+        panel.querySelectorAll('.stage-card-wrapper').forEach(w => {
+          w.classList.toggle('is-active',   w.dataset.stage === num);
+          w.classList.toggle('is-inactive', w.dataset.stage !== num);
+        });
+        panel.querySelectorAll('.gf-stage-detail').forEach(d => {
+          d.classList.toggle('is-visible', d.dataset.stage === num);
+        });
+      }
+
+      panel.querySelectorAll('.stage-card').forEach(card => {
+        card.addEventListener('click', () => activateModStage(card.dataset.stage));
+        card.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateModStage(card.dataset.stage); }
+        });
+      });
+
+      activateModStage('01');
+    }
+
+    function buildDetailPanel(type) {
+      const panel = document.getElementById('panel-' + type);
+      panel.innerHTML = '';
+      LIFECYCLE_MAP[type].forEach(({ group, agents }) => {
+        const acc = document.createElement('div');
+        acc.className = 'lifecycle-accordion';
+        acc.innerHTML = `
+          <button class="lifecycle-header" aria-expanded="false">
+            <span class="lifecycle-title-wrap">${group}</span>
+            <span class="lifecycle-meta-wrap">
+              <span class="lifecycle-agent-count">${agents.length} agent${agents.length !== 1 ? 's' : ''}</span>
+              ${CHEVRON_SVG}
+            </span>
+          </button>
+          <div class="lifecycle-body">
+            <div class="detail-agent-grid">${agents.map(buildAgentCard).join('')}</div>
+          </div>`;
+        const hdr  = acc.querySelector('.lifecycle-header');
+        const body = acc.querySelector('.lifecycle-body');
+        hdr.addEventListener('click', () => {
+          const open = hdr.getAttribute('aria-expanded') === 'true';
+          hdr.setAttribute('aria-expanded', String(!open));
+          body.classList.toggle('is-open', !open);
+        });
+        panel.appendChild(acc);
+      });
+    }
+
+    function activatePtTab(type) {
+      document.querySelectorAll('.pt-panel').forEach(p =>
+        p.classList.toggle('is-active', p.id === 'panel-' + type));
+      const scroll = document.getElementById(
+        type === 'greenfield' ? 'gfStageScroll' : type === 'brownfield' ? 'bfStageScroll' : type === 'modernisation' ? 'modStageScroll' : null
+      );
+      if (scroll && scroll._refreshSlider) requestAnimationFrame(scroll._refreshSlider);
+    }
+
+    function selectProjectCard(type) {
+      const allCards = { greenfield: cardGreen, brownfield: cardBrown, modernisation: cardMod };
+      Object.entries(allCards).forEach(([key, card]) => {
+        card.classList.remove('is-winner', 'is-other', 'is-all-visible');
+        card.classList.add(key === type ? 'is-winner' : 'is-other');
+      });
+      initDetailSection(type);
+    }
+
+    function initDetailSection(winner) {
+      const section = document.getElementById('agent-detail-section');
+      section.style.display = 'block';
+
+      if (!section.dataset.built) {
+        buildGreenfieldPanel();
+        buildBrownfieldPanel();
+        buildModernisationPanel();
+
+        [
+          [cardGreen, 'greenfield'],
+          [cardBrown, 'brownfield'],
+          [cardMod,   'modernisation'],
+        ].forEach(([card, type]) => {
+          card.addEventListener('click', () => selectProjectCard(type));
+          card.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') selectProjectCard(type);
+          });
+        });
+
+        section.addEventListener('click', e => {
+          const card = e.target.closest('.agent-card[data-agent-id]');
+          if (card) openAgentOverlay(card.dataset.agentId);
+        });
+        section.addEventListener('keydown', e => {
+          const card = e.target.closest('.agent-card[data-agent-id]');
+          if ((e.key === 'Enter' || e.key === ' ') && card) {
+            e.preventDefault();
+            openAgentOverlay(card.dataset.agentId);
+          }
+        });
+
+        section.dataset.built = '1';
+      }
+
+      activatePtTab(winner);
+    }
+
+    /* ── Agent overlay ───────────────────────────────────────── */
+    const agentOv      = document.getElementById('agent-ov');
+    const agentOvClose = document.getElementById('agent-ov-close');
+
+    function openAgentOverlay(id) {
+      const a = DETAIL_AGENTS[id];
+      if (!a) return;
+      document.getElementById('agent-ov-icon').innerHTML    = `<img src="${a.icon}" alt="${a.name}" width="38" height="38">`;
+      document.getElementById('agent-ov-id').textContent    = id;
+      document.getElementById('agent-ov-name').textContent  = a.name;
+      document.getElementById('agent-ov-tagline').textContent = a.tagline;
+      document.getElementById('agent-ov-model').textContent = '✦ ' + a.model;
+      document.getElementById('agent-ov-body').innerHTML = `
+        <div class="ov-detail-block">
+          <div class="ov-detail-label">Use when</div>
+          <div class="ov-detail-content">${a.useWhen}</div>
+        </div>
+        <div class="ov-detail-block">
+          <div class="ov-detail-label">Human review</div>
+          <div class="ov-detail-content">${a.humanReview}</div>
+        </div>
+        <div class="ov-detail-block">
+          <div class="ov-detail-label">Approved inputs</div>
+          <div class="ov-detail-content">${a.inputs}</div>
+        </div>
+        <div class="ov-detail-block">
+          <div class="ov-detail-label">Output</div>
+          <div class="ov-detail-content">${a.output}</div>
+        </div>
+        <div class="ov-prompt-block ov-detail-block--full">
+          <div class="ov-prompt-label"><span class="ov-prompt-dot"></span>Example prompt</div>
+          <div class="ov-prompt-text">${a.prompt.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+        </div>`;
+      agentOv.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeAgentOverlay() {
+      agentOv.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    agentOvClose.addEventListener('click', closeAgentOverlay);
+    agentOv.addEventListener('click', e => { if (e.target === agentOv) closeAgentOverlay(); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && agentOv.classList.contains('open')) closeAgentOverlay();
+    });
+
+    /* ── Init ────────────────────────────────────────────────── */
+    initDetailSection('greenfield');
+  </script>
+
+</body>
+</html>

@@ -810,6 +810,303 @@
       padding: 0 18px 18px;
     }
 
+    /* ═══════════════════════════════════════════════════════════
+       STAGE CAROUSEL
+    ═══════════════════════════════════════════════════════════ */
+    .stage-cards-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background: var(--purple-700);
+      border-radius: 16px;
+      padding: 40px 43px 108px;
+      overflow: hidden;
+    }
+
+    .stage-cards-scroll {
+      overflow-x: auto;
+      overflow-y: visible;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .stage-cards-scroll::-webkit-scrollbar { display: none; }
+
+    .stage-cards-row {
+      display: flex;
+      flex-direction: row;
+      gap: 0;
+      width: max-content;
+      align-items: flex-end;
+    }
+
+    .stage-card-wrapper {
+      position: relative;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .stage-card-wrapper::before {
+      content: '';
+      display: block;
+      height: 30px;
+    }
+
+    .stage-indicator {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 30px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      animation: indicator-bounce 1.1s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .stage-card-wrapper.is-active .stage-indicator {
+      display: flex;
+    }
+
+    @keyframes indicator-bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0px);  opacity: 0.75; }
+      50%       { transform: translateX(-50%) translateY(5px);  opacity: 1; }
+    }
+
+    .stage-card {
+      width: 147px;
+      height: 186px;
+      border-radius: 9.6px;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      flex-shrink: 0;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.18s ease, opacity 0.2s ease, box-shadow 0.18s ease;
+      user-select: none;
+      outline: none;
+    }
+
+    .stage-card:hover { transform: translateY(-3px); }
+
+    .stage-card:focus-visible {
+      box-shadow: 0 0 0 3px #ffe8b2;
+    }
+
+    .stage-card__accent {
+      width: 174px;
+      height: 5px;
+      flex-shrink: 0;
+      background: #b893f3;
+      align-self: center;
+      transition: background 0.18s ease;
+    }
+
+    .stage-card__inner {
+      display: flex;
+      flex-direction: column;
+      padding: 8px 12px 10px;
+      flex: 1;
+      gap: 4px;
+      position: relative;
+    }
+
+    .stage-card__num-section {
+      position: relative;
+      height: 52px;
+    }
+
+    .stage-card__ghost-num {
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: 51.2px;
+      font-weight: 700;
+      color: var(--purple-600);
+      opacity: 0.09;
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+
+    .stage-card__real-num {
+      position: absolute;
+      bottom: 0;
+      left: 1px;
+      font-size: 35.2px;
+      font-weight: 700;
+      color: var(--purple-600);
+      line-height: 1;
+    }
+
+    .stage-card__name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-top: 2px;
+      line-height: 1.3;
+    }
+
+    .stage-cards-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .stage-slider-track {
+      width: 204px;
+      flex-shrink: 0;
+      height: 2px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 99px;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.4);
+    }
+    .stage-slider-thumb {
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      background: #d9d9d9;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0;
+      cursor: grab;
+      transition: left 0.05s;
+    }
+
+    .stage-card-connector {
+      flex-shrink: 0;
+      align-self: center;
+      width: 20px;
+      height: 26px;
+      clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+      background: rgba(184,147,243,0.5);
+      margin-bottom: 93px;
+    }
+
+    /* Active / inactive card states */
+    .stage-card-wrapper.is-inactive .stage-card {
+      opacity: 0.3;
+    }
+    .stage-card-wrapper.is-inactive .stage-card:hover {
+      opacity: 0.55;
+      transform: translateY(-2px);
+    }
+    .stage-card-wrapper.is-active .stage-card__accent {
+      background: var(--purple-600);
+    }
+    .stage-card-wrapper.is-active .stage-card {
+      box-shadow: 0 0 0 2px rgba(184,147,243,0.9);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       GREENFIELD STAGE DETAIL SECTIONS
+    ═══════════════════════════════════════════════════════════ */
+    .gf-stage-details {
+      background: #FFFFFF;
+      border-top: 1px solid rgba(74,82,96,0.1);
+      margin: 36px -43px -108px;
+      border-radius: 0 0 16px 16px;
+      overflow: hidden;
+    }
+
+    .gf-stage-detail {
+      display: none;
+    }
+
+    .gf-stage-detail.is-visible {
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      gap: 48px;
+      padding: 40px 43px 44px;
+    }
+
+    .gf-stage-detail__title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #14181F;
+      margin-bottom: 10px;
+      letter-spacing: -0.3px;
+    }
+
+    .gf-stage-detail__label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #9298A4;
+      margin-bottom: 16px;
+    }
+
+    .gf-stage-detail__tasks {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .gf-stage-detail__tasks li {
+      font-size: 14px;
+      color: #4A5260;
+      line-height: 1.65;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .gf-stage-detail__tasks li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 6px;
+      height: 6px;
+      background: #7631C1;
+      border-radius: 50%;
+    }
+
+    .gf-stage-detail__right {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .gf-agents-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #9298A4;
+    }
+
+    .gf-agent-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .gf-no-agents {
+      font-size: 14px;
+      color: #9298A4;
+      line-height: 1.65;
+    }
+
+    .divider {
+      height: 1px;
+      background: rgba(74,82,96,0.12);
+    }
+
   </style>
 </head>
 <body>
@@ -829,6 +1126,10 @@
       </nav>
       <h1 class="mini-hero__heading">Identify your project type</h1>
       <p class="mini-hero__sub">Take a short quiz to find out more.</p>
+      <a href="agentic-lifecycle.html" style="display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; color: #7631C1; font-size: 14px; font-weight: 500; text-decoration: none;">
+        Take me to view all project types
+        <svg width="14" height="14" fill="none" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
     </div>
   </section>
 
@@ -928,7 +1229,7 @@
 
       <!-- Agent lifecycle detail section -->
       <div class="agent-detail-section" id="agent-detail-section" style="display:none">
-        <h3 class="agent-detail-section__heading">Agents for your project type</h3>
+        <h3 class="agent-detail-section__heading">Your project lifecycle</h3>
 
         <div class="pt-panel" id="panel-greenfield"    role="tabpanel"></div>
         <div class="pt-panel" id="panel-brownfield"    role="tabpanel"></div>
@@ -1310,64 +1611,70 @@
         ]},
       ],
       brownfield: [
-        { group: '1. Discover and Frame', agents: [
+        { group: '1. Mobilize and Assess', agents: [] },
+        { group: '2. Discover and Frame', agents: [
           { id: 'A.1', role: 'Optional', why: 'Use only when the enhancement is poorly defined or the user problem has not been validated. Skip if the change is already approved and specified.' },
           { id: 'A.2', role: 'Optional', why: 'Use if discovery was required for this increment. Not needed when existing research or validated requirements already cover the change.' },
         ]},
-        { group: '2. Contextualize', agents: [
+        { group: '3. Contextualize', agents: [
           { id: 'A.4', role: 'Recommended', why: 'Ingests the existing codebase, architecture, APIs and approved artefacts to form the context package for the change.' },
         ]},
-        { group: '3. Define Requirements', agents: [
+        { group: '4. Define Requirements', agents: [
           { id: 'A.5', role: 'Optional', why: 'Only required if existing requirements are incomplete or materially outdated. Approved artefacts should be reused.' },
           { id: 'A.6', role: 'Optional', why: 'Only required if no approved PRD or equivalent artefact exists for this increment.' },
         ]},
-        { group: '4. Design Experience and Architecture', agents: [
-          { id: 'A.3', role: 'Recommended', why: 'Use for user-facing changes to assess UX impact, maintain design-system compliance and define the interaction delta.' },
+        { group: '5. Design Experience and Architecture', agents: [
+          { id: 'A.3', role: 'Optional', why: 'Use for user-facing changes to assess UX impact, maintain design-system compliance and define the interaction delta.' },
         ]},
-        { group: '5. Create Backlog and Specification', agents: [
+        { group: '6. Create Backlog and Specification', agents: [
           { id: 'A.7', role: 'Optional',    why: 'Use to create or update stories when existing backlog artefacts are insufficient for the increment.' },
           { id: 'A.8', role: 'Recommended', why: 'Clarifies the change against existing context and resolves gaps before implementation. Essential for safe delivery into an existing system.' },
         ]},
-        { group: '6. Plan and Decompose', agents: [
+        { group: '7. Plan and Decompose', agents: [
           { id: 'A.9', role: 'Recommended', why: 'Creates a dependency-aware plan for the approved change within the existing architecture constraints.' },
         ]},
-        { group: '7. Build', agents: [
+        { group: '8. Build', agents: [
           { id: 'A.10', role: 'Recommended', why: 'Implements the approved change against the plan, within the defined scope and architecture.' },
         ]},
-        { group: '8. Validate', agents: [
+        { group: '9. Validate', agents: [
           { id: 'A.11', role: 'Recommended', why: 'Validates affected API contracts and ensures the change does not break existing integrations.' },
           { id: 'A.12', role: 'Recommended', why: 'Covers affected journeys and regression paths to confirm the change did not break the existing application.' },
         ]},
+        { group: '10. Release', agents: [] },
+        { group: '11. Operate and Improve', agents: [] },
       ],
       modernisation: [
-        { group: '1. Discover and Frame', agents: [
+        { group: '1. Mobilize and Assess', agents: [] },
+        { group: '2. Discover and Frame', agents: [
           { id: 'A.1', role: 'Optional', why: 'Apply only if the modernisation involves a significant UX redesign or the user problem needs reframing. Skip for pure technical transformation.' },
           { id: 'A.2', role: 'Optional', why: 'Only relevant if discovery was required to define the target state. Not applicable for technically-driven modernisation.' },
         ]},
-        { group: '2. Contextualize', agents: [
+        { group: '3. Contextualize', agents: [
           { id: 'A.4', role: 'Recommended', why: 'The highest-priority agent for this path. Ingests source code, architecture documentation, component inventory and dependency maps — the foundation for all analysis and planning.' },
         ]},
-        { group: '3. Define Requirements', agents: [
+        { group: '4. Define Requirements', agents: [
           { id: 'A.5', role: 'Recommended', why: 'Use to scope the transformation — defines business objectives, constraints and what the modernised state must achieve before architecture decisions are made.' },
           { id: 'A.6', role: 'Recommended', why: 'Converts the approved transformation scope into a structured product document if one does not already exist.' },
         ]},
-        { group: '4. Design Experience and Architecture', agents: [
+        { group: '5. Design Experience and Architecture', agents: [
           { id: 'A.3', role: 'Optional', why: 'Use when the modernisation includes an experience redesign or design-system migration alongside the technical change.' },
         ]},
-        { group: '5. Create Backlog and Specification', agents: [
+        { group: '6. Create Backlog and Specification', agents: [
           { id: 'A.7', role: 'Optional',    why: 'Use to create or update the backlog for migration waves and modernisation increments.' },
           { id: 'A.8', role: 'Recommended', why: 'Used to untangle legacy behaviour — clarifies what the existing system does before implementing the modernised equivalent.' },
         ]},
-        { group: '6. Plan and Decompose', agents: [
+        { group: '7. Plan and Decompose', agents: [
           { id: 'A.9', role: 'Recommended', why: 'Plans implementation and migration waves, dependencies, environment steps and rollback checkpoints.' },
         ]},
-        { group: '7. Build', agents: [
+        { group: '8. Build', agents: [
           { id: 'A.10', role: 'Recommended', why: 'Implements the approved modernisation or migration increment against the plan.' },
         ]},
-        { group: '8. Validate', agents: [
+        { group: '9. Validate', agents: [
           { id: 'A.11', role: 'Recommended', why: 'Validates API contracts against the modernised system. Regression coverage against the existing API surface is critical.' },
           { id: 'A.12', role: 'Recommended', why: 'Confirms functional equivalence between the existing and modernised system — the primary quality gate for this path.' },
         ]},
+        { group: '10. Release', agents: [] },
+        { group: '11. Operate and Improve', agents: [] },
       ],
     };
 
@@ -1390,6 +1697,446 @@
           <div class="agent-card__arrow">${ARROW_SVG}</div>
         </div>
       </div>`;
+    }
+
+    function buildGreenfieldPanel() {
+      const panel = document.getElementById('panel-greenfield');
+      panel.innerHTML = '';
+
+      const GF_STAGES = [
+        { num: '01', name: 'Mobilise &amp; Assess',
+          tasks: ['Select an appropriate project', 'Define a bounded delivery increment'],
+          agents: [{ id: 'A.1', role: 'Recommended', why: 'Plans the research needed to define the user problem, personas and opportunity — essential before any requirement is written.' }] },
+        { num: '02', name: 'Discover &amp; Frame',
+          tasks: ['Mandatory for net-new products and journeys', 'Define customer problem and personas', 'Define desired outcomes, journey and value hypothesis', 'Identify any constraints'],
+          agents: [{ id: 'A.2', role: 'Recommended', why: 'Synthesises discovery outputs into validated findings that inform the BRD and experience direction.' }] },
+        { num: '03', name: 'Contextualise',
+          tasks: ['Establish approved enterprise, domain context', 'Establish project context required by the agents'],
+          agents: [{ id: 'A.4', role: 'Recommended', why: 'Establishes the approved enterprise, domain, product and engineering context that all downstream agents depend on.' }] },
+        { num: '04', name: 'Define Requirements',
+          tasks: ['Develop the BRD and PRD from approved discovery outputs', 'Obtain business, product and architecture approval'],
+          agents: [
+            { id: 'A.5', role: 'Recommended', why: 'Drafts the Business Requirements Document from discovery notes — required because no prior BRD exists.' },
+            { id: 'A.6', role: 'Recommended', why: 'Converts the approved BRD into a structured Product Requirements Document before backlog creation.' },
+          ] },
+        { num: '05', name: 'Design Experience &amp; Architecture',
+          tasks: ['Define journey and interaction design', 'Apply design-system requirements', 'Define target architecture, APIs/events and data design', 'Address security and observability by design'],
+          agents: [{ id: 'A.3', role: 'Recommended', why: 'Defines the target user journey, interaction model and design-system alignment for the new product.' }] },
+        { num: '06', name: 'Create Backlog &amp; Specs',
+          tasks: ['Convert approved requirements and designs into implementable work', 'Maintain traceability'],
+          agents: [
+            { id: 'A.7', role: 'Recommended', why: 'Splits approved epics into Jira user stories and seeds the backlog for the new product.' },
+            { id: 'A.8', role: 'Recommended', why: 'Builds the executable specification from context and resolves requirement gaps before coding begins.' },
+          ] },
+        { num: '07', name: 'Plan &amp; Decompose',
+          tasks: ['Create a dependency-aware implementation plan', 'Base the plan on the approved specification'],
+          agents: [{ id: 'A.9', role: 'Recommended', why: 'Breaks the approved specification into a dependency-aware task plan for implementation.' }] },
+        { num: '08', name: 'Build',
+          tasks: ['Implement the bounded increment against the approved plan and specification'],
+          agents: [{ id: 'A.10', role: 'Recommended', why: 'Writes code and unit tests against the approved plan.' }] },
+        { num: '09', name: 'Validate',
+          tasks: ['Validate against approved business and technical requirements', 'Validate security and operational requirements'],
+          agents: [
+            { id: 'A.11', role: 'Recommended', why: 'Generates and runs API tests from the new specifications — no existing test suite to inherit.' },
+            { id: 'A.12', role: 'Recommended', why: 'Turns requirements into Playwright scripts to validate the new journeys end-to-end.' },
+          ] },
+        { num: '10', name: 'Release',
+          tasks: ['Prepare the increment for controlled release', 'Obtain required authorisation'],
+          agents: [] },
+        { num: '11', name: 'Operate &amp; Improve',
+          tasks: ['Monitor operational outcomes', 'Improve the product, context packages and agent chain'],
+          agents: [] },
+      ];
+
+      /* — carousel — */
+      const INDICATOR_SVG = `<svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 1.5L7 8L13 1.5" stroke="#ffe8b2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+      let carouselHTML = `<div class="stage-cards-wrapper"><div class="stage-cards-header"><div class="stage-slider-track" id="gfSliderTrack" role="scrollbar" aria-controls="gfStageScroll" aria-orientation="horizontal"><div class="stage-slider-thumb" id="gfSliderThumb"></div></div></div><div class="stage-cards-scroll" id="gfStageScroll"><div class="stage-cards-row">`;
+      GF_STAGES.forEach((stage, i) => {
+        if (i > 0) carouselHTML += `<div class="stage-card-connector" aria-hidden="true"></div>`;
+        carouselHTML += `
+          <div class="stage-card-wrapper" data-stage="${stage.num}">
+            <div class="stage-indicator" aria-hidden="true">${INDICATOR_SVG}</div>
+            <div class="stage-card" data-stage="${stage.num}" tabindex="0" role="button" aria-label="Stage ${stage.num}">
+              <div class="stage-card__accent"></div>
+              <div class="stage-card__inner">
+                <div class="stage-card__num-section">
+                  <span class="stage-card__ghost-num">${stage.num}</span>
+                  <span class="stage-card__real-num">${stage.num}</span>
+                </div>
+                <span class="stage-card__name">${stage.name}</span>
+              </div>
+            </div>
+          </div>`;
+      });
+      carouselHTML += `</div></div>`;
+
+      /* — detail sections below carousel — */
+      let detailHTML = `<div class="gf-stage-details">`;
+      GF_STAGES.forEach(stage => {
+        const tasksHTML  = stage.tasks.map(t => `<li>${t}</li>`).join('');
+        const rightHTML  = stage.agents.length > 0
+          ? `
+             <div class="gf-agent-grid">${stage.agents.map(buildAgentCard).join('')}</div>`
+          : `<p class="gf-no-agents">No dedicated agents at this stage. Human-led review and decision-making.</p>`;
+        detailHTML += `
+          <div class="gf-stage-detail" data-stage="${stage.num}">
+            <div class="gf-stage-detail__left">
+              <h3 class="gf-stage-detail__title">Stage ${stage.num}. ${stage.name}</h3>
+              
+              <ul class="gf-stage-detail__tasks">${tasksHTML}</ul>
+            </div>
+            <div class="gf-stage-detail__right">${rightHTML}</div>
+          </div>`;
+      });
+      detailHTML += `</div></div>`;
+
+      panel.innerHTML = carouselHTML + detailHTML;
+
+      /* — slider — */
+      (function() {
+        var scroll = panel.querySelector('#gfStageScroll');
+        var track  = panel.querySelector('#gfSliderTrack');
+        var thumb  = panel.querySelector('#gfSliderThumb');
+        function updateThumb() {
+          var maxScroll = scroll.scrollWidth - scroll.clientWidth;
+          var ratio = maxScroll > 0 ? scroll.scrollLeft / maxScroll : 0;
+          var trackW = track.offsetWidth; var thumbW = 17;
+          thumb.style.left = (ratio * (trackW - thumbW)) + 'px';
+        }
+        function checkOverflow() {
+          track.style.display = scroll.scrollWidth > scroll.clientWidth ? '' : 'none';
+        }
+        function refresh() { checkOverflow(); updateThumb(); }
+        scroll._refreshSlider = refresh;
+        requestAnimationFrame(refresh);
+        scroll.addEventListener('scroll', updateThumb);
+        window.addEventListener('resize', refresh);
+        var dragging = false, dragStartX, thumbStartLeft;
+        thumb.addEventListener('mousedown', function(e) {
+          dragging = true; dragStartX = e.clientX; thumbStartLeft = thumb.offsetLeft; e.preventDefault();
+        });
+        document.addEventListener('mousemove', function(e) {
+          if (!dragging) return;
+          var dx = e.clientX - dragStartX; var trackW = track.offsetWidth; var thumbW = 17;
+          var newLeft = Math.max(0, Math.min(trackW - thumbW, thumbStartLeft + dx));
+          var ratio = (trackW - thumbW) > 0 ? newLeft / (trackW - thumbW) : 0;
+          scroll.scrollLeft = ratio * (scroll.scrollWidth - scroll.clientWidth);
+        });
+        document.addEventListener('mouseup', function() { dragging = false; });
+        track.addEventListener('click', function(e) {
+          if (e.target === thumb) return;
+          var trackRect = track.getBoundingClientRect(); var clickX = e.clientX - trackRect.left;
+          var thumbW = 17; var trackW = track.offsetWidth;
+          var ratio = Math.max(0, Math.min(1, (clickX - thumbW / 2) / (trackW - thumbW)));
+          scroll.scrollLeft = ratio * (scroll.scrollWidth - scroll.clientWidth);
+        });
+      })();
+
+      /* — interaction — */
+      function activateGfStage(num) {
+        panel.querySelectorAll('.stage-card-wrapper').forEach(w => {
+          w.classList.toggle('is-active',   w.dataset.stage === num);
+          w.classList.toggle('is-inactive', w.dataset.stage !== num);
+        });
+        panel.querySelectorAll('.gf-stage-detail').forEach(d => {
+          d.classList.toggle('is-visible', d.dataset.stage === num);
+        });
+      }
+
+      panel.querySelectorAll('.stage-card').forEach(card => {
+        card.addEventListener('click', () => activateGfStage(card.dataset.stage));
+        card.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateGfStage(card.dataset.stage); }
+        });
+      });
+
+      activateGfStage('01');
+    }
+
+    function buildBrownfieldPanel() {
+      const panel = document.getElementById('panel-brownfield');
+      panel.innerHTML = '';
+
+      const BF_STAGES = [
+        { num: '01', name: 'Mobilize and Assess',
+          tasks: ['Select the bounded change', 'Assess existing project artefacts, environment and readiness'],
+          agents: LIFECYCLE_MAP.brownfield[0].agents },
+        { num: '02', name: 'Discover and Frame',
+          tasks: ['Use where the enhancement is poorly defined', 'Reframe unclear or conflicting requirements'],
+          agents: LIFECYCLE_MAP.brownfield[1].agents },
+        { num: '03', name: 'Contextualize',
+          tasks: ['Establish the approved context package', 'Include relevant requirements, architecture, APIs, dependencies, code and existing decisions'],
+          agents: LIFECYCLE_MAP.brownfield[2].agents },
+        { num: '04', name: 'Define Requirements',
+          tasks: ['Start from the existing approved requirement or change request', 'Clarify requirements and update acceptance criteria', 'Regenerate BRD/PRD only if artefacts are incomplete or outdated'],
+          agents: LIFECYCLE_MAP.brownfield[3].agents },
+        { num: '05', name: 'Design Experience and Architecture',
+          tasks: ['Assess change impacts and compatibility', 'Work within existing architecture constraints', 'Reuse established components', 'Assess interface and regression risk'],
+          agents: LIFECYCLE_MAP.brownfield[4].agents },
+        { num: '06', name: 'Create Backlog and Specification',
+          tasks: ['Reuse approved backlog and specifications where sufficient', 'Clarify or regenerate only where existing material cannot support implementation'],
+          agents: LIFECYCLE_MAP.brownfield[5].agents },
+        { num: '07', name: 'Plan and Decompose',
+          tasks: ['Create a dependency-aware plan for the approved change'],
+          agents: LIFECYCLE_MAP.brownfield[6].agents },
+        { num: '08', name: 'Build',
+          tasks: ['Implement the approved change within the defined scope and architecture'],
+          agents: LIFECYCLE_MAP.brownfield[7].agents },
+        { num: '09', name: 'Validate',
+          tasks: ['Validate against approved requirements', 'Include relevant integration and regression testing'],
+          agents: LIFECYCLE_MAP.brownfield[8].agents },
+        { num: '10', name: 'Release',
+          tasks: ['Prepare the change for controlled release', 'Obtain required authorisation'],
+          agents: LIFECYCLE_MAP.brownfield[9].agents },
+        { num: '11', name: 'Operate and Improve',
+          tasks: ['Monitor the changed application', 'Feed production learning into requirements and tests', 'Update relevant context'],
+          agents: LIFECYCLE_MAP.brownfield[10].agents },
+      ];
+
+      /* — carousel — */
+      const INDICATOR_SVG = `<svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 1.5L7 8L13 1.5" stroke="#ffe8b2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+      let carouselHTML = `<div class="stage-cards-wrapper"><div class="stage-cards-header"><div class="stage-slider-track" id="bfSliderTrack" role="scrollbar" aria-controls="bfStageScroll" aria-orientation="horizontal"><div class="stage-slider-thumb" id="bfSliderThumb"></div></div></div><div class="stage-cards-scroll" id="bfStageScroll"><div class="stage-cards-row">`;
+      BF_STAGES.forEach((stage, i) => {
+        if (i > 0) carouselHTML += `<div class="stage-card-connector" aria-hidden="true"></div>`;
+        carouselHTML += `
+          <div class="stage-card-wrapper" data-stage="${stage.num}">
+            <div class="stage-indicator" aria-hidden="true">${INDICATOR_SVG}</div>
+            <div class="stage-card" data-stage="${stage.num}" tabindex="0" role="button" aria-label="Stage ${stage.num}">
+              <div class="stage-card__accent"></div>
+              <div class="stage-card__inner">
+                <div class="stage-card__num-section">
+                  <span class="stage-card__ghost-num">${stage.num}</span>
+                  <span class="stage-card__real-num">${stage.num}</span>
+                </div>
+                <span class="stage-card__name">${stage.name}</span>
+              </div>
+            </div>
+          </div>`;
+      });
+      carouselHTML += `</div></div>`;
+
+      /* — detail sections below carousel — */
+      let detailHTML = `<div class="gf-stage-details">`;
+      BF_STAGES.forEach(stage => {
+        const tasksHTML = stage.tasks.map(t => `<li>${t}</li>`).join('');
+        const rightHTML = stage.agents.length > 0
+          ? `
+             <div class="gf-agent-grid">${stage.agents.map(buildAgentCard).join('')}</div>`
+          : `<p class="gf-no-agents">No dedicated agents at this stage. Human-led review and decision-making.</p>`;
+        detailHTML += `
+          <div class="gf-stage-detail" data-stage="${stage.num}">
+            <div class="gf-stage-detail__left">
+              <h3 class="gf-stage-detail__title">Stage ${stage.num}. ${stage.name}</h3>
+              
+              <ul class="gf-stage-detail__tasks">${tasksHTML}</ul>
+            </div>
+            <div class="gf-stage-detail__right">${rightHTML}</div>
+          </div>`;
+      });
+      detailHTML += `</div></div>`;
+
+      panel.innerHTML = carouselHTML + detailHTML;
+
+      /* — slider — */
+      (function() {
+        var scroll = panel.querySelector('#bfStageScroll');
+        var track  = panel.querySelector('#bfSliderTrack');
+        var thumb  = panel.querySelector('#bfSliderThumb');
+        function updateThumb() {
+          var maxScroll = scroll.scrollWidth - scroll.clientWidth;
+          var ratio = maxScroll > 0 ? scroll.scrollLeft / maxScroll : 0;
+          var trackW = track.offsetWidth; var thumbW = 17;
+          thumb.style.left = (ratio * (trackW - thumbW)) + 'px';
+        }
+        function checkOverflow() {
+          track.style.display = scroll.scrollWidth > scroll.clientWidth ? '' : 'none';
+        }
+        function refresh() { checkOverflow(); updateThumb(); }
+        scroll._refreshSlider = refresh;
+        requestAnimationFrame(refresh);
+        scroll.addEventListener('scroll', updateThumb);
+        window.addEventListener('resize', refresh);
+        var dragging = false, dragStartX, thumbStartLeft;
+        thumb.addEventListener('mousedown', function(e) {
+          dragging = true; dragStartX = e.clientX; thumbStartLeft = thumb.offsetLeft; e.preventDefault();
+        });
+        document.addEventListener('mousemove', function(e) {
+          if (!dragging) return;
+          var dx = e.clientX - dragStartX; var trackW = track.offsetWidth; var thumbW = 17;
+          var newLeft = Math.max(0, Math.min(trackW - thumbW, thumbStartLeft + dx));
+          var ratio = (trackW - thumbW) > 0 ? newLeft / (trackW - thumbW) : 0;
+          scroll.scrollLeft = ratio * (scroll.scrollWidth - scroll.clientWidth);
+        });
+        document.addEventListener('mouseup', function() { dragging = false; });
+        track.addEventListener('click', function(e) {
+          if (e.target === thumb) return;
+          var trackRect = track.getBoundingClientRect(); var clickX = e.clientX - trackRect.left;
+          var thumbW = 17; var trackW = track.offsetWidth;
+          var ratio = Math.max(0, Math.min(1, (clickX - thumbW / 2) / (trackW - thumbW)));
+          scroll.scrollLeft = ratio * (scroll.scrollWidth - scroll.clientWidth);
+        });
+      })();
+
+      /* — interaction — */
+      function activateBfStage(num) {
+        panel.querySelectorAll('.stage-card-wrapper').forEach(w => {
+          w.classList.toggle('is-active',   w.dataset.stage === num);
+          w.classList.toggle('is-inactive', w.dataset.stage !== num);
+        });
+        panel.querySelectorAll('.gf-stage-detail').forEach(d => {
+          d.classList.toggle('is-visible', d.dataset.stage === num);
+        });
+      }
+
+      panel.querySelectorAll('.stage-card').forEach(card => {
+        card.addEventListener('click', () => activateBfStage(card.dataset.stage));
+        card.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateBfStage(card.dataset.stage); }
+        });
+      });
+
+      activateBfStage('01');
+    }
+
+    function buildModernisationPanel() {
+      const panel = document.getElementById('panel-modernisation');
+      panel.innerHTML = '';
+
+      const MOD_STAGES = [
+        { num: '01', name: 'Mobilize and Assess',
+          tasks: ['Select the bounded modernisation increment', 'Assess the existing application, environment'],
+          agents: LIFECYCLE_MAP.modernisation[0].agents },
+        { num: '02', name: 'Discover and Frame',
+          tasks: ['Use where the underlying problem or desired outcome needs to be reframed before modernisation'],
+          agents: LIFECYCLE_MAP.modernisation[1].agents },
+        { num: '03', name: 'Contextualize',
+          tasks: ['Establish approved current-state context', 'Capture the application, architecture, dependencies and engineering environment'],
+          agents: LIFECYCLE_MAP.modernisation[2].agents },
+        { num: '04', name: 'Define Requirements',
+          tasks: ['Analyse the source', 'Obtain SME verification', 'Develop the BRD and PRD', 'Obtain architecture approval'],
+          agents: LIFECYCLE_MAP.modernisation[3].agents },
+        { num: '05', name: 'Design Experience and Architecture',
+          tasks: ['Map current state to target state', 'Define coexistence and data migration approach', 'Define strangler or phased replacement patterns', 'Plan decommissioning, rollback and feature controls'],
+          agents: LIFECYCLE_MAP.modernisation[4].agents },
+        { num: '06', name: 'Create Backlog and Specification',
+          tasks: ['Create the backlog and specification required for the approved modernisation approach'],
+          agents: LIFECYCLE_MAP.modernisation[5].agents },
+        { num: '07', name: 'Plan and Decompose',
+          tasks: ['Plan implementation or migration waves', 'Define dependencies, testing and environments', 'Define review checkpoints and rollback steps'],
+          agents: LIFECYCLE_MAP.modernisation[6].agents },
+        { num: '08', name: 'Build',
+          tasks: ['Implement the approved modernisation or migration increment within the defined scope'],
+          agents: LIFECYCLE_MAP.modernisation[7].agents },
+        { num: '09', name: 'Validate',
+          tasks: ['Validate against approved requirements', 'Confirm alignment to the target state'],
+          agents: LIFECYCLE_MAP.modernisation[8].agents },
+        { num: '10', name: 'Release',
+          tasks: ['Prepare the modernised increment for controlled release', 'Include the required rollback approach', 'Obtain required authorisation'],
+          agents: LIFECYCLE_MAP.modernisation[9].agents },
+        { num: '11', name: 'Operate and Improve',
+          tasks: ['Monitor the modernised environment', 'Use operational learning to improve the product and context', 'Apply learning to subsequent modernisation increments'],
+          agents: LIFECYCLE_MAP.modernisation[10].agents },
+      ];
+
+      const INDICATOR_SVG = `<svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 1.5L7 8L13 1.5" stroke="#ffe8b2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+      let carouselHTML = `<div class="stage-cards-wrapper"><div class="stage-cards-header"><div class="stage-slider-track" id="modSliderTrack" role="scrollbar" aria-controls="modStageScroll" aria-orientation="horizontal"><div class="stage-slider-thumb" id="modSliderThumb"></div></div></div><div class="stage-cards-scroll" id="modStageScroll"><div class="stage-cards-row">`;
+      MOD_STAGES.forEach((stage, i) => {
+        if (i > 0) carouselHTML += `<div class="stage-card-connector" aria-hidden="true"></div>`;
+        carouselHTML += `
+          <div class="stage-card-wrapper" data-stage="${stage.num}">
+            <div class="stage-indicator" aria-hidden="true">${INDICATOR_SVG}</div>
+            <div class="stage-card" data-stage="${stage.num}" tabindex="0" role="button" aria-label="Stage ${stage.num}">
+              <div class="stage-card__accent"></div>
+              <div class="stage-card__inner">
+                <div class="stage-card__num-section">
+                  <span class="stage-card__ghost-num">${stage.num}</span>
+                  <span class="stage-card__real-num">${stage.num}</span>
+                </div>
+                <span class="stage-card__name">${stage.name}</span>
+              </div>
+            </div>
+          </div>`;
+      });
+      carouselHTML += `</div></div>`;
+
+      let detailHTML = `<div class="gf-stage-details">`;
+      MOD_STAGES.forEach(stage => {
+        const tasksHTML = stage.tasks.map(t => `<li>${t}</li>`).join('');
+        const rightHTML = stage.agents.length > 0
+          ? `
+             <div class="gf-agent-grid">${stage.agents.map(buildAgentCard).join('')}</div>`
+          : `<p class="gf-no-agents">No dedicated agents at this stage. Human-led review and decision-making.</p>`;
+        detailHTML += `
+          <div class="gf-stage-detail" data-stage="${stage.num}">
+            <div class="gf-stage-detail__left">
+              <h3 class="gf-stage-detail__title">Stage ${stage.num}. ${stage.name}</h3>
+              
+              <ul class="gf-stage-detail__tasks">${tasksHTML}</ul>
+            </div>
+            <div class="gf-stage-detail__right">${rightHTML}</div>
+          </div>`;
+      });
+      detailHTML += `</div></div>`;
+
+      panel.innerHTML = carouselHTML + detailHTML;
+
+      (function() {
+        var scroll = panel.querySelector('#modStageScroll');
+        var track  = panel.querySelector('#modSliderTrack');
+        var thumb  = panel.querySelector('#modSliderThumb');
+        function updateThumb() {
+          var maxScroll = scroll.scrollWidth - scroll.clientWidth;
+          var ratio = maxScroll > 0 ? scroll.scrollLeft / maxScroll : 0;
+          var trackW = track.offsetWidth; var thumbW = 17;
+          thumb.style.left = (ratio * (trackW - thumbW)) + 'px';
+        }
+        function checkOverflow() {
+          track.style.display = scroll.scrollWidth > scroll.clientWidth ? '' : 'none';
+        }
+        function refresh() { checkOverflow(); updateThumb(); }
+        scroll._refreshSlider = refresh;
+        requestAnimationFrame(refresh);
+        scroll.addEventListener('scroll', updateThumb);
+        window.addEventListener('resize', refresh);
+        var dragging = false, dragStartX, thumbStartLeft;
+        thumb.addEventListener('mousedown', function(e) {
+          dragging = true; dragStartX = e.clientX; thumbStartLeft = thumb.offsetLeft; e.preventDefault();
+        });
+        document.addEventListener('mousemove', function(e) {
+          if (!dragging) return;
+          var dx = e.clientX - dragStartX; var trackW = track.offsetWidth; var thumbW = 17;
+          var newLeft = Math.max(0, Math.min(trackW - thumbW, thumbStartLeft + dx));
+          var ratio = (trackW - thumbW) > 0 ? newLeft / (trackW - thumbW) : 0;
+          scroll.scrollLeft = ratio * (scroll.scrollWidth - scroll.clientWidth);
+        });
+        document.addEventListener('mouseup', function() { dragging = false; });
+        track.addEventListener('click', function(e) {
+          if (e.target === thumb) return;
+          var trackRect = track.getBoundingClientRect(); var clickX = e.clientX - trackRect.left;
+          var thumbW = 17; var trackW = track.offsetWidth;
+          var ratio = Math.max(0, Math.min(1, (clickX - thumbW / 2) / (trackW - thumbW)));
+          scroll.scrollLeft = ratio * (scroll.scrollWidth - scroll.clientWidth);
+        });
+      })();
+
+      function activateModStage(num) {
+        panel.querySelectorAll('.stage-card-wrapper').forEach(w => {
+          w.classList.toggle('is-active',   w.dataset.stage === num);
+          w.classList.toggle('is-inactive', w.dataset.stage !== num);
+        });
+        panel.querySelectorAll('.gf-stage-detail').forEach(d => {
+          d.classList.toggle('is-visible', d.dataset.stage === num);
+        });
+      }
+
+      panel.querySelectorAll('.stage-card').forEach(card => {
+        card.addEventListener('click', () => activateModStage(card.dataset.stage));
+        card.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateModStage(card.dataset.stage); }
+        });
+      });
+
+      activateModStage('01');
     }
 
     function buildDetailPanel(type) {
@@ -1423,6 +2170,10 @@
     function activatePtTab(type) {
       document.querySelectorAll('.pt-panel').forEach(p =>
         p.classList.toggle('is-active', p.id === 'panel-' + type));
+      const scroll = document.getElementById(
+        type === 'greenfield' ? 'gfStageScroll' : type === 'brownfield' ? 'bfStageScroll' : type === 'modernisation' ? 'modStageScroll' : null
+      );
+      if (scroll && scroll._refreshSlider) requestAnimationFrame(scroll._refreshSlider);
     }
 
     function selectProjectCard(type) {
@@ -1439,7 +2190,9 @@
       section.style.display = 'block';
 
       if (!section.dataset.built) {
-        ['greenfield', 'brownfield', 'modernisation'].forEach(buildDetailPanel);
+        buildGreenfieldPanel();
+        buildBrownfieldPanel();
+        buildModernisationPanel();
 
         [
           [cardGreen, 'greenfield'],
