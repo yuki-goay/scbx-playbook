@@ -442,48 +442,32 @@
       line-height: 22px;
     }
 
-    /* output review grid */
-    .output-review-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-    }
-    .output-review {
-      min-width: 0;
+    /* stage agent columns */
+    .stage-agent-cols {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 20px;
+      width: fit-content;
+      margin-left: auto;
     }
-    .output-review__header {
+    .stage-agent-col {
       display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 8px;
+      flex-direction: column;
+      gap: 12px;
     }
-    .output-review__icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: var(--color-yellow-300);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .output-review__icon svg {
-      width: 18px;
-      height: 18px;
-    }
-    .output-review__name {
-      font-size: 16px;
+    .stage-agent-col__label {
+      font-size: 11px;
       font-weight: 700;
-      color: var(--text-secondary);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary, #4A5260);
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(74,82,96,0.12);
     }
-    .output-review__desc {
-      font-size: 14px;
-      font-weight: 400;
-      color: var(--text-secondary);
-      line-height: 1.5;
+    .stage-agent-col__cards {
+      display: grid;
+      grid-template-columns: repeat(2, 227px);
+      gap: 12px;
     }
 
     /* ── AGENTS SECTION ──────────────────────────────────────────── */
@@ -503,6 +487,20 @@
       grid-template-columns: repeat(auto-fill, 227px);
       gap: 16px;
     }
+
+    .role-disclaimer {
+      margin-top: 4px;
+      padding: 16px 20px;
+      background: var(--color-grey-050, #F5F3F8);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--color-ink-700, #4A5260);
+      line-height: 1.6;
+    }
+    .role-disclaimer p { margin: 0; }
+    .role-disclaimer p + p { margin-top: 10px; }
+    .role-disclaimer strong { font-weight: 600; color: var(--color-ink-900, #14181F); }
 
     /* ── FOOTER ──────────────────────────────────────────────────── */
     .site-footer {
@@ -830,35 +828,25 @@
         <div class="stage-detail">
           <div class="stage-detail__left">
             <h2 class="stage-detail__title">Stage 01. Mobilise &amp; Assess</h2>
-            <p class="stage-detail__label">What you are responsible for</p>
-            <p class="stage-detail__body">You set the direction for the increment. The Research Planner needs to know what you're trying to achieve and why, so it can produce a research plan that's grounded in the right questions.</p>
+            <p class="stage-detail__label">Role in this stage</p>
+            <p class="stage-detail__body">Sets product direction and business outcomes, helps bound the increment, and confirms priorities and scope.</p>
           </div>
-          <div class="output-review-grid">
-            <div class="output-review">
-              <div class="output-review__header">
-                <div class="output-review__icon">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
-                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
-                  </svg>
-                </div>
-                <span class="output-review__name">Product direction</span>
+          <div class="stage-agent-cols">
+            <div class="stage-agent-col">
+              <p class="stage-agent-col__label">Provides input to:</p>
+              <div class="stage-agent-col__cards">
+                <a class="agent-card" href="agent-catalogue.html#research-planner">
+                  <div class="agent-card__top">
+                    <span class="agent-card__id">A.1</span>
+                    <div class="agent-card__icon"><img src="icons/research-planner.svg" alt="Research Planner icon" width="40" height="40"></div>
+                  </div>
+                  <p class="agent-card__name">Research Planner</p>
+                  <p class="agent-card__desc">Gets the team ready before anyone talks to a user, turning vision and stakeholder notes into an assumptions log, research plan, interview guides and screeners.</p>
+                  <div class="agent-card__footer">
+                    <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  </div>
+                </a>
               </div>
-              <p class="output-review__desc">What is the increment meant to achieve? What business outcome should it deliver? Be specific — the Research Planner uses this to frame the right research questions.</p>
-            </div>
-            <div class="output-review">
-              <div class="output-review__header">
-                <div class="output-review__icon">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
-                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
-                  </svg>
-                </div>
-                <span class="output-review__name">Scope and constraints</span>
-              </div>
-              <p class="output-review__desc">What is in and out of scope? What boundaries, known risks or dependencies should shape the work?</p>
             </div>
           </div>
         </div>
@@ -869,35 +857,63 @@
         <div class="stage-detail">
           <div class="stage-detail__left">
             <h2 class="stage-detail__title">Stage 02. Discover &amp; Frame</h2>
-            <p class="stage-detail__label">What you are responsible for</p>
-            <p class="stage-detail__body">You confirm whether discovery is addressing the right problem. Agents can synthesise research quickly, but only you can say whether the findings match the problem you set out to solve and whether the priorities are still right.</p>
+            <p class="stage-detail__label">Role in this stage</p>
+            <p class="stage-detail__body">Ensures discovery addresses the right user or business problem and confirms expected outcomes and priorities.</p>
           </div>
-          <div class="output-review-grid">
-            <div class="output-review">
-              <div class="output-review__header">
-                <div class="output-review__icon">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
-                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
-                  </svg>
-                </div>
-                <span class="output-review__name">Research plan</span>
+          <div class="stage-agent-cols">
+            <div class="stage-agent-col">
+              <p class="stage-agent-col__label">Provides input to:</p>
+              <div class="stage-agent-col__cards">
+                <a class="agent-card" href="agent-catalogue.html#research-planner">
+                  <div class="agent-card__top">
+                    <span class="agent-card__id">A.1</span>
+                    <div class="agent-card__icon"><img src="icons/research-planner.svg" alt="Research Planner icon" width="40" height="40"></div>
+                  </div>
+                  <p class="agent-card__name">Research Planner</p>
+                  <p class="agent-card__desc">Gets the team ready before anyone talks to a user, turning vision and stakeholder notes into an assumptions log, research plan, interview guides and screeners.</p>
+                  <div class="agent-card__footer">
+                    <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  </div>
+                </a>
+                <a class="agent-card" href="agent-catalogue.html#insights-synthesizer">
+                  <div class="agent-card__top">
+                    <span class="agent-card__id">A.2</span>
+                    <div class="agent-card__icon"><img src="icons/insights-synthesizer.svg" alt="Insights Synthesizer icon" width="40" height="40"></div>
+                  </div>
+                  <p class="agent-card__name">Insights Synthesizer</p>
+                  <p class="agent-card__desc">Makes sense of what users said by filing and tagging raw sessions, then drafting insights, personas, blueprints and test findings traceable to source.</p>
+                  <div class="agent-card__footer">
+                    <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  </div>
+                </a>
               </div>
-              <p class="output-review__desc">Does the plan target the right users and the right questions? Are the research objectives clearly connected to the product outcome you've set?</p>
             </div>
-            <div class="output-review">
-              <div class="output-review__header">
-                <div class="output-review__icon">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
-                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
-                  </svg>
-                </div>
-                <span class="output-review__name">Insights synthesis</span>
+            <div class="stage-agent-col">
+              <p class="stage-agent-col__label">Reviews output from:</p>
+              <div class="stage-agent-col__cards">
+                <a class="agent-card" href="agent-catalogue.html#research-planner">
+                  <div class="agent-card__top">
+                    <span class="agent-card__id">A.1</span>
+                    <div class="agent-card__icon"><img src="icons/research-planner.svg" alt="Research Planner icon" width="40" height="40"></div>
+                  </div>
+                  <p class="agent-card__name">Research Planner</p>
+                  <p class="agent-card__desc">Gets the team ready before anyone talks to a user, turning vision and stakeholder notes into an assumptions log, research plan, interview guides and screeners.</p>
+                  <div class="agent-card__footer">
+                    <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  </div>
+                </a>
+                <a class="agent-card" href="agent-catalogue.html#insights-synthesizer">
+                  <div class="agent-card__top">
+                    <span class="agent-card__id">A.2</span>
+                    <div class="agent-card__icon"><img src="icons/insights-synthesizer.svg" alt="Insights Synthesizer icon" width="40" height="40"></div>
+                  </div>
+                  <p class="agent-card__name">Insights Synthesizer</p>
+                  <p class="agent-card__desc">Makes sense of what users said by filing and tagging raw sessions, then drafting insights, personas, blueprints and test findings traceable to source.</p>
+                  <div class="agent-card__footer">
+                    <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  </div>
+                </a>
               </div>
-              <p class="output-review__desc">Do the synthesised themes and recommendations reflect a real user or business problem? Are the findings relevant to your product priorities?</p>
             </div>
           </div>
         </div>
@@ -908,35 +924,63 @@
         <div class="stage-detail">
           <div class="stage-detail__left">
             <h2 class="stage-detail__title">Stage 04. Define requirements</h2>
-            <p class="stage-detail__label">What you are responsible for</p>
-            <p class="stage-detail__body">You confirm the product intent and resolve scope and priority decisions. The agents draft requirements from approved inputs, but only you can confirm that the business case, priorities and scope are correct.</p>
+            <p class="stage-detail__label">Role in this stage</p>
+            <p class="stage-detail__body">Confirms business and product intent and resolves scope, priority and outcome decisions.</p>
           </div>
-          <div class="output-review-grid">
-            <div class="output-review">
-              <div class="output-review__header">
-                <div class="output-review__icon">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
-                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
-                  </svg>
-                </div>
-                <span class="output-review__name">BRD</span>
+          <div class="stage-agent-cols">
+            <div class="stage-agent-col">
+              <p class="stage-agent-col__label">Provides input to:</p>
+              <div class="stage-agent-col__cards">
+                <a class="agent-card" href="agent-catalogue.html#brd-builder">
+                  <div class="agent-card__top">
+                    <span class="agent-card__id">A.5</span>
+                    <div class="agent-card__icon"><img src="icons/brd-builder.svg" alt="BRD Builder icon" width="40" height="40"></div>
+                  </div>
+                  <p class="agent-card__name">BRD Builder</p>
+                  <p class="agent-card__desc">Converts business problems, objectives and discovery inputs into a structured and traceable Business Requirements Document for stakeholder review and approval.</p>
+                  <div class="agent-card__footer">
+                    <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  </div>
+                </a>
+                <a class="agent-card" href="agent-catalogue.html#prd-builder">
+                  <div class="agent-card__top">
+                    <span class="agent-card__id">A.6</span>
+                    <div class="agent-card__icon"><img src="icons/prd-builder.svg" alt="PRD Builder icon" width="40" height="40"></div>
+                  </div>
+                  <p class="agent-card__name">PRD Builder</p>
+                  <p class="agent-card__desc">Translates approved business direction into detailed, measurable and testable product requirements for downstream design, engineering and validation.</p>
+                  <div class="agent-card__footer">
+                    <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  </div>
+                </a>
               </div>
-              <p class="output-review__desc">Do the objectives and requirements accurately reflect the business problem? Are stakeholders named, scope clear and success criteria measurable?</p>
             </div>
-            <div class="output-review">
-              <div class="output-review__header">
-                <div class="output-review__icon">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
-                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
-                  </svg>
-                </div>
-                <span class="output-review__name">PRD</span>
+            <div class="stage-agent-col">
+              <p class="stage-agent-col__label">Reviews output from:</p>
+              <div class="stage-agent-col__cards">
+                <a class="agent-card" href="agent-catalogue.html#brd-builder">
+                  <div class="agent-card__top">
+                    <span class="agent-card__id">A.5</span>
+                    <div class="agent-card__icon"><img src="icons/brd-builder.svg" alt="BRD Builder icon" width="40" height="40"></div>
+                  </div>
+                  <p class="agent-card__name">BRD Builder</p>
+                  <p class="agent-card__desc">Converts business problems, objectives and discovery inputs into a structured and traceable Business Requirements Document for stakeholder review and approval.</p>
+                  <div class="agent-card__footer">
+                    <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  </div>
+                </a>
+                <a class="agent-card" href="agent-catalogue.html#prd-builder">
+                  <div class="agent-card__top">
+                    <span class="agent-card__id">A.6</span>
+                    <div class="agent-card__icon"><img src="icons/prd-builder.svg" alt="PRD Builder icon" width="40" height="40"></div>
+                  </div>
+                  <p class="agent-card__name">PRD Builder</p>
+                  <p class="agent-card__desc">Translates approved business direction into detailed, measurable and testable product requirements for downstream design, engineering and validation.</p>
+                  <div class="agent-card__footer">
+                    <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  </div>
+                </a>
               </div>
-              <p class="output-review__desc">Does every requirement trace back to the BRD? Are priorities set, the MVP scope clear and non-functional requirements included?</p>
             </div>
           </div>
         </div>
@@ -947,22 +991,25 @@
         <div class="stage-detail">
           <div class="stage-detail__left">
             <h2 class="stage-detail__title">Stage 05. Design experience &amp; architecture</h2>
-            <p class="stage-detail__label">What you are responsible for</p>
-            <p class="stage-detail__body">You review the proposed experience to confirm it matches what you've approved. The Experience Architect translates requirements into design, but you check that the product direction hasn't been lost in translation.</p>
+            <p class="stage-detail__label">Role in this stage</p>
+            <p class="stage-detail__body">Reviews the proposed experience and key solution decisions for alignment with product intent and user needs.</p>
           </div>
-          <div class="output-review-grid">
-            <div class="output-review">
-              <div class="output-review__header">
-                <div class="output-review__icon">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
-                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
-                  </svg>
-                </div>
-                <span class="output-review__name">Experience design</span>
+          <div class="stage-agent-cols">
+            <div class="stage-agent-col">
+              <p class="stage-agent-col__label">Reviews output from:</p>
+              <div class="stage-agent-col__cards">
+                <a class="agent-card" href="agent-catalogue.html#experience-architect">
+                  <div class="agent-card__top">
+                    <span class="agent-card__id">A.3</span>
+                    <div class="agent-card__icon"><img src="icons/experience-architect.svg" alt="Experience Architect icon" width="40" height="40"></div>
+                  </div>
+                  <p class="agent-card__name">Experience Architect</p>
+                  <p class="agent-card__desc">Turns decisions into something people can see and try by drafting experience structure, design language, detailed screens and a working concept prototype.</p>
+                  <div class="agent-card__footer">
+                    <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  </div>
+                </a>
               </div>
-              <p class="output-review__desc">Does the proposed experience reflect the approved product direction and user outcomes? Are the flows, entry points and key interactions right?</p>
             </div>
           </div>
         </div>
@@ -973,35 +1020,52 @@
         <div class="stage-detail">
           <div class="stage-detail__left">
             <h2 class="stage-detail__title">Stage 06. Create backlog &amp; specs</h2>
-            <p class="stage-detail__label">What you are responsible for</p>
-            <p class="stage-detail__body">You own the backlog. You confirm that requirements have been correctly broken down into stories, that priorities are reflected and that the acceptance criteria match what you agreed.</p>
+            <p class="stage-detail__label">Role in this stage</p>
+            <p class="stage-detail__body">Owns backlog priority and acceptance intent and reviews how requirements are translated into delivery work.</p>
           </div>
-          <div class="output-review-grid">
-            <div class="output-review">
-              <div class="output-review__header">
-                <div class="output-review__icon">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
-                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
-                  </svg>
-                </div>
-                <span class="output-review__name">Jira backlog</span>
+          <div class="stage-agent-cols">
+            <div class="stage-agent-col">
+              <p class="stage-agent-col__label">Provides input to:</p>
+              <div class="stage-agent-col__cards">
+                <a class="agent-card" href="agent-catalogue.html#jira-backlog-manager">
+                  <div class="agent-card__top">
+                    <span class="agent-card__id">A.7</span>
+                    <div class="agent-card__icon"><img src="icons/jira-backlog-manager.svg" alt="Jira Backlog Manager icon" width="40" height="40"></div>
+                  </div>
+                  <p class="agent-card__name">Jira Backlog Manager</p>
+                  <p class="agent-card__desc">Transforms approved product requirements or epics into a structured delivery backlog of epics, user stories and acceptance criteria.</p>
+                  <div class="agent-card__footer">
+                    <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  </div>
+                </a>
               </div>
-              <p class="output-review__desc">Are epics and stories correctly structured? Do acceptance criteria reflect what you approved? Are priority and MVP scope correctly represented?</p>
             </div>
-            <div class="output-review">
-              <div class="output-review__header">
-                <div class="output-review__icon">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
-                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
-                  </svg>
-                </div>
-                <span class="output-review__name">Technical specification</span>
+            <div class="stage-agent-col">
+              <p class="stage-agent-col__label">Reviews output from:</p>
+              <div class="stage-agent-col__cards">
+                <a class="agent-card" href="agent-catalogue.html#jira-backlog-manager">
+                  <div class="agent-card__top">
+                    <span class="agent-card__id">A.7</span>
+                    <div class="agent-card__icon"><img src="icons/jira-backlog-manager.svg" alt="Jira Backlog Manager icon" width="40" height="40"></div>
+                  </div>
+                  <p class="agent-card__name">Jira Backlog Manager</p>
+                  <p class="agent-card__desc">Transforms approved product requirements or epics into a structured delivery backlog of epics, user stories and acceptance criteria.</p>
+                  <div class="agent-card__footer">
+                    <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  </div>
+                </a>
+                <a class="agent-card" href="agent-catalogue.html#spec-clarify">
+                  <div class="agent-card__top">
+                    <span class="agent-card__id">A.8</span>
+                    <div class="agent-card__icon"><img src="icons/spec-clarify.svg" alt="Technical Specifier icon" width="40" height="40"></div>
+                  </div>
+                  <p class="agent-card__name">Technical Specifier</p>
+                  <p class="agent-card__desc">Converts approved requirements, architecture, design and standards into an implementation-ready specification while identifying gaps, conflicts and unresolved questions.</p>
+                  <div class="agent-card__footer">
+                    <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  </div>
+                </a>
               </div>
-              <p class="output-review__desc">Does the spec reflect the product intent? Have scope and priority decisions been carried through correctly from the PRD?</p>
             </div>
           </div>
         </div>
@@ -1012,22 +1076,25 @@
         <div class="stage-detail">
           <div class="stage-detail__left">
             <h2 class="stage-detail__title">Stage 07. Plan and decompose</h2>
-            <p class="stage-detail__label">What you are responsible for</p>
-            <p class="stage-detail__body">You review the implementation plan to confirm that scope and priority trade-offs are acceptable. Where dependencies affect the value being delivered, you decide whether to adjust scope or accept the sequencing.</p>
+            <p class="stage-detail__label">Role in this stage</p>
+            <p class="stage-detail__body">Resolves scope and priority trade-offs where implementation dependencies affect intended value.</p>
           </div>
-          <div class="output-review-grid">
-            <div class="output-review">
-              <div class="output-review__header">
-                <div class="output-review__icon">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
-                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
-                  </svg>
-                </div>
-                <span class="output-review__name">Implementation plan</span>
+          <div class="stage-agent-cols">
+            <div class="stage-agent-col">
+              <p class="stage-agent-col__label">Reviews output from:</p>
+              <div class="stage-agent-col__cards">
+                <a class="agent-card" href="agent-catalogue.html#task-planner">
+                  <div class="agent-card__top">
+                    <span class="agent-card__id">A.9</span>
+                    <div class="agent-card__icon"><img src="icons/task-planner.svg" alt="Implementation Planner icon" width="40" height="40"></div>
+                  </div>
+                  <p class="agent-card__name">Implementation Planner</p>
+                  <p class="agent-card__desc">Decomposes the approved specification and solution approach into ordered implementation tasks with explicit dependencies and expected outcomes.</p>
+                  <div class="agent-card__footer">
+                    <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  </div>
+                </a>
               </div>
-              <p class="output-review__desc">Does the sequencing deliver the highest-priority value first? Are any scope trade-offs or dependencies acceptable to the business?</p>
             </div>
           </div>
         </div>
@@ -1038,35 +1105,36 @@
         <div class="stage-detail">
           <div class="stage-detail__left">
             <h2 class="stage-detail__title">Stage 09. Validate</h2>
-            <p class="stage-detail__label">What you are responsible for</p>
-            <p class="stage-detail__body">You confirm whether the increment delivers what was agreed. Test agents run the checks, but you review the results and decide whether the product meets the acceptance criteria you set.</p>
+            <p class="stage-detail__label">Role in this stage</p>
+            <p class="stage-detail__body">Confirms the increment meets agreed product outcomes and acceptance intent.</p>
           </div>
-          <div class="output-review-grid">
-            <div class="output-review">
-              <div class="output-review__header">
-                <div class="output-review__icon">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
-                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
-                  </svg>
-                </div>
-                <span class="output-review__name">API test results</span>
+          <div class="stage-agent-cols">
+            <div class="stage-agent-col">
+              <p class="stage-agent-col__label">Reviews output from:</p>
+              <div class="stage-agent-col__cards">
+                <a class="agent-card" href="agent-catalogue.html#api-testing">
+                  <div class="agent-card__top">
+                    <span class="agent-card__id">A.11</span>
+                    <div class="agent-card__icon"><img src="icons/api-testing.svg" alt="API Testing icon" width="40" height="40"></div>
+                  </div>
+                  <p class="agent-card__name">API Testing</p>
+                  <p class="agent-card__desc">Generates and executes API tests against approved interface specifications and acceptance criteria, producing test results and evidence for review.</p>
+                  <div class="agent-card__footer">
+                    <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  </div>
+                </a>
+                <a class="agent-card" href="agent-catalogue.html#functional-testing">
+                  <div class="agent-card__top">
+                    <span class="agent-card__id">A.12</span>
+                    <div class="agent-card__icon"><img src="icons/functional-testing.svg" alt="Functional Testing icon" width="40" height="40"></div>
+                  </div>
+                  <p class="agent-card__name">Functional Testing</p>
+                  <p class="agent-card__desc">Converts approved requirements, designs and acceptance criteria into repeatable functional tests, executable scripts and test evidence.</p>
+                  <div class="agent-card__footer">
+                    <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  </div>
+                </a>
               </div>
-              <p class="output-review__desc">Do API failures indicate a gap in the product, or an issue with the test or specification?</p>
-            </div>
-            <div class="output-review">
-              <div class="output-review__header">
-                <div class="output-review__icon">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
-                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
-                  </svg>
-                </div>
-                <span class="output-review__name">Functional test results</span>
-              </div>
-              <p class="output-review__desc">Does the increment meet the acceptance criteria? Are any test failures blocking release?</p>
             </div>
           </div>
         </div>
@@ -1077,35 +1145,25 @@
         <div class="stage-detail">
           <div class="stage-detail__left">
             <h2 class="stage-detail__title">Stage 10. Release</h2>
-            <p class="stage-detail__label">What you are responsible for</p>
-            <p class="stage-detail__body">You give product acceptance before the increment is released. You confirm the agreed outcomes have been met and the business is ready to receive the change.</p>
+            <p class="stage-detail__label">Role in this stage</p>
+            <p class="stage-detail__body">Confirms product acceptance and business readiness before release.</p>
           </div>
-          <div class="output-review-grid">
-            <div class="output-review">
-              <div class="output-review__header">
-                <div class="output-review__icon">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
-                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
-                  </svg>
-                </div>
-                <span class="output-review__name">Functional test sign-off</span>
+          <div class="stage-agent-cols">
+            <div class="stage-agent-col">
+              <p class="stage-agent-col__label">Reviews output from:</p>
+              <div class="stage-agent-col__cards">
+                <a class="agent-card" href="agent-catalogue.html#functional-testing">
+                  <div class="agent-card__top">
+                    <span class="agent-card__id">A.12</span>
+                    <div class="agent-card__icon"><img src="icons/functional-testing.svg" alt="Functional Testing icon" width="40" height="40"></div>
+                  </div>
+                  <p class="agent-card__name">Functional Testing</p>
+                  <p class="agent-card__desc">Converts approved requirements, designs and acceptance criteria into repeatable functional tests, executable scripts and test evidence.</p>
+                  <div class="agent-card__footer">
+                    <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  </div>
+                </a>
               </div>
-              <p class="output-review__desc">Has all functional testing passed? Are any outstanding failures acceptable for this release?</p>
-            </div>
-            <div class="output-review">
-              <div class="output-review__header">
-                <div class="output-review__icon">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
-                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
-                  </svg>
-                </div>
-                <span class="output-review__name">Deployment confirmation</span>
-              </div>
-              <p class="output-review__desc">Is the deployment configuration consistent with what was approved? Are there any operational risks to flag before release?</p>
             </div>
           </div>
         </div>
@@ -1116,22 +1174,41 @@
         <div class="stage-detail">
           <div class="stage-detail__left">
             <h2 class="stage-detail__title">Stage 11. Operate &amp; Improve</h2>
-            <p class="stage-detail__label">What you are responsible for</p>
-            <p class="stage-detail__body">You use what you learn from customers and operations to decide what to work on next. The Insights Synthesizer can aggregate feedback and usage signals; you use it to sharpen product priorities for the next increment.</p>
+            <p class="stage-detail__label">Role in this stage</p>
+            <p class="stage-detail__body">Uses customer, product and operational learning to reprioritise the roadmap and subsequent increments.</p>
           </div>
-          <div class="output-review-grid">
-            <div class="output-review">
-              <div class="output-review__header">
-                <div class="output-review__icon">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 2h7l4 4v12H5V2z" stroke="#14181F" stroke-width="1.5" stroke-linejoin="round"/>
-                    <path d="M12 2v4h4" stroke="#14181F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 9h5M8 12h5M8 15h3" stroke="#14181F" stroke-width="1.2" stroke-linecap="round"/>
-                  </svg>
-                </div>
-                <span class="output-review__name">Insights synthesis</span>
+          <div class="stage-agent-cols">
+            <div class="stage-agent-col">
+              <p class="stage-agent-col__label">Provides input to:</p>
+              <div class="stage-agent-col__cards">
+                <a class="agent-card" href="agent-catalogue.html#context-builder">
+                  <div class="agent-card__top">
+                    <span class="agent-card__id">A.4</span>
+                    <div class="agent-card__icon"><img src="icons/context-builder.svg" alt="Context Builder icon" width="40" height="40"></div>
+                  </div>
+                  <p class="agent-card__name">Context Builder</p>
+                  <p class="agent-card__desc">Creates a unified project context from business, technical, compliance, standards, documentation and codebase sources to support downstream agent-enabled delivery.</p>
+                  <div class="agent-card__footer">
+                    <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  </div>
+                </a>
               </div>
-              <p class="output-review__desc">What are customers telling you? Do the synthesised themes suggest a change in product direction, priorities or acceptance criteria for the next increment?</p>
+            </div>
+            <div class="stage-agent-col">
+              <p class="stage-agent-col__label">Reviews output from:</p>
+              <div class="stage-agent-col__cards">
+                <a class="agent-card" href="agent-catalogue.html#insights-synthesizer">
+                  <div class="agent-card__top">
+                    <span class="agent-card__id">A.2</span>
+                    <div class="agent-card__icon"><img src="icons/insights-synthesizer.svg" alt="Insights Synthesizer icon" width="40" height="40"></div>
+                  </div>
+                  <p class="agent-card__name">Insights Synthesizer</p>
+                  <p class="agent-card__desc">Makes sense of what users said by filing and tagging raw sessions, then drafting insights, personas, blueprints and test findings traceable to source.</p>
+                  <div class="agent-card__footer">
+                    <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  </div>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -1142,154 +1219,11 @@
 
       <!-- AGENTS SECTION -->
       <div class="agents-section">
-        <p class="agents-label">These are the agents you'll most likely work with:</p>
-        <div class="agent-grid">
-
-          <!-- A1 Research Planner -->
-          <a class="agent-card" href="agent-catalogue.html#research-planner">
-            <div class="agent-card__top">
-              <span class="agent-card__id">A.1</span>
-              <div class="agent-card__icon"><img src="icons/research-planner.svg" alt="Research Planner icon" width="40" height="40"></div>
-            </div>
-            <p class="agent-card__name">Research Planner</p>
-            <p class="agent-card__desc">Turns your vision and stakeholder notes into an assumptions log, a research plan, interview guides and screeners.</p>
-            <div class="agent-card__footer">
-              <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            </div>
-          </a>
-
-          <!-- A2 Insights Synthesizer -->
-          <a class="agent-card" href="agent-catalogue.html#insights-synthesizer">
-            <div class="agent-card__top">
-              <span class="agent-card__id">A.2</span>
-              <div class="agent-card__icon"><img src="icons/insights-synthesizer.svg" alt="Insights Synthesizer icon" width="40" height="40"></div>
-            </div>
-            <p class="agent-card__name">Insights Synthesizer</p>
-            <p class="agent-card__desc">Synthesises raw research data into structured findings: themes, personas, journey maps and design context packages.</p>
-            <div class="agent-card__footer">
-              <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            </div>
-          </a>
-
-          <!-- A3 Experience Architect -->
-          <a class="agent-card" href="agent-catalogue.html#experience-architect">
-            <div class="agent-card__top">
-              <span class="agent-card__id">A.3</span>
-              <div class="agent-card__icon"><img src="icons/experience-architect.svg" alt="Experience Architect icon" width="40" height="40"></div>
-            </div>
-            <p class="agent-card__name">Experience Architect</p>
-            <p class="agent-card__desc">Translates approved requirements, designs and standards into a complete UX specification covering flows, components, interactions and frontend behaviour.</p>
-            <div class="agent-card__footer">
-              <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            </div>
-          </a>
-
-          <!-- A4 Context Builder -->
-          <a class="agent-card" href="agent-catalogue.html#context-builder">
-            <div class="agent-card__top">
-              <span class="agent-card__id">A.4</span>
-              <div class="agent-card__icon"><img src="icons/context-builder.svg" alt="Context Builder icon" width="40" height="40"></div>
-            </div>
-            <p class="agent-card__name">Context Builder</p>
-            <p class="agent-card__desc">Creates a unified project context from business, technical, compliance, standards, documentation and codebase.</p>
-            <div class="agent-card__footer">
-              <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            </div>
-          </a>
-
-          <!-- A5 BRD Builder -->
-          <a class="agent-card" href="agent-catalogue.html#brd-builder">
-            <div class="agent-card__top">
-              <span class="agent-card__id">A.5</span>
-              <div class="agent-card__icon"><img src="icons/brd-builder.svg" alt="BRD Builder icon" width="40" height="40"></div>
-            </div>
-            <p class="agent-card__name">BRD Builder</p>
-            <p class="agent-card__desc">Converts business problems, objectives and discovery inputs into a structured and traceable Business Requirements Document.</p>
-            <div class="agent-card__footer">
-              <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            </div>
-          </a>
-
-          <!-- A6 PRD Builder -->
-          <a class="agent-card" href="agent-catalogue.html#prd-builder">
-            <div class="agent-card__top">
-              <span class="agent-card__id">A.6</span>
-              <div class="agent-card__icon"><img src="icons/prd-builder.svg" alt="PRD Builder icon" width="40" height="40"></div>
-            </div>
-            <p class="agent-card__name">PRD Builder</p>
-            <p class="agent-card__desc">Translates approved business direction into detailed, measurable and testable product requirements for design, engineering and validation.</p>
-            <div class="agent-card__footer">
-              <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            </div>
-          </a>
-
-          <!-- A7 Jira Backlog Manager -->
-          <a class="agent-card" href="agent-catalogue.html#jira-backlog-manager">
-            <div class="agent-card__top">
-              <span class="agent-card__id">A.7</span>
-              <div class="agent-card__icon"><img src="icons/jira-backlog-manager.svg" alt="Jira Backlog Manager icon" width="40" height="40"></div>
-            </div>
-            <p class="agent-card__name">Jira Backlog Manager</p>
-            <p class="agent-card__desc">Transforms approved product requirements or epics into a backlog of epics, user stories and acceptance criteria.</p>
-            <div class="agent-card__footer">
-              <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            </div>
-          </a>
-
-          <!-- A8 Technical Specifier -->
-          <a class="agent-card" href="agent-catalogue.html#spec-clarify">
-            <div class="agent-card__top">
-              <span class="agent-card__id">A.8</span>
-              <div class="agent-card__icon"><img src="icons/spec-clarify.svg" alt="Technical Specifier icon" width="40" height="40"></div>
-            </div>
-            <p class="agent-card__name">Technical Specifier</p>
-            <p class="agent-card__desc">Converts approved requirements, architecture, design and standards into an implementation-ready specification while identifying gaps.</p>
-            <div class="agent-card__footer">
-              <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            </div>
-          </a>
-
-          <!-- A9 Implementation Planner -->
-          <a class="agent-card" href="agent-catalogue.html#task-planner">
-            <div class="agent-card__top">
-              <span class="agent-card__id">A.9</span>
-              <div class="agent-card__icon"><img src="icons/task-planner.svg" alt="Implementation Planner icon" width="40" height="40"></div>
-            </div>
-            <p class="agent-card__name">Implementation Planner</p>
-            <p class="agent-card__desc">Decomposes the approved specification and solution approach into ordered implementation tasks with explicit dependencies and expected outcomes.</p>
-            <div class="agent-card__footer">
-              <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            </div>
-          </a>
-
-          <!-- A11 API Testing -->
-          <a class="agent-card" href="agent-catalogue.html#api-testing">
-            <div class="agent-card__top">
-              <span class="agent-card__id">A.11</span>
-              <div class="agent-card__icon"><img src="icons/api-testing.svg" alt="API Testing icon" width="40" height="40"></div>
-            </div>
-            <p class="agent-card__name">API Testing</p>
-            <p class="agent-card__desc">Generates and executes API tests against approved interface specifications and acceptance criteria, producing test results and evidence for review.</p>
-            <div class="agent-card__footer">
-              <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            </div>
-          </a>
-
-          <!-- A12 Functional Testing -->
-          <a class="agent-card" href="agent-catalogue.html#functional-testing">
-            <div class="agent-card__top">
-              <span class="agent-card__id">A.12</span>
-              <div class="agent-card__icon"><img src="icons/functional-testing.svg" alt="Functional Testing icon" width="40" height="40"></div>
-            </div>
-            <p class="agent-card__name">Functional Testing</p>
-            <p class="agent-card__desc">Converts approved requirements, designs and acceptance criteria into repeatable functional tests, executable scripts and test evidence.</p>
-            <div class="agent-card__footer">
-              <div class="agent-card__arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            </div>
-          </a>
-
-        </div><!-- .agent-grid -->
         <p class="view-catalogue-link"><a href="agent-catalogue.html">View agent catalogue →</a></p>
+        <div class="role-disclaimer">
+          <p>The roles shown are <strong>indicative and should be tailored to the scope, complexity and risk of each increment</strong>. They are not intended to define a fixed squad structure or RACI.</p>
+          <p>The mapping is informed by recognised practices including the <strong>Scrum Guide</strong> for product ownership and backlog accountability, <strong>ISO 9241-210</strong> for human-centred design, the <strong>Microsoft Azure Well-Architected Framework</strong> for architecture, reliability and operational excellence, and <strong>Microsoft Secure DevOps</strong> and the <strong>NIST Secure Software Development Framework (SSDF)</strong> for integrating security throughout the development lifecycle. These practices have been adapted to the Agentic PDLC lifecycle and the core product squad roles defined in this playbook.</p>
+        </div>
       </div><!-- .agents-section -->
 
     </article>

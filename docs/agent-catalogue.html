@@ -853,7 +853,7 @@ const agents = [
   {
     id: 'A.1', group: 'design', icon: 'icons/research-planner.svg',
     name: 'Research Planner',
-    tagline: 'Gets the team ready before anyone talks to a user.',
+    tagline: 'Gets the team ready before anyone talks to a user, turning vision and stakeholder notes into an assumptions log, research plan, interview guides and screeners.',
     desc: 'Turns the vision and early stakeholder notes into a clear list of assumptions, a research plan, interview guides and screeners, so fieldwork starts with real questions instead of guesses.',
     useWhen: 'Kickoff has produced the vision and objectives; stakeholder interviews or earlier findings have changed what we need to ask; or a gate asks for the plan to be revised.',
     inputs: 'Vision and objectives, stakeholder and expert interview notes, briefs and earlier work.',
@@ -865,7 +865,7 @@ const agents = [
   {
     id: 'A.2', group: 'design', icon: 'icons/insights-synthesizer.svg',
     name: 'Insights Synthesizer',
-    tagline: 'Makes sense of what users told us.',
+    tagline: 'Makes sense of what users said by filing and tagging raw sessions, then drafting insights, personas, blueprints and test findings traceable to source.',
     desc: 'Files and tags raw sessions as evidence, then drafts insights, personas, blueprints and test findings — each one traceable to where it came from.',
     useWhen: 'A person has conducted discovery sessions and has raw materials of requirements and findings.',
     inputs: 'Checked raw material, tagged and de-identified evidence, personas, jobs and pain points, prioritised features, the to-be blueprint, experience principles, the hi-fi prototype and pass criteria.',
@@ -877,7 +877,7 @@ const agents = [
   {
     id: 'A.3', group: 'design', icon: 'icons/experience-architect.svg',
     name: 'Experience Architect',
-    tagline: 'Turns decisions into something people can see and try.',
+    tagline: 'Turns decisions into something people can see and try by drafting experience structure, design language, detailed screens and a working concept prototype.',
     desc: 'Drafts the structure of the experience, the design language and the detailed screens. Builds a working concept prototype from the approved design system and checks designs against principles and standards.',
     useWhen: 'The user journey, screen inventory, and design system are available to create detailed designs.',
     inputs: 'Feature requirements, existing designs, sample images or links.',
@@ -897,7 +897,7 @@ const agents = [
   {
     id: 'A.4', group: 'coding', icon: 'icons/context-builder.svg',
     name: 'Context Builder',
-    tagline: 'Creates a unified project context for downstream agents.',
+    tagline: 'Creates a unified project context from business, technical, compliance, standards, documentation and codebase sources to support downstream agent-enabled delivery.',
     desc: 'Brings together reference material, project documentation, source code, configuration and tests, and supplements these with business, stakeholder, compliance and technical context.',
     useWhen: 'Creating project context from scratch; starting a new project or onboarding an existing codebase; or establishing business, technical and standards documentation.',
     inputs: 'Confluence link where provided; otherwise attached Word or PDF documents; available legacy project documentation; source code, configuration and tests; business, client-domain, stakeholder and compliance information; and, for greenfield projects, technology stack and business overview.',
@@ -909,7 +909,7 @@ const agents = [
   {
     id: 'A.5', group: 'coding', icon: 'icons/brd-builder.svg',
     name: 'BRD Builder',
-    tagline: 'Converts business problems into a structured BRD.',
+    tagline: 'Converts business problems, objectives and discovery inputs into a structured and traceable Business Requirements Document for stakeholder review and approval.',
     desc: 'Supports the discovery, definition, and governance of business requirements. Helps teams convert an initial business idea or problem statement into a structured BRD ready for stakeholder review.',
     useWhen: 'The team needs to define the business problem, establish objectives and outcomes, identify stakeholders, document current-state challenges, or establish governance before detailed design begins.',
     inputs: 'Business problem statements; transformation objectives; workshop notes; stakeholder interviews; existing process documents; policies and standards; customer or employee feedback; business metrics and key performance indicators; existing architecture or programme documentation; and known assumptions, risks and dependencies.',
@@ -939,7 +939,7 @@ Capture:
   {
     id: 'A.6', group: 'coding', icon: 'icons/prd-builder.svg',
     name: 'PRD Builder',
-    tagline: 'Translates approved business direction into product requirements.',
+    tagline: 'Translates approved business direction into detailed, measurable and testable product requirements for downstream design, engineering and validation.',
     desc: 'Converts an approved BRD into detailed, measurable, and actionable product requirements. Defines what the product must do, how it should behave, which quality attributes it must satisfy, and how completion will be verified.',
     useWhen: 'After an approved BRD is in place and the team needs to define product users, describe capabilities, capture functional and non-functional requirements, or establish acceptance criteria.',
     inputs: 'Approved BRD; product vision and roadmap; user personas; user research; existing process flows; architecture constraints; regulatory and security requirements; source-system and integration details; existing backlog items; service-level objectives; operational and support requirements; and reference applications or existing codebase context.',
@@ -977,7 +977,7 @@ Include:
   {
     id: 'A.7', group: 'coding', icon: 'icons/jira-backlog-manager.svg',
     name: 'Jira Backlog Manager',
-    tagline: 'Turns approved requirements into a structured delivery backlog.',
+    tagline: 'Transforms approved product requirements or epics into a structured delivery backlog of epics, user stories and acceptance criteria.',
     desc: 'Transforms approved product requirements or epics into a structured delivery backlog. Drafts epics, user stories and acceptance criteria and helps maintain relationships and consistency across backlog items.',
     useWhen: 'Backlog decomposition or maintenance is required.',
     inputs: 'Approved PRD, epics, story standards and backlog context.',
@@ -997,7 +997,7 @@ Important: Do not create any issues in Jira yet. Only produce the discovery and 
   {
     id: 'A.8', group: 'coding', icon: 'icons/spec-clarify.svg',
     name: 'Technical Specifier',
-    tagline: 'Converts requirements into an implementation-ready specification.',
+    tagline: 'Converts approved requirements, architecture, design and standards into an implementation-ready specification while identifying gaps, conflicts and unresolved questions.',
     desc: 'Identifies missing information, conflicting assumptions and unresolved questions before planning or coding begins. The specification becomes the main implementation reference only after accountable roles have resolved and approved the open points.',
     useWhen: 'Before planning and implementation for a bounded increment.',
     inputs: 'Approved requirements, design, architecture, context and standards.',
@@ -1015,7 +1015,7 @@ Generate all required specification, contract, design-evidence, traceability, an
   {
     id: 'A.9', group: 'coding', icon: 'icons/task-planner.svg',
     name: 'Implementation Planner',
-    tagline: 'Decomposes a specification into ordered implementation tasks.',
+    tagline: 'Decomposes the approved specification and solution approach into ordered implementation tasks with explicit dependencies and expected outcomes.',
     desc: 'Makes dependencies, sequencing and expected outcomes explicit so work can be executed in controlled increments. The FDE or engineering lead checks that the plan covers the approved scope and does not introduce unsupported design decisions.',
     useWhen: 'After specification and plan approval.',
     inputs: 'spec.md, project context and engineering standards.',
@@ -1029,7 +1029,7 @@ verification, and unit-test work for each implementation task. Do not implement 
   {
     id: 'A.10', group: 'coding', icon: 'icons/task-implementor.svg',
     name: 'Implementation Builder',
-    tagline: 'Executes bounded tasks from the approved spec and plan.',
+    tagline: 'Executes bounded implementation tasks against the approved specification and plan, producing source-code changes and associated unit tests.',
     desc: 'Produces source-code changes and unit tests within the supplied repository context, standards and guardrails. The Application Engineer remains accountable for understanding the change, resolving failures and confirming that the pull request is suitable for review.',
     useWhen: 'For bounded, approved implementation work.',
     inputs: 'Approved tasks, codebase, standards, context and test expectations.',
@@ -1042,7 +1042,7 @@ Follow the approved specification and project standards and record implementatio
   {
     id: 'A.11', group: 'testing', icon: 'icons/api-testing.svg',
     name: 'API Testing',
-    tagline: 'Generates and executes API tests against approved specifications.',
+    tagline: 'Generates and executes API tests against approved interface specifications and acceptance criteria, producing test results and evidence for review.',
     desc: 'Uses approved interface specifications, acceptance criteria and test standards to produce test assets, results and evidence. The Quality Engineer confirms that coverage is sufficient and decides whether the evidence can be accepted.',
     useWhen: 'Where the increment exposes or changes APIs.',
     inputs: 'Approved API specification, acceptance criteria and test standards.',
@@ -1059,7 +1059,7 @@ contract drift, coverage gaps, and blockers. Do not modify application code to m
   {
     id: 'A.12', group: 'testing', icon: 'icons/functional-testing.svg',
     name: 'Functional Testing',
-    tagline: 'Converts requirements into repeatable functional tests.',
+    tagline: 'Converts approved requirements, designs and acceptance criteria into repeatable functional tests, executable scripts and test evidence.',
     desc: 'Prepares test scenarios, cases, data, executable scripts and execution evidence for functional, role-based, negative and boundary conditions. The Quality Engineer reviews coverage and results and retains the quality decision.',
     useWhen: 'For functional, role-based, negative and boundary testing in approved environments.',
     inputs: 'PRD, stories, acceptance criteria, designs, APIs and test standards.',
@@ -1105,7 +1105,7 @@ function renderCards(filter) {
           <div class="agent-card__icon"><img src="${agent.icon}" alt="${agent.name} icon" width="40" height="40"></div>
         </div>
         <div class="agent-card__name">${agent.name}</div>
-        <div class="agent-card__desc">${agent.desc}</div>
+        <div class="agent-card__desc">${agent.tagline}</div>
         <div class="agent-card__footer">
           <span class="agent-card__badge agent-card__badge--model">${agent.model}</span>
           <div class="agent-card__arrow">${arrowSVG}</div>

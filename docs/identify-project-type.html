@@ -1435,7 +1435,7 @@
     const DETAIL_AGENTS = {
       'A.1': {
         name: 'Research Planner',
-        tagline: 'Gets the team ready before anyone talks to a user.',
+        tagline: 'Gets the team ready before anyone talks to a user, turning vision and stakeholder notes into an assumptions log, research plan, interview guides and screeners.',
         desc: 'Turns the vision and early stakeholder notes into a clear list of assumptions, a research plan, interview guides and screeners.',
         icon: 'icons/research-planner.svg',
         model: 'GPT-6.1 Terra',
@@ -1447,7 +1447,7 @@
       },
       'A.2': {
         name: 'Insights Synthesizer',
-        tagline: 'Makes sense of what users told us.',
+        tagline: 'Makes sense of what users said by filing and tagging raw sessions, then drafting insights, personas, blueprints and test findings traceable to source.',
         desc: 'Files and tags raw sessions as evidence, then drafts insights, personas, blueprints and test findings — each one traceable back to where it came from.',
         icon: 'icons/insights-synthesizer.svg',
         model: 'Claude Sonnet 5.5',
@@ -1459,7 +1459,7 @@
       },
       'A.3': {
         name: 'Experience Architect',
-        tagline: 'Turns decisions into something people can see and try.',
+        tagline: 'Turns decisions into something people can see and try by drafting experience structure, design language, detailed screens and a working concept prototype.',
         desc: 'Drafts the structure of the experience, the design language and the detailed screens. Builds a working concept prototype from the approved design system.',
         icon: 'icons/experience-architect.svg',
         model: 'Claude Sonnet 5.5',
@@ -1471,7 +1471,7 @@
       },
       'A.4': {
         name: 'Context Builder',
-        tagline: 'Creates a unified project context for downstream agents.',
+        tagline: 'Creates a unified project context from business, technical, compliance, standards, documentation and codebase sources to support downstream agent-enabled delivery.',
         desc: 'Brings together reference material, project documentation, source code, configuration and tests, supplemented with business, stakeholder, compliance and technical context.',
         icon: 'icons/context-builder.svg',
         model: 'GPT-6.1 Terra',
@@ -1483,7 +1483,7 @@
       },
       'A.5': {
         name: 'BRD Builder',
-        tagline: 'Converts business problems into a structured BRD.',
+        tagline: 'Converts business problems, objectives and discovery inputs into a structured and traceable Business Requirements Document for stakeholder review and approval.',
         desc: 'Supports the discovery, definition, and governance of business requirements. Converts an initial business idea into a structured BRD ready for stakeholder review.',
         icon: 'icons/brd-builder.svg',
         model: 'GPT-6.1 Terra',
@@ -1495,7 +1495,7 @@
       },
       'A.6': {
         name: 'PRD Builder',
-        tagline: 'Translates approved business direction into product requirements.',
+        tagline: 'Translates approved business direction into detailed, measurable and testable product requirements for downstream design, engineering and validation.',
         desc: 'Converts an approved BRD into detailed, measurable, and actionable product requirements. Defines what the product must do and how completion will be verified.',
         icon: 'icons/prd-builder.svg',
         model: 'Claude Sonnet 5.5',
@@ -1507,7 +1507,7 @@
       },
       'A.7': {
         name: 'Jira Backlog Manager',
-        tagline: 'Turns approved requirements into a structured delivery backlog.',
+        tagline: 'Transforms approved product requirements or epics into a structured delivery backlog of epics, user stories and acceptance criteria.',
         desc: 'Transforms approved product requirements or epics into a structured delivery backlog. Drafts epics, user stories and acceptance criteria.',
         icon: 'icons/jira-backlog-manager.svg',
         model: 'Claude Sonnet 5.5',
@@ -1519,7 +1519,7 @@
       },
       'A.8': {
         name: 'Technical Specifier',
-        tagline: 'Converts requirements into an implementation-ready specification.',
+        tagline: 'Converts approved requirements, architecture, design and standards into an implementation-ready specification while identifying gaps, conflicts and unresolved questions.',
         desc: 'Identifies missing information, conflicting assumptions and unresolved questions before planning or coding begins. The specification is the main implementation reference after accountable roles approve it.',
         icon: 'icons/spec-clarify.svg',
         model: 'GPT-6.1 Sol',
@@ -1531,7 +1531,7 @@
       },
       'A.9': {
         name: 'Implementation Planner',
-        tagline: 'Decomposes a specification into ordered implementation tasks.',
+        tagline: 'Decomposes the approved specification and solution approach into ordered implementation tasks with explicit dependencies and expected outcomes.',
         desc: 'Makes dependencies, sequencing and expected outcomes explicit so work can be executed in controlled increments. The FDE or engineering lead checks coverage against approved scope.',
         icon: 'icons/task-planner.svg',
         model: 'GPT-6.1 Sol',
@@ -1543,7 +1543,7 @@
       },
       'A.10': {
         name: 'Implementation Builder',
-        tagline: 'Executes bounded tasks from the approved spec and plan.',
+        tagline: 'Executes bounded implementation tasks against the approved specification and plan, producing source-code changes and associated unit tests.',
         desc: 'Produces source-code changes and unit tests within the supplied repository context, standards and guardrails. The Application Engineer remains accountable for the change.',
         icon: 'icons/task-implementor.svg',
         model: 'GPT-5.3-Codex',
@@ -1555,7 +1555,7 @@
       },
       'A.11': {
         name: 'API Testing',
-        tagline: 'Generates and executes API tests against approved specifications.',
+        tagline: 'Generates and executes API tests against approved interface specifications and acceptance criteria, producing test results and evidence for review.',
         desc: 'Uses approved interface specifications, acceptance criteria and test standards to produce test assets, results and evidence. The Quality Engineer confirms coverage is sufficient.',
         icon: 'icons/api-testing.svg',
         model: 'GPT-5.3-Codex',
@@ -1567,7 +1567,7 @@
       },
       'A.12': {
         name: 'Functional Testing',
-        tagline: 'Converts requirements into repeatable functional tests.',
+        tagline: 'Converts approved requirements, designs and acceptance criteria into repeatable functional tests, executable scripts and test evidence.',
         desc: 'Prepares test scenarios, cases, data, executable scripts and execution evidence for functional, role-based, negative and boundary conditions.',
         icon: 'icons/functional-testing.svg',
         model: 'GPT-6 Sol',
@@ -1691,7 +1691,7 @@
           <div class="agent-card__icon"><img src="${a.icon}" alt="" width="40" height="40"></div>
         </div>
         <div class="agent-card__name">${a.name}</div>
-        <div class="agent-card__desc">${why}</div>
+        <div class="agent-card__desc">${a.tagline}</div>
         <div class="agent-card__footer">
           <span class="agent-card__badge agent-card__badge--${roleLower}">${role}</span>
           <div class="agent-card__arrow">${ARROW_SVG}</div>
