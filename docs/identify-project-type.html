@@ -415,6 +415,8 @@
 
     .project-card.is-other {
       opacity: 0.3;
+      pointer-events: none;
+      cursor: default;
     }
 
     .project-card.is-all-visible {
@@ -470,7 +472,7 @@
     .results-actions {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 12px;
     }
 
     .btn-retake {
@@ -486,6 +488,22 @@
 
     .btn-retake:hover {
       border-color: var(--purple-600);
+      background: rgba(118,49,193,0.06);
+    }
+
+    .btn-view-all {
+      display: inline-block;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--purple-600);
+      background: transparent;
+      border: 1.5px solid var(--purple-600);
+      border-radius: 8px;
+      padding: 12px 28px;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .btn-view-all:hover {
       background: rgba(118,49,193,0.06);
     }
 
@@ -1107,6 +1125,24 @@
       background: rgba(74,82,96,0.12);
     }
 
+    /* ── Optional agent card: light grey icon + grey text ── */
+    .agent-card--optional .agent-card__icon {
+      background: #EAECEF;
+      border-radius: 10px;
+      padding: 6px;
+      width: 52px;
+      height: 52px;
+    }
+    .agent-card--optional .agent-card__icon img {
+      filter: grayscale(1) opacity(0.6);
+    }
+    .agent-card--optional .agent-card__id {
+      color: #60636A;
+    }
+    .agent-card--optional .agent-card__name {
+      color: #60636A;
+    }
+
   </style>
 </head>
 <body>
@@ -1225,6 +1261,7 @@
       <!-- Actions row -->
       <div class="results-actions">
         <button class="btn-retake" id="btn-retake">Retake Quiz</button>
+        <a href="agentic-lifecycle.html" class="btn-view-all">View all project types</a>
       </div>
 
       <!-- Agent lifecycle detail section -->
@@ -1416,7 +1453,10 @@
 
       Object.entries(cards).forEach(([key, card]) => {
         card.classList.remove('is-winner', 'is-other', 'is-all-visible');
-        card.classList.add(key === result ? 'is-winner' : 'is-other');
+        const winner = key === result;
+        card.classList.add(winner ? 'is-winner' : 'is-other');
+        card.setAttribute('role', winner ? 'button' : 'presentation');
+        card.setAttribute('tabindex', winner ? '0' : '-1');
       });
 
       initDetailSection(result);
@@ -1685,7 +1725,7 @@
     function buildAgentCard({ id, role, why }) {
       const a = DETAIL_AGENTS[id];
       const roleLower = role.toLowerCase();
-      return `<div class="agent-card" role="button" tabindex="0" data-agent-id="${id}">
+      return `<div class="agent-card agent-card--${roleLower}" role="button" tabindex="0" data-agent-id="${id}">
         <div class="agent-card__top">
           <span class="agent-card__id">${id}</span>
           <div class="agent-card__icon"><img src="${a.icon}" alt="" width="40" height="40"></div>
@@ -2180,7 +2220,10 @@
       const allCards = { greenfield: cardGreen, brownfield: cardBrown, modernisation: cardMod };
       Object.entries(allCards).forEach(([key, card]) => {
         card.classList.remove('is-winner', 'is-other', 'is-all-visible');
-        card.classList.add(key === type ? 'is-winner' : 'is-other');
+        const winner = key === type;
+        card.classList.add(winner ? 'is-winner' : 'is-other');
+        card.setAttribute('role', winner ? 'button' : 'presentation');
+        card.setAttribute('tabindex', winner ? '0' : '-1');
       });
       initDetailSection(type);
     }

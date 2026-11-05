@@ -1106,6 +1106,24 @@
       background: rgba(74,82,96,0.12);
     }
 
+    /* ── Optional agent card: light grey icon + grey text ── */
+    .agent-card--optional .agent-card__icon {
+      background: #EAECEF;
+      border-radius: 10px;
+      padding: 6px;
+      width: 52px;
+      height: 52px;
+    }
+    .agent-card--optional .agent-card__icon img {
+      filter: grayscale(1) opacity(0.6);
+    }
+    .agent-card--optional .agent-card__id {
+      color: #60636A;
+    }
+    .agent-card--optional .agent-card__name {
+      color: #60636A;
+    }
+
   </style>
 </head>
 <body>
@@ -1463,7 +1481,7 @@
     function buildAgentCard({ id, role, why }) {
       const a = DETAIL_AGENTS[id];
       const roleLower = role.toLowerCase();
-      return `<div class="agent-card" role="button" tabindex="0" data-agent-id="${id}">
+      return `<div class="agent-card agent-card--${roleLower}" role="button" tabindex="0" data-agent-id="${id}">
         <div class="agent-card__top">
           <span class="agent-card__id">${id}</span>
           <div class="agent-card__icon"><img src="${a.icon}" alt="" width="40" height="40"></div>
